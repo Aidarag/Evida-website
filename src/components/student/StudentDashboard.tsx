@@ -399,7 +399,7 @@ export default function StudentDashboard({
                 ) : (
                   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {exploreEvents.map((event) => {
-                      const isSaved = event.savedBy.includes(currentUser.name);
+                      const isSaved = (event.savedBy ?? []).includes(currentUser.name);
                       return (
                         <div
                           key={event.id}
