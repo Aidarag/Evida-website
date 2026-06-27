@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased bg-white text-gray-900 min-h-screen selection:bg-[#4C1D95] selection:text-white`}>
+      <body className={`${inter.variable} antialiased bg-white text-gray-900 min-h-screen selection:bg-[var(--color-evida-lime)] selection:text-black`}>
         <UserProvider>
           <EventProvider>
             {children}

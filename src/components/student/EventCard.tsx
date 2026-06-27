@@ -13,9 +13,9 @@ interface EventCardProps {
 }
 
 export default function EventCard({ event, onClick, onSave, isSaved = false }: EventCardProps) {
-  const isGradient = event.coverImage.includes('from-');
-  const bgClass = isGradient ? event.coverImage : '';
-  const bgStyle = !isGradient ? { backgroundImage: `url(${event.coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
+  const isGradient = event.coverImage ? event.coverImage.includes('from-') : false;
+  const bgClass = isGradient ? event.coverImage : (event.coverImage ? '' : 'bg-gray-100');
+  const bgStyle = (!isGradient && event.coverImage) ? { backgroundImage: `url(${event.coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
 
   return (
     <div 

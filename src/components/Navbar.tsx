@@ -13,26 +13,34 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
   const pathname = usePathname();
 
   return (
-    <header className="hidden md:flex sticky top-0 z-40 w-full h-16 border-b border-gray-100 bg-white/90 backdrop-blur-xl shadow-sm">
-      <div className="mx-auto w-full max-w-7xl px-8 flex items-center justify-between">
+    <header className={`hidden md:flex ${variant === 'public' ? 'absolute top-0 z-50 w-full h-24 border-none bg-transparent' : 'sticky top-0 z-40 w-full h-16 border-b border-gray-100 bg-white/90 backdrop-blur-xl shadow-sm'}`}>
+      <div className="mx-auto w-full max-w-[1400px] px-8 flex items-center justify-between">
         {/* Left side: Logo & Links */}
         <div className="flex items-center gap-10">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <span className="text-xl font-bold tracking-tight text-[#4C1D95]">
-              Where <br className="hidden lg:block" />
-              to go?
-            </span>
+            {variant === 'public' ? (
+              <span className="text-3xl font-black tracking-widest text-white uppercase" style={{ fontFamily: 'var(--font-lufga)' }}>
+                Evida.
+              </span>
+            ) : (
+              <>
+                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[var(--color-evida-coral)] to-[var(--color-evida-blue)] flex items-center justify-center">
+                  <span className="text-white font-black text-sm">E</span>
+                </div>
+                <span className="text-xl font-bold tracking-tight text-gray-900" style={{ fontFamily: 'var(--font-lufga)' }}>
+                  Evida.
+                </span>
+              </>
+            )}
           </Link>
           
           {/* Public links */}
           {variant === 'public' && (
-            <nav className="hidden lg:flex items-center gap-6">
-              <Link href="/student/events?cat=Party" className="text-sm font-medium text-[#4C1D95] hover:text-[#6D28D9] transition-colors">Party</Link>
-              <Link href="/student/events?cat=Music" className="text-sm font-medium text-[#4C1D95] hover:text-[#6D28D9] transition-colors">Music</Link>
-              <Link href="/student/events?cat=Cinema" className="text-sm font-medium text-[#4C1D95] hover:text-[#6D28D9] transition-colors">Cinema</Link>
-              <Link href="/student/events?cat=Sport" className="text-sm font-medium text-[#4C1D95] hover:text-[#6D28D9] transition-colors">Sport</Link>
-              <Link href="/contacts" className="text-sm font-medium text-[#4C1D95] hover:text-[#6D28D9] transition-colors">Contacts</Link>
+            <nav className="hidden lg:flex items-center gap-8 ml-8">
+              <Link href="#why-evida" className="text-xs font-bold text-white/90 hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors">Why Evida</Link>
+              <Link href="#how-it-works" className="text-xs font-bold text-white/90 hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors">How It Works</Link>
+              <Link href="#featured-events" className="text-xs font-bold text-white/90 hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors">Featured Events</Link>
             </nav>
           )}
         </div>
@@ -41,11 +49,11 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
         <div className="flex items-center gap-4">
           {variant === 'public' && (
             <>
-              <Link href="/login" className="text-sm font-medium text-[#4C1D95] hover:text-[#6D28D9] transition-colors">
+              <Link href="/login" className="text-xs font-bold text-white hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors flex items-center gap-2">
                 Login
               </Link>
-              <Link href="/login" className="px-5 py-1.5 rounded-full border border-[#4C1D95] text-sm font-medium text-[#4C1D95] hover:bg-[#F5F3FF] transition-colors">
-                Sign up
+              <Link href="/login" className="ml-4 bg-[var(--color-evida-lime)] text-[#111827] px-6 py-2.5 font-bold uppercase tracking-widest text-xs hover:bg-white transition-colors rounded-sm shadow-[3px_3px_0px_rgba(255,255,255,0.2)]">
+                Get Started
               </Link>
             </>
           )}
