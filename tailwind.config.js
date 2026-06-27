@@ -1,6 +1,7 @@
 // tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}"
@@ -8,17 +9,25 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Brand palette
-        "brand-orange": "#FF7A1A",
-        "brand-yellow": "#FFD214",
-        "brand-cream": "#F5EFEB",
-        // UI palette
-        "primary-bg": "#050507",
-        "primary-fg": "#f8fafc",
-        "card-bg": "rgba(13,13,16,0.7)",
-        "border": "rgba(255,255,255,0.05)",
-        "accent": "#FF6B2C", // main Evida accent (warm orange)
-        "soft-orange": "rgba(255,122,26,0.2)"
+        // Primary dark backgrounds
+        "primary-bg": "#08080B",
+        "secondary-bg": "#111118",
+        "surface": "#171722",
+        // Text
+        "primary-text": "#FFFFFF",
+        "secondary-text": "#B8BBC8",
+        // Borders
+        "border": "rgba(255,255,255,0.08)",
+        // Neon accent (reserved for CTA, FAB, QR)
+        "neon-green": "#B7FF2D",
+        // Gradient colors
+        "gradient-primary-start": "#584BFF",
+        "gradient-primary-end": "#7A2CFF",
+        "gradient-secondary": "#166BFF",
+        "gradient-pink": "#FF2D7A",
+        "gradient-purple": "#7A2CFF",
+        "gradient-blue": "#166BFF",
+        "gradient-green": "#B7FF2D"
       },
       spacing: {
         // 8‑point system (4px base)
@@ -36,27 +45,33 @@ module.exports = {
         "12": "48px"
       },
       borderRadius: {
-        "card": "24px", // rounded-3xl equivalent
-        "poster": "28px",
-        "btn": "9999px",
+        "large": "28px",
+        "pill": "9999px",
         "default": "8px"
       },
       boxShadow: {
-        "card": "0 5px 15px rgba(0,0,0,0.3), 0 0 10px rgba(255,122,26,0.1)",
-        "card-hover": "0 20px 40px -15px rgba(0,0,0,0.7), 0 0 30px -5px rgba(255,122,26,0.15)",
-        "poster-hover": "0 30px 60px -20px rgba(0,0,0,0.8), 0 0 40px -10px rgba(255,122,26,0.2)"
+        "glass": "0 4px 12px rgba(0,0,0,0.25)",
+        "card": "0 8px 20px rgba(0,0,0,0.3)",
+        "card-hover": "0 12px 30px rgba(0,0,0,0.45)"
       },
       fontFamily: {
         sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"]
       },
-      animation: {
-        "float-glow": "float-glow 4s infinite ease-in-out"
+      backgroundImage: {
+        // Gradient utilities
+        "gradient-primary": "linear-gradient(135deg, var(--tw-color-gradient-primary-start), var(--tw-color-gradient-primary-end))",
+        "gradient-purple-pink": "linear-gradient(135deg, var(--tw-color-gradient-purple), var(--tw-color-gradient-pink))",
+        "gradient-blue-purple": "linear-gradient(135deg, var(--tw-color-gradient-blue), var(--tw-color-gradient-purple))",
+        "gradient-purple-blue": "linear-gradient(135deg, var(--tw-color-gradient-purple), var(--tw-color-gradient-blue))"
       },
       keyframes: {
         "float-glow": {
           "0%, 100%": { transform: "translateY(0)", "box-shadow": "0 5px 15px rgba(0,0,0,0.3), 0 0 10px rgba(255,122,26,0.1)" },
           "50%": { transform: "translateY(-5px)", "box-shadow": "0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255,122,26,0.3)" }
         }
+      },
+      animation: {
+        "float-glow": "float-glow 4s infinite ease-in-out"
       }
     }
   },

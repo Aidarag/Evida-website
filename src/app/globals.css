@@ -1,137 +1,112 @@
+// src/app/globals.css
 @import "tailwindcss";
 
+/* Design Tokens */
 :root {
-  --background: #050507;
-  --foreground: #f8fafc;
-  
-  /* HYPERACTIVE Brand Colors */
-  --brand-orange: #FF7A1A;
-  --brand-orange-rgb: 255, 122, 26;
-  --brand-yellow: #FFD214;
-  --brand-cream: #F5EFEB;
-  --card-bg: rgba(13, 13, 16, 0.7);
-  --border-color: rgba(255, 255, 255, 0.05);
+  /* Backgrounds */
+  --bg-primary: #08080B; /* pure black */
+  --bg-secondary: #111118; /* dark charcoal */
+  --bg-surface: #171722;
+  /* Text */
+  --text-primary: #FFFFFF;
+  --text-secondary: #B8BBC8;
+  /* Brand Colors */
+  --color-electric: #80B0EC;
+  --color-coral: #EE3D5A;
+  --color-neon: #DAFB71;
+  /* Border */
+  --border: rgba(255,255,255,0.08);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+/* Global Styles */
+html, body {
+  height: 100%;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   overflow-x: hidden;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(255, 122, 26, 0.08) 0px, transparent 40%),
-    radial-gradient(at 100% 10%, rgba(255, 210, 20, 0.04) 0px, transparent 35%),
-    radial-gradient(at 50% 100%, rgba(255, 122, 26, 0.05) 0px, transparent 50%);
-  background-attachment: fixed;
 }
 
-/* Custom Scrollbar */
+/* Glassmorphism utility */
+.glass {
+  background: rgba(17, 17, 24, 0.45); /* default opacity – matches secondary-bg */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+}
+
+/* Button utilities */
+.btn-primary {
+  @apply rounded-full px-6 py-2 text-white font-medium bg-gradient-to-r from-electric-blue to-neon-lime;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-primary:hover {
+  @apply shadow-lg;
+  transform: scale(1.02);
+}
+
+.btn-secondary {
+  @apply rounded-full px-6 py-2 text-white font-medium bg-gradient-to-r from-coral to-electric-blue;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-secondary:hover {
+  @apply shadow-lg;
+  transform: scale(1.02);
+}
+
+.btn-ghost {
+  @apply rounded-full px-6 py-2 text-white font-medium bg-transparent border border-white/20;
+  backdrop-filter: blur(10px);
+}
+.btn-ghost:hover {
+  @apply bg-white/10;
+}
+
+/* Chip utility */
+.chip {
+  @apply inline-flex items-center rounded-full px-3 py-1 text-sm font-medium bg-white/10 text-white;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #050507;
+  background: var(--bg-primary);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: var(--border);
   border-radius: 9999px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-orange);
+  background: var(--color-electric);
 }
 
-/* Glassmorphism Panels */
-.hyper-panel {
-  background: rgba(13, 13, 16, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+/* Card base style */
+.card-base {
+  @apply rounded-large bg-surface shadow-card overflow-hidden relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-base:hover {
+  @apply shadow-card-hover;
+  transform: translateY(-4px) scale(1.02);
 }
 
-/* Card Visuals (HYPERACTIVE Style) */
-.hyper-card {
-  background: rgba(18, 18, 22, 0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 24px; /* rounded-3xl equivalent */
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+/* Gradient utilities for hero sections */
+.bg-hero-primary {
+  @apply bg-gradient-to-r from-electric-blue to-neon-lime;
+}
+.bg-hero-secondary {
+  @apply bg-gradient-to-r from-coral to-electric-blue;
 }
 
-.hyper-card:hover {
-  background: rgba(22, 22, 28, 0.85);
-  border-color: rgba(255, 122, 26, 0.3);
-  transform: translateY(-4px);
-  box-shadow: 
-    0 20px 40px -15px rgba(0, 0, 0, 0.7),
-    0 0 30px -5px rgba(255, 122, 26, 0.15);
+/* Animation utilities */
+.fade-up {
+  animation: fade-up 0.35s ease-out forwards;
 }
 
-/* Heavy Poster Event Cards (HYPERACTIVE Style) */
-.poster-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.poster-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(5, 5, 7, 0.95) 0%, rgba(5, 5, 7, 0.6) 35%, transparent 100%);
-  z-index: 1;
-}
-
-.poster-card:hover {
-  transform: scale(1.02);
-  border-color: rgba(255, 122, 26, 0.4);
-  box-shadow: 
-    0 30px 60px -20px rgba(0, 0, 0, 0.8),
-    0 0 40px -10px rgba(255, 122, 26, 0.2);
-}
-
-/* Neon Glow Gradients & Text */
-.neon-text-orange {
-  color: var(--brand-orange);
-  text-shadow: 0 0 10px rgba(255, 122, 26, 0.3);
-}
-
-.neon-border-orange {
-  border-color: var(--brand-orange);
-  box-shadow: 0 0 15px rgba(255, 122, 26, 0.2);
-}
-
-/* Custom CSS Gradients matching HYPERACTIVE */
-.hyper-grad-orange {
-  background: linear-gradient(135deg, #FF7A1A 0%, #FFB61D 100%);
-}
-
-.hyper-grad-neon {
-  background: linear-gradient(135deg, #FF7A1A 0%, #FF2E93 50%, #902bf5 100%);
-}
-
-.hyper-grad-dark {
-  background: linear-gradient(to bottom, #111115 0%, #050507 100%);
-}
-
-/* Animations */
-@keyframes float-glow {
-  0%, 100% {
-    transform: translateY(0);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 122, 26, 0.1);
-  }
-  50% {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 122, 26, 0.3);
-  }
-}
-
-.float-glowing {
-  animation: float-glow 4s infinite ease-in-out;
+@keyframes fade-up {
+  0% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
