@@ -21,8 +21,8 @@ module.exports = {
         // Neon accent (reserved for CTA, FAB, QR)
         "neon-green": "#B7FF2D",
         // Brand accent colors
-        "electric-blue": "#80B0EC",
-        "coral": "#EE3D5A",
+        "electric-blue": "#2563EB",
+        "coral": "#FFFFFF",
         "neon-lime": "#DAFB71",
         // Gradient colors (for utilities)
         "gradient-primary-start": "#584BFF",

@@ -17,8 +17,8 @@
   /* Colors – Brand accents (From Screenshot) */
   /* Colors - Brand accents (Evida Original) */
   --color-evida-lime: #DAFB71;
-  --color-evida-coral: #EE3D5A;
-  --color-evida-blue: #80B0EC;
+  --color-evida-coral: #FFFFFF;
+  --color-evida-blue: #2563EB;
   
   /* Grungy Theme Accents */
   --color-grungy-bg: #0F0F13;
@@ -26,7 +26,7 @@
   --color-neon-yellow: #DAFB71; /* Reusing lime for neon */
   
   /* Colors – Gradients */
-  --color-gradient-hero: linear-gradient(135deg, #80B0EC, #EE3D5A);
+  --color-gradient-hero: linear-gradient(135deg, #2563EB, #DAFB71);
 
   /* Border radius */
   --radius-large: 32px;

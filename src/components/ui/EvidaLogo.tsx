@@ -38,14 +38,14 @@ export default function EvidaLogo({
         {/* Right Ribbon (Blue) */}
         <path
           d="M 42 42 L 42 22 L 24 6 L 24 15 L 33 24 L 33 42 Z"
-          fill="#80B0EC"
+          fill="#2563EB"
           opacity="0.85"
         />
         
-        {/* Center Ribbon (Coral) */}
+        {/* Center Ribbon (Coral replaced by White/Black depending on theme) */}
         <path
           d="M 24 10 L 36 22 L 24 34 L 12 22 Z M 24 16 L 30 22 L 24 28 L 18 22 Z"
-          fill="#EE3D5A"
+          fill={lightMode ? '#111827' : '#FFFFFF'}
           opacity="0.9"
         />
       </g>
