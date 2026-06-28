@@ -34,8 +34,8 @@
   --radius-default: 12px;
 
   /* Font family */
-  --font-display: var(--font-poppins), sans-serif;
-  --font-sans: var(--font-poppins), sans-serif;
+  --font-display: var(--font-syne), sans-serif;
+  --font-sans: var(--font-plus-jakarta-sans), sans-serif;
   --font-lufga: var(--font-display); /* Alias for backward compatibility */
 }
 
