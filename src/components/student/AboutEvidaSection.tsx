@@ -24,7 +24,7 @@ export default function AboutEvidaSection() {
           {/* Center Logo */}
           <div className="absolute left-1/2 -translate-x-1/2 top-0 flex flex-col items-center">
             <div className="flex items-center justify-center">
-              <span className="text-white font-extrabold text-2xl tracking-[0.3em] uppercase bg-gradient-to-r from-[var(--color-evida-blue)] to-[var(--color-evida-coral)] bg-clip-text text-transparent">
+              <span className="text-[var(--color-evida-lime)] font-extrabold text-2xl tracking-[0.3em] uppercase">
                 EVIDA
               </span>
             </div>

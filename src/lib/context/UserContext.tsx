@@ -73,8 +73,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        const matched = DEFAULT_USERS.find((u) => u.username === parsed.username);
-        setCurrentUser(matched || DEFAULT_USERS[0]);
+        if (parsed && parsed.username) {
+          const matched = DEFAULT_USERS.find((u) => u.username === parsed.username);
+          setCurrentUser(matched || parsed);
+        }
       } catch {
         setCurrentUser(DEFAULT_USERS[0]);
       }
@@ -85,7 +87,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const handleSetUser = useCallback((user: User) => {
     setCurrentUser(user);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('evida-user', JSON.stringify({ username: user.username }));
+      localStorage.setItem('evida-user', JSON.stringify(user));
     }
   }, []);
 

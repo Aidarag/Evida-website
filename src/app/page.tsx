@@ -472,7 +472,7 @@ export default function LandingPage() {
               </span>
               <h2 className="text-white font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
                 Your Campus <br />
-                <span className="bg-gradient-to-r from-[var(--color-evida-blue)] to-[var(--color-evida-coral)] bg-clip-text text-transparent">Calendar</span> <br />
+                <span className="text-[var(--color-evida-lime)]">Calendar</span> <br />
                 At A Glance
               </h2>
               <p className="text-white/70 text-sm md:text-base leading-relaxed">
@@ -731,7 +731,7 @@ export default function LandingPage() {
         <div className="relative max-w-4xl mx-auto px-6 text-center z-20 space-y-8">
           <h2 className="text-white font-extrabold text-4xl md:text-6xl lg:text-7xl uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
             College Ends.<br />
-            <span className="bg-gradient-to-r from-[var(--color-evida-coral)] via-[var(--color-evida-blue)] to-[var(--color-evida-lime)] bg-clip-text text-transparent">
+            <span className="text-[var(--color-evida-lime)]">
               Memories Don’t.
             </span>
           </h2>
@@ -753,7 +753,7 @@ export default function LandingPage() {
 
         {/* Giant Immersive EVIDA Wordmark in Background */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden select-none pointer-events-none z-10 leading-none">
-          <div className="w-full text-center text-[18vw] font-extrabold tracking-tighter uppercase opacity-10 bg-gradient-to-r from-[var(--color-evida-coral)] via-[var(--color-evida-blue)] to-[var(--color-evida-lime)] bg-clip-text text-transparent translate-y-[20%]">
+          <div className="w-full text-center text-[18vw] font-extrabold tracking-tighter uppercase opacity-10 text-[var(--color-evida-lime)] translate-y-[20%]">
             EVIDA
           </div>
         </div>

@@ -75,7 +75,7 @@ export default function EventFeed({
         <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center gap-2">
-              Welcome back, <span className="bg-gradient-to-r from-indigo-200 to-violet-200 bg-clip-text text-transparent">{currentUser.name}</span>!
+              Welcome back, <span className="text-[var(--color-evida-lime)]">{currentUser.name}</span>!
             </h1>
             <p className="mt-2 text-sm text-slate-400 max-w-xl">
               Discover verified campus activities, RSVP to events, or share your tutoring/photography services with the campus community.
