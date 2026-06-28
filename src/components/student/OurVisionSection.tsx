@@ -123,27 +123,50 @@ export default function OurVisionSection() {
   };
 
   return (
-    <section className="w-full bg-white py-24 border-y border-gray-100 font-sans overflow-hidden">
+    <section className="w-full bg-white py-20 md:py-24 border-y border-gray-100 font-sans overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         
         {/* Title */}
-        <div className="text-center mb-20">
-          <h2 className="text-gray-900 font-black text-4xl tracking-widest uppercase mb-4" style={{ fontFamily: 'var(--font-lufga)' }}>
+        <div className="text-center mb-12 md:mb-20">
+          <h2 className="text-gray-900 font-black text-3xl md:text-4xl tracking-widest uppercase mb-4" style={{ fontFamily: 'var(--font-lufga)' }}>
             OUR VISION
           </h2>
           <div className="w-12 h-1 bg-black mx-auto" />
         </div>
 
+        {/* Mobile/Tablet Menu (Horizontal Tabs) - Top positioned for better UX */}
+        <div className="lg:hidden w-full mb-8">
+          <div className="flex overflow-x-auto gap-5 pb-3 no-scrollbar border-b border-gray-200 scroll-smooth -mx-6 px-6">
+            {(Object.keys(visionData) as VisionKey[]).map((item) => {
+              const isActive = activeItem === item;
+              return (
+                <button
+                  key={item}
+                  onClick={() => handleMenuHover(item)}
+                  className={`flex-shrink-0 pb-2 text-xs md:text-sm font-black uppercase tracking-widest border-b-2 transition-all duration-300 cursor-pointer ${
+                    isActive 
+                      ? 'text-black border-black' 
+                      : 'text-gray-400 border-transparent hover:text-gray-600'
+                  }`}
+                  style={{ fontFamily: 'var(--font-lufga)' }}
+                >
+                  {item}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Left Column: Cube and Paragraphs */}
           <div className="lg:col-span-8 flex flex-col">
             
             {/* Cube Area */}
-            <div className="flex justify-center items-center h-[320px] md:h-[380px] relative">
+            <div className="flex justify-center items-center h-[280px] md:h-[340px] relative">
               <div 
-                className="relative w-[240px] h-[240px] select-none"
+                className="relative w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] select-none [--cube-translate:100px] sm:[--cube-translate:120px]"
                 style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
@@ -164,9 +187,9 @@ export default function OurVisionSection() {
                 >
                   {/* Front Face (STUDENTS) */}
                   <div 
-                    className="absolute inset-0 bg-white border-4 border-black p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
+                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
                     style={{
-                      transform: 'rotateY(0deg) translateZ(120px)',
+                      transform: 'rotateY(0deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
                       WebkitBackfaceVisibility: 'hidden'
                     }}
@@ -175,10 +198,10 @@ export default function OurVisionSection() {
                       <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-evida-coral)]">Pillar 01</span>
                     </div>
                     <div className="my-auto text-left">
-                      <h3 className="text-black font-black text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-lufga)' }}>
+                      <h3 className="text-black font-black text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-lufga)' }}>
                         STUDENTS
                       </h3>
-                      <p className="text-gray-600 text-[11px] mt-3 font-semibold leading-relaxed">
+                      <p className="text-gray-600 text-[10px] sm:text-[11px] mt-3 font-semibold leading-relaxed">
                         Discover events. Meet people. Create memories. Experience campus life.
                       </p>
                     </div>
@@ -189,9 +212,9 @@ export default function OurVisionSection() {
 
                   {/* Right Face (SCHOOLS) */}
                   <div 
-                    className="absolute inset-0 bg-white border-4 border-black p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
+                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
                     style={{
-                      transform: 'rotateY(90deg) translateZ(120px)',
+                      transform: 'rotateY(90deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
                       WebkitBackfaceVisibility: 'hidden'
                     }}
@@ -200,10 +223,10 @@ export default function OurVisionSection() {
                       <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-evida-blue)]">Pillar 02</span>
                     </div>
                     <div className="my-auto text-left">
-                      <h3 className="text-black font-black text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-lufga)' }}>
+                      <h3 className="text-black font-black text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-lufga)' }}>
                         SCHOOLS
                       </h3>
-                      <p className="text-gray-600 text-[11px] mt-3 font-semibold leading-relaxed">
+                      <p className="text-gray-600 text-[10px] sm:text-[11px] mt-3 font-semibold leading-relaxed">
                         Organize events. Increase engagement. Strengthen your campus community.
                       </p>
                     </div>
@@ -214,9 +237,9 @@ export default function OurVisionSection() {
 
                   {/* Back Face */}
                   <div 
-                    className="absolute inset-0 bg-white border-4 border-black p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
+                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
                     style={{
-                      transform: 'rotateY(180deg) translateZ(120px)',
+                      transform: 'rotateY(180deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
                       WebkitBackfaceVisibility: 'hidden'
                     }}
@@ -225,10 +248,10 @@ export default function OurVisionSection() {
                       <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-evida-lime)]">Vision</span>
                     </div>
                     <div className="my-auto text-left">
-                      <h3 className="text-black font-black text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-lufga)' }}>
+                      <h3 className="text-black font-black text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-lufga)' }}>
                         EVIDA
                       </h3>
-                      <p className="text-gray-600 text-[11px] mt-3 font-semibold leading-relaxed">
+                      <p className="text-gray-600 text-[10px] sm:text-[11px] mt-3 font-semibold leading-relaxed">
                         The digital home of campus life and community connection.
                       </p>
                     </div>
@@ -239,9 +262,9 @@ export default function OurVisionSection() {
 
                   {/* Left Face */}
                   <div 
-                    className="absolute inset-0 bg-white border-4 border-black p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
+                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
                     style={{
-                      transform: 'rotateY(-90deg) translateZ(120px)',
+                      transform: 'rotateY(-90deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
                       WebkitBackfaceVisibility: 'hidden'
                     }}
@@ -250,10 +273,10 @@ export default function OurVisionSection() {
                       <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-evida-coral)]">Core</span>
                     </div>
                     <div className="my-auto text-left">
-                      <h3 className="text-black font-black text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-lufga)' }}>
+                      <h3 className="text-black font-black text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-lufga)' }}>
                         COMMUNITY
                       </h3>
-                      <p className="text-gray-600 text-[11px] mt-3 font-semibold leading-relaxed">
+                      <p className="text-gray-600 text-[10px] sm:text-[11px] mt-3 font-semibold leading-relaxed">
                         Bringing students and schools together into one connected experience.
                       </p>
                     </div>
@@ -264,49 +287,49 @@ export default function OurVisionSection() {
 
                   {/* Top Face */}
                   <div 
-                    className="absolute inset-0 bg-gray-50 border-4 border-black p-6 flex items-center justify-center"
+                    className="absolute inset-0 bg-gray-50 border-4 border-black p-5 flex items-center justify-center"
                     style={{
-                      transform: 'rotateX(90deg) translateZ(120px)',
+                      transform: 'rotateX(90deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
                       WebkitBackfaceVisibility: 'hidden'
                     }}
                   >
-                    <span className="text-black font-black text-xl uppercase tracking-widest">EVIDA</span>
+                    <span className="text-black font-black text-lg uppercase tracking-widest">EVIDA</span>
                   </div>
 
                   {/* Bottom Face */}
                   <div 
-                    className="absolute inset-0 bg-gray-50 border-4 border-black p-6 flex items-center justify-center"
+                    className="absolute inset-0 bg-gray-50 border-4 border-black p-5 flex items-center justify-center"
                     style={{
-                      transform: 'rotateX(-90deg) translateZ(120px)',
+                      transform: 'rotateX(-90deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
                       WebkitBackfaceVisibility: 'hidden'
                     }}
                   >
-                    <span className="text-black font-black text-xl uppercase tracking-widest">EVIDA</span>
+                    <span className="text-black font-black text-lg uppercase tracking-widest">EVIDA</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Paragraphs under the Cube */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 text-left border-t border-gray-100 pt-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 md:mt-12 text-left border-t border-gray-100 pt-8">
               {/* Left Paragraph */}
               <div className="space-y-3">
-                <h4 className="text-black font-black text-lg md:text-xl uppercase tracking-wider" style={{ fontFamily: 'var(--font-lufga)' }}>
+                <h4 className="text-black font-black text-lg uppercase tracking-wider" style={{ fontFamily: 'var(--font-lufga)' }}>
                   {visionData[activeItem].leftHeadline}
                 </h4>
-                <p className="text-gray-600 text-sm leading-relaxed font-medium min-h-[80px] transition-all duration-300">
+                <p className="text-gray-600 text-sm leading-relaxed font-medium min-h-[70px] transition-all duration-300">
                   {visionData[activeItem].leftText}
                 </p>
               </div>
 
               {/* Bottom Middle Paragraph */}
               <div className="space-y-3">
-                <h4 className="text-black font-black text-lg md:text-xl uppercase tracking-wider" style={{ fontFamily: 'var(--font-lufga)' }}>
+                <h4 className="text-black font-black text-lg uppercase tracking-wider" style={{ fontFamily: 'var(--font-lufga)' }}>
                   {visionData[activeItem].bottomHeadline}
                 </h4>
-                <p className="text-gray-600 text-sm leading-relaxed font-medium min-h-[80px] transition-all duration-300">
+                <p className="text-gray-600 text-sm leading-relaxed font-medium min-h-[70px] transition-all duration-300">
                   {visionData[activeItem].bottomText}
                 </p>
               </div>
@@ -314,8 +337,8 @@ export default function OurVisionSection() {
 
           </div>
 
-          {/* Right Column: Menu */}
-          <div className="lg:col-span-4 flex flex-col text-left">
+          {/* Right Column: Desktop Menu (Hidden on mobile/tablet) */}
+          <div className="hidden lg:flex lg:col-span-4 flex-col text-left">
             <div className="border-t border-gray-900 w-full mb-4 opacity-10" />
             <ul className="flex flex-col w-full">
               {(Object.keys(visionData) as VisionKey[]).map((item) => {

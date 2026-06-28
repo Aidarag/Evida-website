@@ -169,48 +169,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* For Students & Schools */}
-      <section className="w-full py-24 bg-gray-50 border-y border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8">
-          
-          <div className="rounded-[32px] bg-gradient-to-br from-[var(--color-evida-blue)] to-[#3B82F6] p-10 text-white shadow-xl flex flex-col justify-between">
-            <div className="space-y-6">
-              <div className="h-12 w-12 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                <Compass className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="text-heading-2">For Students</h3>
-              <p className="text-subtitle text-white/80 leading-relaxed">
-                Stop missing out. Everything happening on campus, curated just for you.
-              </p>
-              <ul className="space-y-3 pt-4">
-                <li className="flex items-center gap-2"><div className="h-1.5 w-1.5 rounded-full bg-white/60" /> Discover campus events</li>
-                <li className="flex items-center gap-2"><div className="h-1.5 w-1.5 rounded-full bg-white/60" /> RSVP and save events</li>
-                <li className="flex items-center gap-2"><div className="h-1.5 w-1.5 rounded-full bg-white/60" /> Create your own promotions</li>
-                <li className="flex items-center gap-2"><div className="h-1.5 w-1.5 rounded-full bg-white/60" /> Connect with campus life</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="rounded-[32px] bg-white border-2 border-[var(--color-evida-blue)]/30 p-10 text-gray-900 shadow-md flex flex-col justify-between">
-            <div className="space-y-6">
-              <div className="h-12 w-12 rounded-xl bg-[var(--color-evida-blue)]/10 flex items-center justify-center">
-                <Shield className="h-6 w-6 text-[var(--color-evida-blue)]" />
-              </div>
-              <h3 className="text-heading-2">For Schools</h3>
-              <p className="text-subtitle text-gray-600 leading-relaxed">
-                Take control of your campus narrative. Manage, review, and track engagement.
-              </p>
-              <ul className="space-y-3 pt-4">
-                <li className="flex items-center gap-2 text-gray-700"><div className="h-1.5 w-1.5 rounded-full bg-[var(--color-evida-blue)]/50" /> Review and approve events</li>
-                <li className="flex items-center gap-2 text-gray-700"><div className="h-1.5 w-1.5 rounded-full bg-[var(--color-evida-blue)]/50" /> Feature official events</li>
-                <li className="flex items-center gap-2 text-gray-700"><div className="h-1.5 w-1.5 rounded-full bg-[var(--color-evida-blue)]/50" /> Manage student organizations</li>
-                <li className="flex items-center gap-2 text-gray-700"><div className="h-1.5 w-1.5 rounded-full bg-[var(--color-evida-blue)]/50" /> View engagement analytics</li>
-              </ul>
-            </div>
-          </div>
-
-        </div>
-      </section>
 
       {/* Featured Events Section (Grungy Dark Theme) */}
       <section className="relative w-full bg-[#0F0F13] py-24 mt-20 mb-12">
