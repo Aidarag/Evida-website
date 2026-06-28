@@ -95,7 +95,7 @@ export default function StudentDashboard({
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-[#FF7A1A] to-[#FFD214]">
               <Sparkles className="h-4.5 w-4.5 text-black" />
             </div>
-            <span className="text-base font-black tracking-wider text-white">EVIDA</span>
+            <span className="text-base font-bold tracking-wider text-white">EVIDA</span>
           </div>
 
           {/* Nav List */}
@@ -130,7 +130,7 @@ export default function StudentDashboard({
         <div className="space-y-4 pt-6 border-t border-white/5">
           <button
             onClick={onOpenCreate}
-            className="w-full flex items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] py-3 text-xs font-black text-black shadow-lg shadow-orange-500/10 hover:scale-[1.01] transition-all cursor-pointer"
+            className="w-full flex items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] py-3 text-xs font-bold text-black shadow-lg shadow-orange-500/10 hover:scale-[1.01] transition-all cursor-pointer"
           >
             <Plus className="h-4 w-4 stroke-[3]" />
             CREATE EVENT
@@ -157,7 +157,7 @@ export default function StudentDashboard({
             <div className="h-7 w-7 rounded-lg bg-[#FF7A1A] flex items-center justify-center">
               <Sparkles className="h-4 w-4 text-black" />
             </div>
-            <span className="text-sm font-black text-white">EVIDA</span>
+            <span className="text-sm font-bold text-white">EVIDA</span>
           </div>
 
           <div className="hidden md:block">
@@ -174,7 +174,7 @@ export default function StudentDashboard({
             >
               <Bell className="h-4 w-4" />
               {unreadNotifsCount > 0 && (
-                <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-[#FF7A1A] text-[9px] font-black text-black flex items-center justify-center border border-slate-950">
+                <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-[#FF7A1A] text-[9px] font-bold text-black flex items-center justify-center border border-slate-950">
                   {unreadNotifsCount}
                 </span>
               )}
@@ -190,7 +190,7 @@ export default function StudentDashboard({
                   className="absolute right-0 top-11 w-80 rounded-2xl border border-white/10 bg-[#121215] p-4 shadow-2xl z-50 space-y-3"
                 >
                   <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                    <span className="text-xs font-black uppercase text-white">Notifications</span>
+                    <span className="text-xs font-bold uppercase text-white">Notifications</span>
                     <button
                       onClick={() => setNotificationsOpen(false)}
                       className="text-slate-500 hover:text-white cursor-pointer"
@@ -262,7 +262,7 @@ export default function StudentDashboard({
                   {/* Badges/Details Overlay */}
                   <div className="absolute inset-0 z-20 p-6 sm:p-8 flex flex-col justify-between">
                     <div className="flex justify-between items-start gap-4">
-                      <span className="rounded-full bg-[#FF7A1A] text-black text-[9px] font-black uppercase tracking-wider px-3 py-1">
+                      <span className="rounded-full bg-[#FF7A1A] text-black text-[9px] font-bold uppercase tracking-wider px-3 py-1">
                         TODAY'S HIGHLIGHT
                       </span>
                       
@@ -276,7 +276,7 @@ export default function StudentDashboard({
                       <span className="text-xs font-bold text-[#FF7A1A] uppercase tracking-wider">
                         {featuredEvent.organizationName || 'OFFICIAL EVENT'}
                       </span>
-                      <h2 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tighter leading-none">
+                      <h2 className="text-2xl sm:text-3xl font-extrabold text-white uppercase tracking-tighter leading-none">
                         {featuredEvent.title}
                       </h2>
                       <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
@@ -336,7 +336,7 @@ export default function StudentDashboard({
               {trendingEvents.length > 0 && selectedCategory === 'All' && !searchQuery && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xs font-black tracking-widest text-slate-500 uppercase">
+                    <h3 className="text-xs font-extrabold tracking-widest text-slate-500 uppercase">
                       TRENDING EVENTS
                     </h3>
                   </div>
@@ -367,7 +367,7 @@ export default function StudentDashboard({
                             <span className="text-[9px] font-bold text-[#FF7A1A] uppercase tracking-wide">
                               {event.organizationName || 'OFFICIAL'}
                             </span>
-                            <h4 className="text-sm font-black text-white leading-snug line-clamp-2">
+                            <h4 className="text-sm font-bold text-white leading-snug line-clamp-2">
                               {event.title}
                             </h4>
                             <p className="text-[10px] text-slate-400 flex items-center gap-1 pt-1.5 truncate">
@@ -384,7 +384,7 @@ export default function StudentDashboard({
 
               {/* General Grid feed */}
               <div className="space-y-4">
-                <h3 className="text-xs font-black tracking-widest text-slate-500 uppercase">
+                <h3 className="text-xs font-extrabold tracking-widest text-slate-500 uppercase">
                   {selectedCategory === 'All' ? 'UPCOMING EXPERIENCES' : `${selectedCategory.toUpperCase()} EVENTS`}
                 </h3>
 
@@ -450,7 +450,7 @@ export default function StudentDashboard({
                                 )}
                               </div>
 
-                              <h4 className="text-base font-black text-white leading-snug group-hover:text-[#FF7A1A] transition-colors line-clamp-1 uppercase">
+                              <h4 className="text-base font-bold text-white leading-snug group-hover:text-[#FF7A1A] transition-colors line-clamp-1 uppercase">
                                 {event.title}
                               </h4>
                               <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">

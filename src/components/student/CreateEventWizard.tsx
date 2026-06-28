@@ -174,10 +174,10 @@ export default function CreateEventWizard({
         {statusScreen === 'form' ? (
           <form onSubmit={handleFormSubmit} className="p-6 md:p-8 space-y-6 max-h-[85vh] overflow-y-auto">
             <div>
-              <span className="rounded-full bg-[#FF7A1A]/10 border border-[#FF7A1A]/20 px-3 py-0.5 text-[9px] font-black uppercase tracking-widest text-[#FF7A1A]">
+              <span className="rounded-full bg-[#FF7A1A]/10 border border-[#FF7A1A]/20 px-3 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#FF7A1A]">
                 SUBMIT EXPERIENCE
               </span>
-              <h2 className="text-xl font-black text-white uppercase tracking-tight mt-1.5 flex items-center gap-2">
+              <h2 className="text-xl font-extrabold text-white uppercase tracking-tight mt-1.5 flex items-center gap-2">
                 Create Campus Event
               </h2>
             </div>
@@ -338,7 +338,7 @@ export default function CreateEventWizard({
                     style={{ borderColor: coverGradient === grad.value ? '#FF7A1A' : 'transparent' }}
                   >
                     {coverGradient === grad.value && (
-                      <span className="text-[8px] font-black text-black bg-white rounded px-1.5 py-0.5">OK</span>
+                      <span className="text-[8px] font-bold text-black bg-white rounded px-1.5 py-0.5">OK</span>
                     )}
                   </button>
                 ))}
@@ -426,7 +426,7 @@ export default function CreateEventWizard({
             <div className={`rounded-2xl border p-4 transition-all duration-300 ${preview.color}`}>
               <div className="flex items-center gap-2">
                 <Info className="h-4 w-4 shrink-0 text-[#FF7A1A]" />
-                <h5 className="text-xs font-black uppercase tracking-wider">Smart Classification Insight</h5>
+                <h5 className="text-xs font-bold uppercase tracking-wider">Smart Classification Insight</h5>
               </div>
               <p className="text-[11px] font-bold text-white mt-1.5">{preview.name}</p>
               <ul className="mt-2 pl-4 list-disc text-[10px] space-y-1 text-slate-400 font-medium">
@@ -441,14 +441,14 @@ export default function CreateEventWizard({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-full border border-white/10 bg-slate-950 hover:bg-slate-900 py-3 px-6 text-xs font-black text-slate-400 transition-colors cursor-pointer"
+                className="rounded-full border border-white/10 bg-slate-950 hover:bg-slate-900 py-3 px-6 text-xs font-bold text-slate-400 transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="rounded-full bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] px-6 py-3.5 text-xs font-black text-black shadow-lg shadow-orange-500/20 transition-all hover:scale-[1.01] cursor-pointer"
+                className="rounded-full bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] px-6 py-3.5 text-xs font-bold text-black shadow-lg shadow-orange-500/20 transition-all hover:scale-[1.01] cursor-pointer"
               >
                 {submitting ? 'Submitting...' : 'Submit Event'}
               </button>
@@ -462,7 +462,7 @@ export default function CreateEventWizard({
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-lg font-black uppercase tracking-tight text-white">Event Submitted For Review</h3>
+              <h3 className="text-lg font-extrabold uppercase tracking-tight text-white">Event Submitted For Review</h3>
               <p className="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto">
                 Your campus experience has been uploaded successfully! School administration will examine the scheduling details in the moderation queues.
               </p>
@@ -485,7 +485,7 @@ export default function CreateEventWizard({
                   onClose();
                   setStatusScreen('form');
                 }}
-                className="rounded-full bg-white text-black px-6 py-3 text-xs font-black hover:bg-slate-200 transition-colors cursor-pointer"
+                className="rounded-full bg-white text-black px-6 py-3 text-xs font-bold hover:bg-slate-200 transition-colors cursor-pointer"
               >
                 Return to Explore
               </button>

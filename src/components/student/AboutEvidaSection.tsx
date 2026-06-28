@@ -6,7 +6,7 @@ import { GraduationCap, Music, Globe, CalendarDays, Users, Trophy } from 'lucide
 
 export default function AboutEvidaSection() {
   return (
-    <section className="relative w-full bg-[#0F0F13] py-24 overflow-hidden border-y border-white/10 font-sans">
+    <section id="about-evida" className="relative w-full bg-[#0F0F13] py-24 overflow-hidden border-y border-white/10 font-sans">
       {/* Background Texture / Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#15151A] to-[#0F0F13] opacity-50 z-0" />
 
@@ -16,7 +16,7 @@ export default function AboutEvidaSection() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 relative">
           {/* Top Left Text */}
           <div className="rotate-[-6deg] mb-8 md:mb-0">
-            <h2 className="text-white font-black text-3xl md:text-5xl uppercase tracking-widest leading-none" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-white font-extrabold text-3xl md:text-5xl uppercase tracking-widest leading-none" style={{ fontFamily: 'var(--font-display)' }}>
               About <br /> <span className="text-[var(--color-evida-lime)]">Evida</span>
             </h2>
           </div>
@@ -24,7 +24,7 @@ export default function AboutEvidaSection() {
           {/* Center Logo */}
           <div className="absolute left-1/2 -translate-x-1/2 top-0 flex flex-col items-center">
             <div className="flex items-center justify-center">
-              <span className="text-white font-black text-2xl tracking-[0.3em] uppercase bg-gradient-to-r from-[var(--color-evida-blue)] to-[var(--color-evida-coral)] bg-clip-text text-transparent">
+              <span className="text-white font-extrabold text-2xl tracking-[0.3em] uppercase bg-gradient-to-r from-[var(--color-evida-blue)] to-[var(--color-evida-coral)] bg-clip-text text-transparent">
                 EVIDA
               </span>
             </div>
@@ -40,7 +40,7 @@ export default function AboutEvidaSection() {
           
           {/* Top Right Decorative (optional) */}
           <div className="hidden md:block">
-            <div className="text-white/20 font-black text-xl tracking-widest rotate-[4deg]">EST. 2024</div>
+            <div className="text-white/20 font-bold text-xl tracking-widest rotate-[4deg]">EST. 2024</div>
           </div>
         </div>
 
@@ -50,15 +50,15 @@ export default function AboutEvidaSection() {
           {/* The main block background */}
           <div className="bg-[var(--color-evida-blue)]/10 border border-[var(--color-evida-blue)]/20 rounded-[40px] p-8 md:p-16 text-center relative z-20 backdrop-blur-sm max-w-2xl lg:max-w-3xl mx-auto">
             
-            <p className="text-[var(--color-evida-lime)] text-sm md:text-base font-black tracking-[0.3em] uppercase mb-6">
+            <p className="text-[var(--color-evida-lime)] text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-6">
               Who We Are
             </p>
 
-            <h3 className="text-white font-black text-2xl md:text-4xl lg:text-5xl uppercase leading-tight mb-6" style={{ fontFamily: 'var(--font-display)' }}>
+            <h3 className="text-white font-extrabold text-2xl md:text-4xl lg:text-5xl uppercase leading-tight mb-6" style={{ fontFamily: 'var(--font-display)' }}>
               The Digital Home of Campus Life.
             </h3>
             
-            <p className="text-white/80 text-base md:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed font-medium">
+            <p className="text-white/80 text-base md:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed font-light">
               Evida brings every campus event, organization, and opportunity into one place, helping students discover experiences, build connections, and create unforgettable college memories.
             </p>
 

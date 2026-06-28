@@ -28,7 +28,7 @@ export default function AnalyticsPage() {
   return (
     <div className="p-6 md:p-10 space-y-8 max-w-6xl mx-auto">
       <div className="space-y-2">
-        <h1 className="text-3xl font-black text-white tracking-tight">Engagement Analytics</h1>
+        <h1 className="text-3xl font-extrabold text-white tracking-tight">Engagement Analytics</h1>
         <p className="text-sm text-[#B8BBC8]">Campus-wide metrics and event performance data.</p>
       </div>
 
@@ -41,7 +41,7 @@ export default function AnalyticsPage() {
             </div>
             <span className="text-xs font-bold text-[#B8BBC8] uppercase tracking-wider">Total Events</span>
           </div>
-          <div className="text-3xl font-black text-white">{totalApproved}</div>
+          <div className="text-3xl font-bold text-white">{totalApproved}</div>
         </Card>
 
         <Card className="p-6">
@@ -51,7 +51,7 @@ export default function AnalyticsPage() {
             </div>
             <span className="text-xs font-bold text-[#B8BBC8] uppercase tracking-wider">Total RSVPs</span>
           </div>
-          <div className="text-3xl font-black text-white">{totalRsvps}</div>
+          <div className="text-3xl font-bold text-white">{totalRsvps}</div>
         </Card>
 
         <Card className="p-6">
@@ -61,7 +61,7 @@ export default function AnalyticsPage() {
             </div>
             <span className="text-xs font-bold text-[#B8BBC8] uppercase tracking-wider">Total Views</span>
           </div>
-          <div className="text-3xl font-black text-white">{totalViews}</div>
+          <div className="text-3xl font-bold text-white">{totalViews}</div>
         </Card>
 
         <Card className="p-6">
@@ -71,7 +71,7 @@ export default function AnalyticsPage() {
             </div>
             <span className="text-xs font-bold text-[#B8BBC8] uppercase tracking-wider">Active Orgs</span>
           </div>
-          <div className="text-3xl font-black text-white">{organizations.filter(o => o.verified).length}</div>
+          <div className="text-3xl font-bold text-white">{organizations.filter(o => o.verified).length}</div>
         </Card>
       </div>
 

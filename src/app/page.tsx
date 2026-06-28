@@ -13,6 +13,40 @@ import { useEvents } from '@/lib/context/EventContext';
 export default function LandingPage() {
   const { events } = useEvents();
   const [activeStep, setActiveStep] = React.useState(0);
+
+  const faqData = {
+    students: [
+      {
+        question: "Can I create my own event?",
+        answer: "Yes. Students can submit events through Evida. Depending on your school’s policies, some events may require approval before they are published."
+      },
+      {
+        question: "Do I need to join a club or organization to use Evida?",
+        answer: "No. Every student can discover, save, and RSVP to events. You don’t need to belong to an organization to enjoy campus life."
+      },
+      {
+        question: "Will I miss events if I don’t check Evida every day?",
+        answer: "No. Save events you’re interested in and receive reminders so you never miss important dates."
+      }
+    ],
+    schools: [
+      {
+        question: "How does Evida help our campus?",
+        answer: "Evida centralizes campus events into one platform, making it easier to communicate with students, increase participation, and manage campus activities."
+      },
+      {
+        question: "Can schools review events before they are published?",
+        answer: "Yes. Schools have an administrative dashboard where they can review, approve, reject, or feature events according to campus policies."
+      },
+      {
+        question: "Does Evida provide insights about student engagement?",
+        answer: "Yes. Schools can access analytics such as event participation, attendance trends, and engagement metrics to better understand campus life."
+      }
+    ]
+  };
+
+  const [faqTab, setFaqTab] = React.useState<'students' | 'schools'>('students');
+  const [expandedFaq, setExpandedFaq] = React.useState<number | null>(null);
   
   // Map the specific featured events and their uploaded images
   const featuredEventsData = [
@@ -53,14 +87,14 @@ export default function LandingPage() {
 
         {/* Hero Content (Centered) */}
         <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-5xl mx-auto -mt-16">
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-tight tracking-wide mb-8" style={{ fontFamily: 'var(--font-display)' }}>
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white leading-tight tracking-wide mb-8" style={{ fontFamily: 'var(--font-display)' }}>
             Discover Evida, the digital home of campus life and community connection
           </h1>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Link href="/student/events" className="bg-[var(--color-evida-blue)] text-[#111827] font-black uppercase tracking-widest text-xs px-8 py-4 hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors flex items-center gap-2 rounded-sm shadow-[4px_4px_0px_rgba(255,255,255,0.1)]">
+            <Link href="/student/events" className="bg-[var(--color-evida-blue)] text-[#111827] font-bold uppercase tracking-widest text-xs px-8 py-4 hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors flex items-center gap-2 rounded-sm shadow-[4px_4px_0px_rgba(255,255,255,0.1)]">
               Explore Events <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="#how-it-works" className="bg-transparent border-2 border-[var(--color-evida-blue)] text-[var(--color-evida-blue)] font-black uppercase tracking-widest text-xs px-8 py-3.5 hover:bg-[var(--color-evida-blue)] hover:text-[#111827] transition-colors flex items-center gap-2 rounded-sm">
+            <Link href="#how-it-works" className="bg-transparent border-2 border-[var(--color-evida-blue)] text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs px-8 py-3.5 hover:bg-[var(--color-evida-blue)] hover:text-[#111827] transition-colors flex items-center gap-2 rounded-sm">
               How Evida Works <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -69,7 +103,7 @@ export default function LandingPage() {
         {/* Scrolling Category Marquee (Bottom of Hero) */}
         <div className="absolute bottom-0 left-0 w-full z-20">
           <div className="relative w-full overflow-hidden bg-[#0F0F13]/90 backdrop-blur-sm py-5 flex items-center border-t border-white/5 shadow-2xl">
-            <div className="animate-marquee flex gap-12 text-[var(--color-evida-coral)] font-black text-xl tracking-[0.2em] uppercase opacity-90">
+            <div className="animate-marquee flex gap-12 text-[var(--color-evida-coral)] font-bold text-xl tracking-[0.2em] uppercase opacity-90">
               <span>ORIENTATION</span>
               <span>HOMECOMING</span>
               <span>CAREER FAIR</span>
@@ -92,49 +126,13 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* About Evida Section */}
+      {/* 1. About Evida Section */}
       <AboutEvidaSection />
 
-      {/* Our Vision Section */}
+      {/* 2. Our Mission (Vision) Section */}
       <OurVisionSection />
 
-      {/* Why Evida Section */}
-      <section className="w-full bg-gray-50 py-24 mt-12 border-y border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
-          <div className="text-center max-w-2xl mx-auto space-y-4">
-            <h2 className="text-heading-2 text-gray-900">Why Evida?</h2>
-            <p className="text-subtitle text-gray-600 leading-relaxed">
-              Students miss events because information is scattered across emails, flyers, and group chats. Schools struggle to track engagement. Evida centralizes campus life into one unified platform.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-[24px] shadow-sm border border-gray-100 flex flex-col items-center text-center gap-4 hover:shadow-md transition-shadow">
-              <div className="h-14 w-14 rounded-full bg-[var(--color-evida-coral)]/10 flex items-center justify-center text-[var(--color-evida-coral)]">
-                <Compass className="h-7 w-7" />
-              </div>
-              <h3 className="text-title text-gray-900">Discover Events</h3>
-              <p className="text-subtitle text-gray-500">Find exactly what you're looking for. Filter by category, date, or organization.</p>
-            </div>
-            <div className="bg-white p-8 rounded-[24px] shadow-sm border border-gray-100 flex flex-col items-center text-center gap-4 hover:shadow-md transition-shadow">
-              <div className="h-14 w-14 rounded-full bg-[var(--color-evida-coral)]/10 flex items-center justify-center text-[var(--color-evida-coral)]">
-                <Megaphone className="h-7 w-7" />
-              </div>
-              <h3 className="text-title text-gray-900">Create & Promote</h3>
-              <p className="text-subtitle text-gray-500">Launch events or promotions for your club and track RSVPs instantly.</p>
-            </div>
-            <div className="bg-white p-8 rounded-[24px] shadow-sm border border-gray-100 flex flex-col items-center text-center gap-4 hover:shadow-md transition-shadow">
-              <div className="h-14 w-14 rounded-full bg-[var(--color-evida-coral)]/10 flex items-center justify-center text-[var(--color-evida-coral)]">
-                <Shield className="h-7 w-7" />
-              </div>
-              <h3 className="text-title text-gray-900">Built for Schools</h3>
-              <p className="text-subtitle text-gray-500">Administrators can review events, feature content, and monitor engagement analytics.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How it Works */}
+      {/* 3. How it Works */}
       <section className="w-full py-24 bg-white font-sans overflow-hidden" id="how-it-works">
         <div className="max-w-5xl mx-auto px-6 md:px-12 text-center space-y-12">
           
@@ -197,7 +195,7 @@ export default function LandingPage() {
                 >
                   {/* Top Row: Number & Icon */}
                   <div className="flex justify-between items-start">
-                    <span className={`font-black text-3xl transition-colors duration-500 ${
+                    <span className={`font-bold text-3xl transition-colors duration-500 ${
                       isActive ? 'text-[var(--color-evida-lime)]' : 'text-gray-300'
                     }`} style={{ fontFamily: 'var(--font-display)' }}>
                       {step.number}
@@ -211,7 +209,7 @@ export default function LandingPage() {
 
                   {/* Bottom Area: Title & Description */}
                   <div className="space-y-4">
-                    <h3 className={`font-black text-2xl uppercase tracking-wide transition-colors duration-500 ${
+                    <h3 className={`font-bold text-2xl uppercase tracking-wide transition-colors duration-500 ${
                       isActive ? 'text-white' : 'text-gray-900'
                     }`} style={{ fontFamily: 'var(--font-display)' }}>
                       {step.title}
@@ -220,7 +218,7 @@ export default function LandingPage() {
                     <div className={`transition-all duration-500 overflow-hidden ${
                       isActive ? 'max-h-[150px] opacity-100 mt-2' : 'max-h-0 opacity-0 pointer-events-none'
                     }`}>
-                      <p className="text-white/70 text-sm leading-relaxed font-medium">
+                      <p className="text-white/70 text-sm leading-relaxed font-light">
                         {step.description}
                       </p>
                     </div>
@@ -272,12 +270,12 @@ export default function LandingPage() {
                 >
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-4">
-                      <span className={`font-black text-xl ${
+                      <span className={`font-bold text-xl ${
                         isActive ? 'text-[var(--color-evida-lime)]' : 'text-gray-300'
                       }`} style={{ fontFamily: 'var(--font-display)' }}>
                         {step.number}
                       </span>
-                      <h3 className={`font-black text-lg uppercase tracking-wide ${
+                      <h3 className={`font-bold text-lg uppercase tracking-wide ${
                         isActive ? 'text-white' : 'text-gray-900'
                       }`} style={{ fontFamily: 'var(--font-display)' }}>
                         {step.title}
@@ -293,7 +291,7 @@ export default function LandingPage() {
                   <div className={`transition-all duration-500 overflow-hidden ${
                     isActive ? 'max-h-[120px] opacity-100 mt-4' : 'max-h-0 opacity-0 pointer-events-none'
                   }`}>
-                    <p className="text-white/70 text-xs sm:text-sm leading-relaxed font-medium">
+                    <p className="text-white/70 text-xs sm:text-sm leading-relaxed font-light">
                       {step.description}
                     </p>
                   </div>
@@ -305,13 +303,10 @@ export default function LandingPage() {
         </div>
       </section>
 
-
-      {/* Featured Events Section (Grungy Dark Theme) */}
-      <section className="relative w-full bg-[#0F0F13] py-24 mt-20 mb-12">
-        {/* Torn Paper Edges */}
+      {/* 4. Featured Events Section (Grungy Dark Theme) */}
+      <section id="featured-events" className="relative w-full bg-[#0F0F13] py-24 mt-20 mb-12">
+        {/* Torn Paper Edges - Top Transition Only */}
         <div className="absolute top-[-10px] left-0 w-full h-10 bg-[#0F0F13] edge-top z-10" />
-        <div className="absolute bottom-[-10px] left-0 w-full h-10 bg-white edge-bottom z-10" />
-        <div className="absolute bottom-0 left-0 w-full h-10 bg-[#0F0F13]" /> {/* Block behind bottom edge */}
 
         <div className="relative max-w-7xl mx-auto px-6 md:px-12 z-20">
           {/* Header Row */}
@@ -349,7 +344,7 @@ export default function LandingPage() {
 
         {/* Scrolling Marquee */}
         <div className="relative mt-20 w-full overflow-hidden border-y border-white/5 bg-[#141417] py-4 flex items-center z-20">
-          <div className="animate-marquee flex gap-12 text-[var(--color-evida-lime)] font-black text-xl tracking-[0.2em] uppercase opacity-80">
+          <div className="animate-marquee flex gap-12 text-[var(--color-evida-lime)] font-bold text-xl tracking-[0.2em] uppercase opacity-80">
             <span>ORIENTATION</span>
             <span>HOMECOMING</span>
             <span>CAREER FAIR</span>
@@ -370,30 +365,19 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-      
-      {/* Grungy Footer / Lower Landing Section */}
-      <footer className="relative w-full bg-[#0F0F13] pt-24 pb-12 mt-20">
-        {/* Torn Paper Top Edge */}
-        <div className="absolute top-[-10px] left-0 w-full h-10 bg-[#0F0F13] edge-top z-10" />
-        
-        <div className="relative max-w-6xl mx-auto px-6 md:px-12 z-20 flex flex-col items-center">
-          
-          {/* Logo / Title above cards */}
-          <div className="mb-12 flex justify-center w-full">
-             <span className="text-4xl font-black tracking-widest text-white uppercase" style={{ fontFamily: 'var(--font-display)' }}>
-               Evida.
-             </span>
-          </div>
 
+      {/* 5. Calendar Section (Standalone Dark Theme) */}
+      <section id="calendar" className="relative w-full bg-[#0F0F13] py-24 border-t border-white/5">
+        <div className="relative max-w-6xl mx-auto px-6 md:px-12 z-20">
           {/* Campus Calendar Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full mb-16 mt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full">
             
             {/* Left side: What's Happening Next */}
             <div className="space-y-6 lg:col-span-5 flex flex-col justify-center text-left">
-              <span className="text-[var(--color-evida-lime)] font-black uppercase text-xs tracking-[0.2em]">
+              <span className="text-[var(--color-evida-lime)] font-bold uppercase text-xs tracking-[0.2em]">
                 What's Happening Next
               </span>
-              <h2 className="text-white font-black text-3xl md:text-5xl uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
+              <h2 className="text-white font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
                 Your Campus <br />
                 <span className="bg-gradient-to-r from-[var(--color-evida-blue)] to-[var(--color-evida-coral)] bg-clip-text text-transparent">Calendar</span> <br />
                 At A Glance
@@ -402,7 +386,7 @@ export default function LandingPage() {
                 Never miss a beat. Discover upcoming campus events, connect with student organizations, and make the most of your college experience.
               </p>
               <div className="pt-2">
-                <Link href="/student/events" className="inline-flex bg-[var(--color-evida-lime)] text-[#111827] font-black uppercase tracking-widest text-[10px] px-5 py-3 hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors items-center gap-2 rounded-sm shadow-[4px_4px_0px_rgba(255,255,255,0.1)]">
+                <Link href="/student/events" className="inline-flex bg-[var(--color-evida-lime)] text-[#111827] font-bold uppercase tracking-widest text-[10px] px-5 py-3 hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors items-center gap-2 rounded-sm shadow-[4px_4px_0px_rgba(255,255,255,0.1)]">
                   Explore Events <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -424,8 +408,8 @@ export default function LandingPage() {
                 {/* Calendar Header */}
                 <div className="flex justify-between items-center mb-6 pt-2 border-b border-white/5 pb-4">
                   <div className="text-left">
-                    <span className="text-[var(--color-evida-lime)] font-black uppercase text-[10px] tracking-[0.2em]">CAMPUS LIFE</span>
-                    <h4 className="text-white font-black text-lg md:text-xl tracking-wide uppercase mt-0.5" style={{ fontFamily: 'var(--font-display)' }}>October 2026</h4>
+                    <span className="text-[var(--color-evida-lime)] font-bold uppercase text-[10px] tracking-[0.2em]">CAMPUS LIFE</span>
+                    <h4 className="text-white font-bold text-lg md:text-xl tracking-wide uppercase mt-0.5" style={{ fontFamily: 'var(--font-display)' }}>October 2026</h4>
                   </div>
                   <div className="flex gap-2">
                     <button className="w-7 h-7 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-white/30 transition-colors text-xs font-bold">
@@ -438,7 +422,7 @@ export default function LandingPage() {
                 </div>
 
                 {/* Days of week */}
-                <div className="grid grid-cols-7 gap-2 mb-4 text-center text-[9px] font-black text-white/40 uppercase tracking-widest">
+                <div className="grid grid-cols-7 gap-2 mb-4 text-center text-[9px] font-bold text-white/40 uppercase tracking-widest">
                   <span>Mon</span>
                   <span>Tue</span>
                   <span>Wed</span>
@@ -461,7 +445,7 @@ export default function LandingPage() {
                   
                   {/* Day 4: Music (Concert) */}
                   <div className="relative aspect-square bg-[var(--color-evida-coral)]/20 rounded-xl border-2 border-[var(--color-evida-coral)] flex flex-col items-center justify-center text-[10px] sm:text-xs text-white font-bold group/day cursor-pointer hover:scale-105 transition-all duration-300">
-                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-coral)] font-black">4</span>
+                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-coral)] font-bold">4</span>
                     <Music className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-evida-coral)] animate-pulse" />
                     {/* Tooltip */}
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#0F0F13] border border-white/10 text-[9px] text-white uppercase tracking-wider px-2.5 py-1 rounded-sm whitespace-nowrap opacity-0 pointer-events-none group-hover/day:opacity-100 transition-opacity duration-300 shadow-xl z-50">
@@ -479,7 +463,7 @@ export default function LandingPage() {
                   
                   {/* Day 12: Sports (Game Day) */}
                   <div className="relative aspect-square bg-[var(--color-evida-blue)]/20 rounded-xl border-2 border-[var(--color-evida-blue)] flex flex-col items-center justify-center text-[10px] sm:text-xs text-white font-bold group/day cursor-pointer hover:scale-105 transition-all duration-300">
-                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-blue)] font-black">12</span>
+                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-blue)] font-bold">12</span>
                     <Trophy className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-evida-blue)]" />
                     {/* Tooltip */}
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#0F0F13] border border-white/10 text-[9px] text-white uppercase tracking-wider px-2.5 py-1 rounded-sm whitespace-nowrap opacity-0 pointer-events-none group-hover/day:opacity-100 transition-opacity duration-300 shadow-xl z-50">
@@ -492,7 +476,7 @@ export default function LandingPage() {
 
                   {/* Day 15: Career Fair */}
                   <div className="relative aspect-square bg-[var(--color-evida-lime)]/20 rounded-xl border-2 border-[var(--color-evida-lime)] flex flex-col items-center justify-center text-[10px] sm:text-xs text-white font-bold group/day cursor-pointer hover:scale-105 transition-all duration-300">
-                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-lime)] font-black">15</span>
+                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-lime)] font-bold">15</span>
                     <Briefcase className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-evida-lime)]" />
                     {/* Tooltip */}
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#0F0F13] border border-white/10 text-[9px] text-white uppercase tracking-wider px-2.5 py-1 rounded-sm whitespace-nowrap opacity-0 pointer-events-none group-hover/day:opacity-100 transition-opacity duration-300 shadow-xl z-50">
@@ -509,7 +493,7 @@ export default function LandingPage() {
 
                   {/* Day 22: Party */}
                   <div className="relative aspect-square bg-[var(--color-evida-coral)]/20 rounded-xl border-2 border-[var(--color-evida-coral)] flex flex-col items-center justify-center text-[10px] sm:text-xs text-white font-bold group/day cursor-pointer hover:scale-105 transition-all duration-300">
-                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-coral)] font-black">22</span>
+                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-coral)] font-bold">22</span>
                     <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-evida-coral)]" />
                     {/* Tooltip */}
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#0F0F13] border border-white/10 text-[9px] text-white uppercase tracking-wider px-2.5 py-1 rounded-sm whitespace-nowrap opacity-0 pointer-events-none group-hover/day:opacity-100 transition-opacity duration-300 shadow-xl z-50">
@@ -524,7 +508,7 @@ export default function LandingPage() {
 
                   {/* Day 27: Club */}
                   <div className="relative aspect-square bg-[var(--color-evida-blue)]/20 rounded-xl border-2 border-[var(--color-evida-blue)] flex flex-col items-center justify-center text-[10px] sm:text-xs text-white font-bold group/day cursor-pointer hover:scale-105 transition-all duration-300">
-                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-blue)] font-black">27</span>
+                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-blue)] font-bold">27</span>
                     <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-evida-blue)]" />
                     {/* Tooltip */}
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#0F0F13] border border-white/10 text-[9px] text-white uppercase tracking-wider px-2.5 py-1 rounded-sm whitespace-nowrap opacity-0 pointer-events-none group-hover/day:opacity-100 transition-opacity duration-300 shadow-xl z-50">
@@ -537,7 +521,7 @@ export default function LandingPage() {
 
                   {/* Day 30: Graduation */}
                   <div className="relative aspect-square bg-[var(--color-evida-lime)]/20 rounded-xl border-2 border-[var(--color-evida-lime)] flex flex-col items-center justify-center text-[10px] sm:text-xs text-white font-bold group/day cursor-pointer hover:scale-105 transition-all duration-300">
-                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-lime)] font-black">30</span>
+                    <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] text-[var(--color-evida-lime)] font-bold">30</span>
                     <GraduationCap className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-evida-lime)]" />
                     {/* Tooltip */}
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#0F0F13] border border-white/10 text-[9px] text-white uppercase tracking-wider px-2.5 py-1 rounded-sm whitespace-nowrap opacity-0 pointer-events-none group-hover/day:opacity-100 transition-opacity duration-300 shadow-xl z-50">
@@ -551,11 +535,116 @@ export default function LandingPage() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* 6. FAQ Section */}
+      <section id="faq" className="relative w-full bg-[#0F0F13] py-24 border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          
+          {/* Left Column: Title and overlapping circles */}
+          <div className="lg:col-span-4 space-y-8 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <h2 className="text-white font-extrabold text-5xl md:text-6xl uppercase tracking-tighter" style={{ fontFamily: 'var(--font-display)' }}>
+              FAQ
+            </h2>
+            
+            {/* Overlapping Brand Circles (from the screenshot design) */}
+            <div className="relative w-28 h-16 flex items-center justify-center lg:justify-start">
+              <div className="w-12 h-12 rounded-full border-4 border-[var(--color-evida-coral)] opacity-80" />
+              <div className="w-12 h-12 rounded-full border-4 border-[var(--color-evida-blue)] opacity-80 -ml-4" />
+            </div>
+          </div>
+
+          {/* Right Column: Tab Selector and Accordion List */}
+          <div className="lg:col-span-8 space-y-8">
+            {/* Tab Selector */}
+            <div className="flex space-x-2 bg-[#16161A] p-1 rounded-full border border-white/5 w-fit">
+              <button
+                onClick={() => {
+                  setFaqTab('students');
+                  setExpandedFaq(null);
+                }}
+                className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                  faqTab === 'students'
+                    ? 'bg-[var(--color-evida-lime)] text-[#111827]'
+                    : 'text-white/60 hover:text-white'
+                }`}
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                For Students
+              </button>
+              <button
+                onClick={() => {
+                  setFaqTab('schools');
+                  setExpandedFaq(null);
+                }}
+                className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                  faqTab === 'schools'
+                    ? 'bg-[var(--color-evida-lime)] text-[#111827]'
+                    : 'text-white/60 hover:text-white'
+                }`}
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                For Schools
+              </button>
+            </div>
+
+            {/* Accordion Cards */}
+            <div className="space-y-4">
+              {faqData[faqTab].map((item, index) => {
+                const isOpen = expandedFaq === index;
+                return (
+                  <div
+                    key={index}
+                    className="bg-[#16161A] border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/10"
+                  >
+                    <button
+                      onClick={() => setExpandedFaq(isOpen ? null : index)}
+                      className="w-full px-6 py-5 flex justify-between items-center text-left gap-4 cursor-pointer focus:outline-none"
+                    >
+                      <span className="text-white font-bold text-sm sm:text-base uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
+                        {item.question}
+                      </span>
+                      <span className="text-white/60 text-xl font-medium shrink-0">
+                        {isOpen ? '−' : '+'}
+                      </span>
+                    </button>
+                    
+                    {/* Expandable Answer */}
+                    <div
+                      className={`transition-all duration-300 ease-in-out ${
+                        isOpen ? 'max-h-[200px] border-t border-white/5 opacity-100' : 'max-h-0 opacity-0'
+                      } overflow-hidden`}
+                    >
+                      <p className="px-6 py-5 text-white/70 text-xs sm:text-sm leading-relaxed font-light">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* Footer Section */}
+      <footer className="relative w-full bg-[#0F0F13] pt-24 pb-12">
+        <div className="relative max-w-6xl mx-auto px-6 md:px-12 z-20 flex flex-col items-center">
+          
+          {/* Logo / Title */}
+          <div className="mb-12 flex justify-center w-full">
+             <span className="text-4xl font-bold tracking-widest text-white uppercase" style={{ fontFamily: 'var(--font-display)' }}>
+               Evida.
+             </span>
+          </div>
 
           {/* Horizontal Scrolling Categories */}
           <div className="w-full mb-16 pt-8 border-t border-white/5 text-left">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-white/40 font-black uppercase text-[10px] tracking-[0.2em]">EXPLORE BY CATEGORY</span>
+              <span className="text-white/40 font-bold uppercase text-[10px] tracking-[0.2em]">EXPLORE BY CATEGORY</span>
               <span className="text-white/20 text-[9px] font-bold tracking-wider">SWIPE &middot; DISCOVER</span>
             </div>
             <div className="flex overflow-x-auto gap-4 pb-6 pt-2 no-scrollbar scroll-smooth -mx-6 px-6 md:-mx-12 md:px-12">
@@ -576,7 +665,7 @@ export default function LandingPage() {
                 <Link 
                   key={i} 
                   href={`/student/events?category=${encodeURIComponent(cat.name)}`}
-                  className="flex-shrink-0 border-2 border-white/10 hover:border-white/30 text-white px-6 py-3 rounded-full font-black uppercase text-[11px] tracking-wider transition-all duration-300 hover:scale-102 flex items-center gap-3 group/cat cursor-pointer"
+                  className="flex-shrink-0 border-2 border-white/10 hover:border-white/30 text-white px-6 py-3 rounded-full font-bold uppercase text-[11px] tracking-wider transition-all duration-300 hover:scale-102 flex items-center gap-3 group/cat cursor-pointer"
                 >
                   <span className="w-2 h-2 rounded-full transition-transform duration-300 group-hover/cat:scale-150" style={{ backgroundColor: cat.color }} />
                   <span className="group-hover/cat:text-[var(--color-evida-lime)] transition-colors">{cat.name}</span>
@@ -589,17 +678,17 @@ export default function LandingPage() {
         {/* Footer Links */}
         <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-4 gap-12 text-white/70 mb-12">
           
-          {/* Left Column */}
+          {/* Contact Column */}
           <div className="md:col-span-1 space-y-4">
             <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Contact</h4>
             <div className="space-y-1 text-sm font-medium">
-              <p className="text-white font-black text-lg mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
+              <p className="text-white font-bold text-lg mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
               <p>Campus Event & Engagement Platform</p>
               <p className="pt-2 hover:text-[var(--color-evida-coral)] transition-colors cursor-pointer">Email: hello@evida.app</p>
             </div>
           </div>
 
-          {/* Middle Column */}
+          {/* Discover Column */}
           <div>
             <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Discover</h4>
             <ul className="space-y-3 text-sm font-medium">
@@ -611,7 +700,7 @@ export default function LandingPage() {
             </ul>
           </div>
 
-          {/* Right Column */}
+          {/* Platform Column */}
           <div>
             <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Platform</h4>
             <ul className="space-y-3 text-sm font-medium">
@@ -623,7 +712,7 @@ export default function LandingPage() {
             </ul>
           </div>
 
-          {/* Social */}
+          {/* Social Column */}
           <div>
             <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Stay Social</h4>
             <ul className="space-y-3 text-sm font-medium">
@@ -633,9 +722,9 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Bottom Line */}
+        {/* Bottom Slogan */}
         <div className="relative text-center border-t border-white/5 pt-8 pb-4">
-          <p className="text-[var(--color-evida-lime)] font-black text-sm uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+          <p className="text-[var(--color-evida-lime)] font-bold text-sm uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
             Evida — Campus life, all in one place.
           </p>
         </div>

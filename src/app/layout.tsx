@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
-import { Inter, Poppins } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import './globals.css';
 import { UserProvider } from '@/lib/context/UserContext';
 import { EventProvider } from '@/lib/context/EventContext';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['800'],
+  weight: ['300', '400', '500', '600', '700', '800'],
   variable: '--font-poppins',
 });
 
@@ -24,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${poppins.variable} antialiased bg-white text-gray-900 min-h-screen selection:bg-[var(--color-evida-lime)] selection:text-black`}>
+      <body className={`${poppins.variable} antialiased bg-white text-gray-900 min-h-screen selection:bg-[var(--color-evida-lime)] selection:text-black`}>
         <UserProvider>
           <EventProvider>
             {children}

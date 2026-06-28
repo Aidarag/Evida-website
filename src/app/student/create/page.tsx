@@ -90,7 +90,7 @@ export default function CreateEventPage() {
             className="space-y-8"
           >
             <div className="text-center space-y-2">
-              <h1 className="text-3xl font-black text-white">What are you creating?</h1>
+              <h1 className="text-3xl font-extrabold text-white">What are you creating?</h1>
               <p className="text-[#B8BBC8]">Choose the type of listing you want to add to Evida.</p>
             </div>
 
@@ -134,7 +134,7 @@ export default function CreateEventPage() {
             className="space-y-8 max-w-2xl mx-auto w-full"
           >
             <div className="text-center space-y-2">
-              <h1 className="text-3xl font-black text-white">Who is hosting this?</h1>
+              <h1 className="text-3xl font-extrabold text-white">Who is hosting this?</h1>
               <p className="text-[#B8BBC8]">You can create this as yourself or on behalf of an organization.</p>
             </div>
 
@@ -198,7 +198,7 @@ export default function CreateEventPage() {
                 <ArrowLeft className="h-5 w-5" />
               </button>
               <div>
-                <h1 className="text-2xl font-black text-white capitalize">{createType} Details</h1>
+                <h1 className="text-2xl font-extrabold text-white capitalize">{createType} Details</h1>
                 <p className="text-sm text-[#B8BBC8]">Fill in the information below.</p>
               </div>
             </div>

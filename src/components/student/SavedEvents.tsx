@@ -126,7 +126,7 @@ export default function SavedEvents({
                   <span className="text-[9px] font-bold text-[#FF7A1A] uppercase tracking-wide block">
                     {event.organizationName || event.organizer}
                   </span>
-                  <h4 className="text-sm font-black text-white leading-snug group-hover:text-[#FF7A1A] transition-colors mt-1 line-clamp-1 uppercase">
+                  <h4 className="text-sm font-bold text-white leading-snug group-hover:text-[#FF7A1A] transition-colors mt-1 line-clamp-1 uppercase">
                     {event.title}
                   </h4>
                 </div>

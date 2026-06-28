@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Compass, Plus, Bookmark, User, Settings, BarChart3, Shield, Star, ClipboardList, Building2 } from 'lucide-react';
+import { Home, Compass, Plus, Bookmark, User, Settings, BarChart3, Shield, Star, ClipboardList, Building2, Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 // ─────────────────────────────────────────────────
@@ -11,75 +11,141 @@ import { motion } from 'framer-motion';
 // ─────────────────────────────────────────────────
 export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'school' | 'public' }) {
   const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
+  const publicLinks = [
+    { label: 'About Evida', href: '#about-evida' },
+    { label: 'Our Mission', href: '#our-mission' },
+    { label: 'FAQ', href: '#faq' },
+    { label: 'Featured Events', href: '#featured-events' },
+    { label: 'How It Works', href: '#how-it-works' },
+    { label: 'Calendar', href: '#calendar' },
+  ];
 
   return (
-    <header className={`hidden md:flex ${variant === 'public' ? 'absolute top-0 z-50 w-full h-24 border-none bg-transparent' : 'sticky top-0 z-40 w-full h-16 border-b border-gray-100 bg-white/90 backdrop-blur-xl shadow-sm'}`}>
-      <div className="mx-auto w-full max-w-[1400px] px-8 flex items-center justify-between">
-        {/* Left side: Logo & Links */}
-        <div className="flex items-center gap-10">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            {variant === 'public' ? (
-              <span className="text-3xl font-black tracking-widest text-white uppercase" style={{ fontFamily: 'var(--font-display)' }}>
-                Evida.
-              </span>
-            ) : (
-              <>
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[var(--color-evida-coral)] to-[var(--color-evida-blue)] flex items-center justify-center">
-                  <span className="text-white font-black text-sm">E</span>
-                </div>
-                <span className="text-xl font-bold tracking-tight text-gray-900" style={{ fontFamily: 'var(--font-display)' }}>
+    <>
+      <header className={`flex w-full items-center transition-all duration-300 ${
+        variant === 'public' 
+          ? 'absolute top-0 z-50 h-20 md:h-24 border-none bg-transparent' 
+          : 'sticky top-0 z-40 h-16 border-b border-gray-100 bg-white/90 backdrop-blur-xl shadow-sm'
+      } ${variant !== 'public' ? 'hidden md:flex' : ''}`}>
+        <div className="mx-auto w-full max-w-[1400px] px-6 md:px-8 flex items-center justify-between">
+          {/* Left side: Logo & Links */}
+          <div className="flex items-center gap-10">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2 group">
+              {variant === 'public' ? (
+                <span className="text-3xl font-extrabold tracking-widest text-white uppercase" style={{ fontFamily: 'var(--font-display)' }}>
                   Evida.
                 </span>
+              ) : (
+                <>
+                  <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[var(--color-evida-coral)] to-[var(--color-evida-blue)] flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">E</span>
+                  </div>
+                  <span className="text-xl font-bold tracking-tight text-gray-900" style={{ fontFamily: 'var(--font-display)' }}>
+                    Evida.
+                  </span>
+                </>
+              )}
+            </Link>
+            
+            {/* Public links */}
+            {variant === 'public' && (
+              <nav className="hidden lg:flex items-center gap-8 ml-8">
+                {publicLinks.map((link) => (
+                  <Link 
+                    key={link.href}
+                    href={link.href} 
+                    className="text-[11px] font-bold text-white/80 hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            )}
+          </div>
+
+          {/* Right side */}
+          <div className="flex items-center gap-4">
+            {variant === 'public' && (
+              <>
+                <div className="hidden md:flex items-center gap-4">
+                  <Link href="/login" className="text-xs font-bold text-white hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors flex items-center gap-2">
+                    Login
+                  </Link>
+                  <Link href="/login" className="ml-4 bg-[var(--color-evida-lime)] text-[#111827] px-6 py-2.5 font-bold uppercase tracking-widest text-xs hover:bg-white transition-colors rounded-sm shadow-[3px_3px_0px_rgba(255,255,255,0.2)]">
+                    Get Started
+                  </Link>
+                </div>
+
+                {/* Mobile Hamburger Button */}
+                <button 
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="lg:hidden text-white hover:text-[var(--color-evida-lime)] p-2 focus:outline-none transition-colors z-55 cursor-pointer"
+                >
+                  {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                </button>
               </>
             )}
-          </Link>
-          
-          {/* Public links */}
-          {variant === 'public' && (
-            <nav className="hidden lg:flex items-center gap-8 ml-8">
-              <Link href="#why-evida" className="text-xs font-bold text-white/90 hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors">Why Evida</Link>
-              <Link href="#how-it-works" className="text-xs font-bold text-white/90 hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors">How It Works</Link>
-              <Link href="#featured-events" className="text-xs font-bold text-white/90 hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors">Featured Events</Link>
-            </nav>
-          )}
+            {variant === 'student' && (
+              <>
+                <Link href="/student/create" className="px-4 py-1.5 rounded-full bg-[#4C1D95] text-white text-xs font-medium hover:bg-[#6D28D9] transition-colors">
+                  Create Event
+                </Link>
+                <Link href="/student/profile" className="h-9 w-9 rounded-full bg-[#F5F3FF] border border-[#4C1D95]/20 flex items-center justify-center text-[#4C1D95] text-xs font-bold cursor-pointer">
+                  MC
+                </Link>
+              </>
+            )}
+            {variant === 'school' && (
+              <>
+                <Link href="/student/events" className="text-xs font-medium text-[#4C1D95] hover:text-[#6D28D9] transition-colors cursor-pointer">
+                  Student Portal
+                </Link>
+                <div className="h-9 w-9 rounded-full bg-pink-50 border border-pink-200 flex items-center justify-center text-pink-600 text-xs font-bold">
+                  A
+                </div>
+              </>
+            )}
+          </div>
         </div>
+      </header>
 
-        {/* Right side */}
-        <div className="flex items-center gap-4">
-          {variant === 'public' && (
-            <>
-              <Link href="/login" className="text-xs font-bold text-white hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors flex items-center gap-2">
-                Login
+      {/* Mobile Menu Overlay (Public only) */}
+      {variant === 'public' && mobileMenuOpen && (
+        <div className="fixed inset-0 bg-[#0F0F13] z-40 lg:hidden flex flex-col pt-28 px-8 transition-all duration-300 animate-fade-in">
+          <nav className="flex flex-col gap-6 text-left">
+            {publicLinks.map((link) => (
+              <Link 
+                key={link.href}
+                href={link.href} 
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-xl font-bold text-white hover:text-[var(--color-evida-lime)] uppercase tracking-wider transition-colors py-2 border-b border-white/5"
+              >
+                {link.label}
               </Link>
-              <Link href="/login" className="ml-4 bg-[var(--color-evida-lime)] text-[#111827] px-6 py-2.5 font-bold uppercase tracking-widest text-xs hover:bg-white transition-colors rounded-sm shadow-[3px_3px_0px_rgba(255,255,255,0.2)]">
-                Get Started
-              </Link>
-            </>
-          )}
-          {variant === 'student' && (
-            <>
-              <Link href="/student/create" className="px-4 py-1.5 rounded-full bg-[#4C1D95] text-white text-xs font-medium hover:bg-[#6D28D9] transition-colors">
-                Create Event
-              </Link>
-              <Link href="/student/profile" className="h-9 w-9 rounded-full bg-[#F5F3FF] border border-[#4C1D95]/20 flex items-center justify-center text-[#4C1D95] text-xs font-bold cursor-pointer">
-                MC
-              </Link>
-            </>
-          )}
-          {variant === 'school' && (
-            <>
-              <Link href="/student/events" className="text-xs font-medium text-[#4C1D95] hover:text-[#6D28D9] transition-colors cursor-pointer">
-                Student Portal
-              </Link>
-              <div className="h-9 w-9 rounded-full bg-pink-50 border border-pink-200 flex items-center justify-center text-pink-600 text-xs font-bold">
-                A
-              </div>
-            </>
-          )}
+            ))}
+          </nav>
+          <div className="flex flex-col gap-4 mt-12">
+            <Link 
+              href="/login" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full text-center py-4 text-sm font-bold text-white border border-white/10 uppercase tracking-widest hover:border-white/30 transition-colors"
+            >
+              Login
+            </Link>
+            <Link 
+              href="/login" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full text-center py-4 text-sm font-bold bg-[var(--color-evida-lime)] text-[#111827] uppercase tracking-widest hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors"
+            >
+              Get Started
+            </Link>
+          </div>
         </div>
-      </div>
-    </header>
+      )}
+    </>
   );
 }
 

@@ -27,7 +27,7 @@ export default function LandingPage({
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF7A1A] to-[#FFD214] shadow-lg shadow-orange-500/20">
               <Sparkles className="h-5 w-5 text-black font-extrabold" />
             </div>
-            <span className="text-xl font-black tracking-wider bg-gradient-to-r from-white via-orange-100 to-orange-400 bg-clip-text text-transparent">
+            <span className="text-xl font-bold tracking-wider bg-gradient-to-r from-white via-orange-100 to-orange-400 bg-clip-text text-transparent">
               EVIDA
             </span>
           </div>
@@ -61,7 +61,7 @@ export default function LandingPage({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="rounded-full bg-[#FF7A1A]/10 border border-[#FF7A1A]/20 px-3.5 py-1 text-[10px] font-black uppercase tracking-widest text-[#FF7A1A]">
+            <span className="rounded-full bg-[#FF7A1A]/10 border border-[#FF7A1A]/20 px-3.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[#FF7A1A]">
               THE DIGITAL HOME OF CAMPUS LIFE
             </span>
           </motion.div>
@@ -69,7 +69,7 @@ export default function LandingPage({
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-white leading-[0.95]"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tighter text-white leading-[0.95]"
           >
             Your campus, <br />
             <span className="bg-gradient-to-r from-[#FF7A1A] to-[#FFD214] bg-clip-text text-transparent">
@@ -93,14 +93,14 @@ export default function LandingPage({
           >
             <button
               onClick={onExplore}
-              className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] px-6 py-3.5 text-xs font-black text-black shadow-lg shadow-orange-500/20 hover:scale-[1.03] transition-all cursor-pointer"
+              className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] px-6 py-3.5 text-xs font-bold text-black shadow-lg shadow-orange-500/20 hover:scale-[1.03] transition-all cursor-pointer"
             >
               Explore Events
               <ArrowRight className="h-4 w-4" />
             </button>
             <button
               onClick={onCreateEvent}
-              className="flex items-center gap-2 rounded-full border border-white/10 hover:border-white/20 bg-slate-900/50 hover:bg-slate-900 px-6 py-3.5 text-xs font-black text-white hover:scale-[1.03] transition-all cursor-pointer"
+              className="flex items-center gap-2 rounded-full border border-white/10 hover:border-white/20 bg-slate-900/50 hover:bg-slate-900 px-6 py-3.5 text-xs font-bold text-white hover:scale-[1.03] transition-all cursor-pointer"
             >
               Create Event
             </button>
@@ -124,10 +124,10 @@ export default function LandingPage({
 
             {/* Poster contents */}
             <div className="absolute inset-x-6 bottom-6 z-20 space-y-3">
-              <span className="rounded-full bg-[#FF7A1A] px-2.5 py-0.5 text-[9px] font-black text-black uppercase tracking-wider">
+              <span className="rounded-full bg-[#FF7A1A] px-2.5 py-0.5 text-[9px] font-bold text-black uppercase tracking-wider">
                 FEATURED EXPERIENCE
               </span>
-              <h3 className="text-xl font-black text-white leading-tight">
+              <h3 className="text-xl font-extrabold text-white leading-tight">
                 Homecoming Kickoff Rally 2026
               </h3>
               <div className="flex items-center justify-between text-xs text-slate-300">
@@ -143,7 +143,7 @@ export default function LandingPage({
       <section className="bg-slate-950/40 border-y border-white/5 py-16">
         <div className="mx-auto max-w-7xl px-6 space-y-8">
           <div className="text-center space-y-2">
-            <h2 className="text-2xl font-black tracking-tight text-white uppercase">TRENDING EXPERIENCES</h2>
+            <h2 className="text-2xl font-extrabold tracking-tight text-white uppercase">TRENDING EXPERIENCES</h2>
             <p className="text-xs text-slate-500">Live feed of the most anticipated campus gatherings</p>
           </div>
 
@@ -162,7 +162,7 @@ export default function LandingPage({
                   <span className="text-[10px] font-bold text-[#FF7A1A] uppercase tracking-wide">
                     {event.organizationName || 'OFFICIAL SCHOOL EVENT'}
                   </span>
-                  <h4 className="text-sm font-black text-white mt-1 leading-snug">
+                  <h4 className="text-sm font-bold text-white mt-1 leading-snug">
                     {event.title}
                   </h4>
                   <div className="flex justify-between items-center text-[10px] text-slate-400 mt-2 font-semibold">
@@ -179,7 +179,7 @@ export default function LandingPage({
       {/* How it works */}
       <section className="mx-auto max-w-7xl px-6 py-20 space-y-16">
         <div className="text-center space-y-2 max-w-lg mx-auto">
-          <h2 className="text-2xl font-black text-white uppercase">CAMPUS ENGAGEMENT SIMPLIFIED</h2>
+          <h2 className="text-2xl font-extrabold text-white uppercase">CAMPUS ENGAGEMENT SIMPLIFIED</h2>
           <p className="text-xs text-slate-400">We bridge the gap between student groups and university staff.</p>
         </div>
 
@@ -222,7 +222,7 @@ export default function LandingPage({
           {/* Students */}
           <div className="rounded-[28px] border border-white/5 bg-[#121215]/50 p-8 space-y-6 relative overflow-hidden">
             <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#FF7A1A]/5 blur-3xl"></div>
-            <h3 className="text-lg font-black text-white tracking-tight uppercase flex items-center gap-2">
+            <h3 className="text-lg font-extrabold text-white tracking-tight uppercase flex items-center gap-2">
               <Users className="h-5 w-5 text-[#FF7A1A]" /> For Students & Leaders
             </h3>
             <ul className="space-y-3.5 text-xs text-slate-400 font-medium">
@@ -244,7 +244,7 @@ export default function LandingPage({
           {/* School */}
           <div className="rounded-[28px] border border-white/5 bg-[#121215]/50 p-8 space-y-6 relative overflow-hidden">
             <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#FFD214]/5 blur-3xl"></div>
-            <h3 className="text-lg font-black text-white tracking-tight uppercase flex items-center gap-2">
+            <h3 className="text-lg font-extrabold text-white tracking-tight uppercase flex items-center gap-2">
               <Shield className="h-5 w-5 text-[#FFD214]" /> For Universities
             </h3>
             <ul className="space-y-3.5 text-xs text-slate-400 font-medium">

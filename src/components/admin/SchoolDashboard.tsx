@@ -108,7 +108,7 @@ export default function SchoolDashboard({
             {/* Thumbnail */}
             <div className={`h-12 w-12 rounded-xl bg-gradient-to-tr ${event.coverImage} shrink-0 opacity-60`} />
             <div>
-              <h4 className="text-xs font-black text-white uppercase">{event.title}</h4>
+              <h4 className="text-xs font-bold text-white uppercase">{event.title}</h4>
               <p className="text-[10px] text-slate-500 mt-0.5">
                 Host: <span className="font-semibold text-slate-400">{event.organizationName || event.organizer}</span>
               </p>
@@ -193,7 +193,7 @@ export default function SchoolDashboard({
       {/* Administrative Header Banner */}
       <div className="rounded-[28px] border border-white/5 bg-[#121215]/50 p-6 flex items-center justify-between">
         <div className="space-y-1">
-          <h2 className="text-lg font-black text-white uppercase tracking-tight flex items-center gap-2">
+          <h2 className="text-lg font-bold text-white uppercase tracking-tight flex items-center gap-2">
             <Shield className="h-5 w-5 text-[#FF7A1A]" />
             School Administration Dashboard
           </h2>
@@ -247,28 +247,28 @@ export default function SchoolDashboard({
           <div className="space-y-6">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <div className="rounded-[24px] border border-white/5 bg-[#121215]/50 p-5 space-y-1">
-                <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">Total Postings</span>
-                <p className="text-2xl font-black text-white">{totalPostings}</p>
+                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">Total Postings</span>
+                <p className="text-2xl font-bold text-white">{totalPostings}</p>
                 <p className="text-[10px] text-slate-400">
                   <span className="text-emerald-400 font-semibold">{approvedEvents.length}</span> published • <span className="text-rose-400 font-semibold">{rejectedEvents.length}</span> rejected
                 </p>
               </div>
 
               <div className="rounded-[24px] border border-white/5 bg-[#121215]/50 p-5 space-y-1">
-                <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">Pending Reviews</span>
-                <p className="text-2xl font-black text-[#FF7A1A]">{pendingEvents.length}</p>
+                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">Pending Reviews</span>
+                <p className="text-2xl font-bold text-[#FF7A1A]">{pendingEvents.length}</p>
                 <p className="text-[10px] text-slate-400">Needs administrative actions</p>
               </div>
 
               <div className="rounded-[24px] border border-white/5 bg-[#121215]/50 p-5 space-y-1">
-                <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">Student RSVPs</span>
-                <p className="text-2xl font-black text-white">{totalRSVPs}</p>
+                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">Student RSVPs</span>
+                <p className="text-2xl font-bold text-white">{totalRSVPs}</p>
                 <p className="text-[10px] text-slate-400">Total verified ticket listings</p>
               </div>
 
               <div className="rounded-[24px] border border-white/5 bg-[#121215]/50 p-5 space-y-1">
-                <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">Groups Registered</span>
-                <p className="text-2xl font-black text-white">{organizations.length}</p>
+                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">Groups Registered</span>
+                <p className="text-2xl font-bold text-white">{organizations.length}</p>
                 <p className="text-[10px] text-slate-400">
                   <span className="text-emerald-400 font-semibold">{organizations.filter(o => o.verified).length}</span> verified groups
                 </p>
@@ -279,7 +279,7 @@ export default function SchoolDashboard({
             <div className="grid gap-6 md:grid-cols-2">
               {/* Popular categories */}
               <div className="rounded-[24px] border border-white/5 bg-[#121215]/50 p-6 space-y-4">
-                <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
                   <Layers className="h-4 w-4 text-[#FF7A1A]" />
                   Event Queues Split
                 </h3>
@@ -328,7 +328,7 @@ export default function SchoolDashboard({
 
               {/* Group activity */}
               <div className="rounded-[24px] border border-white/5 bg-[#121215]/50 p-6 space-y-4">
-                <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
                   <BarChart3 className="h-4 w-4 text-[#FF7A1A]" />
                   Active Organizations
                 </h3>
@@ -420,13 +420,13 @@ export default function SchoolDashboard({
             
             {/* List */}
             <div className="md:col-span-2 space-y-4">
-              <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">Registered Groups</h4>
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Registered Groups</h4>
               <div className="grid gap-4 sm:grid-cols-2">
                 {organizations.map((org) => (
                   <div key={org.id} className="rounded-2xl border border-white/5 bg-[#121215]/50 p-5 space-y-4 flex flex-col justify-between">
                     <div>
                       <div className="flex justify-between items-start">
-                        <h5 className="text-xs font-black text-white uppercase leading-snug">{org.name}</h5>
+                        <h5 className="text-xs font-bold text-white uppercase leading-snug">{org.name}</h5>
                         <span className={`rounded-full px-2 py-0.5 text-[8px] font-bold uppercase border ${
                           org.verified
                             ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
@@ -447,7 +447,7 @@ export default function SchoolDashboard({
 
                       <button
                         onClick={() => onToggleVerifyOrg(org.id)}
-                        className={`rounded-lg px-2.5 py-1 text-[9px] font-black uppercase border transition-colors cursor-pointer ${
+                        className={`rounded-lg px-2.5 py-1 text-[9px] font-bold uppercase border transition-colors cursor-pointer ${
                           org.verified
                             ? 'bg-rose-500/10 text-rose-400 border-rose-500/25 hover:bg-rose-500/25'
                             : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25 hover:bg-emerald-500/25'
@@ -464,7 +464,7 @@ export default function SchoolDashboard({
             {/* Create Org Form */}
             <div className="md:col-span-1">
               <div className="rounded-[24px] border border-white/5 bg-[#121215]/50 p-5 space-y-4 shadow-lg">
-                <h4 className="text-xs font-black text-white uppercase">Register New Organization</h4>
+                <h4 className="text-xs font-bold text-white uppercase">Register New Organization</h4>
                 <form onSubmit={handleOrgSubmit} className="space-y-4 text-xs">
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Club Title</label>
@@ -508,7 +508,7 @@ export default function SchoolDashboard({
 
                   <button
                     type="submit"
-                    className="w-full rounded-full bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] py-3 text-xs font-black text-black shadow-md shadow-orange-500/10 cursor-pointer"
+                    className="w-full rounded-full bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] py-3 text-xs font-bold text-black shadow-md shadow-orange-500/10 cursor-pointer"
                   >
                     Register Club
                   </button>
@@ -522,7 +522,7 @@ export default function SchoolDashboard({
         {subTab === 'featured' && (
           /* Featured Manager layout */
           <div className="rounded-[24px] border border-white/5 bg-[#121215]/50 p-6 space-y-4">
-            <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">Featured Events Selector</h4>
+            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Featured Events Selector</h4>
             <div className="space-y-3 text-xs">
               {approvedEvents.map((event) => (
                 <div
@@ -541,7 +541,7 @@ export default function SchoolDashboard({
 
                   <button
                     onClick={() => handleToggleFeature(event)}
-                    className={`rounded-full px-4 py-1.5 text-[9px] font-black uppercase tracking-wider border transition-colors cursor-pointer ${
+                    className={`rounded-full px-4 py-1.5 text-[9px] font-bold uppercase tracking-wider border transition-colors cursor-pointer ${
                       event.featured
                         ? 'bg-[#FF7A1A]/15 text-[#FF7A1A] border-[#FF7A1A]/20'
                         : 'bg-slate-900 border-white/5 text-slate-400'

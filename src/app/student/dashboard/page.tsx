@@ -28,7 +28,7 @@ export default function StudentDashboardPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
-          <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
             Welcome back, {currentUser.name.split(' ')[0]}
           </h1>
           <p className="text-[#B8BBC8]">Here is what is happening on campus today.</p>
@@ -49,14 +49,14 @@ export default function StudentDashboardPage() {
             <span className="text-xs font-bold text-[#B8BBC8] uppercase tracking-wider">Upcoming RSVPs</span>
             <Calendar className="h-5 w-5 text-[#80B0EC]" />
           </div>
-          <div className="text-3xl font-black text-white">{myRsvps.length}</div>
+          <div className="text-3xl font-bold text-white">{myRsvps.length}</div>
         </div>
         <div className="rounded-[24px] bg-[#171722] border border-white/[0.06] p-5 flex flex-col justify-between h-32">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-[#B8BBC8] uppercase tracking-wider">Unread Alerts</span>
             <Bell className="h-5 w-5 text-[#EE3D5A]" />
           </div>
-          <div className="text-3xl font-black text-white">{unreadNotifs.length}</div>
+          <div className="text-3xl font-bold text-white">{unreadNotifs.length}</div>
         </div>
         <div className="rounded-[24px] bg-[#171722] border border-white/[0.06] p-5 flex flex-col justify-between h-32 md:col-span-2">
            <div className="flex items-center justify-between">
@@ -64,7 +64,7 @@ export default function StudentDashboardPage() {
             <Activity className="h-5 w-5 text-[#DAFB71]" />
           </div>
           <div className="flex items-end gap-2">
-             <div className="text-3xl font-black text-white">{events.length}</div>
+             <div className="text-3xl font-bold text-white">{events.length}</div>
              <span className="text-sm text-[#B8BBC8] mb-1">active events across {currentUser.school}</span>
           </div>
         </div>

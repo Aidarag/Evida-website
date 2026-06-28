@@ -47,7 +47,7 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-[#FF7A1A] to-[#FFD214] shadow-md shadow-orange-500/10">
             <Sparkles className="h-6 w-6 text-black" />
           </div>
-          <h2 className="text-xl font-black uppercase tracking-tight text-white mt-4">JOIN CAMPUS EVIDA</h2>
+          <h2 className="text-xl font-bold uppercase tracking-tight text-white mt-4">JOIN CAMPUS EVIDA</h2>
           <p className="text-[11px] text-slate-500">Access exclusive student experiences and coordinate organizations</p>
         </div>
 
@@ -71,7 +71,7 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
             {/* Google sign-in */}
             <button
               onClick={handleVerificationComplete}
-              className="w-full flex items-center justify-center gap-2.5 rounded-full bg-white hover:bg-slate-200 py-3.5 text-xs font-black text-black transition-all hover:scale-[1.01] cursor-pointer"
+              className="w-full flex items-center justify-center gap-2.5 rounded-full bg-white hover:bg-slate-200 py-3.5 text-xs font-bold text-black transition-all hover:scale-[1.01] cursor-pointer"
             >
               Continue with Google
             </button>
@@ -79,7 +79,7 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
             {/* Email login option */}
             <button
               onClick={() => setMethod('email')}
-              className="w-full flex items-center justify-center gap-2.5 rounded-full border border-white/10 hover:border-white/20 bg-slate-900/40 hover:bg-slate-900 py-3.5 text-xs font-black text-slate-200 transition-all hover:scale-[1.01] cursor-pointer"
+              className="w-full flex items-center justify-center gap-2.5 rounded-full border border-white/10 hover:border-white/20 bg-slate-900/40 hover:bg-slate-900 py-3.5 text-xs font-bold text-slate-200 transition-all hover:scale-[1.01] cursor-pointer"
             >
               <Mail className="h-4 w-4 text-[#FF7A1A]" />
               Use School Email
@@ -110,7 +110,7 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
 
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] py-3.5 text-xs font-black text-black transition-all hover:scale-[1.01] cursor-pointer shadow-lg shadow-orange-500/10"
+              className="w-full flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] py-3.5 text-xs font-bold text-black transition-all hover:scale-[1.01] cursor-pointer shadow-lg shadow-orange-500/10"
             >
               Send Verification Code
               <ArrowRight className="h-4 w-4" />

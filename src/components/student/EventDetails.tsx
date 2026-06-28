@@ -69,10 +69,10 @@ export default function EventDetails({
 
           {/* Title/Host overlay */}
           <div className="absolute inset-x-6 bottom-6 z-20 space-y-1">
-            <span className="rounded-full bg-[#FF7A1A] text-black text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 w-fit">
+            <span className="rounded-full bg-[#FF7A1A] text-black text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 w-fit">
               {event.free ? 'FREE ACCESS' : 'TICKETED'}
             </span>
-            <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight leading-none mt-2">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-white uppercase tracking-tight leading-none mt-2">
               {event.title}
             </h2>
             {event.organizationName && (
@@ -92,7 +92,7 @@ export default function EventDetails({
               <Calendar className="h-4.5 w-4.5 text-[#FF7A1A] shrink-0" />
               <div>
                 <p className="font-bold text-slate-500 uppercase tracking-wider">Date & Time</p>
-                <p className="mt-1 font-black text-slate-200 uppercase">{event.date}</p>
+                <p className="mt-1 font-bold text-slate-200 uppercase">{event.date}</p>
                 <p className="text-[10px] text-slate-400 mt-0.5">{event.time} {event.endTime ? `to ${event.endTime}` : ''}</p>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function EventDetails({
               <MapPin className="h-4.5 w-4.5 text-[#FF7A1A] shrink-0" />
               <div>
                 <p className="font-bold text-slate-500 uppercase tracking-wider">Location Venue</p>
-                <p className="mt-1 font-black text-slate-200 uppercase">{event.location}</p>
+                <p className="mt-1 font-bold text-slate-200 uppercase">{event.location}</p>
                 <p className="text-[10px] text-slate-400 mt-0.5 capitalize">{event.locationType} Space</p>
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function EventDetails({
           <div className="rounded-2xl border border-[#FF7A1A]/20 bg-[#FF7A1A]/5 p-4 flex gap-3 text-xs leading-relaxed">
             <Info className="h-5 w-5 text-[#FF7A1A] shrink-0 mt-0.5" />
             <div>
-              <p className="font-black text-slate-200 uppercase">Review classification: {event.complexityType} queue</p>
+              <p className="font-bold text-slate-200 uppercase">Review classification: {event.complexityType} queue</p>
               <p className="text-[10px] text-slate-400 mt-0.5">
                 {event.complexityType === 'quick' 
                   ? 'Quick event details. Auto-routed to fast approval queue for prompt publishing.' 
@@ -162,7 +162,7 @@ export default function EventDetails({
           <div className="flex items-center gap-3 pt-4 border-t border-white/5">
             <button
               onClick={() => onSaveToggle(event.id)}
-              className={`flex items-center justify-center gap-1.5 rounded-full px-5 py-3 text-xs font-black transition-all hover:scale-[1.01] cursor-pointer ${
+              className={`flex items-center justify-center gap-1.5 rounded-full px-5 py-3 text-xs font-bold transition-all hover:scale-[1.01] cursor-pointer ${
                 isSaved
                   ? 'bg-rose-500/10 text-rose-400 border border-rose-500/25'
                   : 'bg-slate-950 border border-white/10 text-slate-300 hover:text-white'
@@ -174,7 +174,7 @@ export default function EventDetails({
 
             <button
               onClick={() => onRSVP(event.id, 'rsvp')}
-              className={`flex-1 flex items-center justify-center gap-2 rounded-full py-3.5 text-xs font-black transition-all hover:scale-[1.01] cursor-pointer shadow-lg ${
+              className={`flex-1 flex items-center justify-center gap-2 rounded-full py-3.5 text-xs font-bold transition-all hover:scale-[1.01] cursor-pointer shadow-lg ${
                 isRsvped
                   ? 'bg-emerald-600 text-white shadow-emerald-500/10'
                   : 'bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] text-black shadow-orange-500/15'

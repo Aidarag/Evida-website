@@ -29,12 +29,12 @@ export default function StudentProfilePage() {
       {/* Profile Header Card */}
       <Card className="p-8 md:p-10 flex flex-col md:flex-row items-center md:items-start gap-8" hover={false}>
         <div className="h-32 w-32 rounded-full bg-gradient-to-br from-[#80B0EC] to-[#DAFB71] flex items-center justify-center shadow-[0_8px_30px_rgba(128,176,236,0.3)] shrink-0">
-          <span className="text-5xl font-black text-[#08080B]">{currentUser.avatar}</span>
+          <span className="text-5xl font-bold text-[#08080B]">{currentUser.avatar}</span>
         </div>
         
         <div className="flex-1 text-center md:text-left space-y-4">
           <div>
-            <h1 className="text-3xl font-black text-white">{currentUser.name}</h1>
+            <h1 className="text-3xl font-extrabold text-white">{currentUser.name}</h1>
             <p className="text-[#80B0EC] font-bold">@{currentUser.username}</p>
           </div>
           
@@ -55,15 +55,15 @@ export default function StudentProfilePage() {
 
           <div className="flex items-center justify-center md:justify-start gap-6 pt-4 border-t border-white/[0.06]">
             <div className="text-center md:text-left">
-              <div className="text-2xl font-black text-white">{totalRsvps}</div>
+              <div className="text-2xl font-bold text-white">{totalRsvps}</div>
               <div className="text-[10px] font-bold text-[#B8BBC8] uppercase tracking-wider">Events Attended</div>
             </div>
             <div className="text-center md:text-left">
-              <div className="text-2xl font-black text-white">{totalCreated}</div>
+              <div className="text-2xl font-bold text-white">{totalCreated}</div>
               <div className="text-[10px] font-bold text-[#B8BBC8] uppercase tracking-wider">Events Hosted</div>
             </div>
             <div className="text-center md:text-left">
-              <div className="text-2xl font-black text-white">{totalSaved}</div>
+              <div className="text-2xl font-bold text-white">{totalSaved}</div>
               <div className="text-[10px] font-bold text-[#B8BBC8] uppercase tracking-wider">Events Saved</div>
             </div>
           </div>

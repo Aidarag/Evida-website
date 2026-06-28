@@ -31,7 +31,7 @@ export default function SavedEventsPage() {
       {/* Header */}
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Your Events</h1>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">Your Events</h1>
           <p className="text-sm text-[#B8BBC8] mt-1">Keep track of everything you're interested in.</p>
         </div>
 

@@ -25,7 +25,7 @@ export default function MyEventsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Hosted by You</h1>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">Hosted by You</h1>
           <p className="text-sm text-[#B8BBC8] mt-1">Events and promotions you've created.</p>
         </div>
         <Link href="/student/create">

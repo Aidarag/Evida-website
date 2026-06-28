@@ -39,7 +39,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
         
         {/* Neon Badge top right */}
         <div className="absolute top-4 right-4 z-10 flex">
-          <div className="bg-[var(--color-evida-lime)] px-3 py-1 text-[10px] font-black text-black tracking-widest uppercase rounded-full shadow-lg">
+          <div className="bg-[var(--color-evida-lime)] px-3 py-1 text-[10px] font-bold text-black tracking-widest uppercase rounded-full shadow-lg">
             {event.category === 'Art' ? 'Exhibition' : event.category}
           </div>
         </div>
@@ -48,7 +48,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
       {/* Content Below Image */}
       <div className="px-5 pb-5 pt-4 flex flex-col flex-1 gap-2">
         {/* Date text (neon) */}
-        <div className="text-[var(--color-evida-lime)] text-[10px] font-black tracking-wider uppercase mb-1">
+        <div className="text-[var(--color-evida-lime)] text-[10px] font-bold tracking-wider uppercase mb-1">
           {dayStr} {dateStr} {monthStr}
         </div>
 
@@ -64,7 +64,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
 
         {/* Footer line */}
         <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
-          <span className="text-[var(--color-evida-lime)] text-[12px] font-black tracking-wide">
+          <span className="text-[var(--color-evida-lime)] text-[12px] font-bold tracking-wide">
             {event.status === 'approved' ? 'FREE' : 'TICKETED'}
           </span>
           <span className="text-white text-[11px] font-bold flex items-center gap-1 group-hover:gap-2 transition-all">

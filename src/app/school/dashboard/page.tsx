@@ -30,7 +30,7 @@ export default function SchoolDashboardPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
-          <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
             Administrator Overview
           </h1>
           <p className="text-[#B8BBC8]">System status and pending actions for Evida Admin.</p>
@@ -47,7 +47,7 @@ export default function SchoolDashboardPage() {
             <span className="rounded-full bg-[#EE3D5A]/10 text-[#EE3D5A] px-3 py-1 text-[10px] font-bold uppercase">High Priority</span>
           </div>
           <div>
-            <div className="text-3xl font-black text-white">{complexQueue.length}</div>
+            <div className="text-3xl font-bold text-white">{complexQueue.length}</div>
             <p className="text-sm font-medium text-[#B8BBC8]">Complex events pending review</p>
           </div>
         </Card>
@@ -60,7 +60,7 @@ export default function SchoolDashboardPage() {
             <span className="rounded-full bg-[#80B0EC]/10 text-[#80B0EC] px-3 py-1 text-[10px] font-bold uppercase">Standard</span>
           </div>
           <div>
-            <div className="text-3xl font-black text-white">{standardQueue.length}</div>
+            <div className="text-3xl font-bold text-white">{standardQueue.length}</div>
             <p className="text-sm font-medium text-[#B8BBC8]">Standard events pending review</p>
           </div>
         </Card>
@@ -73,7 +73,7 @@ export default function SchoolDashboardPage() {
             <span className="rounded-full bg-[#DAFB71]/10 text-[#DAFB71] px-3 py-1 text-[10px] font-bold uppercase">Fast Track</span>
           </div>
           <div>
-            <div className="text-3xl font-black text-white">{quickQueue.length}</div>
+            <div className="text-3xl font-bold text-white">{quickQueue.length}</div>
             <p className="text-sm font-medium text-[#B8BBC8]">Quick events pending review</p>
           </div>
         </Card>

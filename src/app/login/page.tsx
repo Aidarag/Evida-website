@@ -47,7 +47,7 @@ export default function LoginPage() {
               <Sparkles className="h-6 w-6 text-[#08080B]" />
             </div>
             <div>
-              <h1 className="text-2xl font-black text-white">Welcome back</h1>
+              <h1 className="text-2xl font-bold text-white">Welcome back</h1>
               <p className="text-sm text-[#B8BBC8] mt-1">Select a demo persona to continue</p>
             </div>
           </div>

@@ -28,7 +28,7 @@ export default function OrganizationsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row gap-6 justify-between md:items-end">
         <div className="space-y-2">
-          <h1 className="text-3xl font-black text-white tracking-tight">Organizations</h1>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">Organizations</h1>
           <p className="text-sm text-[#B8BBC8]">Manage and verify campus student groups.</p>
         </div>
         <div className="w-full md:w-80">

@@ -62,13 +62,13 @@ export default function OrgWorkspace({
             <Building className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-base font-black text-white uppercase">Organization Workspace</h3>
+            <h3 className="text-base font-extrabold text-white uppercase">Organization Workspace</h3>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="text-[10px] text-slate-500 font-bold uppercase">Active Desk:</span>
               <select
                 value={selectedOrgId}
                 onChange={(e) => setSelectedOrgId(e.target.value)}
-                className="bg-transparent text-[11px] font-black text-[#FF7A1A] focus:outline-none cursor-pointer pr-1"
+                className="bg-transparent text-[11px] font-bold text-[#FF7A1A] focus:outline-none cursor-pointer pr-1"
               >
                 {userOrgs.map((org) => (
                   <option key={org.id} value={org.id} className="bg-slate-950 text-slate-200">
@@ -82,7 +82,7 @@ export default function OrgWorkspace({
 
         <button
           onClick={onOpenCreate}
-          className="flex items-center gap-1 bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] text-black text-xs font-black rounded-full px-5 py-2.5 transition-all hover:scale-[1.02] cursor-pointer"
+          className="flex items-center gap-1 bg-gradient-to-r from-[#FF7A1A] to-[#FFB61D] text-black text-xs font-bold rounded-full px-5 py-2.5 transition-all hover:scale-[1.02] cursor-pointer"
         >
           <Plus className="h-4 w-4 stroke-[3]" />
           Create Org Event
@@ -98,14 +98,14 @@ export default function OrgWorkspace({
             {/* Info Card */}
             <div className="rounded-[24px] border border-white/5 bg-[#121215]/50 p-5 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-[9px] font-black uppercase text-slate-500">Group Details</span>
+                <span className="text-[9px] font-bold uppercase text-slate-500">Group Details</span>
                 {activeOrg.verified && (
                   <span className="flex items-center gap-0.5 text-[#FF7A1A] text-[9px] font-extrabold uppercase">
                     <ShieldCheck className="h-3.5 w-3.5" /> Verified
                   </span>
                 )}
               </div>
-              <h4 className="text-sm font-black text-white uppercase">{activeOrg.name}</h4>
+              <h4 className="text-sm font-bold text-white uppercase">{activeOrg.name}</h4>
               <p className="text-[11px] text-slate-400 leading-relaxed">
                 {activeOrg.description}
               </p>
@@ -127,23 +127,23 @@ export default function OrgWorkspace({
 
             {/* Basic Analytics */}
             <div className="rounded-[24px] border border-white/5 bg-[#121215]/50 p-5 space-y-4">
-              <span className="text-[9px] font-black uppercase text-slate-500">Engagement Metrics</span>
+              <span className="text-[9px] font-bold uppercase text-slate-500">Engagement Metrics</span>
               
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div className="bg-slate-950/40 p-3 rounded-2xl border border-white/5 space-y-1">
                   <Eye className="h-4 w-4 text-[#FF7A1A] mx-auto" />
                   <p className="text-sm font-extrabold text-white">{totalViews}</p>
-                  <p className="text-[8px] text-slate-500 uppercase font-black">Views</p>
+                  <p className="text-[8px] text-slate-500 uppercase font-bold">Views</p>
                 </div>
                 <div className="bg-slate-950/40 p-3 rounded-2xl border border-white/5 space-y-1">
                   <Bookmark className="h-4 w-4 text-emerald-400 mx-auto" />
                   <p className="text-sm font-extrabold text-white">{totalSaves}</p>
-                  <p className="text-[8px] text-slate-500 uppercase font-black">Saves</p>
+                  <p className="text-[8px] text-slate-500 uppercase font-bold">Saves</p>
                 </div>
                 <div className="bg-slate-950/40 p-3 rounded-2xl border border-white/5 space-y-1">
                   <Users className="h-4 w-4 text-[#FFD214] mx-auto" />
                   <p className="text-sm font-extrabold text-white">{totalRSVPs}</p>
-                  <p className="text-[8px] text-slate-500 uppercase font-black">RSVPs</p>
+                  <p className="text-[8px] text-slate-500 uppercase font-bold">RSVPs</p>
                 </div>
               </div>
             </div>
@@ -197,7 +197,7 @@ export default function OrgWorkspace({
                         className="flex items-center justify-between gap-4 p-3.5 rounded-2xl bg-slate-950/40 border border-white/5 hover:border-white/10 cursor-pointer transition-colors"
                       >
                         <div>
-                          <h5 className="text-xs font-black text-white uppercase">{event.title}</h5>
+                          <h5 className="text-xs font-bold text-white uppercase">{event.title}</h5>
                           <p className="text-[10px] text-slate-500 mt-1 uppercase">
                             {event.date} • {event.time} • {event.location}
                           </p>
@@ -221,7 +221,7 @@ export default function OrgWorkspace({
                         className="p-3.5 rounded-2xl bg-slate-950/40 border border-white/5 hover:border-white/10 cursor-pointer transition-colors space-y-1.5"
                       >
                         <div className="flex justify-between items-center">
-                          <h5 className="text-xs font-black text-white uppercase">{event.title}</h5>
+                          <h5 className="text-xs font-bold text-white uppercase">{event.title}</h5>
                           <span className="rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 text-[8px] font-extrabold uppercase tracking-wide">
                             {event.complexityType} queue
                           </span>
@@ -245,7 +245,7 @@ export default function OrgWorkspace({
                         className="p-3.5 rounded-2xl bg-slate-950/40 border border-white/5 hover:border-white/10 cursor-pointer transition-colors space-y-2.5"
                       >
                         <div>
-                          <h5 className="text-xs font-black text-white uppercase">{event.title}</h5>
+                          <h5 className="text-xs font-bold text-white uppercase">{event.title}</h5>
                           <p className="text-[10px] text-slate-500 mt-0.5 uppercase">
                             {event.date} • {event.time}
                           </p>

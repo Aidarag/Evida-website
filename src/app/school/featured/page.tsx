@@ -20,7 +20,7 @@ export default function FeaturedEventsPage() {
   return (
     <div className="p-6 md:p-10 space-y-8 max-w-6xl mx-auto">
       <div className="space-y-2">
-        <h1 className="text-3xl font-black text-white tracking-tight">Featured Events</h1>
+        <h1 className="text-3xl font-extrabold text-white tracking-tight">Featured Events</h1>
         <p className="text-sm text-[#B8BBC8]">Events currently highlighted on the student dashboard.</p>
       </div>
 

@@ -45,7 +45,7 @@ export default function StudentEventsFeed() {
       <div className="space-y-6 sticky top-[120px] md:top-16 z-30 bg-[#08080B]/90 backdrop-blur-xl py-4 -mx-6 px-6 md:mx-0 md:px-0">
         <div className="flex flex-col md:flex-row gap-4 justify-between">
           <div>
-            <h1 className="text-3xl font-black text-white tracking-tight">Explore</h1>
+            <h1 className="text-3xl font-extrabold text-white tracking-tight">Explore</h1>
             <p className="text-sm text-[#B8BBC8] mt-1">Discover what's happening around campus</p>
           </div>
           <div className="w-full md:w-96">
@@ -85,10 +85,10 @@ export default function StudentEventsFeed() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#08080B] via-[#08080B]/40 to-transparent z-10" />
           
           <div className="absolute inset-x-8 bottom-8 z-20 flex flex-col items-start gap-3">
-            <span className="rounded-full bg-[#DAFB71] text-[#08080B] px-3 py-1 text-[10px] font-black uppercase tracking-wider">
+            <span className="rounded-full bg-[#DAFB71] text-[#08080B] px-3 py-1 text-[10px] font-bold uppercase tracking-wider">
               Featured Experience
             </span>
-            <h2 className="text-3xl md:text-5xl font-black text-white leading-tight">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">
               {featuredEvent.title}
             </h2>
             <div className="flex items-center gap-4 text-sm font-medium text-[#B8BBC8]">

@@ -36,7 +36,7 @@ export default function ReviewQueuePage() {
       {/* Header */}
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Review Queue</h1>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">Review Queue</h1>
           <p className="text-sm text-[#B8BBC8] mt-1">Review and approve pending student activities.</p>
         </div>
 

@@ -123,12 +123,12 @@ export default function OurVisionSection() {
   };
 
   return (
-    <section className="w-full bg-white py-20 md:py-24 border-y border-gray-100 font-sans overflow-hidden">
+    <section id="our-mission" className="w-full bg-white py-20 md:py-24 border-y border-gray-100 font-sans overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         
         {/* Title */}
         <div className="text-center mb-12 md:mb-20">
-          <h2 className="text-gray-900 font-black text-3xl md:text-4xl tracking-widest uppercase mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+          <h2 className="text-gray-900 font-extrabold text-3xl md:text-4xl tracking-widest uppercase mb-4" style={{ fontFamily: 'var(--font-display)' }}>
             OUR VISION
           </h2>
           <div className="w-12 h-1 bg-black mx-auto" />
@@ -143,7 +143,7 @@ export default function OurVisionSection() {
                 <button
                   key={item}
                   onClick={() => handleMenuHover(item)}
-                  className={`flex-shrink-0 pb-2 text-xs md:text-sm font-black uppercase tracking-widest border-b-2 transition-all duration-300 cursor-pointer ${
+                  className={`flex-shrink-0 pb-2 text-xs md:text-sm font-bold uppercase tracking-widest border-b-2 transition-all duration-300 cursor-pointer ${
                     isActive 
                       ? 'text-black border-black' 
                       : 'text-gray-400 border-transparent hover:text-gray-600'
@@ -195,10 +195,10 @@ export default function OurVisionSection() {
                     }}
                   >
                     <div className="text-left">
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-evida-coral)]">Pillar 01</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-evida-coral)]">Pillar 01</span>
                     </div>
                     <div className="my-auto text-left">
-                      <h3 className="text-black font-black text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
+                      <h3 className="text-black font-bold text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
                         STUDENTS
                       </h3>
                       <p className="text-gray-600 text-[10px] sm:text-[11px] mt-3 font-semibold leading-relaxed">
@@ -206,7 +206,7 @@ export default function OurVisionSection() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400">Evida App</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Evida App</span>
                     </div>
                   </div>
 
@@ -220,10 +220,10 @@ export default function OurVisionSection() {
                     }}
                   >
                     <div className="text-left">
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-evida-blue)]">Pillar 02</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-evida-blue)]">Pillar 02</span>
                     </div>
                     <div className="my-auto text-left">
-                      <h3 className="text-black font-black text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
+                      <h3 className="text-black font-bold text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
                         SCHOOLS
                       </h3>
                       <p className="text-gray-600 text-[10px] sm:text-[11px] mt-3 font-semibold leading-relaxed">
@@ -231,7 +231,7 @@ export default function OurVisionSection() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400">Evida Portal</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Evida Portal</span>
                     </div>
                   </div>
 
@@ -245,10 +245,10 @@ export default function OurVisionSection() {
                     }}
                   >
                     <div className="text-left">
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-evida-lime)]">Vision</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-evida-lime)]">Vision</span>
                     </div>
                     <div className="my-auto text-left">
-                      <h3 className="text-black font-black text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
+                      <h3 className="text-black font-bold text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
                         EVIDA
                       </h3>
                       <p className="text-gray-600 text-[10px] sm:text-[11px] mt-3 font-semibold leading-relaxed">
@@ -256,7 +256,7 @@ export default function OurVisionSection() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400">Est. 2024</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Est. 2024</span>
                     </div>
                   </div>
 
@@ -270,10 +270,10 @@ export default function OurVisionSection() {
                     }}
                   >
                     <div className="text-left">
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-evida-coral)]">Core</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-evida-coral)]">Core</span>
                     </div>
                     <div className="my-auto text-left">
-                      <h3 className="text-black font-black text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
+                      <h3 className="text-black font-bold text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
                         COMMUNITY
                       </h3>
                       <p className="text-gray-600 text-[10px] sm:text-[11px] mt-3 font-semibold leading-relaxed">
@@ -281,7 +281,7 @@ export default function OurVisionSection() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400">Evida Hub</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Evida Hub</span>
                     </div>
                   </div>
 
@@ -294,7 +294,7 @@ export default function OurVisionSection() {
                       WebkitBackfaceVisibility: 'hidden'
                     }}
                   >
-                    <span className="text-black font-black text-lg uppercase tracking-widest">EVIDA</span>
+                    <span className="text-black font-bold text-lg uppercase tracking-widest">EVIDA</span>
                   </div>
 
                   {/* Bottom Face */}
@@ -306,7 +306,7 @@ export default function OurVisionSection() {
                       WebkitBackfaceVisibility: 'hidden'
                     }}
                   >
-                    <span className="text-black font-black text-lg uppercase tracking-widest">EVIDA</span>
+                    <span className="text-black font-bold text-lg uppercase tracking-widest">EVIDA</span>
                   </div>
                 </div>
               </div>
@@ -316,20 +316,20 @@ export default function OurVisionSection() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 md:mt-12 text-left border-t border-gray-100 pt-8">
               {/* Left Paragraph */}
               <div className="space-y-3">
-                <h4 className="text-black font-black text-lg uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                <h4 className="text-black font-bold text-lg uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                   {visionData[activeItem].leftHeadline}
                 </h4>
-                <p className="text-gray-600 text-sm leading-relaxed font-medium min-h-[70px] transition-all duration-300">
+                <p className="text-gray-600 text-sm leading-relaxed font-light min-h-[70px] transition-all duration-300">
                   {visionData[activeItem].leftText}
                 </p>
               </div>
 
               {/* Bottom Middle Paragraph */}
               <div className="space-y-3">
-                <h4 className="text-black font-black text-lg uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                <h4 className="text-black font-bold text-lg uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                   {visionData[activeItem].bottomHeadline}
                 </h4>
-                <p className="text-gray-600 text-sm leading-relaxed font-medium min-h-[70px] transition-all duration-300">
+                <p className="text-gray-600 text-sm leading-relaxed font-light min-h-[70px] transition-all duration-300">
                   {visionData[activeItem].bottomText}
                 </p>
               </div>
@@ -348,7 +348,7 @@ export default function OurVisionSection() {
                     <button
                       onClick={() => handleMenuHover(item)}
                       onMouseEnter={() => handleMenuHover(item)}
-                      className={`w-full py-4 text-left font-black uppercase text-xl md:text-2xl transition-all duration-300 flex justify-between items-center tracking-wider cursor-pointer ${
+                      className={`w-full py-4 text-left font-bold uppercase text-xl md:text-2xl transition-all duration-300 flex justify-between items-center tracking-wider cursor-pointer ${
                         isActive ? 'text-black' : 'text-gray-300 hover:text-gray-600'
                       }`}
                       style={{ fontFamily: 'var(--font-display)' }}
