@@ -28,8 +28,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${syne.variable} ${plusJakartaSans.variable} antialiased bg-white text-gray-900 min-h-screen selection:bg-[var(--color-evida-lime)] selection:text-black`}>
+    <html lang="en" className={`${syne.variable} ${plusJakartaSans.variable}`}>
+      <body className="font-sans antialiased bg-white text-gray-900 min-h-screen selection:bg-[var(--color-evida-lime)] selection:text-black">
         <UserProvider>
           <EventProvider>
             {children}
