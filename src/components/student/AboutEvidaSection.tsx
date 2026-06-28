@@ -16,7 +16,7 @@ export default function AboutEvidaSection() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 relative">
           {/* Top Left Text */}
           <div className="rotate-[-6deg] mb-8 md:mb-0">
-            <h2 className="text-white font-black text-3xl md:text-5xl uppercase tracking-widest leading-none" style={{ fontFamily: 'var(--font-lufga)' }}>
+            <h2 className="text-white font-black text-3xl md:text-5xl uppercase tracking-widest leading-none" style={{ fontFamily: 'var(--font-display)' }}>
               About <br /> <span className="text-[var(--color-evida-lime)]">Evida</span>
             </h2>
           </div>
@@ -54,7 +54,7 @@ export default function AboutEvidaSection() {
               Who We Are
             </p>
 
-            <h3 className="text-white font-black text-2xl md:text-4xl lg:text-5xl uppercase leading-tight mb-6" style={{ fontFamily: 'var(--font-lufga)' }}>
+            <h3 className="text-white font-black text-2xl md:text-4xl lg:text-5xl uppercase leading-tight mb-6" style={{ fontFamily: 'var(--font-display)' }}>
               The Digital Home of Campus Life.
             </h3>
             

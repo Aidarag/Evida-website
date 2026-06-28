@@ -20,7 +20,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             {variant === 'public' ? (
-              <span className="text-3xl font-black tracking-widest text-white uppercase" style={{ fontFamily: 'var(--font-lufga)' }}>
+              <span className="text-3xl font-black tracking-widest text-white uppercase" style={{ fontFamily: 'var(--font-display)' }}>
                 Evida.
               </span>
             ) : (
@@ -28,7 +28,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[var(--color-evida-coral)] to-[var(--color-evida-blue)] flex items-center justify-center">
                   <span className="text-white font-black text-sm">E</span>
                 </div>
-                <span className="text-xl font-bold tracking-tight text-gray-900" style={{ fontFamily: 'var(--font-lufga)' }}>
+                <span className="text-xl font-bold tracking-tight text-gray-900" style={{ fontFamily: 'var(--font-display)' }}>
                   Evida.
                 </span>
               </>

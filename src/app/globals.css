@@ -34,8 +34,9 @@
   --radius-default: 12px;
 
   /* Font family */
-  --font-lufga: 'Lufga', var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-lufga);
+  --font-display: var(--font-poppins), sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
+  --font-lufga: var(--font-display); /* Alias for backward compatibility */
 }
 
 /* ───────────────────────────────────────────────
@@ -51,45 +52,45 @@ html, body {
   height: 100%;
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-lufga);
+  font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
 /* ───────────────────────────────────────────────
-   Typography Utility Classes (Lufga)
+   Typography Utility Classes (Poppins & Inter)
    ─────────────────────────────────────────────── */
 .text-heading {
-  font-family: var(--font-lufga);
+  font-family: var(--font-display);
   font-size: 40px;
-  font-weight: 600; /* Semibold */
+  font-weight: 800; /* ExtraBold */
   line-height: 1.2;
 }
 
 .text-heading-2 {
-  font-family: var(--font-lufga);
+  font-family: var(--font-display);
   font-size: 36px;
-  font-weight: 500; /* Medium */
+  font-weight: 800; /* ExtraBold */
   line-height: 1.2;
 }
 
 .text-heading-3 {
-  font-family: var(--font-lufga);
+  font-family: var(--font-display);
   font-size: 24px;
-  font-weight: 500; /* Medium */
+  font-weight: 800; /* ExtraBold */
   line-height: 1.3;
 }
 
 .text-title {
-  font-family: var(--font-lufga);
+  font-family: var(--font-sans);
   font-size: 20px;
-  font-weight: 400; /* Regular */
+  font-weight: 600; /* Semibold for Inter text titles */
   line-height: 1.4;
 }
 
 .text-subtitle {
-  font-family: var(--font-lufga);
+  font-family: var(--font-sans);
   font-size: 16px;
-  font-weight: 400; /* Regular */
+  font-weight: 400; /* Regular for Inter text subtitles */
   line-height: 1.5;
 }
 
@@ -103,7 +104,7 @@ html, body {
   gap: 8px;
   padding: 10px 24px;
   border-radius: 9999px;
-  font-family: var(--font-lufga);
+  font-family: var(--font-sans);
   font-weight: 600;
   font-size: 14px;
   color: #111827;
@@ -124,7 +125,7 @@ html, body {
   gap: 8px;
   padding: 10px 24px;
   border-radius: 9999px;
-  font-family: var(--font-lufga);
+  font-family: var(--font-sans);
   font-weight: 500;
   font-size: 14px;
   color: var(--color-evida-blue);
@@ -144,7 +145,7 @@ html, body {
   gap: 8px;
   padding: 10px 24px;
   border-radius: 9999px;
-  font-family: var(--font-lufga);
+  font-family: var(--font-sans);
   font-weight: 500;
   font-size: 14px;
   color: var(--color-evida-coral);

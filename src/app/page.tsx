@@ -53,7 +53,7 @@ export default function LandingPage() {
 
         {/* Hero Content (Centered) */}
         <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-5xl mx-auto -mt-16">
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-tight tracking-wide mb-8" style={{ fontFamily: 'var(--font-lufga)' }}>
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-tight tracking-wide mb-8" style={{ fontFamily: 'var(--font-display)' }}>
             Discover Evida, the digital home of campus life and community connection
           </h1>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -199,7 +199,7 @@ export default function LandingPage() {
                   <div className="flex justify-between items-start">
                     <span className={`font-black text-3xl transition-colors duration-500 ${
                       isActive ? 'text-[var(--color-evida-lime)]' : 'text-gray-300'
-                    }`} style={{ fontFamily: 'var(--font-lufga)' }}>
+                    }`} style={{ fontFamily: 'var(--font-display)' }}>
                       {step.number}
                     </span>
                     <div className={`p-3 rounded-2xl transition-all duration-500 ${
@@ -213,7 +213,7 @@ export default function LandingPage() {
                   <div className="space-y-4">
                     <h3 className={`font-black text-2xl uppercase tracking-wide transition-colors duration-500 ${
                       isActive ? 'text-white' : 'text-gray-900'
-                    }`} style={{ fontFamily: 'var(--font-lufga)' }}>
+                    }`} style={{ fontFamily: 'var(--font-display)' }}>
                       {step.title}
                     </h3>
                     
@@ -274,12 +274,12 @@ export default function LandingPage() {
                     <div className="flex items-center gap-4">
                       <span className={`font-black text-xl ${
                         isActive ? 'text-[var(--color-evida-lime)]' : 'text-gray-300'
-                      }`} style={{ fontFamily: 'var(--font-lufga)' }}>
+                      }`} style={{ fontFamily: 'var(--font-display)' }}>
                         {step.number}
                       </span>
                       <h3 className={`font-black text-lg uppercase tracking-wide ${
                         isActive ? 'text-white' : 'text-gray-900'
-                      }`} style={{ fontFamily: 'var(--font-lufga)' }}>
+                      }`} style={{ fontFamily: 'var(--font-display)' }}>
                         {step.title}
                       </h3>
                     </div>
@@ -380,7 +380,7 @@ export default function LandingPage() {
           
           {/* Logo / Title above cards */}
           <div className="mb-12 flex justify-center w-full">
-             <span className="text-4xl font-black tracking-widest text-white uppercase" style={{ fontFamily: 'var(--font-lufga)' }}>
+             <span className="text-4xl font-black tracking-widest text-white uppercase" style={{ fontFamily: 'var(--font-display)' }}>
                Evida.
              </span>
           </div>
@@ -393,7 +393,7 @@ export default function LandingPage() {
               <span className="text-[var(--color-evida-lime)] font-black uppercase text-xs tracking-[0.2em]">
                 What's Happening Next
               </span>
-              <h2 className="text-white font-black text-3xl md:text-5xl uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-lufga)' }}>
+              <h2 className="text-white font-black text-3xl md:text-5xl uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
                 Your Campus <br />
                 <span className="bg-gradient-to-r from-[var(--color-evida-blue)] to-[var(--color-evida-coral)] bg-clip-text text-transparent">Calendar</span> <br />
                 At A Glance
@@ -425,7 +425,7 @@ export default function LandingPage() {
                 <div className="flex justify-between items-center mb-6 pt-2 border-b border-white/5 pb-4">
                   <div className="text-left">
                     <span className="text-[var(--color-evida-lime)] font-black uppercase text-[10px] tracking-[0.2em]">CAMPUS LIFE</span>
-                    <h4 className="text-white font-black text-lg md:text-xl tracking-wide uppercase mt-0.5" style={{ fontFamily: 'var(--font-lufga)' }}>October 2026</h4>
+                    <h4 className="text-white font-black text-lg md:text-xl tracking-wide uppercase mt-0.5" style={{ fontFamily: 'var(--font-display)' }}>October 2026</h4>
                   </div>
                   <div className="flex gap-2">
                     <button className="w-7 h-7 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-white/30 transition-colors text-xs font-bold">
@@ -593,7 +593,7 @@ export default function LandingPage() {
           <div className="md:col-span-1 space-y-4">
             <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Contact</h4>
             <div className="space-y-1 text-sm font-medium">
-              <p className="text-white font-black text-lg mb-2 tracking-wide" style={{ fontFamily: 'var(--font-lufga)' }}>EVIDA</p>
+              <p className="text-white font-black text-lg mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
               <p>Campus Event & Engagement Platform</p>
               <p className="pt-2 hover:text-[var(--color-evida-coral)] transition-colors cursor-pointer">Email: hello@evida.app</p>
             </div>
@@ -635,7 +635,7 @@ export default function LandingPage() {
 
         {/* Bottom Line */}
         <div className="relative text-center border-t border-white/5 pt-8 pb-4">
-          <p className="text-[var(--color-evida-lime)] font-black text-sm uppercase tracking-widest" style={{ fontFamily: 'var(--font-lufga)' }}>
+          <p className="text-[var(--color-evida-lime)] font-black text-sm uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
             Evida — Campus life, all in one place.
           </p>
         </div>
