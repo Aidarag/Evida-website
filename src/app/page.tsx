@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Search, ChevronDown, Compass, Megaphone, Shield, MousePointer2, UserCheck, CalendarDays, LineChart, ArrowRight, Briefcase, Sparkles, Music, Trophy, GraduationCap, Users } from 'lucide-react';
 import { DesktopNav } from '@/components/Navbar';
 import EventCard from '@/components/student/EventCard';
@@ -11,6 +12,7 @@ import OurVisionSection from '@/components/student/OurVisionSection';
 import { useEvents } from '@/lib/context/EventContext';
 
 export default function LandingPage() {
+  const router = useRouter();
   const { events } = useEvents();
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -420,7 +422,7 @@ export default function LandingPage() {
               >
                 <FeaturedEventCard 
                   event={event}
-                  onClick={() => {}}
+                  onClick={() => router.push(`/events/${event.id}`)}
                 />
               </div>
             ))}

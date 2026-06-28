@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
 type VisionKey = 'Students' | 'Schools' | 'Discovery' | 'Connection' | 'Community' | 'Memories';
 
@@ -186,8 +188,9 @@ export default function OurVisionSection() {
                   }}
                 >
                   {/* Front Face (STUDENTS) */}
-                  <div 
-                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
+                  <Link 
+                    href="/login"
+                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)] hover:border-[var(--color-evida-coral)] transition-colors cursor-pointer"
                     style={{
                       transform: 'rotateY(0deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
@@ -208,11 +211,12 @@ export default function OurVisionSection() {
                     <div className="text-right">
                       <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Evida App</span>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Right Face (SCHOOLS) */}
-                  <div 
-                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
+                  <Link 
+                    href="/login"
+                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)] hover:border-[var(--color-evida-blue)] transition-colors cursor-pointer"
                     style={{
                       transform: 'rotateY(90deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
@@ -233,11 +237,12 @@ export default function OurVisionSection() {
                     <div className="text-right">
                       <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Evida Portal</span>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Back Face */}
-                  <div 
-                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
+                  <Link 
+                    href="/#explore-categories"
+                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)] hover:border-[var(--color-evida-lime)] transition-colors cursor-pointer"
                     style={{
                       transform: 'rotateY(180deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
@@ -258,11 +263,12 @@ export default function OurVisionSection() {
                     <div className="text-right">
                       <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Est. 2024</span>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Left Face */}
-                  <div 
-                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)]"
+                  <Link 
+                    href="/student/dashboard"
+                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)] hover:border-[var(--color-evida-coral)] transition-colors cursor-pointer"
                     style={{
                       transform: 'rotateY(-90deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
@@ -283,7 +289,7 @@ export default function OurVisionSection() {
                     <div className="text-right">
                       <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Evida Hub</span>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Top Face */}
                   <div 
@@ -333,6 +339,40 @@ export default function OurVisionSection() {
                   {visionData[activeItem].bottomText}
                 </p>
               </div>
+            </div>
+
+            {/* Premium Interactive CTA Buttons */}
+            <div className="mt-8 flex justify-start">
+              {activeItem === 'Students' && (
+                <Link href="/login" className="inline-flex items-center gap-2 bg-[#0F0F13] text-white font-bold uppercase tracking-widest text-[10px] px-6 py-3.5 hover:bg-[var(--color-evida-coral)] transition-colors rounded-sm shadow-[4px_4px_0px_rgba(0,0,0,0.15)]">
+                  Get Started as Student <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              )}
+              {activeItem === 'Schools' && (
+                <Link href="/login" className="inline-flex items-center gap-2 bg-[#0F0F13] text-white font-bold uppercase tracking-widest text-[10px] px-6 py-3.5 hover:bg-[var(--color-evida-blue)] transition-colors rounded-sm shadow-[4px_4px_0px_rgba(0,0,0,0.15)]">
+                  Partner with Evida <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              )}
+              {activeItem === 'Discovery' && (
+                <Link href="/#explore-categories" className="inline-flex items-center gap-2 bg-[#0F0F13] text-white font-bold uppercase tracking-widest text-[10px] px-6 py-3.5 hover:bg-[var(--color-evida-lime)] hover:text-[#111827] transition-colors rounded-sm shadow-[4px_4px_0px_rgba(0,0,0,0.15)]">
+                  Explore Event Discovery <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              )}
+              {activeItem === 'Connection' && (
+                <Link href="/#calendar" className="inline-flex items-center gap-2 bg-[#0F0F13] text-white font-bold uppercase tracking-widest text-[10px] px-6 py-3.5 hover:bg-[var(--color-evida-coral)] transition-colors rounded-sm shadow-[4px_4px_0px_rgba(0,0,0,0.15)]">
+                  View Campus Calendar <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              )}
+              {activeItem === 'Community' && (
+                <Link href="/student/dashboard" className="inline-flex items-center gap-2 bg-[#0F0F13] text-white font-bold uppercase tracking-widest text-[10px] px-6 py-3.5 hover:bg-[var(--color-evida-blue)] transition-colors rounded-sm shadow-[4px_4px_0px_rgba(0,0,0,0.15)]">
+                  Join Student Dashboard <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              )}
+              {activeItem === 'Memories' && (
+                <Link href="/#faq" className="inline-flex items-center gap-2 bg-[#0F0F13] text-white font-bold uppercase tracking-widest text-[10px] px-6 py-3.5 hover:bg-[var(--color-evida-lime)] hover:text-[#111827] transition-colors rounded-sm shadow-[4px_4px_0px_rgba(0,0,0,0.15)]">
+                  Read FAQ & Guidelines <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              )}
             </div>
 
           </div>

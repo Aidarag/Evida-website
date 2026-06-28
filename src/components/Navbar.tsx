@@ -14,12 +14,12 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const publicLinks = [
-    { label: 'About Evida', href: '#about-evida' },
-    { label: 'Our Mission', href: '#our-mission' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Featured Events', href: '#explore-categories' },
-    { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Calendar', href: '#calendar' },
+    { label: 'About Evida', href: '/#about-evida' },
+    { label: 'Our Mission', href: '/#our-mission' },
+    { label: 'FAQ', href: '/#faq' },
+    { label: 'Featured Events', href: '/#explore-categories' },
+    { label: 'How It Works', href: '/#how-it-works' },
+    { label: 'Calendar', href: '/#calendar' },
   ];
 
   return (
@@ -72,10 +72,10 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
               <>
                 <div className="hidden md:flex items-center gap-4">
                   <Link href="/login" className="text-xs font-bold text-white hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors flex items-center gap-2">
-                    Login
+                    Sign In
                   </Link>
-                  <Link href="/login" className="ml-4 bg-[var(--color-evida-lime)] text-[#111827] px-6 py-2.5 font-bold uppercase tracking-widest text-xs hover:bg-white transition-colors rounded-sm shadow-[3px_3px_0px_rgba(255,255,255,0.2)]">
-                    Get Started
+                  <Link href="/login" className="ml-4 bg-[var(--color-evida-lime)] text-[#111827] px-6 py-2.5 font-bold uppercase tracking-widest text-xs hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors rounded-sm shadow-[3px_3px_0px_rgba(255,255,255,0.2)]">
+                    Sign Up
                   </Link>
                 </div>
 
@@ -133,14 +133,14 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
               onClick={() => setMobileMenuOpen(false)}
               className="w-full text-center py-4 text-sm font-bold text-white border border-white/10 uppercase tracking-widest hover:border-white/30 transition-colors"
             >
-              Login
+              Sign In
             </Link>
             <Link 
               href="/login" 
               onClick={() => setMobileMenuOpen(false)}
               className="w-full text-center py-4 text-sm font-bold bg-[var(--color-evida-lime)] text-[#111827] uppercase tracking-widest hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors"
             >
-              Get Started
+              Sign Up
             </Link>
           </div>
         </div>
