@@ -750,7 +750,7 @@ export default function LandingPage() {
           
           {/* Logo / Title */}
           <div className="mb-12 flex justify-center w-full">
-             <EvidaLogo size={44} lightMode={false} />
+             <EvidaLogo size={44} lightMode={false} text="Join Evida" />
           </div>
 
 

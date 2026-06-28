@@ -7,6 +7,7 @@ interface EvidaLogoProps {
   size?: number; // Height of the logo in pixels (default: 40)
   showText?: boolean; // Whether to show the "Evida" text (default: true)
   lightMode?: boolean; // If true, text is dark (#111827) instead of white (default: false)
+  text?: string; // Custom text to display next to the logo (default: "Evida")
 }
 
 export default function EvidaLogo({
@@ -14,15 +15,17 @@ export default function EvidaLogo({
   size = 40,
   showText = true,
   lightMode = false,
+  text = 'Evida',
 }: EvidaLogoProps) {
   // Scale factor based on the default height of 48px
   const scale = size / 48;
-  const width = showText ? 200 * scale : 48 * scale;
+  const viewBoxWidth = text === 'Evida' ? 200 : 260;
+  const width = showText ? viewBoxWidth * scale : 48 * scale;
 
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={showText ? `0 0 200 48` : `0 0 48 48`}
+      viewBox={showText ? `0 0 ${viewBoxWidth} 48` : `0 0 48 48`}
       width={width}
       height={size}
       className={`select-none ${className}`}
@@ -60,7 +63,7 @@ export default function EvidaLogo({
           fontSize="26"
           letterSpacing="0.03em"
         >
-          Evida
+          {text}
         </text>
       )}
     </svg>
