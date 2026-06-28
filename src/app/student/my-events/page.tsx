@@ -68,7 +68,7 @@ export default function MyEventsPage() {
           description="You haven't hosted any events yet. Create one to get started!"
           action={
             <Link href="/student/create">
-              <Button>Create Event</Button>
+              <Button>Create</Button>
             </Link>
           }
         />

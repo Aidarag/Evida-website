@@ -91,7 +91,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
             {variant === 'student' && (
               <>
                 <Link href="/student/create" className="px-4 py-1.5 rounded-full bg-[#4C1D95] text-white text-xs font-medium hover:bg-[#6D28D9] transition-colors">
-                  Create Event
+                  Create
                 </Link>
                 <Link href="/student/profile" className="h-9 w-9 rounded-full bg-[#F5F3FF] border border-[#4C1D95]/20 flex items-center justify-center text-[#4C1D95] text-xs font-bold cursor-pointer">
                   MC
