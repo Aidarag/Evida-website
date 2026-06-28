@@ -34,28 +34,28 @@ const visionData: Record<VisionKey, VisionContent> = {
     leftText: "Stop searching through dozens of group chats, emails, and flyers. Evida centralizes all campus activities into a single, intuitive feed.",
     bottomHeadline: "ALWAYS IN THE LOOP.",
     bottomText: "Filter by your interests, save events to your calendar, and receive notifications for updates that matter to you.",
-    targetRotation: { x: -10, y: 25 }
+    targetRotation: { x: -100, y: 25 }
   },
   Connection: {
     leftHeadline: "CONNECT DEEPLY.",
     leftText: "Great college memories are made with others. Evida makes it easy to find clubs, join student groups, and meet people who share your passions.",
     bottomHeadline: "CLUBS & ORGANIZATIONS.",
     bottomText: "Give your student organization a digital home. Expand your reach, track your members, and simplify event promotion.",
-    targetRotation: { x: -10, y: -20 }
+    targetRotation: { x: 80, y: 25 }
   },
   Community: {
     leftHeadline: "BUILD COMMUNITY.",
     leftText: "A vibrant campus is an engaged campus. Evida fosters a sense of belonging by making student-led initiatives visible to everyone.",
     bottomHeadline: "STRONGER TOGETHER.",
     bottomText: "When students and administration collaborate on a single platform, the entire campus culture becomes more connected.",
-    targetRotation: { x: -10, y: -65 }
+    targetRotation: { x: -10, y: 115 }
   },
   Memories: {
     leftHeadline: "UNFORGETTABLE MEMORIES.",
     leftText: "Your college years are some of the most impactful years of your life. Evida ensures you don't miss the moments that turn into lifelong memories.",
     bottomHeadline: "COLLEGE ENDS, MEMORIES DON'T.",
     bottomText: "Capturing the spirit of campus life. Because what you do outside the classroom matters just as much as what you do inside.",
-    targetRotation: { x: -10, y: 25 }
+    targetRotation: { x: -10, y: -155 }
   }
 };
 
@@ -239,9 +239,9 @@ export default function OurVisionSection() {
                     </div>
                   </Link>
 
-                  {/* Back Face */}
+                  {/* Back Face (MEMORIES) */}
                   <Link 
-                    href="/#explore-categories"
+                    href="/#faq"
                     className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)] hover:border-[var(--color-evida-lime)] transition-colors cursor-pointer"
                     style={{
                       transform: 'rotateY(180deg) translateZ(var(--cube-translate))',
@@ -250,22 +250,22 @@ export default function OurVisionSection() {
                     }}
                   >
                     <div className="text-left">
-                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-evida-lime)]">Vision</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-evida-lime)]">Pillar 06</span>
                     </div>
                     <div className="my-auto text-left">
                       <h3 className="text-black font-bold text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
-                        EVIDA
+                        MEMORIES
                       </h3>
                       <p className="text-gray-600 text-[10px] sm:text-[11px] mt-3 font-semibold leading-relaxed">
-                        The digital home of campus life and community connection.
+                        College ends, memories don't. Capture and cherish your best moments outside the classroom.
                       </p>
                     </div>
                     <div className="text-right">
-                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Est. 2024</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Evida Memories</span>
                     </div>
                   </Link>
 
-                  {/* Left Face */}
+                  {/* Left Face (COMMUNITY) */}
                   <Link 
                     href="/student/dashboard"
                     className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)] hover:border-[var(--color-evida-coral)] transition-colors cursor-pointer"
@@ -276,7 +276,7 @@ export default function OurVisionSection() {
                     }}
                   >
                     <div className="text-left">
-                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-evida-coral)]">Core</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-evida-coral)]">Pillar 05</span>
                     </div>
                     <div className="my-auto text-left">
                       <h3 className="text-black font-bold text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
@@ -291,29 +291,57 @@ export default function OurVisionSection() {
                     </div>
                   </Link>
 
-                  {/* Top Face */}
-                  <div 
-                    className="absolute inset-0 bg-gray-50 border-4 border-black p-5 flex items-center justify-center"
+                  {/* Top Face (DISCOVERY) */}
+                  <Link 
+                    href="/#explore-categories"
+                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)] hover:border-[var(--color-evida-lime)] transition-colors cursor-pointer"
                     style={{
                       transform: 'rotateX(90deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
                       WebkitBackfaceVisibility: 'hidden'
                     }}
                   >
-                    <span className="text-black font-bold text-lg uppercase tracking-widest">EVIDA</span>
-                  </div>
+                    <div className="text-left">
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-evida-lime)]">Pillar 03</span>
+                    </div>
+                    <div className="my-auto text-left">
+                      <h3 className="text-black font-bold text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
+                        DISCOVERY
+                      </h3>
+                      <p className="text-gray-600 text-[10px] sm:text-[11px] mt-3 font-semibold leading-relaxed">
+                        Explore campus events by category, date, or organization in a single feed.
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Evida Feed</span>
+                    </div>
+                  </Link>
 
-                  {/* Bottom Face */}
-                  <div 
-                    className="absolute inset-0 bg-gray-50 border-4 border-black p-5 flex items-center justify-center"
+                  {/* Bottom Face (CONNECTION) */}
+                  <Link 
+                    href="/#calendar"
+                    className="absolute inset-0 bg-white border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-[8px_8px_0px_rgba(0,0,0,0.15)] hover:border-[var(--color-evida-blue)] transition-colors cursor-pointer"
                     style={{
                       transform: 'rotateX(-90deg) translateZ(var(--cube-translate))',
                       backfaceVisibility: 'hidden',
                       WebkitBackfaceVisibility: 'hidden'
                     }}
                   >
-                    <span className="text-black font-bold text-lg uppercase tracking-widest">EVIDA</span>
-                  </div>
+                    <div className="text-left">
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-evida-blue)]">Pillar 04</span>
+                    </div>
+                    <div className="my-auto text-left">
+                      <h3 className="text-black font-bold text-2xl sm:text-3xl tracking-tighter leading-none uppercase" style={{ fontFamily: 'var(--font-display)' }}>
+                        CONNECTION
+                      </h3>
+                      <p className="text-gray-600 text-[10px] sm:text-[11px] mt-3 font-semibold leading-relaxed">
+                        Join student groups, RSVP to events, and connect with your peers.
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">Evida Network</span>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>
