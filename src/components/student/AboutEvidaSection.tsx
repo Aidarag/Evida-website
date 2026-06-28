@@ -45,65 +45,68 @@ export default function AboutEvidaSection() {
         </div>
 
         {/* Central Purple-ish / Brand Block */}
-        <div className="relative w-full max-w-5xl mx-auto mt-24">
+        <div className="relative w-full max-w-6xl mx-auto mt-24">
           
           {/* The main block background */}
-          <div className="bg-[var(--color-evida-blue)]/10 border border-[var(--color-evida-blue)]/20 rounded-[40px] p-12 md:p-24 text-center relative z-20 backdrop-blur-sm">
+          <div className="bg-[var(--color-evida-blue)]/10 border border-[var(--color-evida-blue)]/20 rounded-[40px] p-8 md:p-16 text-center relative z-20 backdrop-blur-sm max-w-2xl lg:max-w-3xl mx-auto">
             
-            <p className="text-[var(--color-evida-lime)] text-sm md:text-base font-black tracking-[0.3em] uppercase mb-8">
+            <p className="text-[var(--color-evida-lime)] text-sm md:text-base font-black tracking-[0.3em] uppercase mb-6">
               Who We Are
             </p>
 
-            <h3 className="text-white font-black text-3xl md:text-5xl uppercase leading-tight mb-8" style={{ fontFamily: 'var(--font-lufga)' }}>
+            <h3 className="text-white font-black text-2xl md:text-4xl lg:text-5xl uppercase leading-tight mb-6" style={{ fontFamily: 'var(--font-lufga)' }}>
               The Digital Home of Campus Life.
             </h3>
             
-            <p className="text-white/80 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed font-medium">
+            <p className="text-white/80 text-base md:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed font-medium">
               Evida brings every campus event, organization, and opportunity into one place, helping students discover experiences, build connections, and create unforgettable college memories.
             </p>
 
           </div>
 
-          {/* Absolute positioned polaroid photos */}
-          
-          {/* Top Left Photo */}
-          <div className="absolute -top-16 -left-12 md:-left-24 z-30 rotate-[-8deg] hover:rotate-[-2deg] transition-transform duration-300">
-            <div className="bg-white p-3 pb-10 rounded-sm shadow-2xl w-48 md:w-64 border border-gray-200">
-              <div className="relative aspect-square w-full overflow-hidden bg-gray-200">
-                <Image src="/pexels-amar-20025867.jpg" alt="Campus Concert" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+          {/* Polaroid photos */}
+          <div className="mt-12 lg:mt-0 grid grid-cols-2 md:grid-cols-4 lg:block gap-6 justify-items-center relative z-30">
+            
+            {/* Top Left Photo */}
+            <div className="lg:absolute lg:-top-12 lg:-left-6 xl:-left-16 z-30 lg:rotate-[-8deg] hover:lg:rotate-[-2deg] transition-transform duration-300">
+              <div className="bg-white p-2.5 pb-8 rounded-sm shadow-2xl w-36 sm:w-44 md:w-48 lg:w-40 xl:w-48 border border-gray-200">
+                <div className="relative aspect-square w-full overflow-hidden bg-gray-200">
+                  <Image src="/pexels-amar-20025867.jpg" alt="Campus Concert" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                </div>
+                <p className="absolute bottom-2.5 left-0 w-full text-center text-black font-bold text-[10px] sm:text-xs uppercase tracking-wider handwritten-font">Welcome Week</p>
               </div>
-              <p className="absolute bottom-3 left-0 w-full text-center text-black font-bold text-xs uppercase tracking-wider handwritten-font">Welcome Week</p>
             </div>
-          </div>
 
-          {/* Top Right Photo */}
-          <div className="absolute -top-10 -right-8 md:-right-16 z-30 rotate-[6deg] hover:rotate-[0deg] transition-transform duration-300">
-            <div className="bg-white p-3 pb-10 rounded-sm shadow-2xl w-40 md:w-56 border border-gray-200">
-              <div className="relative aspect-square w-full overflow-hidden bg-gray-200">
-                <Image src="/pexels-nick-rush-2508183-11211233.jpg" alt="Basketball Game" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            {/* Top Right Photo */}
+            <div className="lg:absolute lg:-top-6 lg:-right-6 xl:-right-16 z-30 lg:rotate-[6deg] hover:lg:rotate-[0deg] transition-transform duration-300">
+              <div className="bg-white p-2.5 pb-8 rounded-sm shadow-2xl w-32 sm:w-40 md:w-44 lg:w-36 xl:w-44 border border-gray-200">
+                <div className="relative aspect-square w-full overflow-hidden bg-gray-200">
+                  <Image src="/pexels-nick-rush-2508183-11211233.jpg" alt="Basketball Game" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                </div>
+                <p className="absolute bottom-2.5 left-0 w-full text-center text-black font-bold text-[10px] sm:text-xs uppercase tracking-wider handwritten-font">Game Day</p>
               </div>
-              <p className="absolute bottom-3 left-0 w-full text-center text-black font-bold text-xs uppercase tracking-wider handwritten-font">Game Day</p>
             </div>
-          </div>
 
-          {/* Bottom Left Photo */}
-          <div className="absolute -bottom-16 -left-4 md:-left-12 z-30 rotate-[4deg] hover:rotate-[-2deg] transition-transform duration-300">
-            <div className="bg-white p-3 pb-10 rounded-sm shadow-2xl w-44 md:w-60 border border-gray-200">
-              <div className="relative aspect-square w-full overflow-hidden bg-gray-200">
-                <Image src="/pexels-maorattias-5191958.jpg" alt="Party" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            {/* Bottom Left Photo */}
+            <div className="hidden md:block lg:absolute lg:bottom-4 lg:-left-4 xl:-left-8 z-30 lg:rotate-[4deg] hover:lg:rotate-[-2deg] transition-transform duration-300">
+              <div className="bg-white p-2.5 pb-8 rounded-sm shadow-2xl w-32 sm:w-40 md:w-44 lg:w-36 xl:w-44 border border-gray-200">
+                <div className="relative aspect-square w-full overflow-hidden bg-gray-200">
+                  <Image src="/pexels-maorattias-5191958.jpg" alt="Party" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                </div>
+                <p className="absolute bottom-2.5 left-0 w-full text-center text-black font-bold text-[10px] sm:text-xs uppercase tracking-wider handwritten-font">Homecoming</p>
               </div>
-              <p className="absolute bottom-3 left-0 w-full text-center text-black font-bold text-xs uppercase tracking-wider handwritten-font">Homecoming</p>
             </div>
-          </div>
 
-          {/* Bottom Right Photo */}
-          <div className="absolute -bottom-12 -right-12 md:-right-24 z-30 rotate-[-5deg] hover:rotate-[2deg] transition-transform duration-300">
-            <div className="bg-white p-3 pb-10 rounded-sm shadow-2xl w-48 md:w-64 border border-gray-200">
-              <div className="relative aspect-square w-full overflow-hidden bg-gray-200">
-                <Image src="/pexels-rdne-7648057.jpg" alt="Career Fair" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            {/* Bottom Right Photo */}
+            <div className="hidden md:block lg:absolute lg:-bottom-12 lg:-right-6 xl:-right-12 z-30 lg:rotate-[-5deg] hover:lg:rotate-[2deg] transition-transform duration-300">
+              <div className="bg-white p-2.5 pb-8 rounded-sm shadow-2xl w-36 sm:w-44 md:w-48 lg:w-40 xl:w-48 border border-gray-200">
+                <div className="relative aspect-square w-full overflow-hidden bg-gray-200">
+                  <Image src="/pexels-rdne-7648057.jpg" alt="Career Fair" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                </div>
+                <p className="absolute bottom-2.5 left-0 w-full text-center text-black font-bold text-[10px] sm:text-xs uppercase tracking-wider handwritten-font">Career Fair</p>
               </div>
-              <p className="absolute bottom-3 left-0 w-full text-center text-black font-bold text-xs uppercase tracking-wider handwritten-font">Career Fair</p>
             </div>
+
           </div>
 
         </div>
