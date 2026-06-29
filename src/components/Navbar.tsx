@@ -14,6 +14,16 @@ import EvidaLogo from '@/components/ui/EvidaLogo';
 export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'school' | 'public' }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    if (variant !== 'public') return;
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [variant]);
 
   const publicLinks = [
     { label: 'About Evida', href: '/#about-evida' },
@@ -28,7 +38,11 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
     <>
       <header className={`flex w-full items-center transition-all duration-300 ${
         variant === 'public' 
-          ? 'absolute top-0 z-50 h-20 md:h-24 border-none bg-transparent' 
+          ? `fixed top-0 z-50 h-20 md:h-24 border-none ${
+              scrolled 
+                ? 'bg-white/90 backdrop-blur-xl border-b border-slate-200/50 shadow-sm' 
+                : 'bg-transparent'
+            }` 
           : 'sticky top-0 z-40 h-16 border-b border-gray-100 bg-white/90 backdrop-blur-xl shadow-sm'
       } ${variant !== 'public' ? 'hidden md:flex' : ''}`}>
         <div className="mx-auto w-full max-w-[1400px] px-6 md:px-8 flex items-center justify-between">
@@ -37,7 +51,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
               {variant === 'public' ? (
-                <EvidaLogo size={36} lightMode={false} />
+                <EvidaLogo size={36} lightMode={scrolled} />
               ) : (
                 <EvidaLogo size={32} lightMode={true} />
               )}
@@ -50,7 +64,11 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                   <Link 
                     key={link.href}
                     href={link.href} 
-                    className="text-[11px] font-bold text-white/80 hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors duration-300"
+                    className={`text-[11px] font-bold uppercase tracking-widest transition-colors duration-300 ${
+                      scrolled 
+                        ? 'text-slate-700 hover:text-[#ff5d00]' 
+                        : 'text-white/80 hover:text-[#ff5d00]'
+                    }`}
                   >
                     {link.label}
                   </Link>
@@ -64,10 +82,22 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
             {variant === 'public' && (
               <>
                 <div className="hidden md:flex items-center gap-4">
-                  <Link href="/login" className="text-xs font-bold text-white hover:text-[var(--color-evida-lime)] uppercase tracking-widest transition-colors flex items-center gap-2">
+                  <Link 
+                    href="/login" 
+                    className={`text-xs font-bold uppercase tracking-widest transition-colors flex items-center gap-2 ${
+                      scrolled ? 'text-slate-700 hover:text-[#ff5d00]' : 'text-white hover:text-[#ff5d00]'
+                    }`}
+                  >
                     Sign In
                   </Link>
-                  <Link href="/signup" className="ml-4 bg-[var(--color-evida-lime)] text-[#111827] px-6 py-2.5 font-bold uppercase tracking-widest text-xs hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors rounded-sm shadow-[3px_3px_0px_rgba(255,255,255,0.2)]">
+                  <Link 
+                    href="/signup" 
+                    className={`ml-4 px-6 py-2.5 font-bold uppercase tracking-widest text-xs transition-all duration-300 rounded-full shadow-sm ${
+                      scrolled 
+                        ? 'bg-[#ff5d00] text-white hover:bg-[#0d0101] shadow-[0_4px_12px_rgba(255,93,0,0.25)]' 
+                        : 'bg-white text-[#0d0101] hover:bg-[#ff5d00] hover:text-white'
+                    }`}
+                  >
                     Sign Up
                   </Link>
                 </div>
@@ -75,7 +105,9 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                 {/* Mobile Hamburger Button */}
                 <button 
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="lg:hidden text-white hover:text-[var(--color-evida-lime)] p-2 focus:outline-none transition-colors z-55 cursor-pointer"
+                  className={`lg:hidden p-2 focus:outline-none transition-colors z-55 cursor-pointer ${
+                    scrolled ? 'text-slate-800 hover:text-[#ff5d00]' : 'text-white hover:text-[#ff5d00]'
+                  }`}
                 >
                   {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
@@ -131,7 +163,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
             <Link 
               href="/signup" 
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-4 text-sm font-bold bg-[var(--color-evida-lime)] text-[#111827] uppercase tracking-widest hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors"
+              className="w-full text-center py-4 text-sm font-bold bg-[#ff5d00] text-white uppercase tracking-widest hover:bg-white hover:text-[#0d0101] transition-colors"
             >
               Sign Up
             </Link>
