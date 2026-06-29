@@ -279,25 +279,42 @@ export default function LandingPage() {
 
         {/* Scrolling Category Marquee (Bottom of Hero) */}
         <div className="absolute bottom-0 left-0 w-full z-20">
-          <div className="relative w-full overflow-hidden bg-[#0F0F13]/90 backdrop-blur-sm py-5 flex items-center border-t border-white/5 shadow-2xl">
-            <div className="animate-marquee flex gap-12 text-[var(--color-evida-coral)] font-bold text-xl tracking-[0.2em] uppercase opacity-90">
+          <div className="relative w-full overflow-hidden bg-[#2c2324]/90 backdrop-blur-sm py-5 flex items-center border-t border-white/5 shadow-2xl">
+            <div className="animate-marquee flex gap-12 text-[#efece3] font-bold text-lg tracking-[0.2em] uppercase opacity-90 items-center">
               <span>ORIENTATION</span>
+              <EvidaLogo size={22} showText={false} />
               <span>HOMECOMING</span>
+              <EvidaLogo size={22} showText={false} />
               <span>CAREER FAIR</span>
+              <EvidaLogo size={22} showText={false} />
               <span>SPORTS</span>
+              <EvidaLogo size={22} showText={false} />
               <span>WORKSHOPS</span>
+              <EvidaLogo size={22} showText={false} />
               <span>STUDENT LIFE</span>
+              <EvidaLogo size={22} showText={false} />
               <span>ORGANIZATIONS</span>
+              <EvidaLogo size={22} showText={false} />
               <span>CULTURAL EVENTS</span>
+              <EvidaLogo size={22} showText={false} />
+              
               {/* Duplicate for infinite effect */}
               <span>ORIENTATION</span>
+              <EvidaLogo size={22} showText={false} />
               <span>HOMECOMING</span>
+              <EvidaLogo size={22} showText={false} />
               <span>CAREER FAIR</span>
+              <EvidaLogo size={22} showText={false} />
               <span>SPORTS</span>
+              <EvidaLogo size={22} showText={false} />
               <span>WORKSHOPS</span>
+              <EvidaLogo size={22} showText={false} />
               <span>STUDENT LIFE</span>
+              <EvidaLogo size={22} showText={false} />
               <span>ORGANIZATIONS</span>
+              <EvidaLogo size={22} showText={false} />
               <span>CULTURAL EVENTS</span>
+              <EvidaLogo size={22} showText={false} />
             </div>
           </div>
         </div>

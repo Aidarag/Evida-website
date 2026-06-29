@@ -31,17 +31,17 @@ export default function EvidaLogo({
       className={`select-none ${className}`}
     >
       <g id="evida-logo-mark">
-        {/* Left Ribbon (Vibrant Orange) */}
+        {/* Left Ribbon (Santiago Orange) */}
         <path
           d="M 6 42 L 6 22 L 24 6 L 24 15 L 15 24 L 15 42 Z"
           fill="#eb5e28"
           opacity="0.85"
         />
         
-        {/* Right Ribbon (Near-Black) */}
+        {/* Right Ribbon (Santiago Orange) */}
         <path
           d="M 42 42 L 42 22 L 24 6 L 24 15 L 33 24 L 33 42 Z"
-          fill="#2c2324"
+          fill="#eb5e28"
           opacity="0.85"
         />
         
