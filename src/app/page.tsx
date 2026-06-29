@@ -671,17 +671,11 @@ export default function LandingPage() {
       <section id="faq" className="relative w-full bg-slate-50 py-24 border-t border-slate-100">
         <div className="max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* Left Column: Title and overlapping circles */}
+          {/* Left Column: Title */}
           <div className="lg:col-span-4 space-y-8 flex flex-col items-center lg:items-start text-center lg:text-left">
             <h2 className="text-slate-900 font-extrabold text-5xl md:text-6xl uppercase tracking-tighter" style={{ fontFamily: 'var(--font-display)' }}>
               FAQ
             </h2>
-            
-            {/* Overlapping Brand Circles (from the screenshot design) */}
-            <div className="relative w-28 h-16 flex items-center justify-center lg:justify-start">
-              <div className="w-12 h-12 rounded-full border-4 border-[#eb5e28] opacity-80" />
-              <div className="w-12 h-12 rounded-full border-4 border-[#eb5e28] opacity-80 -ml-4" />
-            </div>
           </div>
 
           {/* Right Column: Tab Selector and Accordion List */}
@@ -756,6 +750,14 @@ export default function LandingPage() {
 
           </div>
 
+        </div>
+
+        {/* Overlapping Brand Circles - Centered at the bottom of the FAQ section */}
+        <div className="mt-16 flex justify-center w-full">
+          <div className="relative w-24 h-12 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full border-4 border-[#eb5e28] opacity-85" />
+            <div className="w-12 h-12 rounded-full border-4 border-[#eb5e28] opacity-85 -ml-5" />
+          </div>
         </div>
       </section>
 
