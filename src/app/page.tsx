@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Search, ChevronDown, Compass, Megaphone, Shield, MousePointer2, UserCheck, CalendarDays, LineChart, ArrowRight, Briefcase, Sparkles, Music, Trophy, GraduationCap, Users } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { DesktopNav } from '@/components/Navbar';
 import EventCard from '@/components/student/EventCard';
 import FeaturedEventCard from '@/components/student/FeaturedEventCard';
@@ -15,6 +16,12 @@ import EvidaLogo from '@/components/ui/EvidaLogo';
 export default function LandingPage() {
   const router = useRouter();
   const { events } = useEvents();
+
+  // Scroll-based parallax and zoom transforms for the hero background image
+  const { scrollY } = useScroll();
+  const yBg = useTransform(scrollY, [0, 600], [0, 180]);
+  const opacityBg = useTransform(scrollY, [0, 600], [0.35, 0.05]);
+  const scaleBg = useTransform(scrollY, [0, 600], [1, 1.08]);
 
   const faqData = {
     students: [
@@ -285,9 +292,10 @@ export default function LandingPage() {
 
       {/* Full-Screen Cinematic Hero Section */}
       <section className="relative w-full h-[100vh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden bg-[#0F0F13]">
-        {/* Background Image (Vibrant Real Color) */}
-        <div 
-          className="absolute inset-0 w-full h-full bg-[url('/pexels-maorattias-5191958.jpg')] bg-cover bg-center opacity-35 contrast-100"
+        {/* Background Image (Vibrant Real Color - Animated Scroll Parallax & Zoom) */}
+        <motion.div 
+          style={{ y: yBg, opacity: opacityBg, scale: scaleBg }}
+          className="absolute inset-0 w-full h-full bg-[url('/pexels-maorattias-5191958.jpg')] bg-cover bg-center contrast-100 pointer-events-none"
         />
         
         {/* Dark Overlay Gradient */}
