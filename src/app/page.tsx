@@ -896,10 +896,10 @@ export default function LandingPage() {
         </div>
 
         {/* Footer Links */}
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-4 gap-12 text-white/70 mb-12">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-12 text-white/70 mb-12">
           
           {/* Contact Column */}
-          <div className="md:col-span-1 space-y-4">
+          <div className="md:col-span-3 space-y-4 text-left">
             <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Contact</h4>
             <div className="space-y-1 text-sm font-medium">
               <p className="text-white font-bold text-lg mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
@@ -909,7 +909,7 @@ export default function LandingPage() {
           </div>
 
           {/* Discover Column */}
-          <div>
+          <div className="md:col-span-2 space-y-4 text-left">
             <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Discover</h4>
             <ul className="space-y-3 text-sm font-medium">
               <li><Link href="#about-evida" className="hover:text-white transition-colors">About Evida</Link></li>
@@ -921,7 +921,7 @@ export default function LandingPage() {
           </div>
 
           {/* Platform Column */}
-          <div>
+          <div className="md:col-span-2 space-y-4 text-left">
             <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Platform</h4>
             <ul className="space-y-3 text-sm font-medium">
               <li><Link href="/student/events" className="hover:text-white transition-colors">Explore Events</Link></li>
@@ -933,12 +933,35 @@ export default function LandingPage() {
           </div>
 
           {/* Social Column */}
-          <div>
+          <div className="md:col-span-2 space-y-4 text-left">
             <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Stay Social</h4>
             <ul className="space-y-3 text-sm font-medium">
               <li><a href="#" className="hover:text-[var(--color-evida-lime)] transition-colors">Instagram</a></li>
               <li><a href="#" className="hover:text-[var(--color-evida-lime)] transition-colors">LinkedIn</a></li>
             </ul>
+          </div>
+
+          {/* Newsletter Column */}
+          <div className="md:col-span-3 space-y-4 text-left">
+            <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Newsletter</h4>
+            <p className="text-white/60 text-xs leading-relaxed">
+              Stay updated on the latest campus events and club promotions.
+            </p>
+            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row gap-2 pt-2">
+              <input 
+                type="email" 
+                placeholder="Enter your email" 
+                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/35 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#eb5e28] transition-colors"
+                required
+              />
+              <button 
+                type="submit"
+                className="bg-[#eb5e28] text-white px-5 py-2.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider hover:bg-[#FFFDE1] hover:text-[#2c2324] transition-all duration-300 whitespace-nowrap"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
 
