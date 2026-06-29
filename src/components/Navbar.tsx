@@ -84,8 +84,10 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                 <div className="hidden md:flex items-center gap-4">
                   <Link 
                     href="/login" 
-                    className={`text-xs font-bold uppercase tracking-widest transition-colors flex items-center gap-2 ${
-                      scrolled ? 'text-[#2c2324] hover:text-[#eb5e28]' : 'text-[#FFFDE1]/95 hover:text-[#eb5e28]'
+                    className={`px-6 py-2.5 font-bold uppercase tracking-widest text-xs transition-all duration-300 rounded-full shadow-sm ${
+                      scrolled 
+                        ? 'bg-[#FFFDE1] text-[#2c2324] border border-[#2c2324]/20 hover:bg-[#2c2324] hover:text-[#FFFDE1]' 
+                        : 'bg-[#FFFDE1] text-[#2c2324] hover:bg-[#eb5e28] hover:text-[#FFFDE1]'
                     }`}
                   >
                     Sign In
@@ -94,7 +96,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                     href="/signup" 
                     className={`ml-4 px-6 py-2.5 font-bold uppercase tracking-widest text-xs transition-all duration-300 rounded-full shadow-sm ${
                       scrolled 
-                        ? 'bg-[#eb5e28] text-[#FFFDE1] hover:bg-[#2c2324] hover:text-[#FFFDE1]' 
+                        ? 'bg-[#FFFDE1] text-[#eb5e28] border border-[#eb5e28]/40 hover:bg-[#eb5e28] hover:text-[#FFFDE1]' 
                         : 'bg-[#FFFDE1] text-[#2c2324] hover:bg-[#eb5e28] hover:text-[#FFFDE1]'
                     }`}
                   >
@@ -156,14 +158,14 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
             <Link 
               href="/login" 
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-4 text-sm font-bold text-[#FFFDE1] border border-white/10 uppercase tracking-widest hover:border-white/30 transition-colors"
+              className="w-full text-center py-3.5 text-sm font-bold bg-[#FFFDE1] text-[#2c2324] rounded-full uppercase tracking-widest hover:bg-[#eb5e28] hover:text-[#FFFDE1] transition-colors"
             >
               Sign In
             </Link>
             <Link 
               href="/signup" 
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-4 text-sm font-bold bg-[#eb5e28] text-[#FFFDE1] uppercase tracking-widest hover:bg-[#FFFDE1] hover:text-[#2c2324] transition-colors"
+              className="w-full text-center py-3.5 text-sm font-bold bg-[#FFFDE1] text-[#2c2324] rounded-full uppercase tracking-widest hover:bg-[#eb5e28] hover:text-[#FFFDE1] transition-colors"
             >
               Sign Up
             </Link>
