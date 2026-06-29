@@ -19,7 +19,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
   React.useEffect(() => {
     if (variant !== 'public') return;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -30,45 +30,36 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
     { label: 'Our Mission', href: '/#our-mission' },
     { label: 'FAQ', href: '/#faq' },
     { label: 'Featured Events', href: '/#explore-categories' },
-    { label: 'Get Started', href: '/login' },
     { label: 'Calendar', href: '/#calendar' },
   ];
 
   return (
     <>
-      <header className={`flex w-full items-center transition-all duration-300 ${
+      <header className={`flex items-center transition-all duration-500 ${
         variant === 'public' 
-          ? `fixed top-0 left-0 right-0 z-50 h-20 md:h-24 ${
+          ? `fixed top-4 left-4 right-4 z-50 h-16 md:h-20 mx-auto max-w-7xl rounded-full ${
               scrolled 
-                ? 'bg-[#FFFDE1]/85 backdrop-blur-xl border-b border-[#766754]/20 shadow-md' 
-                : 'bg-[#2c2324]/60 backdrop-blur-xl border-b border-white/10 shadow-lg'
+                ? 'bg-white/90 backdrop-blur-xl border border-black/[0.05] shadow-[var(--shadow-premium-md)]' 
+                : 'bg-white/70 backdrop-blur-md border border-black/[0.03] shadow-[var(--shadow-premium-sm)]'
             }` 
-          : 'sticky top-0 z-40 h-16 border-b border-[#766754]/10 bg-[#FFFDE1]/90 backdrop-blur-xl shadow-sm'
+          : 'sticky top-0 z-40 h-16 border-b border-black/[0.04] bg-white/90 backdrop-blur-xl shadow-sm'
       } ${variant !== 'public' ? 'hidden md:flex' : ''}`}>
-        <div className="mx-auto w-full max-w-[1400px] px-6 md:px-8 flex items-center justify-between">
+        <div className="w-full px-6 md:px-8 flex items-center justify-between">
           {/* Left side: Logo & Links */}
           <div className="flex items-center gap-10">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              {variant === 'public' ? (
-                <EvidaLogo size={36} lightMode={scrolled} />
-              ) : (
-                <EvidaLogo size={32} lightMode={true} />
-              )}
+              <EvidaLogo size={32} lightMode={true} />
             </Link>
             
             {/* Public links */}
             {variant === 'public' && (
-              <nav className="hidden lg:flex items-center gap-8 ml-8">
+              <nav className="hidden lg:flex items-center gap-8 ml-4">
                 {publicLinks.map((link) => (
                   <Link 
                     key={link.href}
                     href={link.href} 
-                    className={`text-[11px] font-bold uppercase tracking-widest transition-colors duration-300 ${
-                      scrolled 
-                        ? 'text-[#2c2324] hover:text-[#eb5e28]' 
-                        : 'text-[#FFFDE1]/90 hover:text-[#eb5e28]'
-                    }`}
+                    className="text-[11px] font-bold uppercase tracking-widest text-[#4F5666] hover:text-[#FF5A1F] transition-colors duration-300"
                   >
                     {link.label}
                   </Link>
@@ -84,21 +75,13 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                 <div className="hidden md:flex items-center gap-4">
                   <Link 
                     href="/login" 
-                    className={`px-6 py-2.5 font-bold uppercase tracking-widest text-xs transition-all duration-300 rounded-full shadow-sm ${
-                      scrolled 
-                        ? 'bg-[#FFFDE1] text-[#2c2324] border border-[#2c2324]/20 hover:bg-[#2c2324] hover:text-[#FFFDE1]' 
-                        : 'bg-[#FFFDE1] text-[#2c2324] hover:bg-[#eb5e28] hover:text-[#FFFDE1]'
-                    }`}
+                    className="px-5 py-2 font-bold uppercase tracking-widest text-[11px] text-[#4F5666] hover:text-[#FF5A1F] transition-colors duration-300"
                   >
                     Sign In
                   </Link>
                   <Link 
                     href="/signup" 
-                    className={`ml-4 px-6 py-2.5 font-bold uppercase tracking-widest text-xs transition-all duration-300 rounded-full shadow-sm ${
-                      scrolled 
-                        ? 'bg-[#FFFDE1] text-[#eb5e28] border border-[#eb5e28]/40 hover:bg-[#eb5e28] hover:text-[#FFFDE1]' 
-                        : 'bg-[#FFFDE1] text-[#2c2324] hover:bg-[#eb5e28] hover:text-[#FFFDE1]'
-                    }`}
+                    className="px-6 py-2.5 font-bold uppercase tracking-widest text-[11px] rounded-full bg-[#FF5A1F] text-white shadow-[0_4px_12px_rgba(255,90,31,0.2)] hover:bg-[#e04b12] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                   >
                     Sign Up
                   </Link>
@@ -107,9 +90,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                 {/* Mobile Hamburger Button */}
                 <button 
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className={`lg:hidden p-2 focus:outline-none transition-colors z-55 cursor-pointer ${
-                    scrolled ? 'text-[#2c2324] hover:text-[#eb5e28]' : 'text-[#FFFDE1] hover:text-[#eb5e28]'
-                  }`}
+                  className="lg:hidden p-2 focus:outline-none text-[#121212] hover:text-[#FF5A1F] transition-colors z-55 cursor-pointer"
                 >
                   {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
@@ -117,20 +98,20 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
             )}
             {variant === 'student' && (
               <>
-                <Link href="/student/create" className="px-4 py-1.5 rounded-full bg-[#4C1D95] text-white text-xs font-medium hover:bg-[#6D28D9] transition-colors">
+                <Link href="/student/create" className="px-5 py-2 rounded-full bg-[#FF5A1F] text-white text-[11px] font-bold uppercase tracking-wider hover:bg-[#e04b12] transition-colors shadow-[0_4px_12px_rgba(255,90,31,0.15)]">
                   Create
                 </Link>
-                <Link href="/student/profile" className="h-9 w-9 rounded-full bg-[#F5F3FF] border border-[#4C1D95]/20 flex items-center justify-center text-[#4C1D95] text-xs font-bold cursor-pointer">
+                <Link href="/student/profile" className="h-9 w-9 rounded-full bg-[#8257FF]/10 border border-[#8257FF]/20 flex items-center justify-center text-[#8257FF] text-xs font-bold cursor-pointer">
                   MC
                 </Link>
               </>
             )}
             {variant === 'school' && (
               <>
-                <Link href="/student/events" className="text-xs font-medium text-[#4C1D95] hover:text-[#6D28D9] transition-colors cursor-pointer">
+                <Link href="/student/events" className="text-xs font-bold text-[#4F7CFF] hover:text-[#3b68e0] uppercase tracking-wider transition-colors cursor-pointer">
                   Student Portal
                 </Link>
-                <div className="h-9 w-9 rounded-full bg-pink-50 border border-pink-200 flex items-center justify-center text-pink-600 text-xs font-bold">
+                <div className="h-9 w-9 rounded-full bg-[#4F7CFF]/10 border border-[#4F7CFF]/20 flex items-center justify-center text-[#4F7CFF] text-xs font-bold">
                   A
                 </div>
               </>
@@ -141,14 +122,14 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
 
       {/* Mobile Menu Overlay (Public only) */}
       {variant === 'public' && mobileMenuOpen && (
-        <div className="fixed inset-0 bg-[#2c2324] z-40 lg:hidden flex flex-col pt-28 px-8 transition-all duration-300 animate-fade-in">
+        <div className="fixed inset-0 bg-white/95 backdrop-blur-xl z-40 lg:hidden flex flex-col pt-28 px-8 transition-all duration-300 animate-fade-in">
           <nav className="flex flex-col gap-6 text-left">
             {publicLinks.map((link) => (
               <Link 
                 key={link.href}
                 href={link.href} 
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-xl font-bold text-[#FFFDE1] hover:text-[#eb5e28] uppercase tracking-wider transition-colors py-2 border-b border-white/5"
+                className="text-lg font-bold text-[#121212] hover:text-[#FF5A1F] uppercase tracking-wider transition-colors py-2 border-b border-black/[0.04]"
               >
                 {link.label}
               </Link>
@@ -158,14 +139,14 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
             <Link 
               href="/login" 
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-3.5 text-sm font-bold bg-[#FFFDE1] text-[#2c2324] rounded-full uppercase tracking-widest hover:bg-[#eb5e28] hover:text-[#FFFDE1] transition-colors"
+              className="w-full text-center py-3.5 text-xs font-bold border border-black/10 text-[#121212] rounded-full uppercase tracking-widest hover:bg-black hover:text-white transition-all"
             >
               Sign In
             </Link>
             <Link 
               href="/signup" 
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-3.5 text-sm font-bold bg-[#FFFDE1] text-[#2c2324] rounded-full uppercase tracking-widest hover:bg-[#eb5e28] hover:text-[#FFFDE1] transition-colors"
+              className="w-full text-center py-3.5 text-xs font-bold bg-[#FF5A1F] text-white rounded-full uppercase tracking-widest hover:bg-[#e04b12] shadow-[0_4px_12px_rgba(255,90,31,0.2)] transition-all"
             >
               Sign Up
             </Link>
@@ -206,7 +187,7 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="flex items-center justify-around rounded-full bg-[#FFFDE1]/90 backdrop-blur-2xl border border-gray-200 px-2 py-2 shadow-lg"
+        className="flex items-center justify-around rounded-full bg-white/90 backdrop-blur-2xl border border-black/[0.04] px-2 py-2 shadow-[var(--shadow-premium-lg)]"
       >
         {tabs.map((tab: any) => {
           const isActive = pathname === tab.href || pathname.startsWith(tab.href + '/');
@@ -217,7 +198,7 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
               <Link key={tab.href} href={tab.href} className="-mt-6">
                 <motion.div
                   whileTap={{ scale: 0.9 }}
-                  className="h-14 w-14 rounded-full bg-[#4C1D95] flex items-center justify-center shadow-md cursor-pointer"
+                  className="h-14 w-14 rounded-full bg-[#FF5A1F] flex items-center justify-center shadow-lg shadow-orange-500/20 cursor-pointer"
                 >
                   <Plus className="h-6 w-6 text-white stroke-[2.5]" />
                 </motion.div>
@@ -230,11 +211,13 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
               key={tab.href}
               href={tab.href}
               className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-colors cursor-pointer ${
-                isActive ? 'text-[#4C1D95]' : 'text-gray-400 hover:text-[#4C1D95]'
+                isActive 
+                  ? variant === 'school' ? 'text-[#4F7CFF]' : 'text-[#8257FF]' 
+                  : 'text-gray-400 hover:text-[#8257FF]'
               }`}
             >
               <Icon className="h-5 w-5" />
-              <span className="text-[9px] font-medium">{tab.label}</span>
+              <span className="text-[9px] font-bold uppercase tracking-wider">{tab.label}</span>
             </Link>
           );
         })}
@@ -267,9 +250,11 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
   ];
 
   const links = variant === 'school' ? schoolLinks : studentLinks;
+  const activeColorClass = variant === 'school' ? 'bg-[#4F7CFF]/8 text-[#4F7CFF] border-[#4F7CFF]/10' : 'bg-[#8257FF]/8 text-[#8257FF] border-[#8257FF]/10';
+  const hoverColorClass = variant === 'school' ? 'hover:text-[#4F7CFF] hover:bg-black/[0.01]' : 'hover:text-[#8257FF] hover:bg-black/[0.01]';
 
   return (
-    <aside className="hidden md:flex w-64 bg-[#FFFDE1] border-r border-gray-200 flex-col justify-between p-6 sticky top-16 h-[calc(100vh-64px)] shrink-0">
+    <aside className="hidden md:flex w-64 bg-[#FFFDF8] border-r border-black/[0.04] flex-col justify-between p-6 sticky top-16 h-[calc(100vh-64px)] shrink-0">
       <nav className="space-y-1">
         {links.map((link) => {
           const isActive = pathname === link.href;
@@ -280,10 +265,10 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
               key={link.href}
               href={link.href}
               className={`
-                flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer
+                flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer border
                 ${isActive
-                  ? 'bg-[#F5F3FF] text-[#4C1D95] border border-[#4C1D95]/10'
-                  : 'text-gray-600 hover:text-[#4C1D95] hover:bg-[#FFFDE1] border border-transparent'
+                  ? `${activeColorClass}`
+                  : `text-[#4F5666] ${hoverColorClass} border-transparent`
                 }
               `}
             >
@@ -295,14 +280,14 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
       </nav>
 
       <div className="space-y-3">
-        <div className="border-t border-gray-100 pt-4">
+        <div className="border-t border-black/[0.04] pt-4">
           {variant === 'student' ? (
-            <Link href="/school/dashboard" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-gray-500 hover:text-[#4C1D95] hover:bg-[#FFFDE1] transition-colors cursor-pointer">
+            <Link href="/school/dashboard" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#7B8290] hover:text-[#4F7CFF] transition-colors cursor-pointer">
               <Shield className="h-4 w-4" />
               School Dashboard
             </Link>
           ) : (
-            <Link href="/student/events" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-gray-500 hover:text-[#4C1D95] hover:bg-[#FFFDE1] transition-colors cursor-pointer">
+            <Link href="/student/events" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#7B8290] hover:text-[#8257FF] transition-colors cursor-pointer">
               <Compass className="h-4 w-4" />
               Student Portal
             </Link>

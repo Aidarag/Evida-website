@@ -42,7 +42,7 @@ export default function Modal({ isOpen, onClose, children, title, size = 'md' }:
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={onClose}
           />
 
@@ -54,20 +54,20 @@ export default function Modal({ isOpen, onClose, children, title, size = 'md' }:
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             className={`
               relative w-full ${sizeClasses[size]}
-              bg-[#111118] border border-white/[0.08]
-              rounded-[28px] shadow-2xl
+              bg-[#FFFDF8] border border-black/5
+              rounded-[24px] shadow-[var(--shadow-premium-xl)]
               overflow-y-auto max-h-[85vh]
             `}
           >
             {/* Header */}
             {title && (
-              <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.06]">
-                <h2 className="text-lg font-bold text-white">{title}</h2>
+              <div className="flex items-center justify-between px-6 py-5 border-b border-black/[0.04]">
+                <h2 className="text-lg font-bold text-[#121212] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>{title}</h2>
                 <button
                   onClick={onClose}
-                  className="h-8 w-8 rounded-full bg-[#FFFDE1]/[0.06] hover:bg-[#FFFDE1]/[0.12] flex items-center justify-center transition-colors cursor-pointer"
+                  className="h-8 w-8 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center transition-colors cursor-pointer"
                 >
-                  <X className="h-4 w-4 text-[#B8BBC8]" />
+                  <X className="h-4 w-4 text-[#4F5666]" />
                 </button>
               </div>
             )}

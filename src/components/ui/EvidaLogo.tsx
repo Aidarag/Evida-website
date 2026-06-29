@@ -6,7 +6,7 @@ interface EvidaLogoProps {
   className?: string;
   size?: number; // Height of the logo in pixels (default: 40)
   showText?: boolean; // Whether to show the "Evida" text (default: true)
-  lightMode?: boolean; // If true, text is dark (#111827) instead of white (default: false)
+  lightMode?: boolean; // If true, text is dark (#121212) instead of brand color (default: false)
   text?: string; // Custom text to display next to the logo (default: "Evida")
 }
 
@@ -31,25 +31,25 @@ export default function EvidaLogo({
       className={`select-none ${className}`}
     >
       <g id="evida-logo-mark">
-        {/* Left Ribbon (Santiago Orange) */}
+        {/* Left Ribbon (Vibrant Orange) */}
         <path
           d="M 6 42 L 6 22 L 24 6 L 24 15 L 15 24 L 15 42 Z"
-          fill="#eb5e28"
-          opacity="0.85"
+          fill="#FF5A1F"
+          opacity="0.95"
         />
         
-        {/* Right Ribbon (Santiago Orange) */}
+        {/* Right Ribbon (Vibrant Orange) */}
         <path
           d="M 42 42 L 42 22 L 24 6 L 24 15 L 33 24 L 33 42 Z"
-          fill="#eb5e28"
-          opacity="0.85"
+          fill="#FF5A1F"
+          opacity="0.95"
         />
         
-        {/* Center Ribbon (Small Diamond - Gold Black) */}
+        {/* Center Ribbon (Small Diamond - Premium Dark) */}
         <path
           d="M 24 10 L 36 22 L 24 34 L 12 22 Z M 24 16 L 30 22 L 24 28 L 18 22 Z"
-          fill="#2c2324"
-          opacity="0.9"
+          fill="#121212"
+          opacity="0.95"
         />
       </g>
       
@@ -57,7 +57,7 @@ export default function EvidaLogo({
         <text
           x="56"
           y="33"
-          fill="#eb5e28"
+          fill={lightMode ? '#121212' : '#FF5A1F'}
           fontFamily="var(--font-display), Syne, sans-serif"
           fontWeight="800"
           fontSize="26"

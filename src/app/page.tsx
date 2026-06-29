@@ -4,9 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Search, ChevronDown, Compass, Megaphone, Shield, MousePointer2, UserCheck, CalendarDays, LineChart, ArrowRight, Briefcase, Sparkles, Music, Trophy, GraduationCap, Users, Palette, Heart, Code, Film } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { DesktopNav } from '@/components/Navbar';
-import EventCard from '@/components/student/EventCard';
 import FeaturedEventCard from '@/components/student/FeaturedEventCard';
 import AboutEvidaSection from '@/components/student/AboutEvidaSection';
 import OurVisionSection from '@/components/student/OurVisionSection';
@@ -19,12 +18,9 @@ export default function LandingPage() {
 
   // Scroll-based parallax and zoom transforms for the hero background image
   const { scrollY } = useScroll();
-  const yBg = useTransform(scrollY, [0, 600], [0, 180]);
-  const opacityBg = useTransform(scrollY, [0, 600], [0.35, 0.05]);
-  const scaleBg = useTransform(scrollY, [0, 600], [1, 1.08]);
-  
-  // Scroll-driven text gradient position
-  const textBgPos = useTransform(scrollY, [0, 500], ['0%', '100%']);
+  const yBg = useTransform(scrollY, [0, 600], [0, 160]);
+  const opacityBg = useTransform(scrollY, [0, 600], [0.45, 0.05]);
+  const scaleBg = useTransform(scrollY, [0, 600], [1, 1.06]);
 
   const faqData = {
     students: [
@@ -61,7 +57,6 @@ export default function LandingPage() {
   const [expandedFaq, setExpandedFaq] = React.useState<number | null>(null);
   
   const approvedEvents = events.filter(e => e.status === 'approved');
-
   const [selectedCategory, setSelectedCategory] = React.useState('Sports');
   const [calendarDate, setCalendarDate] = React.useState<Date>(new Date(2026, 9, 1)); // October 2026
 
@@ -145,31 +140,15 @@ export default function LandingPage() {
 
   const categoryEvents = [...filteredEvents, ...getEventsForCategory(selectedCategory)].slice(0, 3);
 
-  const marqueeCategories = [
-    "Sports", "Homecoming", "Career Fairs", "Workshops", "Orientation", 
-    "Concerts", "Cultural Events", "Student Organizations", "Networking", 
-    "Volunteering", "Greek Life", "Athletics", "Hackathons", 
-    "Career Development", "Campus Life"
-  ];
-
   // Dynamic Calendar Calculation
   const year = calendarDate.getFullYear();
   const month = calendarDate.getMonth();
-  
-  // Get days in current month
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  // Get first day of the month (0: Sunday, 1: Monday, ..., 6: Saturday)
   const firstDayOfMonth = new Date(year, month, 1);
-  // Map so that Monday is 0, Tuesday is 1, ..., Sunday is 6
   const firstDayOfWeek = (firstDayOfMonth.getDay() + 6) % 7;
-  
-  // Get days in previous month
   const daysInPrevMonth = new Date(year, month, 0).getDate();
-  
-  // Create calendar grid array
   const calendarDays = [];
   
-  // 1. Add previous month's offset days
   for (let i = firstDayOfWeek - 1; i >= 0; i--) {
     calendarDays.push({
       day: daysInPrevMonth - i,
@@ -178,7 +157,6 @@ export default function LandingPage() {
     });
   }
   
-  // 2. Add current month's days
   for (let i = 1; i <= daysInMonth; i++) {
     calendarDays.push({
       day: i,
@@ -187,7 +165,6 @@ export default function LandingPage() {
     });
   }
   
-  // 3. Add next month's offset days to complete the grid (up to multiple of 7, e.g., 35 or 42)
   const totalCells = calendarDays.length > 35 ? 42 : 35;
   const remainingCells = totalCells - calendarDays.length;
   for (let i = 1; i <= remainingCells; i++) {
@@ -198,94 +175,36 @@ export default function LandingPage() {
     });
   }
 
-  // We want to highlight exactly 10 different dates in the active month
   const highlightedDays = [3, 5, 8, 12, 15, 18, 20, 22, 26, 29];
 
-  // Helper to get highlight style based on the day index (Santiago Orange, Gold Black, Landmark)
   const getHighlightStyle = (day: number) => {
-    // 10 days: 4 orange, 3 black, 3 gray
-    if (day === 3) {
+    if (day === 3 || day === 12 || day === 20 || day === 26) {
+      const IconComp = day === 3 ? GraduationCap : day === 12 ? Music : day === 20 ? Palette : Sparkles;
       return {
-        bgColor: 'bg-[#eb5e28]/10',
-        borderColor: 'border-[#eb5e28]',
-        textColor: 'text-[#eb5e28]',
-        icon: <GraduationCap className="h-4.5 w-4.5 text-[#eb5e28] stroke-[2.5]" />,
+        bgColor: 'bg-[#FF5A1F]/10 hover:bg-[#FF5A1F]/15',
+        borderColor: 'border-[#FF5A1F]/35',
+        textColor: 'text-[#FF5A1F]',
+        icon: <IconComp className="h-4 w-4 text-[#FF5A1F] stroke-[2]" />,
       };
     }
-    if (day === 12) {
+    if (day === 5 || day === 15 || day === 22) {
+      const IconComp = day === 5 ? Users : day === 15 ? Trophy : Heart;
       return {
-        bgColor: 'bg-[#eb5e28]/10',
-        borderColor: 'border-[#eb5e28]',
-        textColor: 'text-[#eb5e28]',
-        icon: <Music className="h-4.5 w-4.5 text-[#eb5e28] stroke-[2.5]" />,
+        bgColor: 'bg-[#4F7CFF]/10 hover:bg-[#4F7CFF]/15',
+        borderColor: 'border-[#4F7CFF]/35',
+        textColor: 'text-[#4F7CFF]',
+        icon: <IconComp className="h-4 w-4 text-[#4F7CFF] stroke-[2]" />,
       };
     }
-    if (day === 20) {
-      return {
-        bgColor: 'bg-[#eb5e28]/10',
-        borderColor: 'border-[#eb5e28]',
-        textColor: 'text-[#eb5e28]',
-        icon: <Palette className="h-4.5 w-4.5 text-[#eb5e28] stroke-[2.5]" />,
-      };
-    }
-    if (day === 26) {
-      return {
-        bgColor: 'bg-[#eb5e28]/10',
-        borderColor: 'border-[#eb5e28]',
-        textColor: 'text-[#eb5e28]',
-        icon: <Sparkles className="h-4.5 w-4.5 text-[#eb5e28] stroke-[2.5]" />,
-      };
-    }
-    if (day === 5) {
-      return {
-        bgColor: 'bg-[#2c2324]/10',
-        borderColor: 'border-[#2c2324]',
-        textColor: 'text-[#2c2324]',
-        icon: <Users className="h-4.5 w-4.5 text-[#2c2324] stroke-[2.5]" />,
-      };
-    }
-    if (day === 15) {
-      return {
-        bgColor: 'bg-[#2c2324]/10',
-        borderColor: 'border-[#2c2324]',
-        textColor: 'text-[#2c2324]',
-        icon: <Trophy className="h-4.5 w-4.5 text-[#2c2324] stroke-[2.5]" />,
-      };
-    }
-    if (day === 22) {
-      return {
-        bgColor: 'bg-[#2c2324]/10',
-        borderColor: 'border-[#2c2324]',
-        textColor: 'text-[#2c2324]',
-        icon: <Heart className="h-4.5 w-4.5 text-[#2c2324] stroke-[2.5]" />,
-      };
-    }
-    if (day === 8) {
-      return {
-        bgColor: 'bg-[#766754]/10',
-        borderColor: 'border-[#766754]',
-        textColor: 'text-[#766754]',
-        icon: <Briefcase className="h-4.5 w-4.5 text-[#766754] stroke-[2.5]" />,
-      };
-    }
-    if (day === 18) {
-      return {
-        bgColor: 'bg-[#766754]/10',
-        borderColor: 'border-[#766754]',
-        textColor: 'text-[#766754]',
-        icon: <Code className="h-4.5 w-4.5 text-[#766754] stroke-[2.5]" />,
-      };
-    }
-    // day === 29
+    const IconComp = day === 8 ? Briefcase : day === 18 ? Code : Film;
     return {
-      bgColor: 'bg-[#766754]/10',
-      borderColor: 'border-[#766754]',
-      textColor: 'text-[#766754]',
-      icon: <Film className="h-4.5 w-4.5 text-[#766754] stroke-[2.5]" />,
+      bgColor: 'bg-[#8257FF]/10 hover:bg-[#8257FF]/15',
+      borderColor: 'border-[#8257FF]/35',
+      textColor: 'text-[#8257FF]',
+      icon: <IconComp className="h-4 w-4 text-[#8257FF] stroke-[2]" />,
     };
   };
 
-  // Get events on a specific date (using the context events)
   const getEventsForDate = (date: Date) => {
     const y = date.getFullYear();
     const m = String(date.getMonth() + 1).padStart(2, '0');
@@ -294,130 +213,162 @@ export default function LandingPage() {
     return events.filter(e => e.date === dateString && e.status === 'approved');
   };
 
-  // Map category to icon and color
-  const getCategoryIconAndColor = (category: string) => {
-    const catLower = category.toLowerCase();
-    if (catLower.includes('music') || catLower.includes('concert') || catLower.includes('show') || catLower.includes('art') || catLower.includes('theater')) {
-      return {
-        icon: <Music className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#eb5e28]" />,
-        bgColor: 'bg-[#eb5e28]/10',
-        borderColor: 'border-[#eb5e28]',
-        textColor: 'text-[#eb5e28]',
-      };
-    }
-    if (catLower.includes('sport') || catLower.includes('game') || catLower.includes('match') || catLower.includes('trophy')) {
-      return {
-        icon: <Trophy className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#eb5e28]" />,
-        bgColor: 'bg-[#eb5e28]/10',
-        borderColor: 'border-[#eb5e28]',
-        textColor: 'text-[#eb5e28]',
-      };
-    }
-    if (catLower.includes('career') || catLower.includes('job') || catLower.includes('fair') || catLower.includes('workshop') || catLower.includes('seminar')) {
-      return {
-        icon: <Briefcase className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#eb5e28]" />,
-        bgColor: 'bg-[#eb5e28]/10',
-        borderColor: 'border-[#eb5e28]',
-        textColor: 'text-[#eb5e28]',
-      };
-    }
-    if (catLower.includes('social') || catLower.includes('club') || catLower.includes('meet') || catLower.includes('association')) {
-      return {
-        icon: <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#eb5e28]" />,
-        bgColor: 'bg-[#eb5e28]/10',
-        borderColor: 'border-[#eb5e28]',
-        textColor: 'text-[#eb5e28]',
-      };
-    }
-    if (catLower.includes('grad') || catLower.includes('commence') || catLower.includes('ceremony')) {
-      return {
-        icon: <GraduationCap className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#eb5e28]" />,
-        bgColor: 'bg-[#eb5e28]/10',
-        borderColor: 'border-[#eb5e28]',
-        textColor: 'text-[#eb5e28]',
-      };
-    }
-    return {
-      icon: <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#eb5e28]" />,
-      bgColor: 'bg-[#eb5e28]/10',
-      borderColor: 'border-[#eb5e28]',
-      textColor: 'text-[#eb5e28]',
-    };
-  };
+  const headlineLines = ["Discover Evida,", "the digital home", "of campus life"];
 
   return (
-    <div className="min-h-screen bg-[#FFFDE1] text-gray-900 flex flex-col font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#FFFDF8] text-[#121212] flex flex-col font-sans overflow-x-hidden">
       <DesktopNav variant="public" />
 
-      {/* Full-Screen Cinematic Hero Section */}
-      <section className="relative w-full h-[100vh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden bg-[#0F0F13]">
-        {/* Background Image (Vibrant Real Color - Animated Scroll Parallax & Zoom) */}
+      {/* Full-Screen Immersive Hero Section */}
+      <section className="relative w-full h-[92vh] min-h-[650px] flex flex-col items-center justify-center overflow-hidden bg-[#121212]">
+        
+        {/* Animated Background Image */}
         <motion.div 
           style={{ y: yBg, opacity: opacityBg, scale: scaleBg }}
-          className="absolute inset-0 w-full h-full bg-[url('/pexels-maorattias-5191958.jpg')] bg-cover bg-center contrast-100 pointer-events-none"
+          className="absolute inset-0 w-full h-full bg-[url('/pexels-maorattias-5191958.jpg')] bg-cover bg-center pointer-events-none"
         />
         
-        {/* Dark Overlay Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F13]/80 via-transparent to-[#0F0F13] z-0" />
+        {/* Dark Elegant Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#121212]/75 via-[#121212]/50 to-[#121212] z-0" />
 
-        {/* Hero Content (Centered) */}
-        <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto -mt-16">
-          <motion.h1 
-            style={{ fontFamily: 'var(--font-display)' }}
-            className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#FFFDE1] leading-[1.1] tracking-tight mb-8 select-none uppercase max-w-3xl mx-auto"
+        {/* Ambient Gradient Blobs */}
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-[#FF5A1F]/8 rounded-full blur-[100px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#4F7CFF]/5 rounded-full blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '12s' }} />
+
+        {/* Hero Content */}
+        <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto -mt-10">
+          
+          {/* Accent Tag */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-6"
           >
-            Discover Evida, <br />
-            the digital home <br />
-            of campus life
-          </motion.h1>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Link href="/student/events" className="bg-[var(--color-evida-blue)] text-[#111827] font-bold uppercase tracking-widest text-xs px-8 py-4 hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors flex items-center gap-2 rounded-sm shadow-[4px_4px_0px_rgba(255,255,255,0.1)]">
+            <span className="rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-white/95 backdrop-blur-md">
+              THE DIGITAL HOME OF CAMPUS LIFE
+            </span>
+          </motion.div>
+
+          {/* Headline Word Reveal */}
+          <h1 
+            style={{ fontFamily: 'var(--font-display)' }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.08] tracking-tight mb-8 select-none uppercase max-w-5xl mx-auto"
+          >
+            {headlineLines.map((line, idx) => (
+              <React.Fragment key={idx}>
+                {idx > 0 && <br />}
+                <motion.span
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.15 + idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                  className={`inline-block ${idx > 0 ? "bg-gradient-to-r from-[#FF5A1F] via-[#8257FF] to-[#4F7CFF] bg-clip-text text-transparent" : "text-white"}`}
+                >
+                  {line}
+                </motion.span>
+              </React.Fragment>
+            ))}
+          </h1>
+
+          {/* Subtext */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="text-sm md:text-base text-white/70 max-w-xl mx-auto mb-8 font-light leading-relaxed"
+          >
+            Evida is a premium engagement experience. Students discover events, track RSVPs, and build communities, while universities manage activities with real-time analytics.
+          </motion.p>
+
+          {/* Action Buttons */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <Link 
+              href="/student/events" 
+              className="bg-[#FF5A1F] text-white font-bold uppercase tracking-widest text-[11px] px-8 py-4 hover:bg-[#e04b12] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 rounded-full shadow-[0_4px_18px_rgba(255,90,31,0.3)]"
+            >
               Explore Events <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/login" className="bg-transparent border-2 border-[var(--color-evida-blue)] text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs px-8 py-3.5 hover:bg-[var(--color-evida-blue)] hover:text-[#111827] transition-colors flex items-center gap-2 rounded-sm">
-              Get Started <ArrowRight className="h-4 w-4" />
+            <Link 
+              href="/login" 
+              className="bg-white/10 border border-white/15 text-white font-bold uppercase tracking-widest text-[11px] px-8 py-4 hover:bg-white hover:text-black hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 rounded-full backdrop-blur-md"
+            >
+              Get Started
             </Link>
-          </div>
+          </motion.div>
+
+          {/* Student Avatars Social Proof */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="flex items-center gap-3 mt-10 justify-center"
+          >
+            <div className="flex -space-x-2.5">
+              <img className="w-8 h-8 rounded-full border-2 border-[#121212] object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face" alt="Student" />
+              <img className="w-8 h-8 rounded-full border-2 border-[#121212] object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Student" />
+              <img className="w-8 h-8 rounded-full border-2 border-[#121212] object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt="Student" />
+              <img className="w-8 h-8 rounded-full border-2 border-[#121212] object-cover" src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=80&h=80&fit=crop&crop=face" alt="Student" />
+            </div>
+            <p className="text-[11px] text-white/50 font-bold uppercase tracking-wider">Joined by 12,000+ active students</p>
+          </motion.div>
         </div>
 
-        {/* Scrolling Category Marquee (Bottom of Hero) */}
+        {/* Bouncing Scroll Down Indicator */}
+        <motion.div 
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-20"
+          onClick={() => document.getElementById('about-evida')?.scrollIntoView({ behavior: 'smooth' })}
+        >
+          <span className="text-[9px] font-bold tracking-[0.25em] text-white/30 uppercase">SCROLL TO EXPLORE</span>
+          <div className="w-5 h-8 border-2 border-white/15 rounded-full flex justify-center pt-1.5">
+            <div className="w-1 h-1.5 bg-[#FF5A1F] rounded-full" />
+          </div>
+        </motion.div>
+
+        {/* Scrolling Category Marquee (Bottom) */}
         <div className="absolute bottom-0 left-0 w-full z-20">
-          <div className="relative w-full overflow-hidden bg-[#2c2324]/90 backdrop-blur-sm py-5 flex items-center border-t border-white/5 shadow-2xl">
-            <div className="animate-marquee flex gap-12 text-[#FFFDE1] font-bold text-lg tracking-[0.2em] uppercase opacity-90 items-center">
+          <div className="relative w-full overflow-hidden bg-[#121212]/90 backdrop-blur-md py-4.5 flex items-center border-t border-white/5 shadow-2xl">
+            <div className="animate-marquee flex gap-12 text-white font-bold text-sm tracking-[0.2em] uppercase opacity-80 items-center">
               <span>ORIENTATION</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>HOMECOMING</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>CAREER FAIR</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>SPORTS</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>WORKSHOPS</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>STUDENT LIFE</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>ORGANIZATIONS</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>CULTURAL EVENTS</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               
               {/* Duplicate for infinite effect */}
               <span>ORIENTATION</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>HOMECOMING</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>CAREER FAIR</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>SPORTS</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>WORKSHOPS</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>STUDENT LIFE</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>ORGANIZATIONS</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
               <span>CULTURAL EVENTS</span>
-              <EvidaLogo size={22} showText={false} />
+              <EvidaLogo size={18} showText={false} />
             </div>
           </div>
         </div>
@@ -429,18 +380,18 @@ export default function LandingPage() {
       {/* 2. Our Mission (Vision) Section */}
       <OurVisionSection />
 
-      {/* 3. How it Works */}
-      <section className="w-full py-24 bg-[#FFFDE1] font-sans overflow-hidden" id="how-it-works">
+      {/* 3. How it Works Section */}
+      <section className="w-full py-24 bg-[#FFFDF8] font-sans overflow-hidden" id="how-it-works">
         <div className="max-w-6xl mx-auto px-6 md:px-12 text-center space-y-16">
           
           <div className="space-y-4">
-            <span className="text-[#eb5e28] font-bold uppercase text-xs tracking-[0.2em]">
+            <span className="text-[#FF5A1F] font-bold uppercase text-xs tracking-[0.2em]">
               Process
             </span>
-            <h2 className="text-slate-900 font-extrabold text-3xl md:text-5xl uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-[#121212] font-extrabold text-3xl md:text-5xl uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
               How It Works
             </h2>
-            <p className="text-slate-500 text-sm md:text-base max-w-2xl mx-auto">
+            <p className="text-[#4F5666] text-sm md:text-base max-w-2xl mx-auto font-light">
               Evida simplifies campus engagement in four simple steps. Here is how you can get started.
             </p>
           </div>
@@ -452,53 +403,63 @@ export default function LandingPage() {
                 number: "01",
                 title: "Discover",
                 icon: Search,
+                color: "#FF5A1F",
+                lightBg: "bg-[#FF5A1F]/8",
                 description: "Find exactly what you're looking for. Filter by category, date, or organization to discover the best of campus life."
               },
               {
                 number: "02",
                 title: "Create",
                 icon: MousePointer2,
+                color: "#4F7CFF",
+                lightBg: "bg-[#4F7CFF]/8",
                 description: "Host your own event, workshop, or promotion. Customize the details and publish instantly for your club or community."
               },
               {
                 number: "03",
                 title: "Attend",
                 icon: UserCheck,
+                color: "#8257FF",
+                lightBg: "bg-[#8257FF]/8",
                 description: "RSVP to events, save them to your profile, and receive notifications. Show up and connect with your fellow students."
               },
               {
                 number: "04",
                 title: "Engage",
                 icon: LineChart,
+                color: "#FF5A1F",
+                lightBg: "bg-[#FF5A1F]/8",
                 description: "Track attendance, collect feedback, and analyze engagement. Administrators and student leaders get real-time analytics."
               }
             ].map((step, index) => {
               const Icon = step.icon;
               return (
-                <div
+                <motion.div
                   key={index}
-                  className="bg-[#FFFDE1] border border-slate-200/60 rounded-[28px] p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01]"
+                  whileHover={{ y: -6, scale: 1.01 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                  className="bg-white border border-black/[0.04] rounded-[24px] p-8 flex flex-col justify-between shadow-[var(--shadow-premium-sm)] hover:shadow-[var(--shadow-premium-md)] transition-all duration-300"
                 >
                   {/* Top Row: Number & Icon */}
                   <div className="flex justify-between items-center mb-8">
-                    <span className="font-extrabold text-2xl text-[#eb5e28]" style={{ fontFamily: 'var(--font-display)' }}>
+                    <span className="font-extrabold text-2xl" style={{ fontFamily: 'var(--font-display)', color: step.color }}>
                       {step.number}
                     </span>
-                    <div className="p-3 rounded-2xl bg-[#FFFDE1] border border-slate-200/60 text-[#eb5e28] shadow-sm">
-                      <Icon className="h-6 w-6" />
+                    <div className={`p-3.5 rounded-2xl border border-transparent ${step.lightBg}`} style={{ color: step.color }}>
+                      <Icon className="h-5 w-5 stroke-[2]" />
                     </div>
                   </div>
 
                   {/* Bottom Area: Title & Description */}
                   <div className="space-y-3">
-                    <h3 className="font-bold text-lg text-slate-900 uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
+                    <h3 className="font-bold text-base text-[#121212] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
                       {step.title}
                     </h3>
-                    <p className="text-slate-600 text-sm leading-relaxed font-light">
+                    <p className="text-[#4F5666] text-xs sm:text-sm leading-relaxed font-light">
                       {step.description}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -506,41 +467,43 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 5. Explore by Category Section */}
-      <section id="explore-categories" className="relative w-full bg-[#FFFDE1] py-24 border-t border-slate-100 mt-20">
-        {/* Torn Paper Edges - Top Transition Only */}
-        <div className="absolute top-[-10px] left-0 w-full h-10 bg-[#FFFDE1] edge-top z-10" />
-
+      {/* 4. Explore by Category Section */}
+      <section id="explore-categories" className="relative w-full bg-[#FFFDF8] py-24 border-t border-black/[0.04]">
         <div className="max-w-6xl mx-auto px-6 md:px-12 z-20 space-y-12">
           
           <div className="text-center space-y-4">
-            <span className="text-[#eb5e28] font-bold uppercase text-xs tracking-[0.2em]">
+            <span className="text-[#FF5A1F] font-bold uppercase text-xs tracking-[0.2em]">
               Discovery
             </span>
-            <h2 className="text-slate-900 font-extrabold text-3xl md:text-5xl uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-              Explore by Category
+            <h2 className="text-[#121212] font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+              Explore<br />by Category
             </h2>
-            <p className="text-slate-500 text-sm md:text-base max-w-2xl mx-auto">
+            <p className="text-[#4F5666] text-sm md:text-base max-w-2xl mx-auto font-light">
               Click on a category to filter campus events instantly. Discover what interests you the most.
             </p>
           </div>
 
-          {/* Category Selector (Pills) */}
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+          {/* Category Selector (Pills with sliding background animation) */}
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-4xl mx-auto">
             {Object.keys(mockEventsByCategory).map((category) => {
               const isActive = selectedCategory === category;
               return (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 transform hover:scale-105 cursor-pointer border ${
-                    isActive
-                      ? 'bg-[#eb5e28] text-white border-transparent shadow-lg shadow-blue-500/10'
-                      : 'bg-[#FFFDE1] text-slate-600 border-slate-200 hover:text-slate-900 hover:border-slate-400 shadow-sm'
+                  className={`relative px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 cursor-pointer ${
+                    isActive ? 'text-white' : 'text-[#4F5666] hover:text-[#121212]'
                   }`}
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
-                  {category}
+                  {isActive && (
+                    <motion.span 
+                      layoutId="activeCategoryBg"
+                      className="absolute inset-0 bg-[#FF5A1F] rounded-full z-0"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{category}</span>
                 </button>
               );
             })}
@@ -564,90 +527,91 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 5.5 Infinite Category Marquee */}
-      <section className="relative w-full bg-[#2c2324] py-5 overflow-hidden border-t border-b border-white/5 shadow-2xl">
+      {/* 4.5 Infinite Category Marquee */}
+      <section className="relative w-full bg-[#121212] py-4 overflow-hidden border-t border-b border-white/5 shadow-2xl">
         <div className="relative w-full overflow-hidden flex items-center">
-          <div className="animate-marquee flex gap-12 text-[#FFFDE1] font-bold text-lg tracking-[0.2em] uppercase opacity-90 items-center">
+          <div className="animate-marquee flex gap-12 text-white/90 font-bold text-sm tracking-[0.2em] uppercase items-center">
             <span>ORIENTATION</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>HOMECOMING</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>CAREER FAIR</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>SPORTS</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>WORKSHOPS</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>STUDENT LIFE</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>ORGANIZATIONS</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>CULTURAL EVENTS</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             
             {/* Duplicate for infinite effect */}
             <span>ORIENTATION</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>HOMECOMING</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>CAREER FAIR</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>SPORTS</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>WORKSHOPS</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>STUDENT LIFE</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>ORGANIZATIONS</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
             <span>CULTURAL EVENTS</span>
-            <EvidaLogo size={22} showText={false} />
+            <EvidaLogo size={18} showText={false} />
           </div>
         </div>
       </section>
 
-      {/* 6. Calendar Section (Light Theme) */}
-      <section id="calendar" className="relative w-full bg-[#FFFDE1] py-24 border-t border-slate-100">
+      {/* 5. Calendar Section (Tactile Design) */}
+      <section id="calendar" className="relative w-full bg-[#FFFDF8] py-24 border-t border-black/[0.04]">
         <div className="relative max-w-6xl mx-auto px-6 md:px-12 z-20">
-          {/* Campus Calendar Section */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full">
             
-            {/* Left side: What's Happening Next */}
+            {/* Left side: Content */}
             <div className="space-y-6 lg:col-span-5 flex flex-col justify-center text-left">
-              <span className="text-[#eb5e28] font-bold uppercase text-xs tracking-[0.2em]">
+              <span className="text-[#FF5A1F] font-bold uppercase text-xs tracking-[0.2em]">
                 What's Happening Next
               </span>
-              <h2 className="text-slate-900 font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
-                Your Campus <span className="text-[#eb5e28]">Calendar</span> At A Glance
+              <h2 className="text-[#121212] font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-[1.08]" style={{ fontFamily: 'var(--font-display)' }}>
+                <span className="block sm:whitespace-nowrap">Your Campus</span>
+                <span className="block sm:whitespace-nowrap text-[#FF5A1F]">Calendar</span>
+                <span className="block sm:whitespace-nowrap">At A Glance</span>
               </h2>
-              <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+              <p className="text-[#4F5666] text-sm md:text-base leading-relaxed font-light">
                 Never miss a beat. Discover upcoming campus events, connect with student organizations, and make the most of your college experience.
               </p>
               <div className="pt-2">
-                <Link href="/student/events" className="inline-flex bg-[#eb5e28] text-white font-bold uppercase tracking-widest text-[10px] px-6 py-3.5 hover:bg-blue-700 transition-colors items-center gap-2 rounded-full shadow-lg shadow-blue-500/10">
+                <Link href="/student/events" className="inline-flex bg-[#FF5A1F] text-white font-bold uppercase tracking-widest text-[10px] px-7 py-4 hover:bg-[#e04b12] hover:scale-[1.02] active:scale-[0.98] transition-all items-center gap-2 rounded-full shadow-lg shadow-orange-500/20">
                   Explore Events <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
             </div>
 
-            {/* Right side: Custom Illustrated Calendar */}
+            {/* Right side: Illustrated Tactile Calendar */}
             <div className="lg:col-span-7 w-full">
-              <div className="relative bg-[#FFFDE1] border border-slate-200/60 rounded-[32px] p-6 md:p-8 shadow-xl overflow-visible group/calendar transition-all duration-500 hover:border-slate-300/80 hover:shadow-2xl">
+              <div className="relative bg-white border border-black/[0.05] rounded-[24px] p-6 md:p-8 shadow-[var(--shadow-premium-md)] transition-all duration-500 hover:border-black/[0.08] hover:shadow-[var(--shadow-premium-lg)]">
                 
                 {/* Binder rings at the top */}
                 <div className="absolute top-0 left-0 right-0 h-4 flex justify-around px-12 -translate-y-1/2 z-30">
                   {[...Array(6)].map((_, i) => (
-                    <div key={i} className="w-3 h-8 bg-gradient-to-b from-gray-300 to-gray-500 rounded-full border border-black/10 shadow-sm relative">
-                      <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1 h-3 bg-[#FFFDE1]/30 rounded-full" />
+                    <div key={i} className="w-2.5 h-6.5 bg-gradient-to-b from-gray-200 to-gray-400 rounded-full border border-black/10 shadow-sm relative">
+                      <div className="absolute top-1 left-1/2 -translate-x-1/2 w-0.5 h-2 bg-white/30 rounded-full" />
                     </div>
                   ))}
                 </div>
 
                 {/* Calendar Header */}
-                <div className="flex justify-between items-center mb-6 pt-2 border-b border-slate-200/60 pb-4">
+                <div className="flex justify-between items-center mb-6 pt-2 border-b border-black/[0.04] pb-4">
                   <div className="text-left">
-                    <span className="text-[#eb5e28] font-bold uppercase text-[10px] tracking-[0.2em]">CAMPUS LIFE</span>
-                    <h4 className="text-slate-900 font-bold text-lg md:text-xl tracking-wide uppercase mt-0.5" style={{ fontFamily: 'var(--font-display)' }}>
+                    <span className="text-[#FF5A1F] font-bold uppercase text-[9px] tracking-[0.25em]">CAMPUS LIFE</span>
+                    <h4 className="text-[#121212] font-bold text-lg md:text-xl tracking-wide uppercase mt-0.5" style={{ fontFamily: 'var(--font-display)' }}>
                       {calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                     </h4>
                   </div>
@@ -658,7 +622,7 @@ export default function LandingPage() {
                         prev.setMonth(prev.getMonth() - 1);
                         setCalendarDate(prev);
                       }}
-                      className="w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-800 hover:border-slate-400 transition-colors text-xs font-bold cursor-pointer"
+                      className="w-8 h-8 rounded-full border border-black/10 flex items-center justify-center text-gray-400 hover:text-[#121212] hover:border-black/20 transition-all text-xs font-bold cursor-pointer"
                     >
                       &larr;
                     </button>
@@ -668,7 +632,7 @@ export default function LandingPage() {
                         next.setMonth(next.getMonth() + 1);
                         setCalendarDate(next);
                       }}
-                      className="w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-800 hover:border-slate-400 transition-colors text-xs font-bold cursor-pointer"
+                      className="w-8 h-8 rounded-full border border-black/10 flex items-center justify-center text-gray-400 hover:text-[#121212] hover:border-black/20 transition-all text-xs font-bold cursor-pointer"
                     >
                       &rarr;
                     </button>
@@ -676,7 +640,7 @@ export default function LandingPage() {
                 </div>
 
                 {/* Days of week */}
-                <div className="grid grid-cols-7 gap-2 mb-4 text-center text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                <div className="grid grid-cols-7 gap-2 mb-4 text-center text-[9px] font-bold text-gray-400 uppercase tracking-widest">
                   <span>Mon</span>
                   <span>Tue</span>
                   <span>Wed</span>
@@ -697,7 +661,7 @@ export default function LandingPage() {
                       return (
                         <div 
                           key={`offset-${idx}`}
-                          className="aspect-square bg-slate-200/20 border border-slate-200/30 rounded-lg opacity-30 flex items-center justify-center text-[10px] text-slate-300"
+                          className="aspect-square bg-gray-50/20 border border-black/[0.02] rounded-xl opacity-20 flex items-center justify-center text-[10px] text-gray-300"
                         >
                           {cell.day}
                         </div>
@@ -721,17 +685,16 @@ export default function LandingPage() {
                           }}
                           className={`relative aspect-square ${style.bgColor} rounded-xl border ${style.borderColor} flex flex-col items-center justify-center text-[10px] sm:text-xs ${style.textColor} font-bold group/day cursor-pointer hover:scale-105 transition-all duration-300`}
                         >
-                          <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] font-bold">
+                          <span className="absolute top-1 left-1.5 text-[8px] sm:text-[9px] font-bold">
                             {cell.day}
                           </span>
                           
-                          {/* Themed Emoticon Pro (Lucide Icon) */}
-                          <div className="mt-2 transform group-hover/day:scale-125 transition-transform duration-300 select-none">
+                          <div className="mt-2 transform group-hover/day:scale-115 transition-transform duration-300 select-none">
                             {style.icon}
                           </div>
                           
-                          {/* Tooltip */}
-                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#2c2324] border border-white/10 text-[9px] text-white uppercase tracking-wider px-2.5 py-1 rounded-sm whitespace-nowrap opacity-0 pointer-events-none group-hover/day:opacity-100 transition-opacity duration-300 shadow-xl z-50">
+                          {/* Premium Tooltip */}
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#121212] border border-white/10 text-[9px] text-white font-bold uppercase tracking-widest px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 pointer-events-none group-hover/day:opacity-100 transition-opacity duration-300 shadow-[var(--shadow-premium-lg)] z-50">
                             {eventTitle}
                           </div>
                         </div>
@@ -741,7 +704,7 @@ export default function LandingPage() {
                     return (
                       <div 
                         key={`day-${cell.day}`}
-                        className="aspect-square bg-[#FFFDE1] rounded-xl border border-slate-200/60 flex items-center justify-center text-[10px] sm:text-xs text-slate-700 font-bold hover:border-slate-300 hover:bg-[#FFFDE1] transition-colors"
+                        className="aspect-square bg-white rounded-xl border border-black/[0.04] flex items-center justify-center text-[10px] sm:text-xs text-[#4F5666] font-bold hover:border-black/15 hover:text-[#121212] transition-colors"
                       >
                         {cell.day}
                       </div>
@@ -756,87 +719,103 @@ export default function LandingPage() {
       </section>
 
       {/* 6. FAQ Section */}
-      <section id="faq" className="relative w-full bg-[#FFFDE1] py-24 border-t border-[#766754]/10">
+      <section id="faq" className="relative w-full bg-[#FFFDF8] py-24 border-t border-black/[0.04]">
         <div className="max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Column: Title and centered overlapping circles */}
+          {/* Left Column: Title and overlapping brand circles */}
           <div className="lg:col-span-4 flex flex-col items-center justify-center text-center py-6">
-            <h2 className="text-[#2c2324] font-extrabold text-5xl md:text-6xl uppercase tracking-tighter" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-[#121212] font-extrabold text-5xl md:text-6xl uppercase tracking-tighter" style={{ fontFamily: 'var(--font-display)' }}>
               FAQ
             </h2>
             
-            {/* Overlapping Brand Circles (centered directly under the word FAQ) */}
+            {/* Overlapping Brand Circles */}
             <div className="relative w-24 h-12 flex items-center justify-center mt-6">
-              <div className="w-12 h-12 rounded-full border-4 border-[#eb5e28] opacity-85" />
-              <div className="w-12 h-12 rounded-full border-4 border-[#eb5e28] opacity-85 -ml-5" />
+              <div className="w-11 h-11 rounded-full border-4 border-[#FF5A1F] opacity-90" />
+              <div className="w-11 h-11 rounded-full border-4 border-[#4F7CFF] opacity-90 -ml-4" />
             </div>
           </div>
 
-          {/* Right Column: Tab Selector and Accordion List */}
+          {/* Right Column: Accordion with smooth transitions */}
           <div className="lg:col-span-8 space-y-8">
-            {/* Tab Selector */}
-            <div className="flex space-x-2 bg-[#FFFDE1] p-1 rounded-full border border-slate-300/20 w-fit">
+            
+            {/* Tab Selector (with sliding background) */}
+            <div className="flex space-x-2 bg-white p-1 rounded-full border border-black/[0.04] w-fit shadow-[var(--shadow-premium-sm)] relative">
               <button
                 onClick={() => {
                   setFaqTab('students');
                   setExpandedFaq(null);
                 }}
-                className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                  faqTab === 'students'
-                    ? 'bg-[#FFFDE1] text-slate-900 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
+                className={`relative px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 cursor-pointer ${
+                  faqTab === 'students' ? 'text-white' : 'text-[#4F5666] hover:text-[#121212]'
                 }`}
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                For Students
+                {faqTab === 'students' && (
+                  <motion.span 
+                    layoutId="activeFaqTabBg"
+                    className="absolute inset-0 bg-[#FF5A1F] rounded-full z-0"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">For Students</span>
               </button>
               <button
                 onClick={() => {
                   setFaqTab('schools');
                   setExpandedFaq(null);
                 }}
-                className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                  faqTab === 'schools'
-                    ? 'bg-[#FFFDE1] text-slate-900 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
+                className={`relative px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 cursor-pointer ${
+                  faqTab === 'schools' ? 'text-white' : 'text-[#4F5666] hover:text-[#121212]'
                 }`}
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                For Schools
+                {faqTab === 'schools' && (
+                  <motion.span 
+                    layoutId="activeFaqTabBg"
+                    className="absolute inset-0 bg-[#FF5A1F] rounded-full z-0"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">For Schools</span>
               </button>
             </div>
 
-            {/* Accordion Cards */}
+            {/* Accordion Cards with Framer Motion Height Transition */}
             <div className="space-y-4">
               {faqData[faqTab].map((item, index) => {
                 const isOpen = expandedFaq === index;
                 return (
                   <div
                     key={index}
-                    className="bg-[#FFFDE1] border border-slate-200/60 rounded-2xl overflow-hidden transition-all duration-300 hover:border-slate-300 shadow-sm"
+                    className="bg-white border border-black/[0.04] rounded-[16px] overflow-hidden transition-all duration-300 hover:border-black/[0.08] shadow-[var(--shadow-premium-sm)]"
                   >
                     <button
                       onClick={() => setExpandedFaq(isOpen ? null : index)}
                       className="w-full px-6 py-5 flex justify-between items-center text-left gap-4 cursor-pointer focus:outline-none"
                     >
-                      <span className="text-[#2c2324] font-bold text-sm sm:text-base uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
+                      <span className="text-[#121212] font-bold text-sm sm:text-base uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
                         {item.question}
                       </span>
-                      <span className="text-slate-500 text-xl font-medium shrink-0">
+                      <span className="text-gray-400 text-xl font-medium shrink-0">
                         {isOpen ? '−' : '+'}
                       </span>
                     </button>
                     
-                    {/* Expandable Answer */}
-                    <div
-                      className={`transition-all duration-300 ease-in-out ${
-                        isOpen ? 'max-h-[200px] border-t border-slate-100 opacity-100' : 'max-h-0 opacity-0'
-                      } overflow-hidden`}
-                    >
-                      <p className="px-6 py-5 text-slate-600 text-xs sm:text-sm leading-relaxed font-light">
-                        {item.answer}
-                      </p>
-                    </div>
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <p className="px-6 pb-6 text-[#4F5666] text-xs sm:text-sm leading-relaxed font-light border-t border-black/[0.02] pt-4">
+                            {item.answer}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 );
               })}
@@ -847,27 +826,28 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 7. Closing Statement Section */}
-      <section className="relative w-full bg-[#0B0B0E] pt-32 pb-48 overflow-hidden flex flex-col items-center justify-center border-t border-white/5">
+      {/* 7. Closing Statement Section (Deep Dark Immersive Theme) */}
+      <section className="relative w-full bg-[#121212] pt-32 pb-48 overflow-hidden flex flex-col items-center justify-center border-t border-white/5">
+        
         {/* Soft Ambient Radial Glows */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[300px] bg-gradient-to-t from-[var(--color-evida-blue)]/5 via-[var(--color-evida-lime)]/5 to-transparent rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[320px] bg-gradient-to-t from-[#FF5A1F]/8 via-[#8257FF]/4 to-transparent rounded-full blur-[120px] pointer-events-none" />
         
         <div className="relative max-w-4xl mx-auto px-6 text-center z-20 space-y-8">
           <h2 className="text-white font-extrabold text-4xl md:text-6xl lg:text-7xl uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
             College Ends.<br />
-            <span className="text-[var(--color-evida-lime)]">
+            <span className="text-[#FF5A1F]">
               Memories Don’t.
             </span>
           </h2>
           
-          <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="text-white/70 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-light">
             Every event you attend, every connection you make, and every memory you create begins with a single place. Welcome to your campus life, reimagined.
           </p>
           
           <div className="pt-4">
             <Link 
               href="/login"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider bg-[#FFFDE1] text-black hover:bg-[var(--color-evida-lime)] transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-[var(--color-evida-lime)]/20 cursor-pointer"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#121212] hover:bg-[#FF5A1F] hover:text-white transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-[#FF5A1F]/10 cursor-pointer"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               Get started
@@ -877,41 +857,39 @@ export default function LandingPage() {
 
         {/* Giant Immersive EVIDA Wordmark in Background */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden select-none pointer-events-none z-10 leading-none">
-          <div className="w-full text-center text-[18vw] font-extrabold tracking-tighter uppercase opacity-10 text-[var(--color-evida-lime)] translate-y-[20%]">
+          <div className="w-full text-center text-[18vw] font-extrabold tracking-tighter uppercase opacity-[0.03] text-[#FF5A1F] translate-y-[20%]">
             EVIDA
           </div>
         </div>
       </section>
 
       {/* Footer Section */}
-      <footer className="relative w-full bg-[#0F0F13] pt-24 pb-12">
+      <footer className="relative w-full bg-[#121212] pt-24 pb-12 border-t border-white/5">
         <div className="relative max-w-6xl mx-auto px-6 md:px-12 z-20 flex flex-col items-center">
           
           {/* Logo / Title */}
-          <div className="mb-12 flex justify-center w-full">
+          <div className="mb-16 flex justify-center w-full">
              <EvidaLogo size={44} lightMode={false} text="Join Evida" />
           </div>
-
-
         </div>
 
         {/* Footer Links */}
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-12 text-white/70 mb-12">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-12 text-white/50 mb-16">
           
           {/* Contact Column */}
-          <div className="md:col-span-3 space-y-4 text-left">
-            <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Contact</h4>
-            <div className="space-y-1 text-sm font-medium">
-              <p className="text-white font-bold text-lg mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
+          <div className="md:col-span-3 space-y-4 text-left font-sans">
+            <h4 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4">Contact</h4>
+            <div className="space-y-1 text-xs font-semibold">
+              <p className="text-white font-bold text-base mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
               <p>Campus Event & Engagement Platform</p>
-              <p className="pt-2 hover:text-[var(--color-evida-coral)] transition-colors cursor-pointer">Email: hello@evida.app</p>
+              <p className="pt-2 hover:text-[#FF5A1F] transition-colors cursor-pointer">Email: hello@evida.app</p>
             </div>
           </div>
 
           {/* Discover Column */}
           <div className="md:col-span-2 space-y-4 text-left">
-            <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Discover</h4>
-            <ul className="space-y-3 text-sm font-medium">
+            <h4 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4">Discover</h4>
+            <ul className="space-y-3 text-xs font-semibold">
               <li><Link href="#about-evida" className="hover:text-white transition-colors">About Evida</Link></li>
               <li><Link href="#our-mission" className="hover:text-white transition-colors">Our Mission</Link></li>
               <li><Link href="#explore-categories" className="hover:text-white transition-colors">Featured Events</Link></li>
@@ -922,8 +900,8 @@ export default function LandingPage() {
 
           {/* Platform Column */}
           <div className="md:col-span-2 space-y-4 text-left">
-            <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Platform</h4>
-            <ul className="space-y-3 text-sm font-medium">
+            <h4 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4">Platform</h4>
+            <ul className="space-y-3 text-xs font-semibold">
               <li><Link href="/student/events" className="hover:text-white transition-colors">Explore Events</Link></li>
               <li><Link href="/student/create" className="hover:text-white transition-colors">Create Event</Link></li>
               <li><Link href="/student/create" className="hover:text-white transition-colors">Create Promotion</Link></li>
@@ -934,29 +912,29 @@ export default function LandingPage() {
 
           {/* Social Column */}
           <div className="md:col-span-2 space-y-4 text-left">
-            <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Stay Social</h4>
-            <ul className="space-y-3 text-sm font-medium">
-              <li><a href="#" className="hover:text-[var(--color-evida-lime)] transition-colors">Instagram</a></li>
-              <li><a href="#" className="hover:text-[var(--color-evida-lime)] transition-colors">LinkedIn</a></li>
+            <h4 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4">Stay Social</h4>
+            <ul className="space-y-3 text-xs font-semibold">
+              <li><a href="#" className="hover:text-white transition-colors">Instagram</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">LinkedIn</a></li>
             </ul>
           </div>
 
           {/* Newsletter Column */}
           <div className="md:col-span-3 space-y-4 text-left">
-            <h4 className="text-[var(--color-evida-blue)] font-bold uppercase tracking-widest text-xs mb-4">Newsletter</h4>
-            <p className="text-white/60 text-xs leading-relaxed">
+            <h4 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4">Newsletter</h4>
+            <p className="text-white/40 text-xs leading-relaxed font-light">
               Stay updated on the latest campus events and club promotions.
             </p>
             <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row gap-2 pt-2">
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/35 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#eb5e28] transition-colors"
+                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#FF5A1F] transition-colors"
                 required
               />
               <button 
                 type="submit"
-                className="bg-[#eb5e28] text-white px-5 py-2.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider hover:bg-[#FFFDE1] hover:text-[#2c2324] transition-all duration-300 whitespace-nowrap"
+                className="bg-[#FF5A1F] text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#121212] transition-all duration-300 whitespace-nowrap"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 Subscribe
@@ -967,7 +945,7 @@ export default function LandingPage() {
 
         {/* Bottom Slogan */}
         <div className="relative text-center border-t border-white/5 pt-8 pb-4">
-          <p className="text-[var(--color-evida-lime)] font-bold text-sm uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+          <p className="text-[#FF5A1F] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
             Evida — Campus life, all in one place.
           </p>
         </div>

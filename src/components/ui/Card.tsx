@@ -14,18 +14,18 @@ interface CardProps {
 export default function Card({ children, className = '', onClick, hover = true, glass = false }: CardProps) {
   return (
     <motion.div
-      whileHover={hover ? { y: -4, scale: 1.02 } : undefined}
-      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+      whileHover={hover ? { y: -6, scale: 1.01 } : undefined}
+      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
       onClick={onClick}
       className={`
-        relative overflow-hidden rounded-[28px]
+        relative overflow-hidden rounded-[24px]
         ${glass
-          ? 'bg-[#FFFDE1]/[0.04] backdrop-blur-xl border border-white/[0.08]'
-          : 'bg-[#171722] border border-white/[0.06]'
+          ? 'bg-white/80 backdrop-blur-xl border border-black/[0.05]'
+          : 'bg-white border border-black/[0.04]'
         }
-        shadow-[0_8px_20px_rgba(0,0,0,0.45)]
-        transition-shadow duration-300
-        ${hover ? 'hover:shadow-[0_12px_30px_rgba(0,0,0,0.65)] hover:border-[#80B0EC]/20 cursor-pointer' : ''}
+        shadow-[var(--shadow-premium-md)]
+        transition-all duration-300
+        ${hover ? 'hover:shadow-[var(--shadow-premium-lg)] hover:border-[#FF5A1F]/10 cursor-pointer' : ''}
         ${className}
       `}
     >
