@@ -70,8 +70,9 @@ export default function OurVisionSection() {
             Why Choose Evida?
           </span>
           <h2 className="text-slate-900 font-extrabold text-3xl md:text-5xl uppercase tracking-tight max-w-4xl mx-auto leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-            <span className="text-[#eb5e28]">More Than</span> a Platform, The Future of <br className="hidden md:inline" />
-            Campus Life <span className="text-[#eb5e28]">is Here</span>
+            More Than a Platform, <br />
+            The Future of Campus Life <br />
+            <span className="text-[#eb5e28]">Is Here</span>
           </h2>
         </div>
 

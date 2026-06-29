@@ -311,8 +311,8 @@ export default function LandingPage() {
             className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#efece3] leading-[1.1] tracking-tight mb-8 select-none uppercase max-w-3xl mx-auto"
           >
             Discover Evida, <br />
-            the digital home of <br />
-            campus life & community
+            the digital home <br />
+            of campus life
           </motion.h1>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link href="/student/events" className="bg-[var(--color-evida-blue)] text-[#111827] font-bold uppercase tracking-widest text-xs px-8 py-4 hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors flex items-center gap-2 rounded-sm shadow-[4px_4px_0px_rgba(255,255,255,0.1)]">
