@@ -190,18 +190,18 @@ export default function LandingPage() {
     if (day === 5 || day === 15 || day === 22) {
       const IconComp = day === 5 ? Users : day === 15 ? Trophy : Heart;
       return {
-        bgColor: 'bg-[#4F7CFF]/10 hover:bg-[#4F7CFF]/15',
-        borderColor: 'border-[#4F7CFF]/35',
-        textColor: 'text-[#4F7CFF]',
-        icon: <IconComp className="h-4 w-4 text-[#4F7CFF] stroke-[2]" />,
+        bgColor: 'bg-black/5 hover:bg-black/8',
+        borderColor: 'border-black/20',
+        textColor: 'text-[#121212]',
+        icon: <IconComp className="h-4 w-4 text-[#121212] stroke-[2]" />,
       };
     }
     const IconComp = day === 8 ? Briefcase : day === 18 ? Code : Film;
     return {
-      bgColor: 'bg-[#8257FF]/10 hover:bg-[#8257FF]/15',
-      borderColor: 'border-[#8257FF]/35',
-      textColor: 'text-[#8257FF]',
-      icon: <IconComp className="h-4 w-4 text-[#8257FF] stroke-[2]" />,
+      bgColor: 'bg-[#FF5A1F]/10 hover:bg-[#FF5A1F]/15',
+      borderColor: 'border-[#FF5A1F]/35',
+      textColor: 'text-[#FF5A1F]',
+      icon: <IconComp className="h-4 w-4 text-[#FF5A1F] stroke-[2]" />,
     };
   };
 
@@ -233,7 +233,7 @@ export default function LandingPage() {
 
         {/* Ambient Gradient Blobs */}
         <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-[#FF5A1F]/8 rounded-full blur-[100px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#4F7CFF]/5 rounded-full blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '12s' }} />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/5 rounded-full blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '12s' }} />
 
         {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto -mt-10">
@@ -262,7 +262,7 @@ export default function LandingPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.15 + idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                  className={`inline-block ${idx > 0 ? "bg-gradient-to-r from-[#FF5A1F] via-[#8257FF] to-[#4F7CFF] bg-clip-text text-transparent" : "text-white"}`}
+                  className={`inline-block ${idx === 2 ? "text-[#FF5A1F]" : "text-white"}`}
                 >
                   {line}
                 </motion.span>
@@ -411,16 +411,16 @@ export default function LandingPage() {
                 number: "02",
                 title: "Create",
                 icon: MousePointer2,
-                color: "#4F7CFF",
-                lightBg: "bg-[#4F7CFF]/8",
+                color: "#121212",
+                lightBg: "bg-black/5",
                 description: "Host your own event, workshop, or promotion. Customize the details and publish instantly for your club or community."
               },
               {
                 number: "03",
                 title: "Attend",
                 icon: UserCheck,
-                color: "#8257FF",
-                lightBg: "bg-[#8257FF]/8",
+                color: "#FF5A1F",
+                lightBg: "bg-[#FF5A1F]/8",
                 description: "RSVP to events, save them to your profile, and receive notifications. Show up and connect with your fellow students."
               },
               {
@@ -731,7 +731,7 @@ export default function LandingPage() {
             {/* Overlapping Brand Circles */}
             <div className="relative w-24 h-12 flex items-center justify-center mt-6">
               <div className="w-11 h-11 rounded-full border-4 border-[#FF5A1F] opacity-90" />
-              <div className="w-11 h-11 rounded-full border-4 border-[#4F7CFF] opacity-90 -ml-4" />
+              <div className="w-11 h-11 rounded-full border-4 border-[#121212] opacity-90 -ml-4" />
             </div>
           </div>
 
@@ -830,7 +830,7 @@ export default function LandingPage() {
       <section className="relative w-full bg-[#121212] pt-32 pb-48 overflow-hidden flex flex-col items-center justify-center border-t border-white/5">
         
         {/* Soft Ambient Radial Glows */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[320px] bg-gradient-to-t from-[#FF5A1F]/8 via-[#8257FF]/4 to-transparent rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[320px] bg-gradient-to-t from-[#FF5A1F]/8 to-transparent rounded-full blur-[120px] pointer-events-none" />
         
         <div className="relative max-w-4xl mx-auto px-6 text-center z-20 space-y-8">
           <h2 className="text-white font-extrabold text-4xl md:text-6xl lg:text-7xl uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>

@@ -35,10 +35,10 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
       return 'bg-[#FF5A1F]/10 text-[#FF5A1F] border-[#FF5A1F]/15';
     }
     if (c.includes('music') || c.includes('concert') || c.includes('party') || c.includes('show') || c.includes('art') || c.includes('greek')) {
-      return 'bg-[#8257FF]/10 text-[#8257FF] border-[#8257FF]/15';
+      return 'bg-black/5 text-[#121212] border-black/10';
     }
     if (c.includes('career') || c.includes('fair') || c.includes('workshop') || c.includes('hackathon') || c.includes('workshop') || c.includes('academic')) {
-      return 'bg-[#4F7CFF]/10 text-[#4F7CFF] border-[#4F7CFF]/15';
+      return 'bg-[#FF5A1F]/10 text-[#FF5A1F] border-[#FF5A1F]/15';
     }
     return 'bg-[#FF5A1F]/10 text-[#FF5A1F] border-[#FF5A1F]/15';
   };

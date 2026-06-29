@@ -17,9 +17,9 @@ const variantStyles: Record<ButtonVariant, string> = {
   primary:
     'bg-[#FF5A1F] text-white font-bold shadow-[0_4px_14px_rgba(255,90,31,0.2)] hover:bg-[#e04b12] border border-transparent',
   secondary:
-    'bg-[#4F7CFF] text-white font-bold shadow-[0_4px_14px_rgba(79,124,255,0.2)] hover:bg-[#3b68e0] border border-transparent',
+    'bg-[#121212] text-white font-bold shadow-[0_4px_14px_rgba(18,18,18,0.15)] hover:bg-black border border-transparent',
   accent:
-    'bg-[#8257FF] text-white font-bold shadow-[0_4px_14px_rgba(130,87,255,0.2)] hover:bg-[#6b42e0] border border-transparent',
+    'bg-[#FF5A1F] text-white font-bold shadow-[0_4px_14px_rgba(255,90,31,0.2)] hover:bg-[#e04b12] border border-transparent',
   neon:
     'bg-[#FF5A1F] text-white font-bold shadow-[0_4px_14px_rgba(255,90,31,0.2)] hover:bg-[#e04b12] border border-transparent',
   ghost:

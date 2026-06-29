@@ -96,22 +96,24 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                 </button>
               </>
             )}
+            {/* Student Logged In */}
             {variant === 'student' && (
               <>
                 <Link href="/student/create" className="px-5 py-2 rounded-full bg-[#FF5A1F] text-white text-[11px] font-bold uppercase tracking-wider hover:bg-[#e04b12] transition-colors shadow-[0_4px_12px_rgba(255,90,31,0.15)]">
                   Create
                 </Link>
-                <Link href="/student/profile" className="h-9 w-9 rounded-full bg-[#8257FF]/10 border border-[#8257FF]/20 flex items-center justify-center text-[#8257FF] text-xs font-bold cursor-pointer">
+                <Link href="/student/profile" className="h-9 w-9 rounded-full bg-[#FF5A1F]/10 border border-[#FF5A1F]/20 flex items-center justify-center text-[#FF5A1F] text-xs font-bold cursor-pointer">
                   MC
                 </Link>
               </>
             )}
+            {/* School Logged In */}
             {variant === 'school' && (
               <>
-                <Link href="/student/events" className="text-xs font-bold text-[#4F7CFF] hover:text-[#3b68e0] uppercase tracking-wider transition-colors cursor-pointer">
+                <Link href="/student/events" className="text-xs font-bold text-[#FF5A1F] hover:text-[#e04b12] uppercase tracking-wider transition-colors cursor-pointer">
                   Student Portal
                 </Link>
-                <div className="h-9 w-9 rounded-full bg-[#4F7CFF]/10 border border-[#4F7CFF]/20 flex items-center justify-center text-[#4F7CFF] text-xs font-bold">
+                <div className="h-9 w-9 rounded-full bg-black/5 border border-black/10 flex items-center justify-center text-[#121212] text-xs font-bold">
                   A
                 </div>
               </>
@@ -212,8 +214,8 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
               href={tab.href}
               className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-colors cursor-pointer ${
                 isActive 
-                  ? variant === 'school' ? 'text-[#4F7CFF]' : 'text-[#8257FF]' 
-                  : 'text-gray-400 hover:text-[#8257FF]'
+                  ? 'text-[#FF5A1F]' 
+                  : 'text-gray-400 hover:text-[#FF5A1F]'
               }`}
             >
               <Icon className="h-5 w-5" />
@@ -250,8 +252,8 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
   ];
 
   const links = variant === 'school' ? schoolLinks : studentLinks;
-  const activeColorClass = variant === 'school' ? 'bg-[#4F7CFF]/8 text-[#4F7CFF] border-[#4F7CFF]/10' : 'bg-[#8257FF]/8 text-[#8257FF] border-[#8257FF]/10';
-  const hoverColorClass = variant === 'school' ? 'hover:text-[#4F7CFF] hover:bg-black/[0.01]' : 'hover:text-[#8257FF] hover:bg-black/[0.01]';
+  const activeColorClass = 'bg-[#FF5A1F]/8 text-[#FF5A1F] border-[#FF5A1F]/10';
+  const hoverColorClass = 'hover:text-[#FF5A1F] hover:bg-black/[0.01]';
 
   return (
     <aside className="hidden md:flex w-64 bg-[#FFFDF8] border-r border-black/[0.04] flex-col justify-between p-6 sticky top-16 h-[calc(100vh-64px)] shrink-0">
@@ -282,12 +284,12 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
       <div className="space-y-3">
         <div className="border-t border-black/[0.04] pt-4">
           {variant === 'student' ? (
-            <Link href="/school/dashboard" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#7B8290] hover:text-[#4F7CFF] transition-colors cursor-pointer">
+            <Link href="/school/dashboard" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#7B8290] hover:text-[#FF5A1F] transition-colors cursor-pointer">
               <Shield className="h-4 w-4" />
               School Dashboard
             </Link>
           ) : (
-            <Link href="/student/events" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#7B8290] hover:text-[#8257FF] transition-colors cursor-pointer">
+            <Link href="/student/events" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#7B8290] hover:text-[#FF5A1F] transition-colors cursor-pointer">
               <Compass className="h-4 w-4" />
               Student Portal
             </Link>

@@ -32,30 +32,30 @@ const visionData: Record<VisionKey, VisionContent> = {
   Schools: {
     tagline: "A smarter way to engage your campus",
     description: "Evida helps schools centralize events, improve communication, and better connect with students through one trusted platform.",
-    color: "#4F7CFF",
-    lightBg: "bg-[#4F7CFF]/8",
-    borderHover: "group-hover:border-[#4F7CFF]/20"
+    color: "#121212",
+    lightBg: "bg-black/5",
+    borderHover: "group-hover:border-black/10"
   },
   Discovery: {
     tagline: "Find experiences, not just events",
     description: "From career fairs to game nights, Evida makes it easy to explore opportunities based on your interests and campus life.",
-    color: "#8257FF",
-    lightBg: "bg-[#8257FF]/8",
-    borderHover: "group-hover:border-[#8257FF]/20"
+    color: "#FF5A1F",
+    lightBg: "bg-[#FF5A1F]/8",
+    borderHover: "group-hover:border-[#FF5A1F]/20"
   },
   Connection: {
     tagline: "Meaningful connections start here",
     description: "Every event is a chance to meet new people, join organizations, and build relationships that last beyond college.",
-    color: "#4F7CFF",
-    lightBg: "bg-[#4F7CFF]/8",
-    borderHover: "group-hover:border-[#4F7CFF]/20"
+    color: "#121212",
+    lightBg: "bg-black/5",
+    borderHover: "group-hover:border-black/10"
   },
   Community: {
     tagline: "One campus. One community",
     description: "Evida brings students, organizations, and schools together in one connected ecosystem where everyone belongs.",
-    color: "#8257FF",
-    lightBg: "bg-[#8257FF]/8",
-    borderHover: "group-hover:border-[#8257FF]/20"
+    color: "#FF5A1F",
+    lightBg: "bg-[#FF5A1F]/8",
+    borderHover: "group-hover:border-[#FF5A1F]/20"
   },
   Memories: {
     tagline: "College ends. Memories don’t",
@@ -82,7 +82,7 @@ export default function OurVisionSection() {
     <section id="our-mission" className="w-full bg-[#FFFDF8] py-24 border-y border-black/[0.04] font-sans relative overflow-hidden">
       {/* Subtle Background Radial Glows */}
       <div className="absolute -left-[10%] top-1/4 w-[45%] h-[55%] bg-[#FF5A1F]/3 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute -right-[10%] bottom-1/4 w-[45%] h-[55%] bg-[#4F7CFF]/3 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute -right-[10%] bottom-1/4 w-[45%] h-[55%] bg-black/[0.01] rounded-full blur-[120px] pointer-events-none" />
       
       <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
         
