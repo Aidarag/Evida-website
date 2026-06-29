@@ -91,7 +91,7 @@ export default function EventDetailsModal({
 
           {/* Title */}
           <div>
-            <h2 className="text-2xl font-extrabold tracking-tight text-white">
+            <h2 className="text-2xl font-extrabold tracking-tight text-white line-clamp-3">
               {event.title}
             </h2>
             {event.organizationName && (

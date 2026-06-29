@@ -257,7 +257,7 @@ export default function StudentEventsFeed() {
             <span className="rounded-full bg-red-500/20 text-red-400 border border-red-500/30 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm">
               Featured Official Event
             </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight line-clamp-3" style={{ fontFamily: 'var(--font-display)' }}>
               {featuredEvent.title}
             </h2>
             <div className="flex items-center gap-4 text-sm font-medium text-[#B8BBC8]">

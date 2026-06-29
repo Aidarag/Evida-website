@@ -72,7 +72,7 @@ export default function EventDetails({
             <span className="rounded-full bg-[#FF7A1A] text-black text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 w-fit">
               {event.free ? 'FREE ACCESS' : 'TICKETED'}
             </span>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white uppercase tracking-tight leading-none mt-2">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-white uppercase tracking-tight leading-none mt-2 line-clamp-3">
               {event.title}
             </h2>
             {event.organizationName && (
