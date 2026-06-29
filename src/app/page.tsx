@@ -565,29 +565,43 @@ export default function LandingPage() {
       </section>
 
       {/* 5.5 Infinite Category Marquee */}
-      <section className="relative w-full bg-white py-12 border-t border-b border-slate-100 overflow-hidden">
-        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-        
+      <section className="relative w-full bg-[#2c2324] py-5 overflow-hidden border-t border-b border-white/5 shadow-2xl">
         <div className="relative w-full overflow-hidden flex items-center">
-          <div className="animate-marquee flex gap-2 text-white">
-            {[...marqueeCategories, ...marqueeCategories, ...marqueeCategories].map((cat, idx) => {
-              const isActive = selectedCategory.toLowerCase() === cat.toLowerCase();
-              return (
-                <button
-                  key={`${cat}-${idx}`}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`flex-shrink-0 px-6 py-3 mx-3 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border cursor-pointer hover:scale-105 ${
-                    isActive
-                      ? 'bg-[#eb5e28] text-white border-transparent shadow-lg shadow-blue-500/10'
-                      : 'bg-slate-50 text-slate-600 border-slate-200 hover:text-slate-900 hover:border-slate-400 shadow-sm'
-                  }`}
-                  style={{ fontFamily: 'var(--font-display)' }}
-                >
-                  {cat}
-                </button>
-              );
-            })}
+          <div className="animate-marquee flex gap-12 text-[#efece3] font-bold text-lg tracking-[0.2em] uppercase opacity-90 items-center">
+            <span>ORIENTATION</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>HOMECOMING</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>CAREER FAIR</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>SPORTS</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>WORKSHOPS</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>STUDENT LIFE</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>ORGANIZATIONS</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>CULTURAL EVENTS</span>
+            <EvidaLogo size={22} showText={false} />
+            
+            {/* Duplicate for infinite effect */}
+            <span>ORIENTATION</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>HOMECOMING</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>CAREER FAIR</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>SPORTS</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>WORKSHOPS</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>STUDENT LIFE</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>ORGANIZATIONS</span>
+            <EvidaLogo size={22} showText={false} />
+            <span>CULTURAL EVENTS</span>
+            <EvidaLogo size={22} showText={false} />
           </div>
         </div>
       </section>
