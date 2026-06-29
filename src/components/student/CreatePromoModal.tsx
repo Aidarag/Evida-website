@@ -69,7 +69,7 @@ export default function CreatePromoModal({
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-lg p-1.5 text-slate-400 hover:bg-white/5 hover:text-white transition-colors cursor-pointer"
+          className="absolute right-4 top-4 rounded-lg p-1.5 text-slate-400 hover:bg-[#FFFDE1]/5 hover:text-white transition-colors cursor-pointer"
         >
           <X className="h-4.5 w-4.5" />
         </button>

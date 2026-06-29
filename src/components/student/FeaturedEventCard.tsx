@@ -20,7 +20,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
   const formattedDate = `${weekday}, ${month} ${day}`;
 
   const isGradient = event.coverImage ? event.coverImage.includes('from-') : false;
-  const bgClass = isGradient ? event.coverImage : (event.coverImage ? '' : 'bg-gray-100');
+  const bgClass = isGradient ? event.coverImage : (event.coverImage ? '' : 'bg-[#FFFDE1]');
   const bgStyle = (!isGradient && event.coverImage) 
     ? { backgroundImage: `url(${event.coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } 
     : {};
@@ -30,7 +30,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
 
   return (
     <div 
-      className="group flex flex-col bg-white rounded-[32px] overflow-hidden border border-slate-200/50 shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all duration-500 h-full justify-between relative"
+      className="group flex flex-col bg-[#FFFDE1] rounded-[32px] overflow-hidden border border-slate-200/50 shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all duration-500 h-full justify-between relative"
     >
       {/* 1. Banner Image */}
       <div 
@@ -57,7 +57,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
           e.stopPropagation();
           setIsSaved(!isSaved);
         }}
-        className="absolute top-4 right-4 z-20 h-8 w-8 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/50 flex items-center justify-center text-slate-500 hover:text-rose-500 hover:scale-110 active:scale-95 transition-all shadow-sm cursor-pointer"
+        className="absolute top-4 right-4 z-20 h-8 w-8 rounded-full bg-[#FFFDE1]/80 backdrop-blur-md border border-slate-200/50 flex items-center justify-center text-slate-500 hover:text-rose-500 hover:scale-110 active:scale-95 transition-all shadow-sm cursor-pointer"
       >
         <Heart 
           className={`h-4.5 w-4.5 transition-colors ${
@@ -120,7 +120,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
           {/* Compact Add to Calendar Button */}
           <button
             onClick={onClick}
-            className="inline-flex items-center gap-1.5 bg-white border border-slate-200 text-slate-800 font-bold text-[10px] sm:text-xs uppercase tracking-wider py-1.5 px-3.5 rounded-full hover:bg-slate-50 transition-colors shadow-sm cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 bg-[#FFFDE1] border border-slate-200 text-slate-800 font-bold text-[10px] sm:text-xs uppercase tracking-wider py-1.5 px-3.5 rounded-full hover:bg-[#FFFDE1] transition-colors shadow-sm cursor-pointer whitespace-nowrap"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             <Calendar className="h-3.5 w-3.5 text-slate-800" />

@@ -237,7 +237,7 @@ export default function LoginPage() {
                     {/* Student Option */}
                     <button
                       onClick={() => handleRoleSelect('student')}
-                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-white/[0.05] bg-white/[0.01] hover:bg-white/[0.03] hover:border-[var(--color-evida-blue)] transition-all duration-300 cursor-pointer text-left group"
+                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-white/[0.05] bg-[#FFFDE1]/[0.01] hover:bg-[#FFFDE1]/[0.03] hover:border-[var(--color-evida-blue)] transition-all duration-300 cursor-pointer text-left group"
                     >
                       <div className="flex items-center gap-4">
                         <div className="h-12 w-12 rounded-xl bg-[var(--color-evida-blue)]/10 text-[var(--color-evida-blue)] flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -254,7 +254,7 @@ export default function LoginPage() {
                     {/* Admin Option */}
                     <button
                       onClick={() => handleRoleSelect('admin')}
-                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-white/[0.05] bg-white/[0.01] hover:bg-white/[0.03] hover:border-[var(--color-evida-coral)] transition-all duration-300 cursor-pointer text-left group"
+                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-white/[0.05] bg-[#FFFDE1]/[0.01] hover:bg-[#FFFDE1]/[0.03] hover:border-[var(--color-evida-coral)] transition-all duration-300 cursor-pointer text-left group"
                     >
                       <div className="flex items-center gap-4">
                         <div className="h-12 w-12 rounded-xl bg-[var(--color-evida-coral)]/10 text-[var(--color-evida-coral)] flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -297,7 +297,7 @@ export default function LoginPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="e.g. yourname@university.edu"
-                        className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-3 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-medium"
+                        className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-3 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-medium"
                       />
                     </div>
                   </div>
@@ -333,7 +333,7 @@ export default function LoginPage() {
                         value={verificationCode}
                         onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
                         placeholder="123456"
-                        className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-3 pl-11 pr-4 text-xs text-white text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-bold"
+                        className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-3 pl-11 pr-4 text-xs text-white text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-bold"
                       />
                     </div>
                     <p className="text-[10px] text-[#B8BBC8] leading-relaxed">
@@ -353,7 +353,7 @@ export default function LoginPage() {
                     </button>
 
                     {/* Simulation Helper */}
-                    <div className="bg-white/[0.02] border border-white/[0.05] p-3.5 rounded-xl space-y-2 text-left">
+                    <div className="bg-[#FFFDE1]/[0.02] border border-white/[0.05] p-3.5 rounded-xl space-y-2 text-left">
                       <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block text-center">Simulation Helper</span>
                       <div className="flex justify-between items-center text-[11px]">
                         <span className="text-[#B8BBC8]">Simulated Code:</span>
@@ -362,7 +362,7 @@ export default function LoginPage() {
                       <button
                         type="button"
                         onClick={() => setVerificationCode(generatedCode)}
-                        className="w-full text-[10px] font-bold text-white bg-white/10 hover:bg-white/15 py-1.5 rounded-md transition-colors uppercase cursor-pointer"
+                        className="w-full text-[10px] font-bold text-white bg-[#FFFDE1]/10 hover:bg-[#FFFDE1]/15 py-1.5 rounded-md transition-colors uppercase cursor-pointer"
                       >
                         Auto-fill Code
                       </button>
@@ -390,7 +390,7 @@ export default function LoginPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="dean.williams@university.edu"
-                          className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-3 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-3 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -410,7 +410,7 @@ export default function LoginPage() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="••••••••"
-                          className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-3 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-3 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -428,7 +428,7 @@ export default function LoginPage() {
                     </button>
 
                     {/* Simulation Helper */}
-                    <div className="bg-white/[0.02] border border-white/[0.05] p-3 rounded-xl text-[11px] space-y-1">
+                    <div className="bg-[#FFFDE1]/[0.02] border border-white/[0.05] p-3 rounded-xl text-[11px] space-y-1">
                       <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block text-center mb-1">Simulation Helper</span>
                       <p className="text-[#B8BBC8]">Use the official admin email:</p>
                       <code className="text-[var(--color-evida-blue)] block font-mono font-bold select-all text-center">dean.williams@university.edu</code>
@@ -438,7 +438,7 @@ export default function LoginPage() {
                           setEmail('dean.williams@university.edu');
                           setPassword('admin123');
                         }}
-                        className="w-full text-[10px] font-bold text-white bg-white/10 hover:bg-white/15 py-1 rounded-md transition-colors uppercase mt-1 cursor-pointer"
+                        className="w-full text-[10px] font-bold text-white bg-[#FFFDE1]/10 hover:bg-[#FFFDE1]/15 py-1 rounded-md transition-colors uppercase mt-1 cursor-pointer"
                       >
                         Pre-fill Admin Credentials
                       </button>

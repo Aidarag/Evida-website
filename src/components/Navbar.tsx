@@ -204,7 +204,7 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="flex items-center justify-around rounded-full bg-white/90 backdrop-blur-2xl border border-gray-200 px-2 py-2 shadow-lg"
+        className="flex items-center justify-around rounded-full bg-[#FFFDE1]/90 backdrop-blur-2xl border border-gray-200 px-2 py-2 shadow-lg"
       >
         {tabs.map((tab: any) => {
           const isActive = pathname === tab.href || pathname.startsWith(tab.href + '/');
@@ -267,7 +267,7 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
   const links = variant === 'school' ? schoolLinks : studentLinks;
 
   return (
-    <aside className="hidden md:flex w-64 bg-white border-r border-gray-200 flex-col justify-between p-6 sticky top-16 h-[calc(100vh-64px)] shrink-0">
+    <aside className="hidden md:flex w-64 bg-[#FFFDE1] border-r border-gray-200 flex-col justify-between p-6 sticky top-16 h-[calc(100vh-64px)] shrink-0">
       <nav className="space-y-1">
         {links.map((link) => {
           const isActive = pathname === link.href;
@@ -281,7 +281,7 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
                 flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer
                 ${isActive
                   ? 'bg-[#F5F3FF] text-[#4C1D95] border border-[#4C1D95]/10'
-                  : 'text-gray-600 hover:text-[#4C1D95] hover:bg-gray-50 border border-transparent'
+                  : 'text-gray-600 hover:text-[#4C1D95] hover:bg-[#FFFDE1] border border-transparent'
                 }
               `}
             >
@@ -295,12 +295,12 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
       <div className="space-y-3">
         <div className="border-t border-gray-100 pt-4">
           {variant === 'student' ? (
-            <Link href="/school/dashboard" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-gray-500 hover:text-[#4C1D95] hover:bg-gray-50 transition-colors cursor-pointer">
+            <Link href="/school/dashboard" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-gray-500 hover:text-[#4C1D95] hover:bg-[#FFFDE1] transition-colors cursor-pointer">
               <Shield className="h-4 w-4" />
               School Dashboard
             </Link>
           ) : (
-            <Link href="/student/events" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-gray-500 hover:text-[#4C1D95] hover:bg-gray-50 transition-colors cursor-pointer">
+            <Link href="/student/events" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-gray-500 hover:text-[#4C1D95] hover:bg-[#FFFDE1] transition-colors cursor-pointer">
               <Compass className="h-4 w-4" />
               Student Portal
             </Link>

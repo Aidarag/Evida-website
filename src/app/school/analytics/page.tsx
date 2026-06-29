@@ -90,7 +90,7 @@ export default function AnalyticsPage() {
                     <span className="text-white">{category}</span>
                     <span className="text-[#B8BBC8]">{count} events ({percentage}%)</span>
                   </div>
-                  <div className="w-full bg-white/[0.04] rounded-full h-2 overflow-hidden">
+                  <div className="w-full bg-[#FFFDE1]/[0.04] rounded-full h-2 overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${percentage}%` }}
@@ -114,7 +114,7 @@ export default function AnalyticsPage() {
               .slice(0, 5)
               .map((org, index) => (
                 <div key={org.id} className="flex items-center gap-4">
-                  <div className="h-8 w-8 rounded-full bg-white/[0.06] flex items-center justify-center text-xs font-bold text-[#B8BBC8]">
+                  <div className="h-8 w-8 rounded-full bg-[#FFFDE1]/[0.06] flex items-center justify-center text-xs font-bold text-[#B8BBC8]">
                     #{index + 1}
                   </div>
                   <div className="flex-1">

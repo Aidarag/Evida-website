@@ -113,7 +113,7 @@ export default function StudentDashboard({
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
                     isActive
                       ? 'bg-gradient-to-r from-[#FF7A1A]/10 to-transparent border-l-2 border-[#FF7A1A] text-[#FF7A1A]'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-[#FFFDE1]/5'
                   }`}
                 >
                   <Icon className="h-4.5 w-4.5" />

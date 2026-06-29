@@ -188,14 +188,14 @@ export default function StudentEventsFeed() {
                   className={`relative flex items-center justify-center gap-2.5 px-6 py-3 h-12 rounded-full text-xs font-extrabold uppercase tracking-widest border-2 cursor-pointer select-none transition-colors duration-200 ${
                     isActive
                       ? 'border-white text-[#08080B] shadow-[0_6px_25px_rgba(255,255,255,0.08)]'
-                      : 'border-white/[0.08] bg-white/[0.01] text-[#B8BBC8] hover:border-white/20'
+                      : 'border-white/[0.08] bg-[#FFFDE1]/[0.01] text-[#B8BBC8] hover:border-white/20'
                   }`}
                 >
                   {/* Sliding Background */}
                   {isActive && (
                     <motion.div
                       layoutId="activeOrganizerBg"
-                      className="absolute inset-0 bg-white rounded-full z-0"
+                      className="absolute inset-0 bg-[#FFFDE1] rounded-full z-0"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -225,7 +225,7 @@ export default function StudentEventsFeed() {
                   className={`relative shrink-0 px-5.5 py-2.5 h-9.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider cursor-pointer select-none transition-colors duration-200 ${
                     isActive
                       ? 'text-[#08080B]'
-                      : 'bg-white/[0.02] border border-white/[0.06] text-[#B8BBC8] hover:bg-white/[0.04] hover:text-white'
+                      : 'bg-[#FFFDE1]/[0.02] border border-white/[0.06] text-[#B8BBC8] hover:bg-[#FFFDE1]/[0.04] hover:text-white'
                   }`}
                 >
                   {/* Sliding Background */}
@@ -265,7 +265,7 @@ export default function StudentEventsFeed() {
                 <Calendar className="h-4 w-4" />
                 {new Date(featuredEvent.date).toLocaleDateString()}
               </span>
-              <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FFFDE1]/20" />
               <span className="flex items-center gap-1.5">
                 <MapPin className="h-4 w-4" />
                 {featuredEvent.location}
@@ -354,7 +354,7 @@ export default function StudentEventsFeed() {
                 <div className="space-y-4">
                   {/* Category & Date */}
                   <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-[#B8BBC8]">
-                    <span className="bg-white/5 px-2.5 py-1 rounded-full text-white capitalize">
+                    <span className="bg-[#FFFDE1]/5 px-2.5 py-1 rounded-full text-white capitalize">
                       Category: {selectedPromo.category}
                     </span>
                     <span className="flex items-center gap-1.5">
@@ -372,7 +372,7 @@ export default function StudentEventsFeed() {
                   </div>
 
                   {/* Organizer Contact Info */}
-                  <div className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-2xl space-y-3">
+                  <div className="bg-[#FFFDE1]/[0.02] border border-white/[0.04] p-4 rounded-2xl space-y-3">
                     <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest">Organizer Information</h3>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-xs text-white">

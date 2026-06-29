@@ -41,7 +41,7 @@ export default function LandingPage({
             </button>
             <button
               onClick={onExplore}
-              className="rounded-full bg-white text-black text-xs font-bold px-4 py-2 hover:bg-slate-200 transition-all hover:scale-[1.02] cursor-pointer"
+              className="rounded-full bg-[#FFFDE1] text-black text-xs font-bold px-4 py-2 hover:bg-slate-200 transition-all hover:scale-[1.02] cursor-pointer"
             >
               Explore Feed
             </button>

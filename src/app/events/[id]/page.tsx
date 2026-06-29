@@ -39,19 +39,19 @@ export default function EventDetailsPage() {
         <div className="absolute top-6 left-6 right-6 z-20 flex justify-between items-center max-w-5xl mx-auto">
           <button 
             onClick={() => router.back()}
-            className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"
+            className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center hover:bg-[#FFFDE1]/20 transition-colors cursor-pointer"
           >
             <ArrowLeft className="h-5 w-5 text-white" />
           </button>
           
           <div className="flex gap-3">
-            <button className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer">
+            <button className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center hover:bg-[#FFFDE1]/20 transition-colors cursor-pointer">
               <Share2 className="h-4 w-4 text-white" />
             </button>
             {currentUser && (
               <button 
                 onClick={() => saveToggle(event.id)}
-                className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"
+                className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center hover:bg-[#FFFDE1]/20 transition-colors cursor-pointer"
               >
                 <Heart className={`h-5 w-5 ${isSaved ? 'fill-[#EE3D5A] text-[#EE3D5A]' : 'text-white'}`} />
               </button>

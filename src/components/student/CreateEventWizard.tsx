@@ -166,7 +166,7 @@ export default function CreateEventWizard({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-6 top-6 rounded-xl p-2 text-slate-400 hover:bg-white/5 hover:text-white transition-colors cursor-pointer z-30"
+          className="absolute right-6 top-6 rounded-xl p-2 text-slate-400 hover:bg-[#FFFDE1]/5 hover:text-white transition-colors cursor-pointer z-30"
         >
           <X className="h-4.5 w-4.5" />
         </button>
@@ -338,7 +338,7 @@ export default function CreateEventWizard({
                     style={{ borderColor: coverGradient === grad.value ? '#FF7A1A' : 'transparent' }}
                   >
                     {coverGradient === grad.value && (
-                      <span className="text-[8px] font-bold text-black bg-white rounded px-1.5 py-0.5">OK</span>
+                      <span className="text-[8px] font-bold text-black bg-[#FFFDE1] rounded px-1.5 py-0.5">OK</span>
                     )}
                   </button>
                 ))}
@@ -485,7 +485,7 @@ export default function CreateEventWizard({
                   onClose();
                   setStatusScreen('form');
                 }}
-                className="rounded-full bg-white text-black px-6 py-3 text-xs font-bold hover:bg-slate-200 transition-colors cursor-pointer"
+                className="rounded-full bg-[#FFFDE1] text-black px-6 py-3 text-xs font-bold hover:bg-slate-200 transition-colors cursor-pointer"
               >
                 Return to Explore
               </button>

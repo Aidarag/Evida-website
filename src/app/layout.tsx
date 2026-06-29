@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${plusJakartaSans.variable}`}>
-      <body className="font-sans antialiased bg-white text-gray-900 min-h-screen selection:bg-[var(--color-evida-lime)] selection:text-black">
+      <body className="font-sans antialiased bg-[#FFFDE1] text-gray-900 min-h-screen selection:bg-[var(--color-evida-lime)] selection:text-black">
         <UserProvider>
           <EventProvider>
             {children}

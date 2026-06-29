@@ -52,7 +52,7 @@ export default function EventDetailsModal({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-lg p-1.5 text-slate-400 hover:bg-white/5 hover:text-white transition-colors cursor-pointer"
+          className="absolute right-4 top-4 rounded-lg p-1.5 text-slate-400 hover:bg-[#FFFDE1]/5 hover:text-white transition-colors cursor-pointer"
         >
           <X className="h-4.5 w-4.5" />
         </button>
@@ -171,7 +171,7 @@ export default function EventDetailsModal({
                   <p className="text-slate-500 italic pl-1">No RSVPs yet</p>
                 ) : (
                   event.attendees.map((name) => (
-                    <div key={name} className="flex items-center gap-1.5 py-0.5 px-1.5 rounded bg-white/5 text-slate-300">
+                    <div key={name} className="flex items-center gap-1.5 py-0.5 px-1.5 rounded bg-[#FFFDE1]/5 text-slate-300">
                       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                       {name}
                     </div>
@@ -191,7 +191,7 @@ export default function EventDetailsModal({
                   <p className="text-slate-500 italic pl-1">No interested students</p>
                 ) : (
                   event.interested.map((name) => (
-                    <div key={name} className="flex items-center gap-1.5 py-0.5 px-1.5 rounded bg-white/5 text-slate-300">
+                    <div key={name} className="flex items-center gap-1.5 py-0.5 px-1.5 rounded bg-[#FFFDE1]/5 text-slate-300">
                       <div className="h-1.5 w-1.5 rounded-full bg-rose-400" />
                       {name}
                     </div>

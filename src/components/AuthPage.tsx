@@ -71,7 +71,7 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
             {/* Google sign-in */}
             <button
               onClick={handleVerificationComplete}
-              className="w-full flex items-center justify-center gap-2.5 rounded-full bg-white hover:bg-slate-200 py-3.5 text-xs font-bold text-black transition-all hover:scale-[1.01] cursor-pointer"
+              className="w-full flex items-center justify-center gap-2.5 rounded-full bg-[#FFFDE1] hover:bg-slate-200 py-3.5 text-xs font-bold text-black transition-all hover:scale-[1.01] cursor-pointer"
             >
               Continue with Google
             </button>

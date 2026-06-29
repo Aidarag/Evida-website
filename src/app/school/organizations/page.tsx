@@ -58,7 +58,7 @@ export default function OrganizationsPage() {
                     <h3 className="text-lg font-bold text-white leading-snug">{org.name}</h3>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-xs text-[#B8BBC8]">{org.members.length} members</span>
-                      <span className="h-1 w-1 rounded-full bg-white/20" />
+                      <span className="h-1 w-1 rounded-full bg-[#FFFDE1]/20" />
                       {org.verified ? (
                         <span className="flex items-center gap-1 text-[10px] font-bold text-[#eb5e28] uppercase">
                           <CheckCircle2 className="h-3 w-3" /> Verified

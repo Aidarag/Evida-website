@@ -57,7 +57,7 @@ const pillarIcons: Record<VisionKey, React.ComponentType<any>> = {
 
 export default function OurVisionSection() {
   return (
-    <section id="our-mission" className="w-full bg-slate-50 py-24 border-y border-slate-100 font-sans relative overflow-hidden">
+    <section id="our-mission" className="w-full bg-[#FFFDE1] py-24 border-y border-slate-100 font-sans relative overflow-hidden">
       {/* Subtle Background Radial Glow (like in the screenshot) */}
       <div className="absolute -left-[10%] top-1/4 w-[40%] h-[50%] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute -right-[10%] bottom-1/4 w-[40%] h-[50%] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
@@ -84,7 +84,7 @@ export default function OurVisionSection() {
             return (
               <div
                 key={item}
-                className="bg-white border border-slate-100 rounded-[32px] p-8 flex flex-col items-center text-center space-y-4 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300"
+                className="bg-[#FFFDE1] border border-slate-100 rounded-[32px] p-8 flex flex-col items-center text-center space-y-4 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300"
               >
                 {/* Icon */}
                 <div className="text-[#eb5e28] p-3.5 bg-blue-50/50 rounded-2xl border border-blue-50">

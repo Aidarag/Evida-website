@@ -226,7 +226,7 @@ export default function SignupPage() {
                     {/* Student Option */}
                     <button
                       onClick={() => handleRoleSelect('student')}
-                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-white/[0.05] bg-white/[0.01] hover:bg-white/[0.03] hover:border-[var(--color-evida-blue)] transition-all duration-300 cursor-pointer text-left group"
+                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-white/[0.05] bg-[#FFFDE1]/[0.01] hover:bg-[#FFFDE1]/[0.03] hover:border-[var(--color-evida-blue)] transition-all duration-300 cursor-pointer text-left group"
                     >
                       <div className="flex items-center gap-4">
                         <div className="h-12 w-12 rounded-xl bg-[var(--color-evida-blue)]/10 text-[var(--color-evida-blue)] flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -243,7 +243,7 @@ export default function SignupPage() {
                     {/* Admin Option */}
                     <button
                       onClick={() => handleRoleSelect('admin')}
-                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-white/[0.05] bg-white/[0.01] hover:bg-white/[0.03] hover:border-[var(--color-evida-coral)] transition-all duration-300 cursor-pointer text-left group"
+                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-white/[0.05] bg-[#FFFDE1]/[0.01] hover:bg-[#FFFDE1]/[0.03] hover:border-[var(--color-evida-coral)] transition-all duration-300 cursor-pointer text-left group"
                     >
                       <div className="flex items-center gap-4">
                         <div className="h-12 w-12 rounded-xl bg-[var(--color-evida-coral)]/10 text-[var(--color-evida-coral)] flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -288,7 +288,7 @@ export default function SignupPage() {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           placeholder="e.g. Alex Morgan"
-                          className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -308,7 +308,7 @@ export default function SignupPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="e.g. alex.morgan@university.edu"
-                          className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -329,7 +329,7 @@ export default function SignupPage() {
                             value={major}
                             onChange={(e) => setMajor(e.target.value)}
                             placeholder="e.g. Economics"
-                            className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-medium"
+                            className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-medium"
                           />
                         </div>
                       </div>
@@ -389,7 +389,7 @@ export default function SignupPage() {
                           value={schoolName}
                           onChange={(e) => setSchoolName(e.target.value)}
                           placeholder="e.g. Gotham University"
-                          className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -409,7 +409,7 @@ export default function SignupPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="e.g. admin@gotham.edu"
-                          className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -429,7 +429,7 @@ export default function SignupPage() {
                           value={department}
                           onChange={(e) => setDepartment(e.target.value)}
                           placeholder="e.g. Student Involvement Office"
-                          className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -449,7 +449,7 @@ export default function SignupPage() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="••••••••"
-                          className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-2.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-coral)] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -486,7 +486,7 @@ export default function SignupPage() {
                         value={verificationCode}
                         onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
                         placeholder="123456"
-                        className="w-full rounded-xl border-2 border-white/[0.06] bg-white/[0.02] py-3 pl-11 pr-4 text-xs text-white text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-bold"
+                        className="w-full rounded-xl border-2 border-white/[0.06] bg-[#FFFDE1]/[0.02] py-3 pl-11 pr-4 text-xs text-white text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[var(--color-evida-blue)] transition-all font-bold"
                       />
                     </div>
                     <p className="text-[10px] text-[#B8BBC8] leading-relaxed">
@@ -506,7 +506,7 @@ export default function SignupPage() {
                     </button>
 
                     {/* Simulation Helper */}
-                    <div className="bg-white/[0.02] border border-white/[0.05] p-3.5 rounded-xl space-y-2 text-left">
+                    <div className="bg-[#FFFDE1]/[0.02] border border-white/[0.05] p-3.5 rounded-xl space-y-2 text-left">
                       <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block text-center">Simulation Helper</span>
                       <div className="flex justify-between items-center text-[11px]">
                         <span className="text-[#B8BBC8]">Simulated Code:</span>
@@ -515,7 +515,7 @@ export default function SignupPage() {
                       <button
                         type="button"
                         onClick={() => setVerificationCode(generatedCode)}
-                        className="w-full text-[10px] font-bold text-white bg-white/10 hover:bg-white/15 py-1.5 rounded-md transition-colors uppercase cursor-pointer"
+                        className="w-full text-[10px] font-bold text-white bg-[#FFFDE1]/10 hover:bg-[#FFFDE1]/15 py-1.5 rounded-md transition-colors uppercase cursor-pointer"
                       >
                         Auto-fill Code
                       </button>

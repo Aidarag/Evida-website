@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, ChevronDown, Compass, Megaphone, Shield, MousePointer2, UserCheck, CalendarDays, LineChart, ArrowRight, Briefcase, Sparkles, Music, Trophy, GraduationCap, Users } from 'lucide-react';
+import { Search, ChevronDown, Compass, Megaphone, Shield, MousePointer2, UserCheck, CalendarDays, LineChart, ArrowRight, Briefcase, Sparkles, Music, Trophy, GraduationCap, Users, Palette, Heart, Code, Film } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DesktopNav } from '@/components/Navbar';
 import EventCard from '@/components/student/EventCard';
@@ -209,7 +209,7 @@ export default function LandingPage() {
         bgColor: 'bg-[#eb5e28]/10',
         borderColor: 'border-[#eb5e28]',
         textColor: 'text-[#eb5e28]',
-        emoticon: '🏫',
+        icon: <GraduationCap className="h-4.5 w-4.5 text-[#eb5e28] stroke-[2.5]" />,
       };
     }
     if (day === 12) {
@@ -217,7 +217,7 @@ export default function LandingPage() {
         bgColor: 'bg-[#eb5e28]/10',
         borderColor: 'border-[#eb5e28]',
         textColor: 'text-[#eb5e28]',
-        emoticon: '🎵',
+        icon: <Music className="h-4.5 w-4.5 text-[#eb5e28] stroke-[2.5]" />,
       };
     }
     if (day === 20) {
@@ -225,7 +225,7 @@ export default function LandingPage() {
         bgColor: 'bg-[#eb5e28]/10',
         borderColor: 'border-[#eb5e28]',
         textColor: 'text-[#eb5e28]',
-        emoticon: '🎨',
+        icon: <Palette className="h-4.5 w-4.5 text-[#eb5e28] stroke-[2.5]" />,
       };
     }
     if (day === 26) {
@@ -233,7 +233,7 @@ export default function LandingPage() {
         bgColor: 'bg-[#eb5e28]/10',
         borderColor: 'border-[#eb5e28]',
         textColor: 'text-[#eb5e28]',
-        emoticon: '🪩',
+        icon: <Sparkles className="h-4.5 w-4.5 text-[#eb5e28] stroke-[2.5]" />,
       };
     }
     if (day === 5) {
@@ -241,7 +241,7 @@ export default function LandingPage() {
         bgColor: 'bg-[#2c2324]/10',
         borderColor: 'border-[#2c2324]',
         textColor: 'text-[#2c2324]',
-        emoticon: '🤝',
+        icon: <Users className="h-4.5 w-4.5 text-[#2c2324] stroke-[2.5]" />,
       };
     }
     if (day === 15) {
@@ -249,7 +249,7 @@ export default function LandingPage() {
         bgColor: 'bg-[#2c2324]/10',
         borderColor: 'border-[#2c2324]',
         textColor: 'text-[#2c2324]',
-        emoticon: '🏀',
+        icon: <Trophy className="h-4.5 w-4.5 text-[#2c2324] stroke-[2.5]" />,
       };
     }
     if (day === 22) {
@@ -257,7 +257,7 @@ export default function LandingPage() {
         bgColor: 'bg-[#2c2324]/10',
         borderColor: 'border-[#2c2324]',
         textColor: 'text-[#2c2324]',
-        emoticon: '❤️',
+        icon: <Heart className="h-4.5 w-4.5 text-[#2c2324] stroke-[2.5]" />,
       };
     }
     if (day === 8) {
@@ -265,7 +265,7 @@ export default function LandingPage() {
         bgColor: 'bg-[#766754]/10',
         borderColor: 'border-[#766754]',
         textColor: 'text-[#766754]',
-        emoticon: '💼',
+        icon: <Briefcase className="h-4.5 w-4.5 text-[#766754] stroke-[2.5]" />,
       };
     }
     if (day === 18) {
@@ -273,7 +273,7 @@ export default function LandingPage() {
         bgColor: 'bg-[#766754]/10',
         borderColor: 'border-[#766754]',
         textColor: 'text-[#766754]',
-        emoticon: '💻',
+        icon: <Code className="h-4.5 w-4.5 text-[#766754] stroke-[2.5]" />,
       };
     }
     // day === 29
@@ -281,7 +281,7 @@ export default function LandingPage() {
       bgColor: 'bg-[#766754]/10',
       borderColor: 'border-[#766754]',
       textColor: 'text-[#766754]',
-      emoticon: '🍿',
+      icon: <Film className="h-4.5 w-4.5 text-[#766754] stroke-[2.5]" />,
     };
   };
 
@@ -346,7 +346,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 flex flex-col font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#FFFDE1] text-gray-900 flex flex-col font-sans overflow-x-hidden">
       <DesktopNav variant="public" />
 
       {/* Full-Screen Cinematic Hero Section */}
@@ -430,7 +430,7 @@ export default function LandingPage() {
       <OurVisionSection />
 
       {/* 3. How it Works */}
-      <section className="w-full py-24 bg-white font-sans overflow-hidden" id="how-it-works">
+      <section className="w-full py-24 bg-[#FFFDE1] font-sans overflow-hidden" id="how-it-works">
         <div className="max-w-6xl mx-auto px-6 md:px-12 text-center space-y-16">
           
           <div className="space-y-4">
@@ -477,14 +477,14 @@ export default function LandingPage() {
               return (
                 <div
                   key={index}
-                  className="bg-slate-50 border border-slate-200/60 rounded-[28px] p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01]"
+                  className="bg-[#FFFDE1] border border-slate-200/60 rounded-[28px] p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01]"
                 >
                   {/* Top Row: Number & Icon */}
                   <div className="flex justify-between items-center mb-8">
                     <span className="font-extrabold text-2xl text-[#eb5e28]" style={{ fontFamily: 'var(--font-display)' }}>
                       {step.number}
                     </span>
-                    <div className="p-3 rounded-2xl bg-white border border-slate-200/60 text-[#eb5e28] shadow-sm">
+                    <div className="p-3 rounded-2xl bg-[#FFFDE1] border border-slate-200/60 text-[#eb5e28] shadow-sm">
                       <Icon className="h-6 w-6" />
                     </div>
                   </div>
@@ -507,9 +507,9 @@ export default function LandingPage() {
       </section>
 
       {/* 5. Explore by Category Section */}
-      <section id="explore-categories" className="relative w-full bg-slate-50 py-24 border-t border-slate-100 mt-20">
+      <section id="explore-categories" className="relative w-full bg-[#FFFDE1] py-24 border-t border-slate-100 mt-20">
         {/* Torn Paper Edges - Top Transition Only */}
-        <div className="absolute top-[-10px] left-0 w-full h-10 bg-slate-50 edge-top z-10" />
+        <div className="absolute top-[-10px] left-0 w-full h-10 bg-[#FFFDE1] edge-top z-10" />
 
         <div className="max-w-6xl mx-auto px-6 md:px-12 z-20 space-y-12">
           
@@ -536,7 +536,7 @@ export default function LandingPage() {
                   className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 transform hover:scale-105 cursor-pointer border ${
                     isActive
                       ? 'bg-[#eb5e28] text-white border-transparent shadow-lg shadow-blue-500/10'
-                      : 'bg-white text-slate-600 border-slate-200 hover:text-slate-900 hover:border-slate-400 shadow-sm'
+                      : 'bg-[#FFFDE1] text-slate-600 border-slate-200 hover:text-slate-900 hover:border-slate-400 shadow-sm'
                   }`}
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
@@ -607,7 +607,7 @@ export default function LandingPage() {
       </section>
 
       {/* 6. Calendar Section (Light Theme) */}
-      <section id="calendar" className="relative w-full bg-white py-24 border-t border-slate-100">
+      <section id="calendar" className="relative w-full bg-[#FFFDE1] py-24 border-t border-slate-100">
         <div className="relative max-w-6xl mx-auto px-6 md:px-12 z-20">
           {/* Campus Calendar Section */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full">
@@ -632,13 +632,13 @@ export default function LandingPage() {
 
             {/* Right side: Custom Illustrated Calendar */}
             <div className="lg:col-span-7 w-full">
-              <div className="relative bg-slate-50 border border-slate-200/60 rounded-[32px] p-6 md:p-8 shadow-xl overflow-visible group/calendar transition-all duration-500 hover:border-slate-300/80 hover:shadow-2xl">
+              <div className="relative bg-[#FFFDE1] border border-slate-200/60 rounded-[32px] p-6 md:p-8 shadow-xl overflow-visible group/calendar transition-all duration-500 hover:border-slate-300/80 hover:shadow-2xl">
                 
                 {/* Binder rings at the top */}
                 <div className="absolute top-0 left-0 right-0 h-4 flex justify-around px-12 -translate-y-1/2 z-30">
                   {[...Array(6)].map((_, i) => (
                     <div key={i} className="w-3 h-8 bg-gradient-to-b from-gray-300 to-gray-500 rounded-full border border-black/10 shadow-sm relative">
-                      <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1 h-3 bg-white/30 rounded-full" />
+                      <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1 h-3 bg-[#FFFDE1]/30 rounded-full" />
                     </div>
                   ))}
                 </div>
@@ -725,10 +725,10 @@ export default function LandingPage() {
                             {cell.day}
                           </span>
                           
-                          {/* Themed Emoticon */}
-                          <span className="text-xs sm:text-sm mt-2.5 transform group-hover/day:scale-125 transition-transform duration-300 select-none">
-                            {style.emoticon}
-                          </span>
+                          {/* Themed Emoticon Pro (Lucide Icon) */}
+                          <div className="mt-2 transform group-hover/day:scale-125 transition-transform duration-300 select-none">
+                            {style.icon}
+                          </div>
                           
                           {/* Tooltip */}
                           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#2c2324] border border-white/10 text-[9px] text-white uppercase tracking-wider px-2.5 py-1 rounded-sm whitespace-nowrap opacity-0 pointer-events-none group-hover/day:opacity-100 transition-opacity duration-300 shadow-xl z-50">
@@ -741,7 +741,7 @@ export default function LandingPage() {
                     return (
                       <div 
                         key={`day-${cell.day}`}
-                        className="aspect-square bg-white rounded-xl border border-slate-200/60 flex items-center justify-center text-[10px] sm:text-xs text-slate-700 font-bold hover:border-slate-300 hover:bg-slate-50 transition-colors"
+                        className="aspect-square bg-[#FFFDE1] rounded-xl border border-slate-200/60 flex items-center justify-center text-[10px] sm:text-xs text-slate-700 font-bold hover:border-slate-300 hover:bg-[#FFFDE1] transition-colors"
                       >
                         {cell.day}
                       </div>
@@ -756,7 +756,7 @@ export default function LandingPage() {
       </section>
 
       {/* 6. FAQ Section */}
-      <section id="faq" className="relative w-full bg-slate-50 py-24 border-t border-slate-100">
+      <section id="faq" className="relative w-full bg-[#FFFDE1] py-24 border-t border-slate-100">
         <div className="max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Left Column: Title */}
@@ -777,7 +777,7 @@ export default function LandingPage() {
                 }}
                 className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                   faqTab === 'students'
-                    ? 'bg-white text-slate-900 shadow-sm'
+                    ? 'bg-[#FFFDE1] text-slate-900 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
                 style={{ fontFamily: 'var(--font-display)' }}
@@ -791,7 +791,7 @@ export default function LandingPage() {
                 }}
                 className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                   faqTab === 'schools'
-                    ? 'bg-white text-slate-900 shadow-sm'
+                    ? 'bg-[#FFFDE1] text-slate-900 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
                 style={{ fontFamily: 'var(--font-display)' }}
@@ -807,7 +807,7 @@ export default function LandingPage() {
                 return (
                   <div
                     key={index}
-                    className="bg-white border border-slate-200/60 rounded-2xl overflow-hidden transition-all duration-300 hover:border-slate-300 shadow-sm"
+                    className="bg-[#FFFDE1] border border-slate-200/60 rounded-2xl overflow-hidden transition-all duration-300 hover:border-slate-300 shadow-sm"
                   >
                     <button
                       onClick={() => setExpandedFaq(isOpen ? null : index)}
@@ -869,7 +869,7 @@ export default function LandingPage() {
           <div className="pt-4">
             <Link 
               href="/login"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider bg-white text-black hover:bg-[var(--color-evida-lime)] transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-[var(--color-evida-lime)]/20 cursor-pointer"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider bg-[#FFFDE1] text-black hover:bg-[var(--color-evida-lime)] transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-[var(--color-evida-lime)]/20 cursor-pointer"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               Get started

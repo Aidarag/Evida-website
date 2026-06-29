@@ -217,7 +217,7 @@ export default function CreateListingPage() {
               {/* Option 1: Me */}
               <button
                 onClick={() => { setCreatorEntity('student'); handleNext(); }}
-                className="w-full text-left p-5 rounded-2xl border-2 border-white/[0.05] bg-white/[0.01] hover:bg-white/[0.03] hover:border-[var(--color-evida-blue)] transition-all flex items-center gap-4 group cursor-pointer"
+                className="w-full text-left p-5 rounded-2xl border-2 border-white/[0.05] bg-[#FFFDE1]/[0.01] hover:bg-[#FFFDE1]/[0.03] hover:border-[var(--color-evida-blue)] transition-all flex items-center gap-4 group cursor-pointer"
               >
                 <div className="h-12 w-12 rounded-xl bg-[var(--color-evida-blue)]/10 text-[var(--color-evida-blue)] flex items-center justify-center group-hover:scale-105 transition-transform shrink-0">
                   <User className="h-6 w-6" />
@@ -239,7 +239,7 @@ export default function CreateListingPage() {
                   }
                   setStep(4); // Go straight to form
                 }}
-                className="w-full text-left p-5 rounded-2xl border-2 border-white/[0.05] bg-white/[0.01] hover:bg-white/[0.03] hover:border-[var(--color-evida-lime)] transition-all flex items-center gap-4 group cursor-pointer"
+                className="w-full text-left p-5 rounded-2xl border-2 border-white/[0.05] bg-[#FFFDE1]/[0.01] hover:bg-[#FFFDE1]/[0.03] hover:border-[var(--color-evida-lime)] transition-all flex items-center gap-4 group cursor-pointer"
               >
                 <div className="h-12 w-12 rounded-xl bg-[var(--color-evida-lime)]/10 text-[var(--color-evida-lime)] flex items-center justify-center group-hover:scale-105 transition-transform shrink-0">
                   <Users className="h-6 w-6" />
@@ -255,7 +255,7 @@ export default function CreateListingPage() {
               {isAdmin && (
                 <button
                   onClick={() => { setCreatorEntity('school'); setStep(4); }} // Go straight to form
-                  className="w-full text-left p-5 rounded-2xl border-2 border-white/[0.05] bg-white/[0.01] hover:bg-white/[0.03] hover:border-[var(--color-evida-coral)] transition-all flex items-center gap-4 group cursor-pointer animate-pulse"
+                  className="w-full text-left p-5 rounded-2xl border-2 border-white/[0.05] bg-[#FFFDE1]/[0.01] hover:bg-[#FFFDE1]/[0.03] hover:border-[var(--color-evida-coral)] transition-all flex items-center gap-4 group cursor-pointer animate-pulse"
                 >
                   <div className="h-12 w-12 rounded-xl bg-[var(--color-evida-coral)]/10 text-[var(--color-evida-coral)] flex items-center justify-center group-hover:scale-105 transition-transform shrink-0">
                     <Shield className="h-6 w-6" />
@@ -347,7 +347,7 @@ export default function CreateListingPage() {
             className="w-full max-w-2xl mx-auto"
           >
             <div className="mb-6 flex items-center gap-4">
-              <button onClick={handleBack} className="h-10 w-10 rounded-full bg-white/[0.06] flex items-center justify-center text-[#B8BBC8] hover:text-white hover:bg-white/[0.1] transition-colors cursor-pointer">
+              <button onClick={handleBack} className="h-10 w-10 rounded-full bg-[#FFFDE1]/[0.06] flex items-center justify-center text-[#B8BBC8] hover:text-white hover:bg-[#FFFDE1]/[0.1] transition-colors cursor-pointer">
                 <ArrowLeft className="h-5 w-5" />
               </button>
               <div>
@@ -420,7 +420,7 @@ export default function CreateListingPage() {
                     <div className="space-y-1.5">
                       <label className="block text-[10px] font-bold text-[#B8BBC8] uppercase tracking-widest">Description</label>
                       <textarea 
-                        className="w-full rounded-xl bg-white/[0.02] border-2 border-white/[0.08] px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-blue)] min-h-[120px] resize-none font-medium leading-relaxed"
+                        className="w-full rounded-xl bg-[#FFFDE1]/[0.02] border-2 border-white/[0.08] px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-blue)] min-h-[120px] resize-none font-medium leading-relaxed"
                         placeholder="What should campus know about this event?"
                         value={eventForm.description}
                         onChange={e => setEventForm({...eventForm, description: e.target.value})}
@@ -497,7 +497,7 @@ export default function CreateListingPage() {
                                 onChange={e => setEventForm({...eventForm, isFeatured: e.target.checked})}
                                 className="sr-only peer" 
                               />
-                              <div className="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--color-evida-lime)]"></div>
+                              <div className="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-[#FFFDE1] after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--color-evida-lime)]"></div>
                               <span className="ml-3 text-xs font-semibold text-white">Feature on Landing Page</span>
                             </label>
                           </div>
@@ -509,7 +509,7 @@ export default function CreateListingPage() {
                     {eventSubtype !== 'quick' && (
                       <div className="space-y-1.5 pt-2">
                         <label className="block text-[10px] font-bold text-[#B8BBC8] uppercase tracking-widest">Cover Image / Flyer</label>
-                        <div className="w-full rounded-2xl border-2 border-dashed border-white/[0.08] bg-white/[0.01] p-6 flex flex-col items-center justify-center gap-2 hover:bg-white/[0.03] transition-colors cursor-pointer">
+                        <div className="w-full rounded-2xl border-2 border-dashed border-white/[0.08] bg-[#FFFDE1]/[0.01] p-6 flex flex-col items-center justify-center gap-2 hover:bg-[#FFFDE1]/[0.03] transition-colors cursor-pointer">
                           <ImageIcon className="h-6 w-6 text-[#B8BBC8]/60" />
                           <div className="text-center">
                             <p className="text-xs font-bold text-white">Click to upload flyer image</p>
@@ -548,7 +548,7 @@ export default function CreateListingPage() {
                     <div className="space-y-1.5">
                       <label className="block text-[10px] font-bold text-[#B8BBC8] uppercase tracking-widest">Service Description</label>
                       <textarea 
-                        className="w-full rounded-xl bg-white/[0.02] border-2 border-white/[0.08] px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-lime)] min-h-[120px] resize-none font-medium leading-relaxed"
+                        className="w-full rounded-xl bg-[#FFFDE1]/[0.02] border-2 border-white/[0.08] px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--color-evida-lime)] min-h-[120px] resize-none font-medium leading-relaxed"
                         placeholder="Explain your service, rates, timings, or initiative details..."
                         value={promoForm.description}
                         onChange={e => setPromoForm({...promoForm, description: e.target.value})}

@@ -20,7 +20,7 @@ export default function Card({ children, className = '', onClick, hover = true, 
       className={`
         relative overflow-hidden rounded-[28px]
         ${glass
-          ? 'bg-white/[0.04] backdrop-blur-xl border border-white/[0.08]'
+          ? 'bg-[#FFFDE1]/[0.04] backdrop-blur-xl border border-white/[0.08]'
           : 'bg-[#171722] border border-white/[0.06]'
         }
         shadow-[0_8px_20px_rgba(0,0,0,0.45)]

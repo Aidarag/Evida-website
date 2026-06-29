@@ -39,15 +39,15 @@ export default function StudentProfilePage() {
           </div>
           
           <div className="flex flex-wrap justify-center md:justify-start gap-3">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.1] text-xs font-medium text-[#B8BBC8]">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFFDE1]/[0.06] border border-white/[0.1] text-xs font-medium text-[#B8BBC8]">
               <Award className="h-3.5 w-3.5" />
               {currentUser.major}
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.1] text-xs font-medium text-[#B8BBC8]">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFFDE1]/[0.06] border border-white/[0.1] text-xs font-medium text-[#B8BBC8]">
               <Calendar className="h-3.5 w-3.5" />
               Class of {currentUser.graduationYear}
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.1] text-xs font-medium text-[#B8BBC8]">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFFDE1]/[0.06] border border-white/[0.1] text-xs font-medium text-[#B8BBC8]">
               <Shield className="h-3.5 w-3.5" />
               {currentUser.school}
             </span>
@@ -102,15 +102,15 @@ export default function StudentProfilePage() {
             <Settings className="h-5 w-5 text-[#EE3D5A]" /> Account Actions
           </h2>
           <Card className="divide-y divide-white/[0.06]" glass hover={false}>
-            <button className="w-full p-4 flex items-center justify-between hover:bg-white/[0.04] transition-colors cursor-not-allowed group">
+            <button className="w-full p-4 flex items-center justify-between hover:bg-[#FFFDE1]/[0.04] transition-colors cursor-not-allowed group">
               <span className="text-sm font-medium text-white group-hover:text-[#80B0EC] transition-colors">Edit Profile (Demo)</span>
             </button>
-            <button className="w-full p-4 flex items-center justify-between hover:bg-white/[0.04] transition-colors cursor-not-allowed group">
+            <button className="w-full p-4 flex items-center justify-between hover:bg-[#FFFDE1]/[0.04] transition-colors cursor-not-allowed group">
               <span className="text-sm font-medium text-white group-hover:text-[#80B0EC] transition-colors">Notification Settings (Demo)</span>
             </button>
             <button 
               onClick={handleLogout}
-              className="w-full p-4 flex items-center justify-between hover:bg-white/[0.04] transition-colors cursor-pointer group"
+              className="w-full p-4 flex items-center justify-between hover:bg-[#FFFDE1]/[0.04] transition-colors cursor-pointer group"
             >
               <span className="text-sm font-medium text-[#EE3D5A] flex items-center gap-2">
                 <LogOut className="h-4 w-4" /> Sign Out
