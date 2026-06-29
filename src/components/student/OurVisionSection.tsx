@@ -66,12 +66,12 @@ export default function OurVisionSection() {
         
         {/* Title & Subtitle */}
         <div className="text-center mb-16 space-y-3">
-          <span className="text-[#2563EB] font-bold uppercase text-xs tracking-[0.2em]">
+          <span className="text-[#ff5d00] font-bold uppercase text-xs tracking-[0.2em]">
             Why Choose Evida?
           </span>
           <h2 className="text-slate-900 font-extrabold text-3xl md:text-5xl uppercase tracking-tight max-w-4xl mx-auto leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-            <span className="text-[#2563EB]">More Than</span> a Platform, The Future of <br className="hidden md:inline" />
-            Campus Life <span className="text-[#2563EB]">is Here</span>
+            <span className="text-[#ff5d00]">More Than</span> a Platform, The Future of <br className="hidden md:inline" />
+            Campus Life <span className="text-[#ff5d00]">is Here</span>
           </h2>
         </div>
 
@@ -86,7 +86,7 @@ export default function OurVisionSection() {
                 className="bg-white border border-slate-100 rounded-[32px] p-8 flex flex-col items-center text-center space-y-4 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300"
               >
                 {/* Icon */}
-                <div className="text-[#2563EB] p-3.5 bg-blue-50/50 rounded-2xl border border-blue-50">
+                <div className="text-[#ff5d00] p-3.5 bg-blue-50/50 rounded-2xl border border-blue-50">
                   <Icon className="h-8 w-8 stroke-[1.5]" />
                 </div>
 
@@ -95,7 +95,7 @@ export default function OurVisionSection() {
                   <h3 className="text-slate-900 font-extrabold text-lg md:text-xl uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
                     {item}
                   </h3>
-                  <p className="text-[#2563EB] font-bold text-[11px] uppercase tracking-wider">
+                  <p className="text-[#ff5d00] font-bold text-[11px] uppercase tracking-wider">
                     {visionData[item].tagline}
                   </p>
                 </div>

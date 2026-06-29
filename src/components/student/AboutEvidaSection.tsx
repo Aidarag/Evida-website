@@ -17,7 +17,7 @@ export default function AboutEvidaSection() {
           {/* Top Left Text */}
           <div className="mb-4 sm:mb-0">
             <h2 className="text-slate-900 font-extrabold text-3xl md:text-4xl uppercase tracking-wider leading-none" style={{ fontFamily: 'var(--font-display)' }}>
-              About <span className="text-[#2563EB]">Evida</span>
+              About <span className="text-[#ff5d00]">Evida</span>
             </h2>
           </div>
 
@@ -31,9 +31,9 @@ export default function AboutEvidaSection() {
         <div className="relative w-full max-w-5xl mx-auto space-y-16">
           
           {/* The main block background */}
-          <div className="bg-[#2563EB]/5 border border-[#2563EB]/10 rounded-[40px] p-8 md:p-16 text-center relative z-20 backdrop-blur-sm">
+          <div className="bg-[#ff5d00]/5 border border-[#ff5d00]/10 rounded-[40px] p-8 md:p-16 text-center relative z-20 backdrop-blur-sm">
             
-            <p className="text-[#2563EB] text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-6">
+            <p className="text-[#ff5d00] text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-6">
               Who We Are
             </p>
 

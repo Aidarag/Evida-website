@@ -202,49 +202,49 @@ export default function LandingPage() {
     const catLower = category.toLowerCase();
     if (catLower.includes('music') || catLower.includes('concert') || catLower.includes('show') || catLower.includes('art') || catLower.includes('theater')) {
       return {
-        icon: <Music className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#2563EB]" />,
-        bgColor: 'bg-[#2563EB]/10',
-        borderColor: 'border-[#2563EB]',
-        textColor: 'text-[#2563EB]',
+        icon: <Music className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#ff5d00]" />,
+        bgColor: 'bg-[#ff5d00]/10',
+        borderColor: 'border-[#ff5d00]',
+        textColor: 'text-[#ff5d00]',
       };
     }
     if (catLower.includes('sport') || catLower.includes('game') || catLower.includes('match') || catLower.includes('trophy')) {
       return {
-        icon: <Trophy className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#0284C7]" />,
-        bgColor: 'bg-[#38BDF8]/10',
-        borderColor: 'border-[#38BDF8]',
-        textColor: 'text-[#0284C7]',
+        icon: <Trophy className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#ff5d00]" />,
+        bgColor: 'bg-[#ff5d00]/10',
+        borderColor: 'border-[#ff5d00]',
+        textColor: 'text-[#ff5d00]',
       };
     }
     if (catLower.includes('career') || catLower.includes('job') || catLower.includes('fair') || catLower.includes('workshop') || catLower.includes('seminar')) {
       return {
-        icon: <Briefcase className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#2563EB]" />,
-        bgColor: 'bg-[#2563EB]/10',
-        borderColor: 'border-[#2563EB]',
-        textColor: 'text-[#2563EB]',
+        icon: <Briefcase className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#ff5d00]" />,
+        bgColor: 'bg-[#ff5d00]/10',
+        borderColor: 'border-[#ff5d00]',
+        textColor: 'text-[#ff5d00]',
       };
     }
     if (catLower.includes('social') || catLower.includes('club') || catLower.includes('meet') || catLower.includes('association')) {
       return {
-        icon: <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#2563EB]" />,
-        bgColor: 'bg-[#2563EB]/10',
-        borderColor: 'border-[#2563EB]',
-        textColor: 'text-[#2563EB]',
+        icon: <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#ff5d00]" />,
+        bgColor: 'bg-[#ff5d00]/10',
+        borderColor: 'border-[#ff5d00]',
+        textColor: 'text-[#ff5d00]',
       };
     }
     if (catLower.includes('grad') || catLower.includes('commence') || catLower.includes('ceremony')) {
       return {
-        icon: <GraduationCap className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#0284C7]" />,
-        bgColor: 'bg-[#38BDF8]/10',
-        borderColor: 'border-[#38BDF8]',
-        textColor: 'text-[#0284C7]',
+        icon: <GraduationCap className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#ff5d00]" />,
+        bgColor: 'bg-[#ff5d00]/10',
+        borderColor: 'border-[#ff5d00]',
+        textColor: 'text-[#ff5d00]',
       };
     }
     return {
-      icon: <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#2563EB]" />,
-      bgColor: 'bg-[#2563EB]/10',
-      borderColor: 'border-[#2563EB]',
-      textColor: 'text-[#2563EB]',
+      icon: <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#ff5d00]" />,
+      bgColor: 'bg-[#ff5d00]/10',
+      borderColor: 'border-[#ff5d00]',
+      textColor: 'text-[#ff5d00]',
     };
   };
 
@@ -314,7 +314,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 md:px-12 text-center space-y-16">
           
           <div className="space-y-4">
-            <span className="text-[#2563EB] font-bold uppercase text-xs tracking-[0.2em]">
+            <span className="text-[#ff5d00] font-bold uppercase text-xs tracking-[0.2em]">
               Process
             </span>
             <h2 className="text-slate-900 font-extrabold text-3xl md:text-5xl uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -361,10 +361,10 @@ export default function LandingPage() {
                 >
                   {/* Top Row: Number & Icon */}
                   <div className="flex justify-between items-center mb-8">
-                    <span className="font-extrabold text-2xl text-[#2563EB]" style={{ fontFamily: 'var(--font-display)' }}>
+                    <span className="font-extrabold text-2xl text-[#ff5d00]" style={{ fontFamily: 'var(--font-display)' }}>
                       {step.number}
                     </span>
-                    <div className="p-3 rounded-2xl bg-white border border-slate-200/60 text-[#2563EB] shadow-sm">
+                    <div className="p-3 rounded-2xl bg-white border border-slate-200/60 text-[#ff5d00] shadow-sm">
                       <Icon className="h-6 w-6" />
                     </div>
                   </div>
@@ -394,7 +394,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 md:px-12 z-20 space-y-12">
           
           <div className="text-center space-y-4">
-            <span className="text-[#2563EB] font-bold uppercase text-xs tracking-[0.2em]">
+            <span className="text-[#ff5d00] font-bold uppercase text-xs tracking-[0.2em]">
               Discovery
             </span>
             <h2 className="text-slate-900 font-extrabold text-3xl md:text-5xl uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -415,7 +415,7 @@ export default function LandingPage() {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 transform hover:scale-105 cursor-pointer border ${
                     isActive
-                      ? 'bg-[#2563EB] text-white border-transparent shadow-lg shadow-blue-500/10'
+                      ? 'bg-[#ff5d00] text-white border-transparent shadow-lg shadow-blue-500/10'
                       : 'bg-white text-slate-600 border-slate-200 hover:text-slate-900 hover:border-slate-400 shadow-sm'
                   }`}
                   style={{ fontFamily: 'var(--font-display)' }}
@@ -459,7 +459,7 @@ export default function LandingPage() {
                   onClick={() => setSelectedCategory(cat)}
                   className={`flex-shrink-0 px-6 py-3 mx-3 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border cursor-pointer hover:scale-105 ${
                     isActive
-                      ? 'bg-[#2563EB] text-white border-transparent shadow-lg shadow-blue-500/10'
+                      ? 'bg-[#ff5d00] text-white border-transparent shadow-lg shadow-blue-500/10'
                       : 'bg-slate-50 text-slate-600 border-slate-200 hover:text-slate-900 hover:border-slate-400 shadow-sm'
                   }`}
                   style={{ fontFamily: 'var(--font-display)' }}
@@ -480,17 +480,17 @@ export default function LandingPage() {
             
             {/* Left side: What's Happening Next */}
             <div className="space-y-6 lg:col-span-5 flex flex-col justify-center text-left">
-              <span className="text-[#2563EB] font-bold uppercase text-xs tracking-[0.2em]">
+              <span className="text-[#ff5d00] font-bold uppercase text-xs tracking-[0.2em]">
                 What's Happening Next
               </span>
               <h2 className="text-slate-900 font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
-                Your Campus <span className="text-[#2563EB]">Calendar</span> At A Glance
+                Your Campus <span className="text-[#ff5d00]">Calendar</span> At A Glance
               </h2>
               <p className="text-slate-600 text-sm md:text-base leading-relaxed">
                 Never miss a beat. Discover upcoming campus events, connect with student organizations, and make the most of your college experience.
               </p>
               <div className="pt-2">
-                <Link href="/student/events" className="inline-flex bg-[#2563EB] text-white font-bold uppercase tracking-widest text-[10px] px-6 py-3.5 hover:bg-blue-700 transition-colors items-center gap-2 rounded-full shadow-lg shadow-blue-500/10">
+                <Link href="/student/events" className="inline-flex bg-[#ff5d00] text-white font-bold uppercase tracking-widest text-[10px] px-6 py-3.5 hover:bg-blue-700 transition-colors items-center gap-2 rounded-full shadow-lg shadow-blue-500/10">
                   Explore Events <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -512,7 +512,7 @@ export default function LandingPage() {
                 {/* Calendar Header */}
                 <div className="flex justify-between items-center mb-6 pt-2 border-b border-slate-200/60 pb-4">
                   <div className="text-left">
-                    <span className="text-[#2563EB] font-bold uppercase text-[10px] tracking-[0.2em]">CAMPUS LIFE</span>
+                    <span className="text-[#ff5d00] font-bold uppercase text-[10px] tracking-[0.2em]">CAMPUS LIFE</span>
                     <h4 className="text-slate-900 font-bold text-lg md:text-xl tracking-wide uppercase mt-0.5" style={{ fontFamily: 'var(--font-display)' }}>
                       {calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                     </h4>
@@ -628,8 +628,8 @@ export default function LandingPage() {
             
             {/* Overlapping Brand Circles (from the screenshot design) */}
             <div className="relative w-28 h-16 flex items-center justify-center lg:justify-start">
-              <div className="w-12 h-12 rounded-full border-4 border-[#2563EB] opacity-80" />
-              <div className="w-12 h-12 rounded-full border-4 border-[#38BDF8] opacity-80 -ml-4" />
+              <div className="w-12 h-12 rounded-full border-4 border-[#ff5d00] opacity-80" />
+              <div className="w-12 h-12 rounded-full border-4 border-[#ff5d00] opacity-80 -ml-4" />
             </div>
           </div>
 
