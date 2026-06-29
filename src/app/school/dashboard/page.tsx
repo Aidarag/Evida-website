@@ -65,12 +65,12 @@ export default function SchoolDashboardPage() {
           </div>
         </Card>
 
-        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#ff5d00]">
+        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#eb5e28]">
           <div className="flex justify-between items-start">
-            <div className="h-10 w-10 rounded-full bg-[#ff5d00]/10 flex items-center justify-center text-[#ff5d00]">
+            <div className="h-10 w-10 rounded-full bg-[#eb5e28]/10 flex items-center justify-center text-[#eb5e28]">
               <CheckCircle className="h-5 w-5" />
             </div>
-            <span className="rounded-full bg-[#ff5d00]/10 text-[#ff5d00] px-3 py-1 text-[10px] font-bold uppercase">Fast Track</span>
+            <span className="rounded-full bg-[#eb5e28]/10 text-[#eb5e28] px-3 py-1 text-[10px] font-bold uppercase">Fast Track</span>
           </div>
           <div>
             <div className="text-3xl font-bold text-white">{quickQueue.length}</div>
@@ -91,8 +91,8 @@ export default function SchoolDashboardPage() {
               </Card>
             </Link>
             <Link href="/school/featured">
-              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#ff5d00]/50 transition-colors">
-                <Star className="h-6 w-6 text-[#ff5d00]" />
+              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#eb5e28]/50 transition-colors">
+                <Star className="h-6 w-6 text-[#eb5e28]" />
                 <span className="text-sm font-bold text-white">Featured Events</span>
               </Card>
             </Link>

@@ -12,10 +12,10 @@ interface BadgeProps {
 
 const variantStyles: Record<BadgeVariant, string> = {
   pending: 'bg-[#EE3D5A]/15 text-[#EE3D5A] border-[#EE3D5A]/20',
-  approved: 'bg-[#ff5d00]/15 text-[#ff5d00] border-[#ff5d00]/20',
+  approved: 'bg-[#eb5e28]/15 text-[#eb5e28] border-[#eb5e28]/20',
   rejected: 'bg-white/10 text-[#B8BBC8] border-white/10',
   info: 'bg-[#80B0EC]/15 text-[#80B0EC] border-[#80B0EC]/20',
-  accent: 'bg-[#ff5d00]/15 text-[#ff5d00] border-[#ff5d00]/20',
+  accent: 'bg-[#eb5e28]/15 text-[#eb5e28] border-[#eb5e28]/20',
 };
 
 export default function Badge({ variant = 'info', children, className = '' }: BadgeProps) {

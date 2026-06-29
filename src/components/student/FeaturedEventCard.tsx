@@ -44,7 +44,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
         
         {/* Category Badge top left */}
         <div className="absolute top-4 left-4 z-10 flex">
-          <span className="bg-[#ff5d00] px-3.5 py-1 text-[10px] font-bold text-white tracking-widest uppercase rounded-full shadow-sm">
+          <span className="bg-[#eb5e28] px-3.5 py-1 text-[10px] font-bold text-white tracking-widest uppercase rounded-full shadow-sm">
             {event.category === 'Art' ? 'Exhibition' : event.category}
           </span>
         </div>
@@ -70,12 +70,12 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
       <div className="p-6 flex flex-col flex-1 justify-between gap-4 text-left">
         <div className="space-y-2 cursor-pointer" onClick={onClick}>
           {/* Date & Time Invite Style (Blue, Uppercase) */}
-          <div className="text-[#ff5d00] text-[11px] font-extrabold uppercase tracking-wider">
+          <div className="text-[#eb5e28] text-[11px] font-extrabold uppercase tracking-wider">
             {formattedDate} • {event.time}
           </div>
 
           {/* Event Title */}
-          <h3 className="text-slate-900 font-extrabold text-lg md:text-xl line-clamp-2 leading-tight tracking-tight hover:text-[#ff5d00] transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
+          <h3 className="text-slate-900 font-extrabold text-lg md:text-xl line-clamp-2 leading-tight tracking-tight hover:text-[#eb5e28] transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
             {event.title}
           </h3>
           

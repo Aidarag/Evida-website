@@ -34,21 +34,21 @@ export default function EvidaLogo({
         {/* Left Ribbon (Vibrant Orange) */}
         <path
           d="M 6 42 L 6 22 L 24 6 L 24 15 L 15 24 L 15 42 Z"
-          fill="#ff5d00"
+          fill="#eb5e28"
           opacity="0.85"
         />
         
         {/* Right Ribbon (Near-Black) */}
         <path
           d="M 42 42 L 42 22 L 24 6 L 24 15 L 33 24 L 33 42 Z"
-          fill="#0d0101"
+          fill="#2c2324"
           opacity="0.85"
         />
         
         {/* Center Ribbon (Near-Black in dark mode, Orange in light mode) */}
         <path
           d="M 24 10 L 36 22 L 24 34 L 12 22 Z M 24 16 L 30 22 L 24 28 L 18 22 Z"
-          fill={lightMode ? '#ff5d00' : '#0d0101'}
+          fill={lightMode ? '#eb5e28' : '#2c2324'}
           opacity="0.9"
         />
       </g>
@@ -57,7 +57,7 @@ export default function EvidaLogo({
         <text
           x="56"
           y="33"
-          fill={lightMode ? '#ff5d00' : '#0d0101'}
+          fill={lightMode ? '#eb5e28' : '#2c2324'}
           fontFamily="var(--font-display), Syne, sans-serif"
           fontWeight="800"
           fontSize="26"

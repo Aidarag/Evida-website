@@ -5,28 +5,28 @@
    ─────────────────────────────────────────────── */
 @theme {
   /* Colors – Core light backgrounds */
-  --color-primary-bg: #fffafa;
-  --color-secondary-bg: #fffafa;
-  --color-surface: #fffafa;
+  --color-primary-bg: #efece3;
+  --color-secondary-bg: #efece3;
+  --color-surface: #efece3;
 
   /* Colors – Text */
-  --color-primary-text: #0d0101;
-  --color-secondary-text: #6B7280;
-  --color-tertiary-text: #9CA3AF;
+  --color-primary-text: #2c2324;
+  --color-secondary-text: #766754;
+  --color-tertiary-text: #766754;
 
   /* Colors – Brand accents (From Screenshot) */
   /* Colors - Brand accents (Evida Original) */
-  --color-evida-lime: #ff5d00;
-  --color-evida-coral: #fffafa;
-  --color-evida-blue: #ff5d00;
+  --color-evida-lime: #eb5e28;
+  --color-evida-coral: #efece3;
+  --color-evida-blue: #eb5e28;
   
   /* Grungy Theme Accents */
-  --color-grungy-bg: #0d0101;
-  --color-grungy-card: #160a0a;
-  --color-neon-yellow: #ff5d00; /* Reusing sky blue for neon */
+  --color-grungy-bg: #2c2324;
+  --color-grungy-card: #3a3132;
+  --color-neon-yellow: #eb5e28; /* Reusing sky blue for neon */
   
   /* Colors – Gradients */
-  --color-gradient-hero: linear-gradient(135deg, #ff5d00, #0d0101);
+  --color-gradient-hero: linear-gradient(135deg, #eb5e28, #2c2324);
 
   /* Border radius */
   --radius-large: 32px;
@@ -43,9 +43,9 @@
    Global Styles
    ─────────────────────────────────────────────── */
 :root {
-  --bg-primary: #fffafa;
-  --text-primary: #0d0101;
-  --text-secondary: #6B7280;
+  --bg-primary: #efece3;
+  --text-primary: #2c2324;
+  --text-secondary: #766754;
 }
 
 html {
