@@ -45,10 +45,10 @@ export default function EvidaLogo({
           opacity="0.85"
         />
         
-        {/* Center Ribbon (Near-Black in dark mode, Orange in light mode) */}
+        {/* Center Ribbon (Small Diamond - Gold Black) */}
         <path
           d="M 24 10 L 36 22 L 24 34 L 12 22 Z M 24 16 L 30 22 L 24 28 L 18 22 Z"
-          fill={lightMode ? '#eb5e28' : '#2c2324'}
+          fill="#2c2324"
           opacity="0.9"
         />
       </g>
@@ -57,7 +57,7 @@ export default function EvidaLogo({
         <text
           x="56"
           y="33"
-          fill={lightMode ? '#eb5e28' : '#2c2324'}
+          fill="#eb5e28"
           fontFamily="var(--font-display), Syne, sans-serif"
           fontWeight="800"
           fontSize="26"
