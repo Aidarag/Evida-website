@@ -22,6 +22,9 @@ export default function LandingPage() {
   const yBg = useTransform(scrollY, [0, 600], [0, 180]);
   const opacityBg = useTransform(scrollY, [0, 600], [0.35, 0.05]);
   const scaleBg = useTransform(scrollY, [0, 600], [1, 1.08]);
+  
+  // Scroll-driven text gradient position
+  const textBgPos = useTransform(scrollY, [0, 500], ['0%', '100%']);
 
   const faqData = {
     students: [
@@ -303,9 +306,19 @@ export default function LandingPage() {
 
         {/* Hero Content (Centered) */}
         <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-5xl mx-auto -mt-16">
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white leading-tight tracking-wide mb-8" style={{ fontFamily: 'var(--font-display)' }}>
+          <motion.h1 
+            style={{ 
+              backgroundImage: 'linear-gradient(135deg, #eb5e28 0%, #efece3 50%, #eb5e28 100%)',
+              backgroundSize: '200% 100%',
+              backgroundPositionX: textBgPos,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontFamily: 'var(--font-display)'
+            }}
+            className="text-4xl md:text-5xl lg:text-7xl font-extrabold leading-tight tracking-wide mb-8 select-none"
+          >
             Discover Evida, the digital home of campus life and community connection
-          </h1>
+          </motion.h1>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link href="/student/events" className="bg-[var(--color-evida-blue)] text-[#111827] font-bold uppercase tracking-widest text-xs px-8 py-4 hover:bg-[var(--color-evida-coral)] hover:text-white transition-colors flex items-center gap-2 rounded-sm shadow-[4px_4px_0px_rgba(255,255,255,0.1)]">
               Explore Events <ArrowRight className="h-4 w-4" />
