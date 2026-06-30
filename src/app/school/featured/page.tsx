@@ -20,7 +20,7 @@ export default function FeaturedEventsPage() {
   return (
     <div className="p-6 md:p-10 space-y-8 max-w-6xl mx-auto">
       <div className="space-y-2">
-        <h1 className="text-3xl font-extrabold text-[#203627] tracking-tight">Featured Events</h1>
+        <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight">Featured Events</h1>
         <p className="text-sm text-[#4F5666]">Events currently highlighted on the student dashboard.</p>
       </div>
 
@@ -33,22 +33,22 @@ export default function FeaturedEventsPage() {
               >
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Star className="h-8 w-8 text-[#203627] drop-shadow-md" fill="white" />
+                  <Star className="h-8 w-8 text-[#191919] drop-shadow-md" fill="white" />
                 </div>
               </div>
               
               <div className="flex-1 space-y-3 w-full">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="text-xl font-bold text-[#203627]">{event.title}</h3>
+                    <h3 className="text-xl font-bold text-[#191919]">{event.title}</h3>
                     <p className="text-sm text-[#4F5666] line-clamp-1">{event.description}</p>
                   </div>
                   <Badge variant="accent">Featured</Badge>
                 </div>
                 
                 <div className="flex flex-wrap gap-4 text-xs font-medium text-[#4F5666]">
-                  <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4 text-[#9DC4D5]" /> {event.date}</span>
-                  <span className="flex items-center gap-1.5"><Trophy className="h-4 w-4 text-[#203627]" /> {event.category}</span>
+                  <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4 text-[#191919]/70" /> {event.date}</span>
+                  <span className="flex items-center gap-1.5"><Trophy className="h-4 w-4 text-[#191919]" /> {event.category}</span>
                 </div>
               </div>
             </Card>

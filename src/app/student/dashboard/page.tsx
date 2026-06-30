@@ -55,11 +55,11 @@ export default function StudentDashboardPage() {
   const upcomingEvents = filteredEvents.slice(3, 8);
 
   const categories = [
-    { name: 'All', icon: Compass, color: '#E8FF40', img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=80&h=80&fit=crop' },
+    { name: 'All', icon: Compass, color: '#BDFB04', img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=80&h=80&fit=crop' },
     { name: 'Sports', icon: Trophy, color: '#22C55E', img: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=80&h=80&fit=crop' },
-    { name: 'Music', icon: Music, color: '#9DC4D5', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=80&h=80&fit=crop' },
-    { name: 'Parties', icon: Wine, color: '#E8FF40', img: 'https://images.unsplash.com/photo-1496337589254-7e19d01eae44?w=80&h=80&fit=crop' },
-    { name: 'Workshops', icon: Cpu, color: '#9DC4D5', img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=80&h=80&fit=crop' },
+    { name: 'Music', icon: Music, color: '#BDFB04', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=80&h=80&fit=crop' },
+    { name: 'Parties', icon: Wine, color: '#BDFB04', img: 'https://images.unsplash.com/photo-1496337589254-7e19d01eae44?w=80&h=80&fit=crop' },
+    { name: 'Workshops', icon: Cpu, color: '#BDFB04', img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=80&h=80&fit=crop' },
     { name: 'Clubs', icon: GraduationCap, color: '#FFB800', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=80&h=80&fit=crop' }
   ];
 
@@ -80,27 +80,27 @@ export default function StudentDashboardPage() {
       {/* 1. Header (Avatar + School Location Selector & Circular Actions) */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="h-11 w-11 rounded-full bg-[#E8FF40] text-[#203627] flex items-center justify-center font-bold border-2 border-white shadow-md text-sm cursor-pointer hover:scale-102 transition-transform" onClick={() => router.push('/student/profile')}>
+          <div className="h-11 w-11 rounded-full bg-[#BDFB04] text-[#191919] flex items-center justify-center font-bold border-2 border-white shadow-md text-sm cursor-pointer hover:scale-102 transition-transform" onClick={() => router.push('/student/profile')}>
             {currentUser.avatar || currentUser.name.substring(0, 2).toUpperCase()}
           </div>
           <div>
             <span className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block leading-none mb-1.5">Campus</span>
-            <button className="flex items-center gap-1 text-sm font-extrabold text-[#203627] uppercase tracking-wide hover:text-[#203627]/80 transition-colors">
-              {currentUser.school} <ChevronDown className="h-4 w-4 text-[#203627]" />
+            <button className="flex items-center gap-1 text-sm font-extrabold text-[#191919] uppercase tracking-wide hover:text-[#191919]/80 transition-colors">
+              {currentUser.school} <ChevronDown className="h-4 w-4 text-[#191919]" />
             </button>
           </div>
         </div>
 
         <div className="flex gap-2.5">
-          <Link href="/student/saved" className="h-11 w-11 rounded-full bg-white border border-black/[0.04] flex items-center justify-center text-[#4F5666] hover:text-[#203627] hover:bg-black/[0.02] transition-colors shadow-sm">
+          <Link href="/student/saved" className="h-11 w-11 rounded-full bg-white border border-black/[0.04] flex items-center justify-center text-[#4F5666] hover:text-[#191919] hover:bg-black/[0.02] transition-colors shadow-sm">
             <Heart className="h-4 w-4" />
           </Link>
           <div className="relative">
-            <button className="h-11 w-11 rounded-full bg-white border border-black/[0.04] flex items-center justify-center text-[#4F5666] hover:text-[#203627] hover:bg-black/[0.02] transition-colors shadow-sm">
+            <button className="h-11 w-11 rounded-full bg-white border border-black/[0.04] flex items-center justify-center text-[#4F5666] hover:text-[#191919] hover:bg-black/[0.02] transition-colors shadow-sm">
               <Bell className="h-4 w-4" />
             </button>
             {unreadNotifs.length > 0 && (
-              <span className="absolute top-0.5 right-0.5 h-2.5 w-2.5 rounded-full bg-[#203627] border-2 border-white"></span>
+              <span className="absolute top-0.5 right-0.5 h-2.5 w-2.5 rounded-full bg-[#191919] border-2 border-white"></span>
             )}
           </div>
         </div>
@@ -115,21 +115,21 @@ export default function StudentDashboardPage() {
             placeholder="Search events..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-black/[0.025] border border-black/[0.04] text-[#203627] placeholder-gray-400 rounded-full pl-12 pr-4 py-3.5 text-xs focus:outline-none focus:border-[#E8FF40] focus:ring-1 focus:ring-[#E8FF40] transition-all"
+            className="w-full bg-black/[0.025] border border-black/[0.04] text-[#191919] placeholder-gray-400 rounded-full pl-12 pr-4 py-3.5 text-xs focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all"
           />
         </div>
-        <button className="h-11 w-11 rounded-full bg-black/[0.025] border border-black/[0.04] flex items-center justify-center text-[#4F5666] hover:text-[#E8FF40] transition-colors shrink-0 cursor-pointer">
+        <button className="h-11 w-11 rounded-full bg-black/[0.025] border border-black/[0.04] flex items-center justify-center text-[#4F5666] hover:text-[#BDFB04] transition-colors shrink-0 cursor-pointer">
           <SlidersHorizontal className="h-4 w-4" />
         </button>
       </div>
 
       {/* 3. High-Impact Featured Banner (Concert Style) */}
-      <div className="relative rounded-[28px] overflow-hidden bg-[#203627] h-44 flex flex-col justify-end p-6 border border-black/[0.04] shadow-[var(--shadow-premium-md)] group">
+      <div className="relative rounded-[28px] overflow-hidden bg-[#191919] h-44 flex flex-col justify-end p-6 border border-black/[0.04] shadow-[var(--shadow-premium-md)] group">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1000&fit=crop')] bg-cover bg-center opacity-65 group-hover:scale-102 transition-transform duration-700 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-0" />
         
         <div className="relative z-10 space-y-2 text-left">
-          <span className="bg-[#E8FF40]/90 backdrop-blur-sm text-[8px] font-bold text-white px-2.5 py-1 rounded-full uppercase tracking-[0.2em] w-fit block mb-1">
+          <span className="bg-[#BDFB04]/90 backdrop-blur-sm text-[8px] font-bold text-white px-2.5 py-1 rounded-full uppercase tracking-[0.2em] w-fit block mb-1">
             Featured Event
           </span>
           <h2 className="text-white font-extrabold text-lg sm:text-xl uppercase tracking-wide leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -144,10 +144,10 @@ export default function StudentDashboardPage() {
       {/* 4. Categories horizontal row */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-[#203627] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+          <h3 className="text-sm font-bold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
             Categories for you
           </h3>
-          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#E8FF40] hover:text-[#d8ee2e] transition-colors">
+          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#BDFB04] hover:text-[#d8ee2e] transition-colors">
             See all
           </Link>
         </div>
@@ -164,13 +164,13 @@ export default function StudentDashboardPage() {
                 {/* Clean icon container like mockup */}
                 <div className={`h-12 w-12 rounded-2xl flex items-center justify-center transition-all ${
                   isActive 
-                    ? 'bg-[#E8FF40] text-[#203627] shadow-lg shadow-[#E8FF40]/20 border border-[#E8FF40]' 
-                    : 'bg-black/[0.03] border border-black/[0.04] text-[#4F5666] hover:bg-black/5 hover:text-[#203627]'
+                    ? 'bg-[#BDFB04] text-[#191919] shadow-lg shadow-[#BDFB04]/20 border border-[#BDFB04]' 
+                    : 'bg-black/[0.03] border border-black/[0.04] text-[#4F5666] hover:bg-black/5 hover:text-[#191919]'
                 }`}>
                   <cat.icon className="h-4.5 w-4.5 stroke-[2.5]" />
                 </div>
                 <span className={`text-[9px] font-extrabold uppercase tracking-wider transition-colors ${
-                  isActive ? 'text-[#E8FF40]' : 'text-[#4F5666]'
+                  isActive ? 'text-[#BDFB04]' : 'text-[#4F5666]'
                 }`}>
                   {cat.name}
                 </span>
@@ -183,10 +183,10 @@ export default function StudentDashboardPage() {
       {/* 5. Featured Events horizontal slider */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-[#203627] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+          <h3 className="text-sm font-bold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
             Featured Events
           </h3>
-          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#E8FF40] hover:text-[#d8ee2e] transition-colors">
+          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#BDFB04] hover:text-[#d8ee2e] transition-colors">
             See all
           </Link>
         </div>
@@ -224,8 +224,8 @@ export default function StudentDashboardPage() {
                       }}
                       className={`h-7 w-7 rounded-full flex items-center justify-center backdrop-blur-md transition-all border ${
                         isSaved 
-                          ? 'bg-[#E8FF40] border-[#E8FF40] text-[#203627]' 
-                          : 'bg-black/30 border-white/10 text-white hover:bg-white hover:text-[#E8FF40]'
+                          ? 'bg-[#BDFB04] border-[#BDFB04] text-[#191919]' 
+                          : 'bg-black/30 border-white/10 text-white hover:bg-white hover:text-[#BDFB04]'
                       }`}
                     >
                       <Heart className="h-3.5 w-3.5 stroke-[2.5]" />
@@ -277,10 +277,10 @@ export default function StudentDashboardPage() {
       {/* 6. Upcoming Events list */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-[#203627] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+          <h3 className="text-sm font-bold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
             Upcoming Events
           </h3>
-          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#E8FF40] hover:text-[#d8ee2e] transition-colors">
+          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#BDFB04] hover:text-[#d8ee2e] transition-colors">
             See all
           </Link>
         </div>
@@ -307,7 +307,7 @@ export default function StudentDashboardPage() {
                         e.stopPropagation();
                         saveToggle(event.id);
                       }}
-                      className="absolute top-1 left-1 h-5.5 w-5.5 rounded-full bg-black/30 border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-[#E8FF40] transition-all"
+                      className="absolute top-1 left-1 h-5.5 w-5.5 rounded-full bg-black/30 border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-[#BDFB04] transition-all"
                     >
                       <Heart className={`h-3 w-3 ${isSaved ? 'fill-white text-white' : ''}`} />
                     </button>
@@ -316,10 +316,10 @@ export default function StudentDashboardPage() {
                   {/* Right Side: Event Details */}
                   <div className="flex-1 flex justify-between items-end gap-3 text-left">
                     <div className="space-y-1">
-                      <span className="text-[9px] font-bold text-[#E8FF40] uppercase tracking-wider block">
+                      <span className="text-[9px] font-bold text-[#BDFB04] uppercase tracking-wider block">
                         October {day}, 2026
                       </span>
-                      <h4 className="font-extrabold text-[13px] text-[#203627] uppercase tracking-wide leading-tight line-clamp-1" style={{ fontFamily: 'var(--font-display)' }}>
+                      <h4 className="font-extrabold text-[13px] text-[#191919] uppercase tracking-wide leading-tight line-clamp-1" style={{ fontFamily: 'var(--font-display)' }}>
                         {event.title}
                       </h4>
                       <p className="text-[10px] text-[#4F5666] font-medium flex items-center gap-1">
@@ -330,7 +330,7 @@ export default function StudentDashboardPage() {
                     {/* Join button */}
                     <button 
                       onClick={(e) => handleRsvpClick(event.id, e)}
-                      className="bg-[#E8FF40] hover:bg-[#d8ee2e] text-[#203627] text-[8px] font-bold uppercase tracking-widest px-4 py-2.5 rounded-full transition-colors shadow-md shadow-orange-500/10 cursor-pointer shrink-0"
+                      className="bg-[#BDFB04] hover:bg-[#BDFB04]/90 text-[#191919] text-[8px] font-bold uppercase tracking-widest px-4 py-2.5 rounded-full transition-colors shadow-md shadow-orange-500/10 cursor-pointer shrink-0"
                     >
                       Join Now
                     </button>

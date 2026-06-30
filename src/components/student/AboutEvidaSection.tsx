@@ -7,14 +7,14 @@ import EvidaLogo from '@/components/ui/EvidaLogo';
 
 export default function AboutEvidaSection() {
   return (
-    <section id="about-evida" className="relative w-full bg-[#EFEFEF] py-24 overflow-hidden border-b border-black/[0.04] font-sans">
+    <section id="about-evida" className="relative w-full bg-[#DFDED7] py-24 overflow-hidden border-b border-black/[0.04] font-sans">
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
         
         {/* 1. Header Row */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-12">
           <div>
             <span className="text-[#7B8290] text-xs font-bold tracking-[0.25em] uppercase block mb-3">ABOUT US</span>
-            <h2 className="text-[#203627] font-extrabold text-5xl md:text-7xl uppercase tracking-tighter leading-[0.9]" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-[#191919] font-extrabold text-5xl md:text-7xl uppercase tracking-tighter leading-[0.9]" style={{ fontFamily: 'var(--font-display)' }}>
               CAMPUS LIFE<br />BUILDERS
             </h2>
           </div>
@@ -48,7 +48,7 @@ export default function AboutEvidaSection() {
             </span>
           </div>
           <div className="md:col-span-9">
-            <p className="text-[#203627] font-extrabold text-xl md:text-3xl lg:text-4xl leading-tight tracking-tight uppercase" style={{ fontFamily: 'var(--font-display)' }}>
+            <p className="text-[#191919] font-extrabold text-xl md:text-3xl lg:text-4xl leading-tight tracking-tight uppercase" style={{ fontFamily: 'var(--font-display)' }}>
               Every campus tells a story, and at Evida®, we make sure it's unforgettable. <span className="text-[#4F5666] font-normal lowercase normal-case">From concept to connection, we bring student life to life with design, coordination, and shaping experiences that resonate with everyone.</span>
             </p>
           </div>
@@ -61,19 +61,19 @@ export default function AboutEvidaSection() {
           <motion.div 
             whileHover={{ y: -8 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className="bg-[#E8FF40] rounded-[24px] p-8 md:p-10 flex flex-col justify-between aspect-[4/5] text-left shadow-[var(--shadow-premium-md)] hover:shadow-[var(--shadow-premium-lg)] transition-shadow duration-300"
+            className="bg-[#BDFB04] rounded-[24px] p-8 md:p-10 flex flex-col justify-between aspect-[4/5] text-left shadow-[var(--shadow-premium-md)] hover:shadow-[var(--shadow-premium-lg)] transition-shadow duration-300"
           >
             <div>
-              <span className="text-[#203627]/70 text-[10px] font-bold tracking-[0.2em] uppercase">ENGAGEMENT</span>
-              <h4 className="text-[#203627] font-bold text-lg md:text-xl uppercase mt-4 leading-snug" style={{ fontFamily: 'var(--font-display)' }}>
+              <span className="text-[#191919]/70 text-[10px] font-bold tracking-[0.2em] uppercase">ENGAGEMENT</span>
+              <h4 className="text-[#191919] font-bold text-lg md:text-xl uppercase mt-4 leading-snug" style={{ fontFamily: 'var(--font-display)' }}>
                 Active Campus Community
               </h4>
             </div>
             <div>
-              <div className="text-[#203627] font-extrabold text-5xl md:text-6xl lg:text-7xl leading-none" style={{ fontFamily: 'var(--font-display)' }}>
+              <div className="text-[#191919] font-extrabold text-5xl md:text-6xl lg:text-7xl leading-none" style={{ fontFamily: 'var(--font-display)' }}>
                 94%
               </div>
-              <p className="text-[#203627]/80 text-xs mt-4 font-light leading-relaxed">
+              <p className="text-[#191919]/80 text-xs mt-4 font-light leading-relaxed">
                 Students reporting a more connected and active campus experience since using Evida.
               </p>
             </div>
@@ -83,16 +83,16 @@ export default function AboutEvidaSection() {
           <motion.div 
             whileHover={{ y: -8 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className="bg-[#EFEFEF] border border-black/10 rounded-[24px] p-8 md:p-10 flex flex-col justify-between aspect-[4/5] text-left shadow-[var(--shadow-premium-md)] hover:shadow-[var(--shadow-premium-lg)] transition-shadow duration-300"
+            className="bg-[#DFDED7] border border-black/10 rounded-[24px] p-8 md:p-10 flex flex-col justify-between aspect-[4/5] text-left shadow-[var(--shadow-premium-md)] hover:shadow-[var(--shadow-premium-lg)] transition-shadow duration-300"
           >
             <div>
               <span className="text-[#4F5666] text-[10px] font-bold tracking-[0.2em] uppercase">EFFICIENCY</span>
-              <h4 className="text-[#203627] font-bold text-lg md:text-xl uppercase mt-4 leading-snug" style={{ fontFamily: 'var(--font-display)' }}>
+              <h4 className="text-[#191919] font-bold text-lg md:text-xl uppercase mt-4 leading-snug" style={{ fontFamily: 'var(--font-display)' }}>
                 Streamlined Planning
               </h4>
             </div>
             <div>
-              <div className="text-[#203627] font-extrabold text-5xl md:text-6xl lg:text-7xl leading-none" style={{ fontFamily: 'var(--font-display)' }}>
+              <div className="text-[#191919] font-extrabold text-5xl md:text-6xl lg:text-7xl leading-none" style={{ fontFamily: 'var(--font-display)' }}>
                 3.5x
               </div>
               <p className="text-[#4F5666] text-xs mt-4 font-light leading-relaxed">
@@ -105,7 +105,7 @@ export default function AboutEvidaSection() {
           <motion.div 
             whileHover={{ y: -8 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className="bg-[#203627] rounded-[24px] p-8 md:p-10 flex flex-col justify-between aspect-[4/5] text-left shadow-[var(--shadow-premium-md)] hover:shadow-[var(--shadow-premium-lg)] transition-shadow duration-300"
+            className="bg-[#191919] rounded-[24px] p-8 md:p-10 flex flex-col justify-between aspect-[4/5] text-left shadow-[var(--shadow-premium-md)] hover:shadow-[var(--shadow-premium-lg)] transition-shadow duration-300"
           >
             <div>
               <span className="text-white/75 text-[10px] font-bold tracking-[0.2em] uppercase">INCLUSION</span>
@@ -114,7 +114,7 @@ export default function AboutEvidaSection() {
               </h4>
             </div>
             <div>
-              <div className="text-[#E8FF40] font-extrabold text-5xl md:text-6xl lg:text-7xl leading-none" style={{ fontFamily: 'var(--font-display)' }}>
+              <div className="text-[#BDFB04] font-extrabold text-5xl md:text-6xl lg:text-7xl leading-none" style={{ fontFamily: 'var(--font-display)' }}>
                 100%
               </div>
               <p className="text-white/80 text-xs mt-4 font-light leading-relaxed">

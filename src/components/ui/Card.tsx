@@ -25,7 +25,7 @@ export default function Card({ children, className = '', onClick, hover = true, 
         }
         shadow-[var(--shadow-premium-md)]
         transition-all duration-300
-        ${hover ? 'hover:shadow-[var(--shadow-premium-lg)] hover:border-[#E8FF40]/10 cursor-pointer' : ''}
+        ${hover ? 'hover:shadow-[var(--shadow-premium-lg)] hover:border-[#BDFB04]/10 cursor-pointer' : ''}
         ${className}
       `}
     >

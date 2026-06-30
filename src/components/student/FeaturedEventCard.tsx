@@ -21,7 +21,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
   const formattedDate = `${weekday}, ${month} ${day}`;
 
   const isGradient = event.coverImage ? event.coverImage.includes('from-') : false;
-  const bgClass = isGradient ? event.coverImage : (event.coverImage ? '' : 'bg-[#EFEFEF]');
+  const bgClass = isGradient ? event.coverImage : (event.coverImage ? '' : 'bg-[#DFDED7]');
   const bgStyle = (!isGradient && event.coverImage) 
     ? { backgroundImage: `url(${event.coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } 
     : {};
@@ -32,15 +32,15 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
   const getCategoryStyles = (cat?: string) => {
     const c = cat?.toLowerCase() || '';
     if (c.includes('sport') || c.includes('athlet') || c.includes('trophy')) {
-      return 'bg-[#E8FF40]/10 text-[#E8FF40] border-[#E8FF40]/15';
+      return 'bg-[#BDFB04]/10 text-[#BDFB04] border-[#BDFB04]/15';
     }
     if (c.includes('music') || c.includes('concert') || c.includes('party') || c.includes('show') || c.includes('art') || c.includes('greek')) {
-      return 'bg-black/5 text-[#203627] border-black/10';
+      return 'bg-black/5 text-[#191919] border-black/10';
     }
     if (c.includes('career') || c.includes('fair') || c.includes('workshop') || c.includes('hackathon') || c.includes('workshop') || c.includes('academic')) {
-      return 'bg-[#E8FF40]/10 text-[#E8FF40] border-[#E8FF40]/15';
+      return 'bg-[#BDFB04]/10 text-[#BDFB04] border-[#BDFB04]/15';
     }
-    return 'bg-[#E8FF40]/10 text-[#E8FF40] border-[#E8FF40]/15';
+    return 'bg-[#BDFB04]/10 text-[#BDFB04] border-[#BDFB04]/15';
   };
 
   return (
@@ -87,12 +87,12 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
       <div className="p-6 flex flex-col flex-1 justify-between gap-4 text-left">
         <div className="space-y-2 cursor-pointer" onClick={onClick}>
           {/* Date & Time Invite Style (Orange, Uppercase) */}
-          <div className="text-[#E8FF40] text-[10px] font-bold uppercase tracking-widest">
+          <div className="text-[#BDFB04] text-[10px] font-bold uppercase tracking-widest">
             {formattedDate} • {event.time}
           </div>
 
           {/* Event Title */}
-          <h3 className="text-[#203627] font-bold text-lg line-clamp-2 leading-tight tracking-tight hover:text-[#E8FF40] transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
+          <h3 className="text-[#191919] font-bold text-lg line-clamp-2 leading-tight tracking-tight hover:text-[#BDFB04] transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
             {event.title}
           </h3>
           
@@ -140,7 +140,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
               e.stopPropagation();
               onClick();
             }}
-            className="inline-flex items-center gap-1.5 bg-white border border-black/10 hover:border-transparent hover:bg-[#E8FF40] hover:text-white text-[#203627] font-bold text-[10px] uppercase tracking-wider py-1.5 px-3.5 rounded-full transition-all duration-300 shadow-sm cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 bg-white border border-black/10 hover:border-transparent hover:bg-[#BDFB04] hover:text-[#191919] text-[#191919] font-bold text-[10px] uppercase tracking-wider py-1.5 px-3.5 rounded-full transition-all duration-300 shadow-sm cursor-pointer whitespace-nowrap"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             <Calendar className="h-3.5 w-3.5" />

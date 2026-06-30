@@ -28,7 +28,7 @@ export default function AnalyticsPage() {
   return (
     <div className="p-6 md:p-10 space-y-8 max-w-6xl mx-auto">
       <div className="space-y-2">
-        <h1 className="text-3xl font-extrabold text-[#203627] tracking-tight">Engagement Analytics</h1>
+        <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight">Engagement Analytics</h1>
         <p className="text-sm text-[#4F5666]">Campus-wide metrics and event performance data.</p>
       </div>
 
@@ -36,50 +36,50 @@ export default function AnalyticsPage() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card className="p-6">
           <div className="flex items-center gap-4 mb-4">
-            <div className="h-10 w-10 rounded-xl bg-[#80B0EC]/10 flex items-center justify-center text-[#9DC4D5]">
+            <div className="h-10 w-10 rounded-xl bg-[#80B0EC]/10 flex items-center justify-center text-[#191919]/70">
               <CalendarDays className="h-5 w-5" />
             </div>
             <span className="text-xs font-bold text-[#4F5666] uppercase tracking-wider">Total Events</span>
           </div>
-          <div className="text-3xl font-bold text-[#203627]">{totalApproved}</div>
+          <div className="text-3xl font-bold text-[#191919]">{totalApproved}</div>
         </Card>
 
         <Card className="p-6">
           <div className="flex items-center gap-4 mb-4">
-            <div className="h-10 w-10 rounded-xl bg-[#eb5e28]/10 flex items-center justify-center text-[#203627]">
+            <div className="h-10 w-10 rounded-xl bg-[#eb5e28]/10 flex items-center justify-center text-[#191919]">
               <Users className="h-5 w-5" />
             </div>
             <span className="text-xs font-bold text-[#4F5666] uppercase tracking-wider">Total RSVPs</span>
           </div>
-          <div className="text-3xl font-bold text-[#203627]">{totalRsvps}</div>
+          <div className="text-3xl font-bold text-[#191919]">{totalRsvps}</div>
         </Card>
 
         <Card className="p-6">
           <div className="flex items-center gap-4 mb-4">
-            <div className="h-10 w-10 rounded-xl bg-[#EE3D5A]/10 flex items-center justify-center text-[#203627]">
+            <div className="h-10 w-10 rounded-xl bg-[#EE3D5A]/10 flex items-center justify-center text-[#191919]">
               <Activity className="h-5 w-5" />
             </div>
             <span className="text-xs font-bold text-[#4F5666] uppercase tracking-wider">Total Views</span>
           </div>
-          <div className="text-3xl font-bold text-[#203627]">{totalViews}</div>
+          <div className="text-3xl font-bold text-[#191919]">{totalViews}</div>
         </Card>
 
         <Card className="p-6">
           <div className="flex items-center gap-4 mb-4">
-            <div className="h-10 w-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-[#203627]">
+            <div className="h-10 w-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-[#191919]">
               <TrendingUp className="h-5 w-5" />
             </div>
             <span className="text-xs font-bold text-[#4F5666] uppercase tracking-wider">Active Orgs</span>
           </div>
-          <div className="text-3xl font-bold text-[#203627]">{organizations.filter(o => o.verified).length}</div>
+          <div className="text-3xl font-bold text-[#191919]">{organizations.filter(o => o.verified).length}</div>
         </Card>
       </div>
 
       {/* Charts area */}
       <div className="grid md:grid-cols-2 gap-8">
         <Card className="p-6 space-y-6">
-          <h2 className="text-lg font-bold text-[#203627] flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-[#9DC4D5]" /> Events by Category
+          <h2 className="text-lg font-bold text-[#191919] flex items-center gap-2">
+            <BarChart3 className="h-5 w-5 text-[#191919]/70" /> Events by Category
           </h2>
           <div className="space-y-4">
             {sortedCategories.map(([category, count]) => {
@@ -87,7 +87,7 @@ export default function AnalyticsPage() {
               return (
                 <div key={category} className="space-y-1.5">
                   <div className="flex justify-between text-xs font-medium">
-                    <span className="text-[#203627]">{category}</span>
+                    <span className="text-[#191919]">{category}</span>
                     <span className="text-[#4F5666]">{count} events ({percentage}%)</span>
                   </div>
                   <div className="w-full bg-black/[0.04] rounded-full h-2 overflow-hidden">
@@ -95,7 +95,7 @@ export default function AnalyticsPage() {
                       initial={{ width: 0 }}
                       animate={{ width: `${percentage}%` }}
                       transition={{ duration: 1, ease: "easeOut" }}
-                      className="h-full bg-gradient-to-r from-[#9DC4D5] to-[#E8FF40] rounded-full"
+                      className="h-full bg-gradient-to-r from-[#9DC4D5] to-[#BDFB04] rounded-full"
                     />
                   </div>
                 </div>
@@ -105,8 +105,8 @@ export default function AnalyticsPage() {
         </Card>
 
         <Card className="p-6 space-y-6">
-          <h2 className="text-lg font-bold text-[#203627] flex items-center gap-2">
-            <Users className="h-5 w-5 text-[#203627]" /> Top Organizations (RSVPs)
+          <h2 className="text-lg font-bold text-[#191919] flex items-center gap-2">
+            <Users className="h-5 w-5 text-[#191919]" /> Top Organizations (RSVPs)
           </h2>
           <div className="space-y-4">
             {organizations
@@ -118,9 +118,9 @@ export default function AnalyticsPage() {
                     #{index + 1}
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-bold text-[#203627]">{org.name}</p>
+                    <p className="text-sm font-bold text-[#191919]">{org.name}</p>
                   </div>
-                  <span className="text-sm font-bold text-[#203627]">{org.rsvps} RSVPs</span>
+                  <span className="text-sm font-bold text-[#191919]">{org.rsvps} RSVPs</span>
                 </div>
               ))}
           </div>

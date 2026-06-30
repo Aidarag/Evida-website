@@ -5,25 +5,25 @@
    ─────────────────────────────────────────────── */
 @theme {
   /* Colors – Backgrounds */
-  --color-primary-bg: #EFEFEF;
-  --color-secondary-bg: #EFEFEF;
+  --color-primary-bg: #DFDED7;
+  --color-secondary-bg: #DFDED7;
   --color-surface: #FFFFFF;
-  --color-bg-warm: #EFEFEF;
+  --color-bg-warm: #DFDED7;
 
   /* Colors – Text */
-  --color-primary-text: #203627;
+  --color-primary-text: #191919;
   --color-secondary-text: #4F5666;
   --color-tertiary-text: #7B8290;
   
   /* Colors – Brand Accents */
-  --color-evida-orange: #E8FF40;
+  --color-evida-orange: #BDFB04;
   --color-evida-blue: #9DC4D5;
   --color-evida-purple: #9DC4D5;
   --color-evida-success: #22C55E;
-  --color-evida-dark: #203627;
+  --color-evida-dark: #191919;
   
   /* Soft Background Accents (10% opacity equivalents) */
-  --color-evida-orange-light: rgba(232, 255, 64, 0.12);
+  --color-evida-orange-light: rgba(189, 251, 4, 0.12);
   --color-evida-blue-light: rgba(79, 124, 255, 0.08);
   --color-evida-purple-light: rgba(130, 87, 255, 0.08);
   --color-evida-success-light: rgba(34, 197, 94, 0.08);
@@ -43,8 +43,8 @@
    Global Styles & Custom Variables
    ─────────────────────────────────────────────── */
 :root {
-  --bg-primary: #EFEFEF;
-  --text-primary: #203627;
+  --bg-primary: #DFDED7;
+  --text-primary: #191919;
   --text-secondary: #4F5666;
   --text-muted: #7B8290;
   
@@ -141,7 +141,7 @@ h3, .text-heading-3 {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #FFFFFF;
-  background: #E8FF40;
+  background: #BDFB04;
   border: none;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -168,15 +168,15 @@ h3, .text-heading-3 {
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #203627;
+  color: #191919;
   background: transparent;
-  border: 1.5px solid #203627;
+  border: 1.5px solid #191919;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-outline:hover {
-  background: #203627;
-  color: #EFEFEF;
+  background: #191919;
+  color: #DFDED7;
   transform: translateY(-2px);
 }
 .btn-outline:active {
@@ -202,7 +202,7 @@ h3, .text-heading-3 {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-ghost:hover {
-  color: #203627;
+  color: #191919;
   background: rgba(32, 54, 39, 0.03);
 }
 
@@ -214,12 +214,12 @@ h3, .text-heading-3 {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #EFEFEF;
+  background: #DFDED7;
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(32, 54, 39, 0.15);
   border-radius: 9999px;
-  border: 2px solid #EFEFEF;
+  border: 2px solid #DFDED7;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(32, 54, 39, 0.3);

@@ -149,10 +149,10 @@ export default function StudentEventsFeed() {
   return (
     <div className="p-6 md:p-10 space-y-8 max-w-7xl mx-auto">
       {/* Search & Filter Header */}
-      <div className="space-y-6 sticky top-[120px] md:top-16 z-30 bg-[#EFEFEF]/90 backdrop-blur-xl py-4 -mx-6 px-6 md:mx-0 md:px-0 border-b border-black/[0.04]">
+      <div className="space-y-6 sticky top-[120px] md:top-16 z-30 bg-[#DFDED7]/90 backdrop-blur-xl py-4 -mx-6 px-6 md:mx-0 md:px-0 border-b border-black/[0.04]">
         <div className="flex flex-col md:flex-row gap-4 justify-between">
           <div>
-            <h1 className="text-3xl font-extrabold text-[#203627] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>Explore</h1>
+            <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>Explore</h1>
             <p className="text-sm text-[#4F5666] mt-1">Discover what's happening around campus</p>
           </div>
           <div className="w-full md:w-96">
@@ -187,7 +187,7 @@ export default function StudentEventsFeed() {
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   className={`relative flex items-center justify-center gap-2.5 px-6 py-3 h-12 rounded-full text-xs font-extrabold uppercase tracking-widest border-2 cursor-pointer select-none transition-all duration-200 ${
                     isActive
-                      ? 'border-[#E8FF40] text-[#203627] shadow-md shadow-[#E8FF40]/10'
+                      ? 'border-[#BDFB04] text-[#191919] shadow-md shadow-[#BDFB04]/10'
                       : 'border-black/[0.06] bg-black/[0.01] text-[#4F5666] hover:border-black/15'
                   }`}
                 >
@@ -195,12 +195,12 @@ export default function StudentEventsFeed() {
                   {isActive && (
                     <motion.div
                       layoutId="activeOrganizerBg"
-                      className="absolute inset-0 bg-[#E8FF40] rounded-full z-0"
+                      className="absolute inset-0 bg-[#BDFB04] rounded-full z-0"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
                   <span className="relative z-10 flex items-center gap-2.5">
-                    <Icon className={`h-4 w-4 relative z-10 ${isActive ? 'text-[#203627]' : 'text-[#4F5666]'}`} />
+                    <Icon className={`h-4 w-4 relative z-10 ${isActive ? 'text-[#191919]' : 'text-[#4F5666]'}`} />
                     <span className="relative z-10">{filter.label}</span>
                   </span>
                 </motion.button>
@@ -224,15 +224,15 @@ export default function StudentEventsFeed() {
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   className={`relative shrink-0 px-5.5 py-2.5 h-9.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider cursor-pointer select-none transition-colors duration-200 ${
                     isActive
-                      ? 'text-[#203627]'
-                      : 'bg-black/[0.02] border border-black/[0.06] text-[#4F5666] hover:bg-black/[0.04] hover:text-[#203627]'
+                      ? 'text-[#191919]'
+                      : 'bg-black/[0.02] border border-black/[0.06] text-[#4F5666] hover:bg-black/[0.04] hover:text-[#191919]'
                   }`}
                 >
                   {/* Sliding Background */}
                   {isActive && (
                     <motion.div
                       layoutId="activeCategoryBg"
-                      className="absolute inset-0 bg-[#E8FF40] rounded-full z-0"
+                      className="absolute inset-0 bg-[#BDFB04] rounded-full z-0"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -354,11 +354,11 @@ export default function StudentEventsFeed() {
                 <div className="space-y-4">
                   {/* Category & Date */}
                   <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-[#4F5666]">
-                    <span className="bg-black/5 px-2.5 py-1 rounded-full text-[#203627] capitalize">
+                    <span className="bg-black/5 px-2.5 py-1 rounded-full text-[#191919] capitalize">
                       Category: {selectedPromo.category}
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <Calendar className="h-3.5 w-3.5 text-[#E8FF40]" />
+                      <Calendar className="h-3.5 w-3.5 text-[#BDFB04]" />
                       Posted: {new Date(selectedPromo.date).toLocaleDateString()}
                     </span>
                   </div>
@@ -375,12 +375,12 @@ export default function StudentEventsFeed() {
                   <div className="bg-black/5 border border-black/[0.04] p-4 rounded-2xl space-y-3">
                     <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest">Organizer Information</h3>
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-xs text-[#203627]">
+                      <div className="flex items-center gap-2 text-xs text-[#191919]">
                         <span className="text-gray-400">Name:</span>
                         <span className="font-bold">{selectedPromo.organizer}</span>
                       </div>
                       <div className="flex items-center gap-2 text-xs text-[#4F5666]">
-                        <Mail className="h-3.5 w-3.5 text-[#E8FF40] shrink-0" />
+                        <Mail className="h-3.5 w-3.5 text-[#BDFB04] shrink-0" />
                         <span className="break-all">{selectedPromo.contactInfo}</span>
                       </div>
                     </div>
@@ -397,7 +397,7 @@ export default function StudentEventsFeed() {
                   </Button>
                   <a 
                     href={`mailto:${selectedPromo.contactInfo}?subject=Inquiry about: ${selectedPromo.title}`}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#E8FF40] hover:bg-[#d8ee2e] text-[#203627] rounded-xl text-xs font-bold transition-all shadow-lg shadow-orange-500/10"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#BDFB04] hover:bg-[#BDFB04]/90 text-[#191919] rounded-xl text-xs font-bold transition-all shadow-lg shadow-orange-500/10"
                   >
                     <Mail className="h-4 w-4" />
                     Contact Organizer
