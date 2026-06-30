@@ -30,51 +30,51 @@ export default function SchoolDashboardPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-[#121212] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
             Administrator Overview
           </h1>
-          <p className="text-[#B8BBC8]">System status and pending actions for Evida Admin.</p>
+          <p className="text-[#4F5666]">System status and pending actions for Evida Admin.</p>
         </div>
       </div>
 
       {/* Primary Action Needs (Queues) */}
       <div className="grid md:grid-cols-3 gap-6">
-        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#EE3D5A]">
+        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#FF5A1F]">
           <div className="flex justify-between items-start">
-            <div className="h-10 w-10 rounded-full bg-[#EE3D5A]/10 flex items-center justify-center text-[#EE3D5A]">
+            <div className="h-10 w-10 rounded-full bg-[#FF5A1F]/10 flex items-center justify-center text-[#FF5A1F]">
               <AlertTriangle className="h-5 w-5" />
             </div>
-            <span className="rounded-full bg-[#EE3D5A]/10 text-[#EE3D5A] px-3 py-1 text-[10px] font-bold uppercase">High Priority</span>
+            <span className="rounded-full bg-[#FF5A1F]/10 text-[#FF5A1F] px-3 py-1 text-[10px] font-bold uppercase">High Priority</span>
           </div>
           <div>
-            <div className="text-3xl font-bold text-white">{complexQueue.length}</div>
-            <p className="text-sm font-medium text-[#B8BBC8]">Complex events pending review</p>
+            <div className="text-3xl font-bold text-[#121212]">{complexQueue.length}</div>
+            <p className="text-sm font-medium text-[#4F5666]">Complex events pending review</p>
           </div>
         </Card>
 
-        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#80B0EC]">
+        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#4F7CFF]">
           <div className="flex justify-between items-start">
-            <div className="h-10 w-10 rounded-full bg-[#80B0EC]/10 flex items-center justify-center text-[#80B0EC]">
+            <div className="h-10 w-10 rounded-full bg-[#4F7CFF]/10 flex items-center justify-center text-[#4F7CFF]">
               <Clock className="h-5 w-5" />
             </div>
-            <span className="rounded-full bg-[#80B0EC]/10 text-[#80B0EC] px-3 py-1 text-[10px] font-bold uppercase">Standard</span>
+            <span className="rounded-full bg-[#4F7CFF]/10 text-[#4F7CFF] px-3 py-1 text-[10px] font-bold uppercase">Standard</span>
           </div>
           <div>
-            <div className="text-3xl font-bold text-white">{standardQueue.length}</div>
-            <p className="text-sm font-medium text-[#B8BBC8]">Standard events pending review</p>
+            <div className="text-3xl font-bold text-[#121212]">{standardQueue.length}</div>
+            <p className="text-sm font-medium text-[#4F5666]">Standard events pending review</p>
           </div>
         </Card>
 
-        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#eb5e28]">
+        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#22C55E]">
           <div className="flex justify-between items-start">
-            <div className="h-10 w-10 rounded-full bg-[#eb5e28]/10 flex items-center justify-center text-[#eb5e28]">
+            <div className="h-10 w-10 rounded-full bg-[#22C55E]/10 flex items-center justify-center text-[#22C55E]">
               <CheckCircle className="h-5 w-5" />
             </div>
-            <span className="rounded-full bg-[#eb5e28]/10 text-[#eb5e28] px-3 py-1 text-[10px] font-bold uppercase">Fast Track</span>
+            <span className="rounded-full bg-[#22C55E]/10 text-[#22C55E] px-3 py-1 text-[10px] font-bold uppercase">Fast Track</span>
           </div>
           <div>
-            <div className="text-3xl font-bold text-white">{quickQueue.length}</div>
-            <p className="text-sm font-medium text-[#B8BBC8]">Quick events pending review</p>
+            <div className="text-3xl font-bold text-[#121212]">{quickQueue.length}</div>
+            <p className="text-sm font-medium text-[#4F5666]">Quick events pending review</p>
           </div>
         </Card>
       </div>
@@ -82,33 +82,33 @@ export default function SchoolDashboardPage() {
       <div className="grid md:grid-cols-2 gap-8">
         {/* Quick Links */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-white">System Modules</h2>
+          <h2 className="text-xl font-bold text-[#121212]" style={{ fontFamily: 'var(--font-display)' }}>System Modules</h2>
           <div className="grid grid-cols-2 gap-4">
              <Link href="/school/review">
-              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#80B0EC]/50 transition-colors">
-                <ClipboardList className="h-6 w-6 text-[#80B0EC]" />
-                <span className="text-sm font-bold text-white">Review Queue</span>
+              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#4F7CFF]/40 transition-colors">
+                <ClipboardList className="h-6 w-6 text-[#4F7CFF]" />
+                <span className="text-sm font-bold text-[#121212]">Review Queue</span>
               </Card>
             </Link>
             <Link href="/school/featured">
-              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#eb5e28]/50 transition-colors">
-                <Star className="h-6 w-6 text-[#eb5e28]" />
-                <span className="text-sm font-bold text-white">Featured Events</span>
+              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#FF5A1F]/40 transition-colors">
+                <Star className="h-6 w-6 text-[#FF5A1F]" />
+                <span className="text-sm font-bold text-[#121212]">Featured Events</span>
               </Card>
             </Link>
             <Link href="/school/organizations">
-              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-white/50 transition-colors relative">
+              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#8257FF]/40 transition-colors relative">
                 {unverifiedOrgs > 0 && (
-                  <span className="absolute top-3 right-3 h-2 w-2 rounded-full bg-[#EE3D5A]"></span>
+                  <span className="absolute top-3 right-3 h-2 w-2 rounded-full bg-[#FF5A1F]"></span>
                 )}
-                <Building2 className="h-6 w-6 text-white" />
-                <span className="text-sm font-bold text-white">Organizations</span>
+                <Building2 className="h-6 w-6 text-[#8257FF]" />
+                <span className="text-sm font-bold text-[#121212]">Organizations</span>
               </Card>
             </Link>
             <Link href="/school/analytics">
-              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#80B0EC]/50 transition-colors">
-                <BarChart3 className="h-6 w-6 text-[#80B0EC]" />
-                <span className="text-sm font-bold text-white">Analytics</span>
+              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#4F7CFF]/40 transition-colors">
+                <BarChart3 className="h-6 w-6 text-[#4F7CFF]" />
+                <span className="text-sm font-bold text-[#121212]">Analytics</span>
               </Card>
             </Link>
           </div>
@@ -116,19 +116,19 @@ export default function SchoolDashboardPage() {
 
         {/* Global Statistics */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-white">Global Statistics</h2>
-          <Card className="p-6 divide-y divide-white/[0.06]">
+          <h2 className="text-xl font-bold text-[#121212]" style={{ fontFamily: 'var(--font-display)' }}>Global Statistics</h2>
+          <Card className="p-6 divide-y divide-black/[0.06]">
             <div className="py-4 flex justify-between items-center first:pt-0">
-              <span className="text-[#B8BBC8]">Total Approved Events</span>
-              <span className="font-bold text-white">{totalApproved}</span>
+              <span className="text-[#4F5666]">Total Approved Events</span>
+              <span className="font-bold text-[#121212]">{totalApproved}</span>
             </div>
             <div className="py-4 flex justify-between items-center">
-              <span className="text-[#B8BBC8]">Registered Organizations</span>
-              <span className="font-bold text-white">{organizations.length}</span>
+              <span className="text-[#4F5666]">Registered Organizations</span>
+              <span className="font-bold text-[#121212]">{organizations.length}</span>
             </div>
             <div className="py-4 flex justify-between items-center border-b-0 pb-0">
-              <span className="text-[#B8BBC8]">Total Student RSVPs</span>
-              <span className="font-bold text-white">
+              <span className="text-[#4F5666]">Total Student RSVPs</span>
+              <span className="font-bold text-[#121212]">
                 {events.reduce((acc, ev) => acc + ev.attendees.length, 0)}
               </span>
             </div>

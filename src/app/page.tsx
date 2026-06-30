@@ -220,7 +220,7 @@ export default function LandingPage() {
       <DesktopNav variant="public" />
 
       {/* Full-Screen Immersive Hero Section */}
-      <section className="relative w-full h-[92vh] min-h-[650px] flex flex-col items-center justify-center overflow-hidden bg-[#121212]">
+      <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#121212] pt-28 pb-24">
         
         {/* Animated Background Image */}
         <motion.div 
@@ -236,7 +236,7 @@ export default function LandingPage() {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/5 rounded-full blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '12s' }} />
 
         {/* Hero Content */}
-        <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto -mt-10">
+        <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-5xl mx-auto">
           
           {/* Accent Tag */}
           <motion.div
@@ -253,7 +253,7 @@ export default function LandingPage() {
           {/* Headline Word Reveal */}
           <h1 
             style={{ fontFamily: 'var(--font-display)' }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.08] tracking-tight mb-8 select-none uppercase max-w-5xl mx-auto"
+            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight mb-8 select-none uppercase max-w-5xl mx-auto"
           >
             {headlineLines.map((line, idx) => (
               <React.Fragment key={idx}>
@@ -262,7 +262,7 @@ export default function LandingPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.15 + idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                  className={`inline-block ${idx === 2 ? "text-[#FF5A1F]" : "text-white"}`}
+                  className={`inline-block whitespace-nowrap ${idx === 2 ? "text-[#FF5A1F]" : "text-white"}`}
                 >
                   {line}
                 </motion.span>
@@ -322,7 +322,7 @@ export default function LandingPage() {
         <motion.div 
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-20"
+          className="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-20"
           onClick={() => document.getElementById('about-evida')?.scrollIntoView({ behavior: 'smooth' })}
         >
           <span className="text-[9px] font-bold tracking-[0.25em] text-white/30 uppercase">SCROLL TO EXPLORE</span>
