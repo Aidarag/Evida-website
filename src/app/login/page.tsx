@@ -201,13 +201,13 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[var(--color-primary-bg)] flex items-center justify-center p-6 relative overflow-hidden font-sans">
       {/* Dynamic Background Glowing Blobs */}
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#FF5A1F]/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#8257FF]/4 blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#FF5A1F]/3 blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#E8FF40]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#9DC4D5]/4 blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#E8FF40]/3 blur-[140px] pointer-events-none" />
 
       {/* Back to Home Button */}
       {step === 'role-selection' && (
-        <Link href="/" className="absolute top-8 left-8 text-[#4F5666] hover:text-[#121212] flex items-center gap-2 transition-colors font-bold text-xs uppercase tracking-wider">
+        <Link href="/" className="absolute top-8 left-8 text-[#4F5666] hover:text-[#203627] flex items-center gap-2 transition-colors font-bold text-xs uppercase tracking-wider">
           <ArrowLeft className="h-4 w-4" /> Back to Home
         </Link>
       )}
@@ -225,7 +225,7 @@ export default function LoginPage() {
                   navigateTo('student-email', 'backward');
                 }
               }}
-              className="flex items-center gap-1.5 text-[10px] font-bold text-[#4F5666] hover:text-[#121212] transition-colors uppercase tracking-widest cursor-pointer"
+              className="flex items-center gap-1.5 text-[10px] font-bold text-[#4F5666] hover:text-[#203627] transition-colors uppercase tracking-widest cursor-pointer"
             >
               <ArrowLeft className="h-3.5 w-3.5" /> Back
             </button>
@@ -249,7 +249,7 @@ export default function LoginPage() {
                     <EvidaLogo size={36} showText={false} />
                   </div>
                   <div>
-                    <h1 className="text-xl font-extrabold text-[#121212] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                    <h1 className="text-xl font-extrabold text-[#203627] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                       {step === 'role-selection' ? 'Sign In to Evida' : role === 'student' ? 'Student Portal' : 'Administration Portal'}
                     </h1>
                     <p className="text-xs text-[#4F5666] mt-1.5">
@@ -276,42 +276,42 @@ export default function LoginPage() {
                     {/* Student Option */}
                     <button
                       onClick={() => handleRoleSelect('student')}
-                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#FF5A1F] transition-all duration-300 cursor-pointer text-left group"
+                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#E8FF40] transition-all duration-300 cursor-pointer text-left group"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="h-12 w-12 rounded-xl bg-[#FF5A1F]/10 text-[#FF5A1F] flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <div className="h-12 w-12 rounded-xl bg-[#E8FF40]/10 text-[#E8FF40] flex items-center justify-center group-hover:scale-105 transition-transform">
                           <GraduationCap className="h-6 w-6" />
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-[#121212] uppercase tracking-wide">Student</p>
+                          <p className="text-sm font-bold text-[#203627] uppercase tracking-wide">Student</p>
                           <p className="text-xs text-[#4F5666] mt-0.5 max-w-[220px]">Discover events, join clubs, and connect with peers.</p>
                         </div>
                       </div>
-                      <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#FF5A1F] group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#E8FF40] group-hover:translate-x-1 transition-all" />
                     </button>
 
                     {/* Admin Option */}
                     <button
                       onClick={() => handleRoleSelect('admin')}
-                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#121212]/30 transition-all duration-300 cursor-pointer text-left group"
+                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#203627]/30 transition-all duration-300 cursor-pointer text-left group"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="h-12 w-12 rounded-xl bg-[#121212]/10 text-[#121212] flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <div className="h-12 w-12 rounded-xl bg-[#203627]/10 text-[#203627] flex items-center justify-center group-hover:scale-105 transition-transform">
                           <Shield className="h-6 w-6" />
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-[#121212] uppercase tracking-wide">School / Administration</p>
+                          <p className="text-sm font-bold text-[#203627] uppercase tracking-wide">School / Administration</p>
                           <p className="text-xs text-[#4F5666] mt-0.5 max-w-[220px]">Manage campus events, review queues, and view analytics.</p>
                         </div>
                       </div>
-                      <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#121212] group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#203627] group-hover:translate-x-1 transition-all" />
                     </button>
                   </div>
 
                   <div className="pt-4 border-t border-black/[0.06] text-center">
                     <p className="text-xs text-[#4F5666]">
                       Don't have an account?{' '}
-                      <Link href="/signup" className="text-[#FF5A1F] font-bold hover:underline transition-all">
+                      <Link href="/signup" className="text-[#E8FF40] font-bold hover:underline transition-all">
                         Sign up here
                       </Link>
                     </p>
@@ -336,17 +336,17 @@ export default function LoginPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="e.g. yourname@university.edu"
-                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#121212] placeholder-gray-400 focus:outline-none focus:border-[#FF5A1F] focus:ring-1 focus:ring-[#FF5A1F] transition-all font-medium"
+                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#203627] placeholder-gray-400 focus:outline-none focus:border-[#E8FF40] focus:ring-1 focus:ring-[#E8FF40] transition-all font-medium"
                       />
                     </div>
                   </div>
 
-                  {error && <p className="text-xs text-[#FF5A1F] font-semibold">{error}</p>}
+                  {error && <p className="text-xs text-[#E8FF40] font-semibold">{error}</p>}
 
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#FF5A1F] hover:bg-[#e04b12] py-3.5 text-xs font-bold text-white uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_14px_rgba(255,90,31,0.25)]"
+                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#E8FF40] hover:bg-[#d8ee2e] py-3.5 text-xs font-bold text-[#203627] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
                   >
                     {isLoading ? 'Sending Code...' : 'Send Verification Code'}
                     {!isLoading && <ArrowRight className="h-4 w-4" />}
@@ -372,21 +372,21 @@ export default function LoginPage() {
                         value={verificationCode}
                         onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
                         placeholder="123456"
-                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#121212] text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[#FF5A1F] focus:ring-1 focus:ring-[#FF5A1F] transition-all font-bold"
+                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#203627] text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[#E8FF40] focus:ring-1 focus:ring-[#E8FF40] transition-all font-bold"
                       />
                     </div>
                     <p className="text-[10px] text-[#4F5666] leading-relaxed">
-                      We sent a code to <strong className="text-[#121212]">{email}</strong>. Enter it above to access Evida.
+                      We sent a code to <strong className="text-[#203627]">{email}</strong>. Enter it above to access Evida.
                     </p>
                   </div>
 
-                  {error && <p className="text-xs text-[#FF5A1F] font-semibold">{error}</p>}
+                  {error && <p className="text-xs text-[#E8FF40] font-semibold">{error}</p>}
 
                   <div className="space-y-3">
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#FF5A1F] hover:bg-[#e04b12] py-3.5 text-xs font-bold text-white uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(255,90,31,0.25)]"
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#E8FF40] hover:bg-[#d8ee2e] py-3.5 text-xs font-bold text-[#203627] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
                     >
                       {isLoading ? 'Verifying...' : 'Verify & Sign In'}
                     </button>
@@ -396,12 +396,12 @@ export default function LoginPage() {
                       <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block text-center">Simulation Helper</span>
                       <div className="flex justify-between items-center text-[11px]">
                         <span className="text-[#4F5666]">Simulated Code:</span>
-                        <code className="text-[#FF5A1F] font-mono font-bold text-xs">{generatedCode}</code>
+                        <code className="text-[#E8FF40] font-mono font-bold text-xs">{generatedCode}</code>
                       </div>
                       <button
                         type="button"
                         onClick={() => setVerificationCode(generatedCode)}
-                        className="w-full text-[10px] font-bold text-[#121212] bg-black/5 hover:bg-black/10 py-1.5 rounded-md transition-colors uppercase cursor-pointer"
+                        className="w-full text-[10px] font-bold text-[#203627] bg-black/5 hover:bg-black/10 py-1.5 rounded-md transition-colors uppercase cursor-pointer"
                       >
                         Auto-fill Code
                       </button>
@@ -429,7 +429,7 @@ export default function LoginPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="dean.williams@university.edu"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#121212] placeholder-gray-400 focus:outline-none focus:border-[#FF5A1F] focus:ring-1 focus:ring-[#FF5A1F] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#203627] placeholder-gray-400 focus:outline-none focus:border-[#E8FF40] focus:ring-1 focus:ring-[#E8FF40] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -449,19 +449,19 @@ export default function LoginPage() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="••••••••"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#121212] placeholder-gray-400 focus:outline-none focus:border-[#FF5A1F] focus:ring-1 focus:ring-[#FF5A1F] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#203627] placeholder-gray-400 focus:outline-none focus:border-[#E8FF40] focus:ring-1 focus:ring-[#E8FF40] transition-all font-medium"
                         />
                       </div>
                     </div>
                   </div>
 
-                  {error && <p className="text-xs text-[#FF5A1F] font-semibold">{error}</p>}
+                  {error && <p className="text-xs text-[#E8FF40] font-semibold">{error}</p>}
 
                   <div className="space-y-3 pt-1">
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#FF5A1F] hover:bg-[#e04b12] py-3.5 text-xs font-bold text-white uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(255,90,31,0.25)]"
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#E8FF40] hover:bg-[#d8ee2e] py-3.5 text-xs font-bold text-[#203627] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
                     >
                       {isLoading ? 'Authenticating...' : 'Sign In as Admin'}
                     </button>
@@ -470,14 +470,14 @@ export default function LoginPage() {
                     <div className="bg-black/[0.02] border border-black/[0.06] p-3 rounded-xl text-[11px] space-y-1">
                       <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block text-center mb-1">Simulation Helper</span>
                       <p className="text-[#4F5666]">Use the official admin email:</p>
-                      <code className="text-[#FF5A1F] block font-mono font-bold select-all text-center">dean.williams@university.edu</code>
+                      <code className="text-[#E8FF40] block font-mono font-bold select-all text-center">dean.williams@university.edu</code>
                       <button
                         type="button"
                         onClick={() => {
                           setEmail('dean.williams@university.edu');
                           setPassword('admin123');
                         }}
-                        className="w-full text-[10px] font-bold text-[#121212] bg-black/5 hover:bg-black/10 py-1 rounded-md transition-colors uppercase mt-1 cursor-pointer"
+                        className="w-full text-[10px] font-bold text-[#203627] bg-black/5 hover:bg-black/10 py-1 rounded-md transition-colors uppercase mt-1 cursor-pointer"
                       >
                         Pre-fill Admin Credentials
                       </button>
@@ -499,7 +499,7 @@ export default function LoginPage() {
                   </motion.div>
 
                   <div className="space-y-2">
-                    <h2 className="text-xl font-extrabold text-[#121212] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                    <h2 className="text-xl font-extrabold text-[#203627] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                       Authenticated Successfully
                     </h2>
                     <p className="text-xs text-[#4F5666]">
@@ -508,7 +508,7 @@ export default function LoginPage() {
                   </div>
 
                   <div className="flex justify-center pt-2">
-                    <div className="w-6 h-6 border-2 border-[#FF5A1F] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-6 h-6 border-2 border-[#E8FF40] border-t-transparent rounded-full animate-spin" />
                   </div>
                 </div>
               )}

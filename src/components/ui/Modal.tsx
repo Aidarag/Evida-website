@@ -54,7 +54,7 @@ export default function Modal({ isOpen, onClose, children, title, size = 'md' }:
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             className={`
               relative w-full ${sizeClasses[size]}
-              bg-[#FFFDF8] border border-black/5
+              bg-[#EFEFEF] border border-black/5
               rounded-[24px] shadow-[var(--shadow-premium-xl)]
               overflow-y-auto max-h-[85vh]
             `}
@@ -62,7 +62,7 @@ export default function Modal({ isOpen, onClose, children, title, size = 'md' }:
             {/* Header */}
             {title && (
               <div className="flex items-center justify-between px-6 py-5 border-b border-black/[0.04]">
-                <h2 className="text-lg font-bold text-[#121212] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>{title}</h2>
+                <h2 className="text-lg font-bold text-[#203627] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>{title}</h2>
                 <button
                   onClick={onClose}
                   className="h-8 w-8 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center transition-colors cursor-pointer"

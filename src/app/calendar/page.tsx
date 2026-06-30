@@ -82,10 +82,10 @@ export default function CalendarPage() {
     if (day === 3 || day === 12 || day === 20 || day === 26) {
       const IconComp = day === 3 ? GraduationCap : day === 12 ? Music : day === 20 ? Palette : Sparkles;
       return {
-        bgColor: 'bg-[#FF5A1F]/10 hover:bg-[#FF5A1F]/15',
-        borderColor: 'border-[#FF5A1F]/35',
-        textColor: 'text-[#FF5A1F]',
-        icon: <IconComp className="h-4 w-4 text-[#FF5A1F] stroke-[2]" />,
+        bgColor: 'bg-[#E8FF40]/10 hover:bg-[#E8FF40]/15',
+        borderColor: 'border-[#E8FF40]/35',
+        textColor: 'text-[#E8FF40]',
+        icon: <IconComp className="h-4 w-4 text-[#E8FF40] stroke-[2]" />,
       };
     }
     if (day === 5 || day === 15 || day === 22) {
@@ -93,17 +93,17 @@ export default function CalendarPage() {
       return {
         bgColor: 'bg-black/5 hover:bg-black/8',
         borderColor: 'border-black/20',
-        textColor: 'text-[#121212]',
-        icon: <IconComp className="h-4 w-4 text-[#121212] stroke-[2]" />,
+        textColor: 'text-[#203627]',
+        icon: <IconComp className="h-4 w-4 text-[#203627] stroke-[2]" />,
       };
     }
     if (day === 8 || day === 18 || day === 29) {
       const IconComp = day === 8 ? Briefcase : day === 18 ? Code : Film;
       return {
-        bgColor: 'bg-[#FF5A1F]/10 hover:bg-[#FF5A1F]/15',
-        borderColor: 'border-[#FF5A1F]/35',
-        textColor: 'text-[#FF5A1F]',
-        icon: <IconComp className="h-4 w-4 text-[#FF5A1F] stroke-[2]" />,
+        bgColor: 'bg-[#E8FF40]/10 hover:bg-[#E8FF40]/15',
+        borderColor: 'border-[#E8FF40]/35',
+        textColor: 'text-[#E8FF40]',
+        icon: <IconComp className="h-4 w-4 text-[#E8FF40] stroke-[2]" />,
       };
     }
     return null;
@@ -146,20 +146,20 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFDF8] text-[#121212] flex flex-col font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#EFEFEF] text-[#203627] flex flex-col font-sans overflow-x-hidden">
       <DesktopNav variant="public" />
 
       {/* Hero Header */}
-      <section className="relative w-full bg-[#121212] pt-36 pb-20 overflow-hidden text-center flex flex-col items-center">
+      <section className="relative w-full bg-[#203627] pt-36 pb-20 overflow-hidden text-center flex flex-col items-center">
         {/* Ambient Brand Glowing Blob */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#FF5A1F]/8 rounded-full blur-[110px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#E8FF40]/8 rounded-full blur-[110px] pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 space-y-4">
           <span className="rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white/90 backdrop-blur-md">
             TIMELINE
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
-            Tactile <span className="text-[#FF5A1F]">Calendar</span>
+            Tactile <span className="text-[#E8FF40]">Calendar</span>
           </h1>
           <p className="text-white/70 text-sm md:text-base max-w-xl mx-auto font-light leading-relaxed">
             Click on any day to inspect campus activities. Keep track of orientation, games, tailgates, and career fairs.
@@ -174,19 +174,19 @@ export default function CalendarPage() {
         <div className="lg:col-span-8 bg-white border border-black/[0.04] rounded-[24px] p-4 sm:p-6 shadow-[var(--shadow-premium-md)]">
           {/* Calendar Header */}
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-[#121212] font-bold text-xl uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-[#203627] font-bold text-xl uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
               {calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
             </h2>
             <div className="flex gap-2">
               <button 
                 onClick={() => handleMonthNav('prev')}
-                className="h-10 w-10 border border-black/5 hover:border-[#FF5A1F]/30 hover:bg-[#FF5A1F]/5 text-black hover:text-[#FF5A1F] rounded-full flex items-center justify-center transition-all cursor-pointer"
+                className="h-10 w-10 border border-black/5 hover:border-[#E8FF40]/30 hover:bg-[#E8FF40]/5 text-black hover:text-[#E8FF40] rounded-full flex items-center justify-center transition-all cursor-pointer"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
               <button 
                 onClick={() => handleMonthNav('next')}
-                className="h-10 w-10 border border-black/5 hover:border-[#FF5A1F]/30 hover:bg-[#FF5A1F]/5 text-black hover:text-[#FF5A1F] rounded-full flex items-center justify-center transition-all cursor-pointer"
+                className="h-10 w-10 border border-black/5 hover:border-[#E8FF40]/30 hover:bg-[#E8FF40]/5 text-black hover:text-[#E8FF40] rounded-full flex items-center justify-center transition-all cursor-pointer"
               >
                 <ChevronRight className="h-5 w-5" />
               </button>
@@ -222,7 +222,7 @@ export default function CalendarPage() {
                     }
                   `}
                 >
-                  <span className={`text-xs font-bold ${highlight ? highlight.textColor : 'text-[#121212]'}`}>
+                  <span className={`text-xs font-bold ${highlight ? highlight.textColor : 'text-[#203627]'}`}>
                     {cell.day}
                   </span>
                   
@@ -240,10 +240,10 @@ export default function CalendarPage() {
         {/* Right Side: Day Details & Inspector */}
         <div className="lg:col-span-4 bg-white border border-black/[0.04] rounded-[24px] p-6 shadow-[var(--shadow-premium-md)] space-y-6">
           <div className="border-b border-black/[0.04] pb-4">
-            <span className="text-[#FF5A1F] text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 mb-1">
+            <span className="text-[#E8FF40] text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 mb-1">
               <CalendarDays className="h-3.5 w-3.5" /> Events on
             </span>
-            <h3 className="font-extrabold text-[#121212] text-lg uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <h3 className="font-extrabold text-[#203627] text-lg uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
               {selectedDateLabel}
             </h3>
           </div>
@@ -253,9 +253,9 @@ export default function CalendarPage() {
               selectedDayEvents.map((evt, idx) => (
                 <div 
                   key={idx}
-                  className="p-4 rounded-2xl bg-black/[0.02] border border-black/[0.03] space-y-2 hover:border-[#FF5A1F]/20 hover:bg-[#FF5A1F]/3 transition-all duration-300"
+                  className="p-4 rounded-2xl bg-black/[0.02] border border-black/[0.03] space-y-2 hover:border-[#E8FF40]/20 hover:bg-[#E8FF40]/3 transition-all duration-300"
                 >
-                  <h4 className="font-bold text-xs sm:text-sm text-[#121212] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
+                  <h4 className="font-bold text-xs sm:text-sm text-[#203627] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
                     {evt.title}
                   </h4>
                   <div className="flex flex-col gap-1 text-[11px] text-[#4F5666] font-medium">
@@ -275,7 +275,7 @@ export default function CalendarPage() {
       </main>
 
       {/* Footer Section */}
-      <footer className="relative w-full bg-[#121212] pt-24 pb-12 border-t border-white/5">
+      <footer className="relative w-full bg-[#203627] pt-24 pb-12 border-t border-white/5">
         <div className="relative max-w-6xl mx-auto px-6 md:px-12 z-20 flex flex-col items-center">
           {/* Logo / Title */}
           <div className="mb-16 flex justify-center w-full">
@@ -291,7 +291,7 @@ export default function CalendarPage() {
             <div className="space-y-1 text-xs font-semibold">
               <p className="text-white font-bold text-base mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
               <p>Campus Event & Engagement Platform</p>
-              <p className="pt-2 hover:text-[#FF5A1F] transition-colors cursor-pointer">Email: hello@evida.app</p>
+              <p className="pt-2 hover:text-[#E8FF40] transition-colors cursor-pointer">Email: hello@evida.app</p>
             </div>
           </div>
 
@@ -336,12 +336,12 @@ export default function CalendarPage() {
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#E8FF40] transition-colors"
                 required
               />
               <button 
                 type="submit"
-                className="bg-[#FF5A1F] text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#121212] transition-all duration-300 whitespace-nowrap"
+                className="bg-[#E8FF40] text-[#203627] px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#203627] transition-all duration-300 whitespace-nowrap"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 Subscribe
@@ -352,7 +352,7 @@ export default function CalendarPage() {
 
         {/* Bottom Slogan */}
         <div className="relative text-center border-t border-white/5 pt-8 pb-4">
-          <p className="text-[#FF5A1F] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+          <p className="text-[#E8FF40] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
             Evida — Campus life, all in one place.
           </p>
         </div>

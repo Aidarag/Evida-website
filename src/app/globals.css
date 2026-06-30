@@ -5,25 +5,25 @@
    ─────────────────────────────────────────────── */
 @theme {
   /* Colors – Backgrounds */
-  --color-primary-bg: #FFFDF8;
-  --color-secondary-bg: #FFFDF8;
+  --color-primary-bg: #EFEFEF;
+  --color-secondary-bg: #EFEFEF;
   --color-surface: #FFFFFF;
-  --color-bg-warm: #FFFDF8;
+  --color-bg-warm: #EFEFEF;
 
   /* Colors – Text */
-  --color-primary-text: #121212;
+  --color-primary-text: #203627;
   --color-secondary-text: #4F5666;
   --color-tertiary-text: #7B8290;
   
   /* Colors – Brand Accents */
-  --color-evida-orange: #FF5A1F;
-  --color-evida-blue: #4F7CFF;
-  --color-evida-purple: #8257FF;
+  --color-evida-orange: #E8FF40;
+  --color-evida-blue: #9DC4D5;
+  --color-evida-purple: #9DC4D5;
   --color-evida-success: #22C55E;
-  --color-evida-dark: #121212;
+  --color-evida-dark: #203627;
   
   /* Soft Background Accents (10% opacity equivalents) */
-  --color-evida-orange-light: rgba(255, 90, 31, 0.08);
+  --color-evida-orange-light: rgba(232, 255, 64, 0.12);
   --color-evida-blue-light: rgba(79, 124, 255, 0.08);
   --color-evida-purple-light: rgba(130, 87, 255, 0.08);
   --color-evida-success-light: rgba(34, 197, 94, 0.08);
@@ -43,8 +43,8 @@
    Global Styles & Custom Variables
    ─────────────────────────────────────────────── */
 :root {
-  --bg-primary: #FFFDF8;
-  --text-primary: #121212;
+  --bg-primary: #EFEFEF;
+  --text-primary: #203627;
   --text-secondary: #4F5666;
   --text-muted: #7B8290;
   
@@ -141,14 +141,14 @@ h3, .text-heading-3 {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #FFFFFF;
-  background: #FF5A1F;
+  background: #E8FF40;
   border: none;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 14px rgba(255, 90, 31, 0.2);
 }
 .btn-primary:hover {
-  background: #e04b12;
+  background: #d8ee2e;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 90, 31, 0.3);
 }
@@ -168,15 +168,15 @@ h3, .text-heading-3 {
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #121212;
+  color: #203627;
   background: transparent;
-  border: 1.5px solid #121212;
+  border: 1.5px solid #203627;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-outline:hover {
-  background: #121212;
-  color: #FFFDF8;
+  background: #203627;
+  color: #EFEFEF;
   transform: translateY(-2px);
 }
 .btn-outline:active {
@@ -202,7 +202,7 @@ h3, .text-heading-3 {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-ghost:hover {
-  color: #121212;
+  color: #203627;
   background: rgba(18, 18, 18, 0.03);
 }
 
@@ -214,12 +214,12 @@ h3, .text-heading-3 {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #FFFDF8;
+  background: #EFEFEF;
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(18, 18, 18, 0.15);
   border-radius: 9999px;
-  border: 2px solid #FFFDF8;
+  border: 2px solid #EFEFEF;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(18, 18, 18, 0.3);

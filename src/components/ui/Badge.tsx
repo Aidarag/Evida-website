@@ -11,11 +11,11 @@ interface BadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  pending: 'bg-[#FF5A1F]/10 text-[#FF5A1F] border-[#FF5A1F]/20',
+  pending: 'bg-[#E8FF40]/10 text-[#E8FF40] border-[#E8FF40]/20',
   approved: 'bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/20',
   rejected: 'bg-gray-100 text-gray-500 border-gray-200/60',
-  info: 'bg-black/5 text-[#121212] border-black/10',
-  accent: 'bg-[#FF5A1F]/10 text-[#FF5A1F] border-[#FF5A1F]/20',
+  info: 'bg-black/5 text-[#203627] border-black/10',
+  accent: 'bg-[#E8FF40]/10 text-[#E8FF40] border-[#E8FF40]/20',
 };
 
 export default function Badge({ variant = 'info', children, className = '' }: BadgeProps) {

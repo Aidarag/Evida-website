@@ -9,20 +9,20 @@ import EvidaLogo from '@/components/ui/EvidaLogo';
 
 export default function HowItWorksPage() {
   return (
-    <div className="min-h-screen bg-[#FFFDF8] text-[#121212] flex flex-col font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#EFEFEF] text-[#203627] flex flex-col font-sans overflow-x-hidden">
       <DesktopNav variant="public" />
 
       {/* Hero Header */}
-      <section className="relative w-full bg-[#121212] pt-36 pb-20 overflow-hidden text-center flex flex-col items-center">
+      <section className="relative w-full bg-[#203627] pt-36 pb-20 overflow-hidden text-center flex flex-col items-center">
         {/* Ambient Brand Glowing Blob */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#FF5A1F]/8 rounded-full blur-[110px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#E8FF40]/8 rounded-full blur-[110px] pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 space-y-4">
           <span className="rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white/90 backdrop-blur-md">
             THE PLATFORM
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
-            How It <span className="text-[#FF5A1F]">Works</span>
+            How It <span className="text-[#E8FF40]">Works</span>
           </h1>
           <p className="text-white/70 text-sm md:text-base max-w-xl mx-auto font-light leading-relaxed">
             Evida streamlines campus event discovery, creation, attendance tracking, and organization engagement in four simple steps.
@@ -31,7 +31,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* How it Works Section */}
-      <main className="flex-1 py-24 bg-[#FFFDF8]">
+      <main className="flex-1 py-24 bg-[#EFEFEF]">
         <div className="max-w-6xl mx-auto px-6 md:px-12 text-center space-y-16">
           
           {/* Cards Grid */}
@@ -41,15 +41,15 @@ export default function HowItWorksPage() {
                 number: "01",
                 title: "Discover",
                 icon: Search,
-                color: "#FF5A1F",
-                lightBg: "bg-[#FF5A1F]/8",
+                color: "#E8FF40",
+                lightBg: "bg-[#E8FF40]/8",
                 description: "Find exactly what you're looking for. Filter by category, date, or organization to discover the best of campus life."
               },
               {
                 number: "02",
                 title: "Create",
                 icon: MousePointer2,
-                color: "#121212",
+                color: "#203627",
                 lightBg: "bg-black/5",
                 description: "Host your own event, workshop, or promotion. Customize the details and publish instantly for your club or community."
               },
@@ -57,16 +57,16 @@ export default function HowItWorksPage() {
                 number: "03",
                 title: "Attend",
                 icon: UserCheck,
-                color: "#FF5A1F",
-                lightBg: "bg-[#FF5A1F]/8",
+                color: "#E8FF40",
+                lightBg: "bg-[#E8FF40]/8",
                 description: "RSVP to events, save them to your profile, and receive reminders. Show up and connect with your fellow students."
               },
               {
                 number: "04",
                 title: "Engage",
                 icon: LineChart,
-                color: "#FF5A1F",
-                lightBg: "bg-[#FF5A1F]/8",
+                color: "#E8FF40",
+                lightBg: "bg-[#E8FF40]/8",
                 description: "Track attendance, collect feedback, and analyze engagement. Administrators and student leaders get real-time analytics."
               }
             ].map((step, index) => {
@@ -90,7 +90,7 @@ export default function HowItWorksPage() {
 
                   {/* Bottom Area: Title & Description */}
                   <div className="space-y-3">
-                    <h3 className="font-bold text-base text-[#121212] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
+                    <h3 className="font-bold text-base text-[#203627] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
                       {step.title}
                     </h3>
                     <p className="text-[#4F5666] text-xs sm:text-sm leading-relaxed font-light">
@@ -106,7 +106,7 @@ export default function HowItWorksPage() {
       </main>
 
       {/* Footer Section */}
-      <footer className="relative w-full bg-[#121212] pt-24 pb-12 border-t border-white/5">
+      <footer className="relative w-full bg-[#203627] pt-24 pb-12 border-t border-white/5">
         <div className="relative max-w-6xl mx-auto px-6 md:px-12 z-20 flex flex-col items-center">
           {/* Logo / Title */}
           <div className="mb-16 flex justify-center w-full">
@@ -122,7 +122,7 @@ export default function HowItWorksPage() {
             <div className="space-y-1 text-xs font-semibold">
               <p className="text-white font-bold text-base mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
               <p>Campus Event & Engagement Platform</p>
-              <p className="pt-2 hover:text-[#FF5A1F] transition-colors cursor-pointer">Email: hello@evida.app</p>
+              <p className="pt-2 hover:text-[#E8FF40] transition-colors cursor-pointer">Email: hello@evida.app</p>
             </div>
           </div>
 
@@ -167,12 +167,12 @@ export default function HowItWorksPage() {
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#E8FF40] transition-colors"
                 required
               />
               <button 
                 type="submit"
-                className="bg-[#FF5A1F] text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#121212] transition-all duration-300 whitespace-nowrap"
+                className="bg-[#E8FF40] text-[#203627] px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#203627] transition-all duration-300 whitespace-nowrap"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 Subscribe
@@ -183,7 +183,7 @@ export default function HowItWorksPage() {
 
         {/* Bottom Slogan */}
         <div className="relative text-center border-t border-white/5 pt-8 pb-4">
-          <p className="text-[#FF5A1F] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+          <p className="text-[#E8FF40] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
             Evida — Campus life, all in one place.
           </p>
         </div>

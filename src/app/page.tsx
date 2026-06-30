@@ -108,11 +108,11 @@ export default function LandingPage() {
   const headlineLines = ["Discover Evida,", "the digital home", "of campus life"];
 
   return (
-    <div className="min-h-screen bg-[#FFFDF8] text-[#121212] flex flex-col font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#EFEFEF] text-[#203627] flex flex-col font-sans overflow-x-hidden">
       <DesktopNav variant="public" />
 
       {/* Full-Screen Immersive Hero Section */}
-      <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#121212] pt-28 pb-24">
+      <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#203627] pt-28 pb-24">
         
         {/* Animated Background Image */}
         <motion.div 
@@ -121,10 +121,10 @@ export default function LandingPage() {
         />
         
         {/* Dark Elegant Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#121212]/75 via-[#121212]/50 to-[#121212] z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#203627]/75 via-[#203627]/50 to-[#203627] z-0" />
 
         {/* Ambient Gradient Blobs */}
-        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-[#FF5A1F]/8 rounded-full blur-[100px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-[#E8FF40]/8 rounded-full blur-[100px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/5 rounded-full blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '12s' }} />
 
         {/* Hero Content */}
@@ -154,7 +154,7 @@ export default function LandingPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.15 + idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                  className={`inline-block whitespace-nowrap ${idx === 2 ? "text-[#FF5A1F]" : "text-white"}`}
+                  className={`inline-block whitespace-nowrap ${idx === 2 ? "text-[#E8FF40]" : "text-white"}`}
                 >
                   {line}
                 </motion.span>
@@ -181,7 +181,7 @@ export default function LandingPage() {
           >
             <Link 
               href="/login" 
-              className="bg-[#FF5A1F] text-white font-bold uppercase tracking-widest text-[11px] px-8 py-4 hover:bg-[#e04b12] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 rounded-full shadow-[0_4px_18px_rgba(255,90,31,0.3)]"
+              className="bg-[#E8FF40] text-[#203627] font-bold uppercase tracking-widest text-[11px] px-8 py-4 hover:bg-[#d8ee2e] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 rounded-full shadow-[0_4px_18px_rgba(255,90,31,0.3)]"
             >
               Get Started <ArrowRight className="h-4 w-4" />
             </Link>
@@ -192,7 +192,7 @@ export default function LandingPage() {
 
         {/* Scrolling Category Marquee (Bottom) */}
         <div className="absolute bottom-0 left-0 w-full z-20">
-          <div className="relative w-full overflow-hidden bg-[#121212]/90 backdrop-blur-md py-4.5 flex items-center border-t border-white/5 shadow-2xl">
+          <div className="relative w-full overflow-hidden bg-[#203627]/90 backdrop-blur-md py-4.5 flex items-center border-t border-white/5 shadow-2xl">
             <div className="animate-marquee flex gap-12 text-white font-bold text-sm tracking-[0.2em] uppercase opacity-80 items-center">
               <span>ORIENTATION</span>
               <EvidaLogo size={18} showText={false} />
@@ -240,14 +240,14 @@ export default function LandingPage() {
       <AppShowcase />
 
       {/* 3. Explore by Category Section */}
-      <section id="explore-categories" className="relative w-full bg-[#FFFDF8] py-24 border-t border-black/[0.04]">
+      <section id="explore-categories" className="relative w-full bg-[#EFEFEF] py-24 border-t border-black/[0.04]">
         <div className="max-w-6xl mx-auto px-6 md:px-12 z-20 space-y-12">
           
           <div className="text-center space-y-4">
-            <span className="text-[#FF5A1F] font-bold uppercase text-xs tracking-[0.2em]">
+            <span className="text-[#E8FF40] font-bold uppercase text-xs tracking-[0.2em]">
               Discovery
             </span>
-            <h2 className="text-[#121212] font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-[#203627] font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
               Explore<br />by Category
             </h2>
             <p className="text-[#4F5666] text-sm md:text-base max-w-2xl mx-auto font-light">
@@ -264,14 +264,14 @@ export default function LandingPage() {
                   key={category}
                   onClick={() => setSelectedCategory(category)}
                   className={`relative px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 cursor-pointer ${
-                    isActive ? 'text-white' : 'text-[#4F5666] hover:text-[#121212]'
+                    isActive ? 'text-white' : 'text-[#4F5666] hover:text-[#203627]'
                   }`}
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {isActive && (
                     <motion.span 
                       layoutId="activeCategoryBg"
-                      className="absolute inset-0 bg-[#FF5A1F] rounded-full z-0"
+                      className="absolute inset-0 bg-[#E8FF40] rounded-full z-0"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -300,15 +300,15 @@ export default function LandingPage() {
       </section>
 
       {/* 4. Closing Statement Section (Deep Dark Immersive Theme) */}
-      <section className="relative w-full bg-[#121212] pt-32 pb-48 overflow-hidden flex flex-col items-center justify-center border-t border-white/5">
+      <section className="relative w-full bg-[#203627] pt-32 pb-48 overflow-hidden flex flex-col items-center justify-center border-t border-white/5">
         
         {/* Soft Ambient Radial Glows */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[320px] bg-gradient-to-t from-[#FF5A1F]/8 to-transparent rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[320px] bg-gradient-to-t from-[#E8FF40]/8 to-transparent rounded-full blur-[120px] pointer-events-none" />
         
         <div className="relative max-w-4xl mx-auto px-6 text-center z-20 space-y-8">
           <h2 className="text-white font-extrabold text-4xl md:text-6xl lg:text-7xl uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
             College Ends.<br />
-            <span className="text-[#FF5A1F]">
+            <span className="text-[#E8FF40]">
               Memories Don’t.
             </span>
           </h2>
@@ -320,7 +320,7 @@ export default function LandingPage() {
           <div className="pt-4">
             <Link 
               href="/login"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#121212] hover:bg-[#FF5A1F] hover:text-white transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-[#FF5A1F]/10 cursor-pointer"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#203627] hover:bg-[#E8FF40] hover:text-white transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-[#E8FF40]/10 cursor-pointer"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               Get started
@@ -330,14 +330,14 @@ export default function LandingPage() {
 
         {/* Giant Immersive EVIDA Wordmark in Background */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden select-none pointer-events-none z-10 leading-none">
-          <div className="w-full text-center text-[18vw] font-extrabold tracking-tighter uppercase opacity-[0.03] text-[#FF5A1F] translate-y-[20%]">
+          <div className="w-full text-center text-[18vw] font-extrabold tracking-tighter uppercase opacity-[0.03] text-[#E8FF40] translate-y-[20%]">
             EVIDA
           </div>
         </div>
       </section>
 
       {/* Footer Section */}
-      <footer className="relative w-full bg-[#121212] pt-24 pb-12 border-t border-white/5">
+      <footer className="relative w-full bg-[#203627] pt-24 pb-12 border-t border-white/5">
         <div className="relative max-w-6xl mx-auto px-6 md:px-12 z-20 flex flex-col items-center">
           
           {/* Logo / Title */}
@@ -355,7 +355,7 @@ export default function LandingPage() {
             <div className="space-y-1 text-xs font-semibold">
               <p className="text-white font-bold text-base mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
               <p>Campus Event & Engagement Platform</p>
-              <p className="pt-2 hover:text-[#FF5A1F] transition-colors cursor-pointer">Email: hello@evida.app</p>
+              <p className="pt-2 hover:text-[#E8FF40] transition-colors cursor-pointer">Email: hello@evida.app</p>
             </div>
           </div>
 
@@ -400,12 +400,12 @@ export default function LandingPage() {
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#E8FF40] transition-colors"
                 required
               />
               <button 
                 type="submit"
-                className="bg-[#FF5A1F] text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#121212] transition-all duration-300 whitespace-nowrap"
+                className="bg-[#E8FF40] text-[#203627] px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#203627] transition-all duration-300 whitespace-nowrap"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 Subscribe
@@ -416,7 +416,7 @@ export default function LandingPage() {
 
         {/* Bottom Slogan */}
         <div className="relative text-center border-t border-white/5 pt-8 pb-4">
-          <p className="text-[#FF5A1F] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+          <p className="text-[#E8FF40] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
             Evida — Campus life, all in one place.
           </p>
         </div>
