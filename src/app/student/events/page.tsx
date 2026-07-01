@@ -150,7 +150,7 @@ export default function StudentEventsFeed() {
   return (
     <div className="p-6 md:p-10 space-y-8 max-w-7xl mx-auto">
       {/* Search & Filter Header */}
-      <div className="space-y-6 sticky top-[120px] md:top-16 z-30 bg-[#DFDED7]/90 backdrop-blur-xl py-4 -mx-6 px-6 md:mx-0 md:px-0 border-b border-black/[0.04]">
+      <div className="space-y-4 md:sticky md:top-16 z-30 bg-[#DFDED7]/90 backdrop-blur-xl py-4 -mx-6 px-6 md:mx-0 md:px-0 border-b border-black/[0.04]">
         <div className="flex flex-col md:flex-row gap-4 justify-between">
           <div className="flex justify-between items-center w-full md:w-auto">
             <div>
@@ -202,7 +202,7 @@ export default function StudentEventsFeed() {
         {/* Row 1: Organizer Filters (Primary) */}
         <div className="space-y-3">
           <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// Organizer</span>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
             {ownershipFilters.map((filter) => {
               const Icon = filter.icon;
               const isActive = selectedOwnership === filter.id;
@@ -216,7 +216,7 @@ export default function StudentEventsFeed() {
                   whileHover={{ y: -2, scale: 1.01 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                  className={`relative flex items-center justify-center gap-2.5 px-6 py-3 h-12 rounded-full text-xs font-extrabold uppercase tracking-widest border-2 cursor-pointer select-none transition-all duration-200 ${
+                  className={`relative shrink-0 flex items-center justify-center gap-2 px-4 py-2 h-9.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider border cursor-pointer select-none transition-all duration-200 ${
                     isActive
                       ? 'border-[#92D000] text-[#191919] shadow-md shadow-[#92D000]/10'
                       : 'border-black/[0.06] bg-black/[0.01] text-[#4F5666] hover:border-black/15'
@@ -309,7 +309,7 @@ export default function StudentEventsFeed() {
       {/* Grid or TikTok Feed */}
       {feedMode === 'tiktok' ? (
         filteredItems.length > 0 ? (
-          <div className="relative max-w-md mx-auto w-full h-[calc(100vh-21rem)] md:h-[calc(100vh-23rem)] rounded-[32px] overflow-hidden border border-black/10 bg-[#191919] shadow-[var(--shadow-premium-xl)]">
+          <div className="relative max-w-md mx-auto w-full h-[calc(100vh-15rem)] md:h-[calc(100vh-16rem)] rounded-[32px] overflow-hidden border border-black/10 bg-[#191919] shadow-[var(--shadow-premium-xl)]">
             <div className="h-full w-full overflow-y-scroll snap-y snap-mandatory scrollbar-none">
               {filteredItems.map((item) => {
                 const isSaved = 'ownershipType' in item ? item.savedBy?.includes(currentUser?.name || '') : false;
