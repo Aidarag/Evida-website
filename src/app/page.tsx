@@ -17,7 +17,7 @@ export default function LandingPage() {
   const opacityBg = useTransform(scrollY, [0, 600], [0.45, 0.05]);
   const scaleBg = useTransform(scrollY, [0, 600], [1, 1.06]);
 
-  const headlineLines = ["Discover Evida,", "the digital home", "of campus life"];
+  const headlineLines = ["Discover Evida", "the digital home", "of campus life"];
 
   return (
     <div className="min-h-screen bg-[#DFDED7] text-[#191919] flex flex-col font-sans overflow-x-hidden">
