@@ -1,33 +1,42 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, ArrowLeft, ArrowRight, GraduationCap, Shield, Mail, KeyRound, CheckCircle2, User, BookOpen, Calendar, Building, Lock } from 'lucide-react';
+import { Sparkles, ArrowLeft, ArrowRight, GraduationCap, Shield, Mail, KeyRound, CheckCircle2, User, BookOpen, Calendar, Building, Lock, Upload, Camera, AlertCircle } from 'lucide-react';
 import { useUser } from '@/lib/context/UserContext';
 import Card from '@/components/ui/Card';
 import EvidaLogo from '@/components/ui/EvidaLogo';
 
-type SignupStep = 'role-selection' | 'student-details' | 'admin-details' | 'verify' | 'success';
+type SignupStep = 'role-selection' | 'auth-options' | 'verify-email' | 'profile-onboarding' | 'school-onboarding' | 'success';
 
 export default function SignupPage() {
   const router = useRouter();
   const { setCurrentUser } = useUser();
 
   const [step, setStep] = useState<SignupStep>('role-selection');
-  const [role, setRole] = useState<'student' | 'admin'>('student');
+  const [role, setRole] = useState<'student' | 'school'>('student');
   
-  // Student Form State
+  // Auth Options Form State
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  
+  // Student Profile Onboarding State
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [major, setMajor] = useState('');
   const [gradYear, setGradYear] = useState('2028');
+  
+  // Avatar Selection State
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState('#92D000');
+  const [avatarType, setAvatarType] = useState<'initials' | 'upload'>('initials');
 
-  // Admin Form State
-  const [schoolName, setSchoolName] = useState('');
+  // School Onboarding State (Email Signup)
   const [department, setDepartment] = useState('');
-  const [password, setPassword] = useState('');
+  const [customSchoolName, setCustomSchoolName] = useState('');
 
   // Verification State
   const [verificationCode, setVerificationCode] = useState('');
@@ -38,7 +47,7 @@ export default function SignupPage() {
   // Transitions configurations
   const slideVariants = {
     initial: (dir: number) => ({
-      x: dir > 0 ? 50 : -50,
+      x: dir > 0 ? 30 : -30,
       opacity: 0
     }),
     animate: {
@@ -46,7 +55,7 @@ export default function SignupPage() {
       opacity: 1
     },
     exit: (dir: number) => ({
-      x: dir > 0 ? -50 : 50,
+      x: dir > 0 ? -30 : 30,
       opacity: 0
     })
   };
@@ -59,132 +68,189 @@ export default function SignupPage() {
     setStep(nextStep);
   };
 
-  const handleRoleSelect = (selectedRole: 'student' | 'admin') => {
+  const handleRoleSelect = (selectedRole: 'student' | 'school') => {
     setRole(selectedRole);
+    navigateTo('auth-options', 'forward');
+  };
+
+  // Auto-detect school name from email
+  const detectSchool = (emailStr: string): string => {
+    if (!emailStr) return 'State University';
+    const domain = emailStr.split('@')[1]?.toLowerCase();
+    if (!domain) return 'State University';
+    
+    if (domain.includes('stateuni') || domain.includes('university')) {
+      return 'State University';
+    }
+    const part = domain.split('.')[0];
+    if (part) {
+      return part.charAt(0).toUpperCase() + part.slice(1) + ' University';
+    }
+    return 'State University';
+  };
+
+  const handleGoogleSignup = () => {
     setIsLoading(true);
+    setError('');
 
     setTimeout(() => {
-      if (selectedRole === 'student') {
-        const mockStudent = {
-          username: 'alex.rivera',
-          name: 'Alex Rivera',
-          email: 'alex.rivera@stateuni.edu',
-          role: 'student' as const,
-          organizations: [],
-          major: 'Computer Science',
-          gradYear: '2028',
-          graduationYear: '2028',
-          school: 'State University',
-          avatar: 'AR',
-        };
-        setCurrentUser(mockStudent);
+      setIsLoading(false);
+      if (role === 'student') {
+        // Pre-fill some details, skip verification, go directly to profile onboarding
+        setEmail('google.student@university.edu');
+        navigateTo('profile-onboarding', 'forward');
       } else {
+        // School sign up with google: directly successfully signs up as mock school admin
         const mockAdmin = {
-          username: 'dean.williams',
+          username: 'dean_williams_google',
           name: 'Dean Williams',
           email: 'dean.williams@university.edu',
           role: 'admin' as const,
           organizations: [],
-          major: 'Administration',
+          major: 'Higher Ed Admin',
           gradYear: 'N/A',
           graduationYear: 'N/A',
-          school: 'Administration Board',
+          school: 'State University',
           avatar: 'DW',
         };
         setCurrentUser(mockAdmin);
-      }
-      setIsLoading(false);
-      navigateTo('success');
-      
-      setTimeout(() => {
-        if (selectedRole === 'student') {
-          router.push('/student/events');
-        } else {
+        navigateTo('success', 'forward');
+        
+        setTimeout(() => {
           router.push('/school/dashboard');
-        }
-      }, 1500);
+        }, 1500);
+      }
     }, 1000);
   };
 
-  const handleDetailsSubmit = (e: React.FormEvent) => {
+  const handleEmailAuthSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    
-    if (role === 'student') {
-      if (!email || !name || !major) {
-        setError('Please fill in all fields.');
-        return;
-      }
-    } else {
-      if (!schoolName || !email || !department || !password) {
-        setError('Please fill in all fields.');
-        return;
-      }
+    if (!email || !password) {
+      setError('Please enter both email and password.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
     }
 
     setIsLoading(true);
-    
+    setError('');
+
     setTimeout(() => {
-      // Generate verification code
-      const code = Math.floor(100000 + Math.random() * 900000).toString();
-      setGeneratedCode(code);
       setIsLoading(false);
-      navigateTo('verify');
+      if (role === 'student') {
+        // Students must verify email
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        setGeneratedCode(code);
+        navigateTo('verify-email', 'forward');
+      } else {
+        // Schools go to school details onboarding
+        setCustomSchoolName(detectSchool(email));
+        navigateTo('school-onboarding', 'forward');
+      }
     }, 800);
   };
 
   const handleVerifySubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (verificationCode.length !== 6) {
-      setError('Please enter a 6-digit code.');
+      setError('Please enter a 6-digit verification code.');
       return;
     }
 
     setIsLoading(true);
-    
     setTimeout(() => {
-      // Create user session based on role
-      if (role === 'student') {
-        const newStudent = {
-          username: email.split('@')[0] + '_custom',
-          name: name,
-          email: email,
-          role: 'student' as const,
-          organizations: [],
-          major: major,
-          gradYear: gradYear,
-          graduationYear: gradYear,
-          school: 'School of Arts & Sciences',
-          avatar: name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'ST',
-        };
-        setCurrentUser(newStudent);
-      } else {
-        const newAdmin = {
-          username: email.split('@')[0] + '_admin',
-          name: department + ' Admin (' + schoolName + ')',
-          email: email,
-          role: 'admin' as const,
-          organizations: [],
-          major: 'School Administration',
-          gradYear: 'N/A',
-          graduationYear: 'N/A',
-          school: schoolName,
-          avatar: schoolName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AD',
-        };
-        setCurrentUser(newAdmin);
-      }
-
       setIsLoading(false);
-      navigateTo('success');
+      navigateTo('profile-onboarding', 'forward');
+    }, 800);
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImage(reader.result as string);
+        setAvatarType('upload');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleStudentProfileSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!firstName || !lastName || !major) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+
+    setIsLoading(true);
+    setTimeout(() => {
+      const detectedSchoolName = detectSchool(email);
+      const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
       
+      const newStudent = {
+        username: email.split('@')[0] + '_student',
+        name: `${firstName} ${lastName}`,
+        email: email,
+        role: 'student' as const,
+        organizations: [],
+        major: major,
+        gradYear: gradYear,
+        graduationYear: gradYear,
+        school: detectedSchoolName,
+        avatar: avatarType === 'upload' ? (uploadedImage || initials) : initials,
+      };
+
+      setCurrentUser(newStudent);
+      setIsLoading(false);
+      navigateTo('success', 'forward');
+
       setTimeout(() => {
-        if (role === 'student') {
-          router.push('/student/events');
-        } else {
-          router.push('/school/dashboard');
-        }
+        router.push('/student/dashboard');
       }, 1500);
-    }, 1000);
+    }, 1200);
+  };
+
+  const handleSchoolOnboardingSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!department || !customSchoolName) {
+      setError('Please fill in all fields.');
+      return;
+    }
+
+    setIsLoading(true);
+    setTimeout(() => {
+      const newAdmin = {
+        username: email.split('@')[0] + '_admin',
+        name: `${department} Admin`,
+        email: email,
+        role: 'admin' as const,
+        organizations: [],
+        major: 'School Administration',
+        gradYear: 'N/A',
+        graduationYear: 'N/A',
+        school: customSchoolName,
+        avatar: customSchoolName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AD',
+      };
+
+      setCurrentUser(newAdmin);
+      setIsLoading(false);
+      navigateTo('success', 'forward');
+
+      setTimeout(() => {
+        router.push('/school/dashboard');
+      }, 1500);
+    }, 1200);
+  };
+
+  // Initials computation for student profile preview
+  const getInitials = () => {
+    const f = firstName.trim().charAt(0) || '';
+    const l = lastName.trim().charAt(0) || '';
+    return (f + l).toUpperCase() || '?';
   };
 
   return (
@@ -208,10 +274,14 @@ export default function SignupPage() {
           {step !== 'role-selection' && step !== 'success' && (
             <button
               onClick={() => {
-                if (step === 'student-details' || step === 'admin-details') {
+                if (step === 'auth-options') {
                   navigateTo('role-selection', 'backward');
-                } else if (step === 'verify') {
-                  navigateTo(role === 'student' ? 'student-details' : 'admin-details', 'backward');
+                } else if (step === 'verify-email') {
+                  navigateTo('auth-options', 'backward');
+                } else if (step === 'profile-onboarding') {
+                  navigateTo(generatedCode ? 'verify-email' : 'auth-options', 'backward');
+                } else if (step === 'school-onboarding') {
+                  navigateTo('auth-options', 'backward');
                 }
               }}
               className="flex items-center gap-1.5 text-[10px] font-bold text-[#4F5666] hover:text-[#191919] transition-colors uppercase tracking-widest cursor-pointer"
@@ -228,7 +298,7 @@ export default function SignupPage() {
               initial="initial"
               animate="animate"
               exit="exit"
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
               className="space-y-6"
             >
               {/* HEADER */}
@@ -239,16 +309,18 @@ export default function SignupPage() {
                   </div>
                   <div>
                     <h1 className="text-xl font-extrabold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
-                      {step === 'role-selection' ? 'Create Evida Account' : role === 'student' ? 'Student Registration' : 'Partner Institution'}
+                      {step === 'role-selection' ? 'Join Evida' : role === 'student' ? 'Student Registration' : 'School Registration'}
                     </h1>
                     <p className="text-xs text-[#4F5666] mt-1.5">
                       {step === 'role-selection' 
-                        ? 'Join your official campus network' 
-                        : step === 'student-details'
-                        ? 'Create your personalized student profile'
-                        : step === 'admin-details'
-                        ? 'Register your university administration portal'
-                        : 'Confirm your email address'}
+                        ? 'Create your official campus account' 
+                        : step === 'auth-options'
+                        ? 'Select authentication method'
+                        : step === 'verify-email'
+                        ? 'Confirm your official school email'
+                        : step === 'profile-onboarding'
+                        ? 'Set up your student profile details'
+                        : 'Set up your administration account'}
                     </p>
                   </div>
                 </div>
@@ -258,7 +330,7 @@ export default function SignupPage() {
               {step === 'role-selection' && (
                 <div className="space-y-4 pt-2">
                   <p className="text-xs font-bold text-center text-[#4F5666] uppercase tracking-wider mb-2">
-                    How would you like to continue?
+                    Register as a Student or Institution
                   </p>
 
                   <div className="grid grid-cols-1 gap-3">
@@ -272,16 +344,16 @@ export default function SignupPage() {
                           <GraduationCap className="h-6 w-6" />
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-[#191919] uppercase tracking-wide">Student Registration</p>
-                          <p className="text-xs text-[#4F5666] mt-0.5 max-w-[220px]">Register with your official school email and build your profile.</p>
+                          <p className="text-sm font-bold text-[#191919] uppercase tracking-wide">Student</p>
+                          <p className="text-xs text-[#4F5666] mt-0.5 max-w-[220px]">Register with school email to join events and verify tickets.</p>
                         </div>
                       </div>
                       <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#92D000] group-hover:translate-x-1 transition-all" />
                     </button>
 
-                    {/* Admin Option */}
+                    {/* School Option */}
                     <button
-                      onClick={() => handleRoleSelect('admin')}
+                      onClick={() => handleRoleSelect('school')}
                       className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#191919]/30 transition-all duration-300 cursor-pointer text-left group"
                     >
                       <div className="flex items-center gap-4">
@@ -290,7 +362,7 @@ export default function SignupPage() {
                         </div>
                         <div>
                           <p className="text-sm font-bold text-[#191919] uppercase tracking-wide">School / Administration</p>
-                          <p className="text-xs text-[#4F5666] mt-0.5 max-w-[220px]">Establish Evida integration for your campus and departments.</p>
+                          <p className="text-xs text-[#4F5666] mt-0.5 max-w-[220px]">Establish department portals and coordinate calendar systems.</p>
                         </div>
                       </div>
                       <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#191919] group-hover:translate-x-1 transition-all" />
@@ -308,52 +380,250 @@ export default function SignupPage() {
                 </div>
               )}
 
-              {/* STEP 2A: STUDENT DETAILS */}
-              {step === 'student-details' && (
-                <form onSubmit={handleDetailsSubmit} className="space-y-4 pt-2">
-                  <div className="space-y-3">
-                    {/* Full Name */}
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
-                        Full Name
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                          <User className="h-4 w-4" />
+              {/* STEP 2: AUTHENTICATION OPTIONS */}
+              {step === 'auth-options' && (
+                <div className="space-y-5 pt-1">
+                  {/* Google sign-up */}
+                  <button
+                    onClick={handleGoogleSignup}
+                    className="w-full flex items-center justify-center gap-2.5 rounded-xl border-2 border-black/[0.08] hover:bg-black/[0.02] py-3 text-xs font-bold text-[#191919] transition-all hover:scale-[1.01] cursor-pointer bg-white"
+                  >
+                    <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none">
+                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05" />
+                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335" />
+                    </svg>
+                    Continue with Google
+                  </button>
+
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="h-px bg-black/[0.08] w-full" />
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider shrink-0">Or use email</span>
+                    <div className="h-px bg-black/[0.08] w-full" />
+                  </div>
+
+                  <form onSubmit={handleEmailAuthSubmit} className="space-y-4">
+                    <div className="space-y-3">
+                      {/* Email input */}
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
+                          {role === 'student' ? 'Official School Email' : 'Institutional Email Address'}
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                            <Mail className="h-4 w-4" />
+                          </div>
+                          <input
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder={role === 'student' ? "e.g. yourname@stateuni.edu" : "e.g. admin@stateuni.edu"}
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
+                          />
                         </div>
-                        <input
-                          type="text"
-                          required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="e.g. Alex Morgan"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
-                        />
+                      </div>
+
+                      {/* Password input */}
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
+                          Password
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                            <Lock className="h-4 w-4" />
+                          </div>
+                          <input
+                            type="password"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Min. 6 characters"
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
+                          />
+                        </div>
                       </div>
                     </div>
 
-                    {/* School Email */}
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
-                        Official School Email
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                          <Mail className="h-4 w-4" />
+                    {error && (
+                      <div className="text-xs text-red-600 font-semibold flex items-center gap-1.5 bg-red-50 border border-red-100 rounded-lg p-2.5">
+                        <AlertCircle className="h-4 w-4 shrink-0" />
+                        <span>{error}</span>
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+                    >
+                      {isLoading ? 'Processing...' : 'Continue'}
+                    </button>
+                  </form>
+                </div>
+              )}
+
+              {/* STEP 3: STUDENT EMAIL VERIFICATION */}
+              {step === 'verify-email' && (
+                <form onSubmit={handleVerifySubmit} className="space-y-5 pt-1">
+                  <div className="space-y-2 text-center">
+                    <div className="mx-auto h-12 w-12 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 border border-emerald-500/20">
+                      <Mail className="h-5 w-5" />
+                    </div>
+                    <p className="text-xs font-bold text-[#191919] uppercase tracking-wider">
+                      Verify School Email
+                    </p>
+                    <p className="text-[11px] text-[#4F5666] leading-relaxed">
+                      We sent a verification code to <strong className="text-[#191919]">{email}</strong>. Enter the 6-digit code below to unlock Evida onboarding.
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                        <KeyRound className="h-4 w-4" />
+                      </div>
+                      <input
+                        type="text"
+                        maxLength={6}
+                        required
+                        value={verificationCode}
+                        onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
+                        placeholder="123456"
+                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-bold"
+                      />
+                    </div>
+                  </div>
+
+                  {error && <p className="text-xs text-red-600 font-semibold">{error}</p>}
+
+                  <div className="space-y-3">
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+                    >
+                      {isLoading ? 'Verifying...' : 'Verify Code'}
+                    </button>
+
+                    {/* Simulation Helper */}
+                    <div className="bg-black/[0.02] border border-black/[0.06] p-3.5 rounded-xl space-y-2 text-left">
+                      <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block text-center">Simulation Helper</span>
+                      <div className="flex justify-between items-center text-[11px]">
+                        <span className="text-[#4F5666]">Simulated Code:</span>
+                        <code className="text-[#191919] font-mono font-bold text-xs">{generatedCode}</code>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setVerificationCode(generatedCode)}
+                        className="w-full text-[10px] font-bold text-[#191919] bg-black/5 hover:bg-black/10 py-1.5 rounded-md transition-colors uppercase cursor-pointer"
+                      >
+                        Auto-fill Code
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              )}
+
+              {/* STEP 4A: STUDENT PROFILE ONBOARDING */}
+              {step === 'profile-onboarding' && (
+                <form onSubmit={handleStudentProfileSubmit} className="space-y-4 pt-1">
+                  {/* Avatar Picker & Upload */}
+                  <div className="flex flex-col items-center gap-3">
+                    <span className="text-[9px] font-extrabold text-[#4F5666] uppercase tracking-wider block">
+                      Profile Picture
+                    </span>
+                    
+                    <div className="relative">
+                      {avatarType === 'upload' && uploadedImage ? (
+                        <div className="h-16 w-16 rounded-full border-2 border-black/10 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${uploadedImage})` }} />
+                      ) : (
+                        <div 
+                          className="h-16 w-16 rounded-full border-2 border-black/5 text-white flex items-center justify-center font-extrabold text-lg shadow-sm transition-colors duration-300"
+                          style={{ backgroundColor: selectedColor }}
+                        >
+                          {getInitials()}
                         </div>
-                        <input
-                          type="email"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="e.g. alex.morgan@university.edu"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="absolute bottom-0 right-0 h-6 w-6 rounded-full bg-[#191919] text-white flex items-center justify-center hover:scale-105 transition-transform border border-white cursor-pointer shadow"
+                      >
+                        <Camera className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+
+                    <input 
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileUpload}
+                      accept="image/*"
+                      className="hidden"
+                    />
+
+                    {/* Presets Row */}
+                    <div className="flex gap-2.5 items-center justify-center">
+                      {['#92D000', '#FF7A1A', '#9C27B0', '#2196F3', '#FF5722'].map((c) => (
+                        <button
+                          key={c}
+                          type="button"
+                          onClick={() => {
+                            setSelectedColor(c);
+                            setAvatarType('initials');
+                          }}
+                          className={`h-5 w-5 rounded-full border border-black/10 transition-all hover:scale-110 cursor-pointer ${selectedColor === c && avatarType === 'initials' ? 'ring-2 ring-[#191919] ring-offset-2 scale-105' : ''}`}
+                          style={{ backgroundColor: c }}
                         />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    {/* First & Last Name */}
+                    <div className="grid grid-cols-2 gap-3.5">
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
+                          First Name
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <User className="h-3.5 w-3.5" />
+                          </div>
+                          <input
+                            type="text"
+                            required
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            placeholder="e.g. Alex"
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
+                          Last Name
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <User className="h-3.5 w-3.5" />
+                          </div>
+                          <input
+                            type="text"
+                            required
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            placeholder="e.g. Rivera"
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
+                          />
+                        </div>
                       </div>
                     </div>
 
                     {/* Major & Grad Year */}
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-3.5">
                       <div className="space-y-1.5">
                         <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
                           Major
@@ -367,7 +637,7 @@ export default function SignupPage() {
                             required
                             value={major}
                             onChange={(e) => setMajor(e.target.value)}
-                            placeholder="e.g. Economics"
+                            placeholder="e.g. Computer Science"
                             className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                           />
                         </div>
@@ -390,8 +660,27 @@ export default function SignupPage() {
                             <option value="2027">2027</option>
                             <option value="2028">2028</option>
                             <option value="2029">2029</option>
+                            <option value="2030">2030</option>
                           </select>
                         </div>
+                      </div>
+                    </div>
+
+                    {/* Auto-detected School */}
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
+                        Campus Network (Auto-Detected)
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                          <Building className="h-4 w-4" />
+                        </div>
+                        <input
+                          type="text"
+                          readOnly
+                          value={detectSchool(email)}
+                          className="w-full rounded-xl border border-black/[0.06] bg-black/[0.02] py-2.5 pl-11 pr-4 text-xs text-[#4F5666] font-bold"
+                        />
                       </div>
                     </div>
                   </div>
@@ -401,62 +690,21 @@ export default function SignupPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
+                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
                   >
-                    {isLoading ? 'Creating Profile...' : 'Register Profile'}
-                    {!isLoading && <ArrowRight className="h-4 w-4" />}
+                    {isLoading ? 'Completing Onboarding...' : 'Join Evida'}
                   </button>
                 </form>
               )}
 
-              {/* STEP 2B: ADMIN DETAILS */}
-              {step === 'admin-details' && (
-                <form onSubmit={handleDetailsSubmit} className="space-y-4 pt-2">
+              {/* STEP 4B: SCHOOL ONBOARDING */}
+              {step === 'school-onboarding' && (
+                <form onSubmit={handleSchoolOnboardingSubmit} className="space-y-4 pt-1">
                   <div className="space-y-3">
-                    {/* School Name */}
+                    {/* Department Name */}
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
-                        School / Institution Name
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                          <Building className="h-4 w-4" />
-                        </div>
-                        <input
-                          type="text"
-                          required
-                          value={schoolName}
-                          onChange={(e) => setSchoolName(e.target.value)}
-                          placeholder="e.g. Gotham University"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Admin Email */}
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
-                        Official Administration Email
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                          <Mail className="h-4 w-4" />
-                        </div>
-                        <input
-                          type="email"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="e.g. admin@gotham.edu"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Department / Office */}
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
-                        Department / Office
+                        Administration Department
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
@@ -467,27 +715,27 @@ export default function SignupPage() {
                           required
                           value={department}
                           onChange={(e) => setDepartment(e.target.value)}
-                          placeholder="e.g. Student Involvement Office"
+                          placeholder="e.g. Student Affairs Board"
                           className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                         />
                       </div>
                     </div>
 
-                    {/* Password */}
+                    {/* School Name (Prefilled / Custom) */}
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
-                        Choose Access Password
+                        Institution Name
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                          <Lock className="h-4 w-4" />
+                          <Building className="h-4 w-4" />
                         </div>
                         <input
-                          type="password"
+                          type="text"
                           required
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          placeholder="••••••••"
+                          value={customSchoolName}
+                          onChange={(e) => setCustomSchoolName(e.target.value)}
+                          placeholder="e.g. State University"
                           className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                         />
                       </div>
@@ -499,71 +747,14 @@ export default function SignupPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
+                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
                   >
-                    {isLoading ? 'Registering...' : 'Register Institution'}
-                    {!isLoading && <ArrowRight className="h-4 w-4" />}
+                    {isLoading ? 'Saving Institution Profile...' : 'Complete Administration Setup'}
                   </button>
                 </form>
               )}
 
-              {/* STEP 3: VERIFICATION */}
-              {step === 'verify' && (
-                <form onSubmit={handleVerifySubmit} className="space-y-5 pt-2">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
-                      Enter 6-Digit Code
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                        <KeyRound className="h-4 w-4" />
-                      </div>
-                      <input
-                        type="text"
-                        maxLength={6}
-                        required
-                        value={verificationCode}
-                        onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
-                        placeholder="123456"
-                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-bold"
-                      />
-                    </div>
-                    <p className="text-[10px] text-[#4F5666] leading-relaxed">
-                      We sent a code to <strong className="text-[#191919]">{email}</strong>. Enter it above to activate your Evida account.
-                    </p>
-                  </div>
-
-                  {error && <p className="text-xs text-red-600 font-semibold">{error}</p>}
-
-                  <div className="space-y-3">
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
-                    >
-                      {isLoading ? 'Verifying...' : 'Verify & Complete Signup'}
-                    </button>
-
-                    {/* Simulation Helper */}
-                    <div className="bg-black/[0.02] border border-black/[0.06] p-3.5 rounded-xl space-y-2 text-left">
-                      <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block text-center">Simulation Helper</span>
-                      <div className="flex justify-between items-center text-[11px]">
-                        <span className="text-[#4F5666]">Simulated Code:</span>
-                        <code className="text-[#191919] font-mono font-bold text-xs">{generatedCode}</code>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setVerificationCode(generatedCode)}
-                        className="w-full text-[10px] font-bold text-[#191919] bg-black/5 hover:bg-black/10 py-1.5 rounded-md transition-colors uppercase cursor-pointer"
-                      >
-                        Auto-fill Code
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              )}
-
-              {/* SUCCESS / REDIRECT */}
+              {/* SUCCESS SCREEN */}
               {step === 'success' && (
                 <div className="text-center py-8 space-y-5">
                   <motion.div 
@@ -577,10 +768,10 @@ export default function SignupPage() {
 
                   <div className="space-y-2">
                     <h2 className="text-xl font-extrabold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
-                      Account Registered!
+                      Account Activated
                     </h2>
                     <p className="text-xs text-[#4F5666]">
-                      Creating your new {role === 'student' ? 'Student' : 'Institution'} account...
+                      Welcome to Evida! Initializing your custom {role === 'student' ? 'Student' : 'Administration'} workspace...
                     </p>
                   </div>
 
@@ -589,7 +780,6 @@ export default function SignupPage() {
                   </div>
                 </div>
               )}
-
             </motion.div>
           </AnimatePresence>
         </Card>
