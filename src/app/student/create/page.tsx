@@ -156,41 +156,87 @@ export default function CreateListingPage() {
             exit={{ opacity: 0, y: -15 }}
             className="space-y-8"
           >
-            <div className="text-center space-y-2">
-              <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="text-center space-y-2 max-w-xl mx-auto">
+              <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight animate-fade-in" style={{ fontFamily: 'var(--font-display)' }}>
                 What would you like to create?
               </h1>
-              <p className="text-sm text-[#4F5666]">Choose the type of listing you want to add to Evida.</p>
+              <p className="text-xs font-semibold text-[#4F5666] leading-relaxed">
+                Events are activities people attend. Promotions help students discover your services, business, or initiative.
+              </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
               <Card 
                 onClick={() => { setCreateType('event'); handleNext(); }}
-                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[var(--color-evida-blue)]/50 cursor-pointer group"
+                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[#92D000]/50 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 rounded-[28px] bg-white border border-black/[0.04]"
               >
-                <div className="h-16 w-16 rounded-2xl bg-[var(--color-evida-blue)]/10 text-[var(--color-evida-blue)] flex items-center justify-center group-hover:scale-105 transition-transform">
+                {/* Custom Badge Indicator */}
+                <div className="absolute top-4 left-4 bg-[#191919] text-white text-[9px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-white/10 shadow-sm flex items-center gap-1 select-none">
+                  <span>🗓️</span> People attend
+                </div>
+
+                <div className="h-16 w-16 rounded-2xl bg-[#92D000]/10 text-[#92D000] flex items-center justify-center group-hover:scale-105 transition-transform mt-6">
                   <Calendar className="h-8 w-8" />
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>Event</h3>
-                  <p className="text-xs text-[#4F5666] mt-2.5 leading-relaxed">
-                    Host an activity happening on campus. Gather student groups, schedule club meetings, or organize school-wide events.
+                <div className="w-full text-center space-y-4">
+                  <h3 className="text-xl font-black text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>Event</h3>
+                  <p className="text-xs text-[#4F5666] leading-relaxed font-semibold">
+                    Create an event students can attend.
                   </p>
+                  <ul className="text-xs text-left max-w-[160px] mx-auto space-y-2 text-[#4F5666] font-medium border-t border-black/[0.04] pt-4">
+                    <li className="flex items-center gap-2">
+                      <span className="text-[#92D000] text-sm">•</span> Club meeting
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-[#92D000] text-sm">•</span> Workshop
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-[#92D000] text-sm">•</span> Party
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-[#92D000] text-sm">•</span> Sports game
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-[#92D000] text-sm">•</span> Career fair
+                    </li>
+                  </ul>
                 </div>
               </Card>
 
               <Card 
                 onClick={() => { setCreateType('promotion'); setStep(4); }} // Go straight to Promo Form
-                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[var(--color-evida-lime)]/50 cursor-pointer group"
+                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[#92D000]/50 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 rounded-[28px] bg-white border border-black/[0.04]"
               >
-                <div className="h-16 w-16 rounded-2xl bg-[var(--color-evida-lime)]/10 text-[var(--color-evida-lime)] flex items-center justify-center group-hover:scale-105 transition-transform">
+                {/* Custom Badge Indicator */}
+                <div className="absolute top-4 left-4 bg-[#191919] text-white text-[9px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-white/10 shadow-sm flex items-center gap-1 select-none">
+                  <span>📢</span> People discover
+                </div>
+
+                <div className="h-16 w-16 rounded-2xl bg-[#92D000]/10 text-[#92D000] flex items-center justify-center group-hover:scale-105 transition-transform mt-6">
                   <Tag className="h-8 w-8" />
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>Promotion</h3>
-                  <p className="text-xs text-[#4F5666] mt-2.5 leading-relaxed">
-                    Advertise a student service, business, tutoring, food sale, photography service, or student initiative.
+                <div className="w-full text-center space-y-4">
+                  <h3 className="text-xl font-black text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>Promote</h3>
+                  <p className="text-xs text-[#4F5666] leading-relaxed font-semibold">
+                    Share a service, business, or initiative with the campus community.
                   </p>
+                  <ul className="text-xs text-left max-w-[160px] mx-auto space-y-2 text-[#4F5666] font-medium border-t border-black/[0.04] pt-4">
+                    <li className="flex items-center gap-2">
+                      <span className="text-[#92D000] text-sm">•</span> Tutoring
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-[#92D000] text-sm">•</span> Student business
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-[#92D000] text-sm">•</span> Food sale
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-[#92D000] text-sm">•</span> Photography
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-[#92D000] text-sm">•</span> Student initiative
+                    </li>
+                  </ul>
                 </div>
               </Card>
             </div>
