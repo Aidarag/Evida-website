@@ -26,7 +26,17 @@ export default function StudentEventsFeed() {
   const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [selectedPromo, setSelectedPromo] = useState<Promotion | null>(null);
   const [feedMode, setFeedMode] = useState<'grid' | 'tiktok'>('tiktok');
-  const [isTikTokExpanded, setIsTikTokExpanded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeFeedIndex, setActiveFeedIndex] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Fetch promotions
   useEffect(() => {
@@ -148,12 +158,20 @@ export default function StudentEventsFeed() {
     }
   };
 
+  const handleWebFeedScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.currentTarget;
+    const index = Math.round(target.scrollTop / target.clientHeight);
+    if (index >= 0 && index < filteredItems.length && index !== activeFeedIndex) {
+      setActiveFeedIndex(index);
+    }
+  };
+
   return (
-    <div className="p-6 md:p-10 space-y-8 max-w-7xl mx-auto">
+    <div className={`space-y-8 max-w-7xl mx-auto ${feedMode === 'tiktok' && isMobile ? 'p-0 overflow-hidden' : 'p-6 md:p-10'}`}>
       {/* Search & Filter Header */}
-      <div className="space-y-4 py-4 -mx-6 px-6 md:mx-0 md:px-0 border-b border-black/[0.04]">
-        <div className="flex flex-col md:flex-row gap-4 justify-between">
-          <div className="flex justify-between items-center w-full md:w-auto">
+      {!(feedMode === 'tiktok' && isMobile) && (
+        <div className="space-y-4 py-4 -mx-6 px-6 md:mx-0 md:px-0 border-b border-black/[0.04]">
+          <div className="flex flex-col md:flex-row gap-4 justify-between md:items-center">
             <div>
               <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight flex items-center gap-3" style={{ fontFamily: 'var(--font-display)' }}>
                 Explore
@@ -161,8 +179,8 @@ export default function StudentEventsFeed() {
               <p className="text-sm text-[#4F5666] mt-1">Discover what's happening around campus</p>
             </div>
             
-             {/* View Mode Toggle */}
-            <div className="flex bg-black/[0.04] p-1 rounded-full border border-black/[0.04] shrink-0">
+            {/* View Mode Toggle - Immediately below the short description */}
+            <div className="flex bg-black/[0.04] p-1 rounded-full border border-black/[0.04] shrink-0 w-fit">
               <button
                 type="button"
                 onClick={() => setFeedMode('tiktok')}
@@ -187,97 +205,101 @@ export default function StudentEventsFeed() {
               </button>
             </div>
           </div>
-          <div className="w-full md:w-96">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <Input
-                placeholder="Search events, organizers, or keywords..."
-                className="pl-12 rounded-full"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+
+          {/* Conditional Filters: Only visible in Grid Mode */}
+          {feedMode === 'grid' && (
+            <div className="space-y-4 pt-2">
+              <div className="w-full md:w-96">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Input
+                    placeholder="Search events, organizers, or keywords..."
+                    className="pl-12 rounded-full"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Row 1: Organizer Filters */}
+              <div className="space-y-3">
+                <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// Organizer</span>
+                <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
+                  {ownershipFilters.map((filter) => {
+                    const Icon = filter.icon;
+                    const isActive = selectedOwnership === filter.id;
+                    return (
+                      <motion.button
+                        key={filter.id}
+                        onClick={() => {
+                          setSelectedOwnership(filter.id);
+                          setSelectedCategory('All');
+                        }}
+                        whileHover={{ y: -2, scale: 1.01 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                        className={`relative shrink-0 flex items-center justify-center gap-2 px-4 py-2 h-9.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider border cursor-pointer select-none transition-all duration-200 ${
+                          isActive
+                            ? 'border-[#92D000] text-[#191919] shadow-md shadow-[#92D000]/10'
+                            : 'border-black/[0.06] bg-black/[0.01] text-[#4F5666] hover:border-black/15'
+                        }`}
+                      >
+                        {isActive && (
+                          <motion.div
+                            layoutId="activeOrganizerBg"
+                            className="absolute inset-0 bg-[#92D000] rounded-full z-0"
+                            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                        <span className="relative z-10 flex items-center gap-2.5">
+                          <Icon className={`h-4 w-4 relative z-10 ${isActive ? 'text-[#191919]' : 'text-[#4F5666]'}`} />
+                          <span className="relative z-10">{filter.label}</span>
+                        </span>
+                      </motion.button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Row 2: Category Filters */}
+              <div className="space-y-3 pt-1">
+                <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// Category</span>
+                <div className="flex gap-2.5 overflow-x-auto pb-3 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
+                  {categories.map((cat) => {
+                    const isActive = selectedCategory === cat;
+                    return (
+                      <motion.button
+                        key={cat}
+                        onClick={() => setSelectedCategory(cat)}
+                        whileHover={{ y: -1.5, scale: 1.01 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                        className={`relative shrink-0 px-5.5 py-2.5 h-9.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider cursor-pointer select-none transition-colors duration-200 ${
+                          isActive
+                            ? 'text-[#191919]'
+                            : 'bg-black/[0.02] border border-black/[0.06] text-[#4F5666] hover:bg-black/[0.04] hover:text-[#191919]'
+                        }`}
+                      >
+                        {isActive && (
+                          <motion.div
+                            layoutId="activeCategoryBg"
+                            className="absolute inset-0 bg-[#92D000] rounded-full z-0"
+                            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                        <span className="relative z-10">{cat}</span>
+                      </motion.button>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
+      )}
 
-        {/* Row 1: Organizer Filters (Primary) */}
-        <div className="space-y-3">
-          <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// Organizer</span>
-          <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
-            {ownershipFilters.map((filter) => {
-              const Icon = filter.icon;
-              const isActive = selectedOwnership === filter.id;
-              return (
-                <motion.button
-                  key={filter.id}
-                  onClick={() => {
-                    setSelectedOwnership(filter.id);
-                    setSelectedCategory('All'); // Reset category filter on ownership change
-                  }}
-                  whileHover={{ y: -2, scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                  className={`relative shrink-0 flex items-center justify-center gap-2 px-4 py-2 h-9.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider border cursor-pointer select-none transition-all duration-200 ${
-                    isActive
-                      ? 'border-[#92D000] text-[#191919] shadow-md shadow-[#92D000]/10'
-                      : 'border-black/[0.06] bg-black/[0.01] text-[#4F5666] hover:border-black/15'
-                  }`}
-                >
-                  {/* Sliding Background */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeOrganizerBg"
-                      className="absolute inset-0 bg-[#92D000] rounded-full z-0"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative z-10 flex items-center gap-2.5">
-                    <Icon className={`h-4 w-4 relative z-10 ${isActive ? 'text-[#191919]' : 'text-[#4F5666]'}`} />
-                    <span className="relative z-10">{filter.label}</span>
-                  </span>
-                </motion.button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Row 2: Category Filters (Secondary) */}
-        <div className="space-y-3 pt-1">
-          <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// Category</span>
-          <div className="flex gap-2.5 overflow-x-auto pb-3 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
-            {categories.map((cat) => {
-              const isActive = selectedCategory === cat;
-              return (
-                <motion.button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  whileHover={{ y: -1.5, scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                  className={`relative shrink-0 px-5.5 py-2.5 h-9.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider cursor-pointer select-none transition-colors duration-200 ${
-                    isActive
-                      ? 'text-[#191919]'
-                      : 'bg-black/[0.02] border border-black/[0.06] text-[#4F5666] hover:bg-black/[0.04] hover:text-[#191919]'
-                  }`}
-                >
-                  {/* Sliding Background */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeCategoryBg"
-                      className="absolute inset-0 bg-[#92D000] rounded-full z-0"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative z-10">{cat}</span>
-                </motion.button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* Featured Hero (Only show if no search/filter applied and featured exists) */}
-      {featuredEvent && searchQuery === '' && selectedCategory === 'All' && selectedOwnership === 'school' && (
+      {/* Featured Hero (Only show in Grid mode if no search/filter applied and featured exists) */}
+      {feedMode === 'grid' && featuredEvent && searchQuery === '' && selectedCategory === 'All' && selectedOwnership === 'school' && (
         <div 
           onClick={() => router.push(`/events/${featuredEvent.id}`)}
           className="relative rounded-[32px] overflow-hidden aspect-[16/9] md:aspect-[21/9] cursor-pointer group border border-black/[0.04] shadow-md"
@@ -310,96 +332,267 @@ export default function StudentEventsFeed() {
       {/* Grid or TikTok Feed */}
       {feedMode === 'tiktok' ? (
         filteredItems.length > 0 ? (
-          <div 
-            onClick={() => setIsTikTokExpanded(true)}
-            className="relative max-w-md mx-auto w-full h-[calc(100vh-15rem)] md:h-[calc(100vh-16rem)] rounded-[32px] overflow-hidden border border-black/10 bg-[#191919] shadow-[var(--shadow-premium-xl)] cursor-pointer group"
-          >
-            {/* Tap Immersive Badge */}
-            <div className="absolute top-4 right-4 z-20 flex gap-2">
-              <span className="bg-black/45 backdrop-blur-md border border-white/10 text-[9px] font-bold uppercase px-3 py-1.5 rounded-full text-white/95 tracking-wider flex items-center gap-1 hover:bg-black/60 transition-colors shadow">
-                ⚡ Tap Immersive Feed
-              </span>
-            </div>
-            <div className="h-full w-full overflow-y-scroll snap-y snap-mandatory scrollbar-none">
-              {filteredItems.map((item) => {
-                const isSaved = 'ownershipType' in item ? item.savedBy?.includes(currentUser?.name || '') : false;
-                const cover = 'ownershipType' in item ? item.coverImage : 'bg-gradient-to-tr from-purple-900/60 via-slate-900 to-violet-950/40';
-                
-                const isGradient = cover ? cover.includes('from-') : false;
-                const bgClass = isGradient ? cover : '';
-                const bgStyle = (!isGradient && cover) ? { backgroundImage: `url(${cover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
-                
-                return (
-                  <div 
-                    key={item.id}
-                    className="snap-start shrink-0 h-full w-full relative overflow-hidden flex flex-col justify-between p-6 text-white"
+          isMobile ? (
+            /* MOBILE SCREEN-FILLING TIKTOK SWIPE FEED */
+            <div className="fixed inset-0 z-40 bg-[#151515] flex flex-col justify-between w-screen h-screen overflow-hidden font-sans">
+              
+              {/* Floating Header Mode Toggle for Mobile TikTok Feed */}
+              <div className="absolute top-6 inset-x-0 z-50 flex justify-center pointer-events-none">
+                <div className="flex bg-black/40 backdrop-blur-md p-1 rounded-full border border-white/10 shrink-0 shadow-lg pointer-events-auto">
+                  <button
+                    type="button"
+                    onClick={() => setFeedMode('tiktok')}
+                    className="px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer bg-white text-[#191919] shadow"
                   >
+                    Feed
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFeedMode('grid')}
+                    className="px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer text-white/80 hover:text-white"
+                  >
+                    Grid
+                  </button>
+                </div>
+              </div>
+
+              {/* Mobile Swipe Container */}
+              <div className="h-full w-full overflow-y-scroll snap-y snap-mandatory scrollbar-none flex flex-col items-center">
+                {filteredItems.map((item) => {
+                  const isSaved = 'ownershipType' in item ? item.savedBy?.includes(currentUser?.name || '') : false;
+                  const cover = 'ownershipType' in item ? item.coverImage : 'bg-gradient-to-tr from-purple-900/60 via-slate-900 to-violet-950/40';
+                  
+                  const isGradient = cover ? cover.includes('from-') : false;
+                  const bgClass = isGradient ? cover : '';
+                  const bgStyle = (!isGradient && cover) ? { backgroundImage: `url(${cover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
+                  
+                  return (
                     <div 
-                      className={`absolute inset-0 opacity-40 z-0 bg-cover bg-center ${bgClass}`}
-                      style={bgStyle}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/60 z-10" />
+                      key={`mobile-feed-${item.id}`}
+                      className="snap-start shrink-0 h-screen w-full relative overflow-hidden flex flex-col justify-between p-6 pb-24 text-white bg-[#191919]"
+                    >
+                      <div 
+                        className={`absolute inset-0 opacity-55 z-0 bg-cover bg-center ${bgClass}`}
+                        style={bgStyle}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-black/55 z-10" />
 
-                    <div className="relative z-20 flex justify-between items-center">
-                      <span className="px-3.5 py-1 text-[9px] font-extrabold uppercase tracking-wider bg-[#92D000] text-[#191919] rounded-full border border-[#92D000]/20 shadow-sm">
-                        {'ownershipType' in item ? item.category : 'Promotion'}
-                      </span>
-                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#92D000]/80">
-                        {'ownershipType' in item ? item.ownershipType : 'Services'}
-                      </span>
-                    </div>
+                      {/* Top Segment spacing */}
+                      <div className="relative z-20 flex justify-between items-center pt-20">
+                        <span className="px-3.5 py-1.5 text-[9px] font-extrabold uppercase tracking-wider bg-[#92D000] text-[#191919] rounded-full border border-[#92D000]/20 shadow-sm">
+                          {'ownershipType' in item ? item.category : 'Promotion'}
+                        </span>
+                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#92D000]/80">
+                          {'ownershipType' in item ? item.ownershipType : 'Services'}
+                        </span>
+                      </div>
 
-                    <div className="relative z-20 space-y-4 mt-auto text-left">
-                      <div className="space-y-2">
-                        <div className="text-[#92D000] text-[10px] font-extrabold uppercase tracking-widest">
-                          {item.date} {('time' in item) && `• ${(item as any).time}`}
+                      {/* Bottom segment and Right-side Action Column */}
+                      <div className="relative z-20 flex items-end gap-4 mt-auto pb-4">
+                        {/* Left: Info Details */}
+                        <div className="flex-1 space-y-3.5 text-left">
+                          <div className="space-y-2">
+                            <div className="text-[#92D000] text-[10px] font-extrabold uppercase tracking-widest flex items-center gap-1">
+                              <Calendar className="h-3 w-3" /> {item.date} {('time' in item) && `• ${(item as any).time}`}
+                            </div>
+                            <h2 className="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+                              {item.title}
+                            </h2>
+                            <p className="text-xs text-gray-300 leading-relaxed font-light line-clamp-3">
+                              {item.description}
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-xs text-gray-400 font-semibold">
+                            <MapPin className="h-4 w-4 text-[#92D000]" />
+                            <span className="truncate">{('location' in item) ? (item as any).location : (item as any).organizer}</span>
+                          </div>
+
+                          <div>
+                            <Button 
+                              variant="neon" 
+                              size="sm" 
+                              fullWidth
+                              onClick={() => handleCardClick(item)}
+                              className="h-10 shadow-lg shadow-[#92D000]/20 font-extrabold tracking-widest uppercase text-[10px]"
+                            >
+                              {'ownershipType' in item ? 'RSVP & Info' : 'Contact / Info'}
+                            </Button>
+                          </div>
                         </div>
-                        <h2 className="text-2xl font-extrabold uppercase tracking-tight text-white line-clamp-2 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-                          {item.title}
-                        </h2>
-                        <p className="text-xs text-gray-300 line-clamp-3 leading-relaxed font-light">
-                          {item.description}
-                        </p>
-                      </div>
 
-                      <div className="flex items-center gap-1.5 text-xs text-gray-400 font-semibold">
-                        <MapPin className="h-4 w-4 text-[#92D000]" />
-                        <span className="truncate">{('location' in item) ? (item as any).location : (item as any).organizer}</span>
-                      </div>
-
-                      <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-3">
+                        {/* Right: Vertical TikTok Interaction Bar */}
+                        <div className="flex flex-col gap-4 items-center pb-2">
+                          {/* Heart Save Button */}
                           {'ownershipType' in item && (
                             <button 
                               onClick={(e) => {
                                 e.stopPropagation();
                                 saveToggle(item.id);
                               }}
-                              className="flex flex-col items-center gap-1 cursor-pointer group"
+                              className="flex flex-col items-center gap-1 group cursor-pointer"
                             >
-                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all text-white">
-                                <Heart className={`h-4.5 w-4.5 ${isSaved ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
+                              <div className="h-11 w-11 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all text-white shadow-md">
+                                <Heart className={`h-5 w-5 ${isSaved ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
                               </div>
-                              <span className="text-[8px] font-bold uppercase tracking-wider text-gray-400">Save</span>
+                              <span className="text-[8px] font-bold uppercase tracking-wider text-gray-300">{isSaved ? 'Saved' : 'Save'}</span>
                             </button>
                           )}
+
+                          {/* Contact/Share Button (Mail) */}
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if ('ownershipType' in item) {
+                                window.location.href = `mailto:?subject=Check out this event: ${item.title}&body=Link: ${window.location.origin}/events/${item.id}`;
+                              } else {
+                                window.location.href = `mailto:${(item as any).contactInfo}?subject=Inquiry about: ${item.title}`;
+                              }
+                            }}
+                            className="flex flex-col items-center gap-1 group cursor-pointer"
+                          >
+                            <div className="h-11 w-11 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all text-white shadow-md">
+                              <Mail className="h-5 w-5" />
+                            </div>
+                            <span className="text-[8px] font-bold uppercase tracking-wider text-gray-300">Share</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            /* TABLET / LAPTOP TIKTOK WEB SPLIT PLAYER VIEW */
+            <div className="relative max-w-4xl mx-auto w-full h-[calc(100vh-16rem)] rounded-[32px] overflow-hidden border border-black/10 bg-[#191919] shadow-[var(--shadow-premium-xl)] flex flex-row">
+              {/* Left Column: Visual Snap Player */}
+              <div className="relative w-[380px] h-full shrink-0 overflow-hidden bg-black border-r border-white/5">
+                <div 
+                  onScroll={handleWebFeedScroll}
+                  className="h-full w-full overflow-y-scroll snap-y snap-mandatory scrollbar-none"
+                >
+                  {filteredItems.map((item) => {
+                    const cover = 'ownershipType' in item ? item.coverImage : 'bg-gradient-to-tr from-purple-900/60 via-slate-900 to-violet-950/40';
+                    const isGradient = cover ? cover.includes('from-') : false;
+                    const bgClass = isGradient ? cover : '';
+                    const bgStyle = (!isGradient && cover) ? { backgroundImage: `url(${cover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
+                    
+                    return (
+                      <div 
+                        key={`web-feed-left-${item.id}`} 
+                        className="h-full w-full snap-start shrink-0 relative overflow-hidden flex flex-col justify-between p-8 text-white"
+                      >
+                        <div 
+                          className={`absolute inset-0 opacity-45 z-0 bg-cover bg-center ${bgClass}`}
+                          style={bgStyle}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 z-10" />
+                        
+                        {/* Tags */}
+                        <div className="relative z-20 flex justify-between items-center">
+                          <span className="px-3.5 py-1.5 text-[8.5px] font-extrabold uppercase tracking-wider bg-[#92D000] text-[#191919] rounded-full border border-[#92D000]/20 shadow-sm">
+                            {'ownershipType' in item ? item.category : 'Promotion'}
+                          </span>
+                          <span className="text-[9px] font-extrabold uppercase tracking-widest text-white/80">
+                            {'ownershipType' in item ? item.ownershipType : 'Services'}
+                          </span>
                         </div>
 
-                        <Button 
-                          variant="neon" 
-                          size="sm" 
-                          onClick={() => handleCardClick(item)}
-                          className="h-11 px-6 shadow-lg shadow-[#92D000]/10"
-                        >
-                          {'ownershipType' in item ? 'RSVP & Info' : 'Contact / Info'}
-                        </Button>
+                        {/* Title overlay */}
+                        <div className="relative z-20 mt-auto text-left space-y-1.5">
+                          <span className="text-[9px] text-[#92D000] font-black uppercase tracking-widest">// Swipe to scroll</span>
+                          <h3 className="text-xl font-extrabold uppercase tracking-tight text-white line-clamp-2 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+                            {item.title}
+                          </h3>
+                        </div>
                       </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Right Column: Synced Info Panel */}
+              {(() => {
+                const activeItem = filteredItems[activeFeedIndex];
+                if (!activeItem) return null;
+                const isSaved = 'ownershipType' in activeItem ? activeItem.savedBy?.includes(currentUser?.name || '') : false;
+
+                return (
+                  <div className="flex-1 h-full bg-[#18181b] p-8 flex flex-col justify-between text-white text-left">
+                    <div className="space-y-6">
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-bold text-[#92D000] uppercase tracking-[0.2em] block">// Event Details</span>
+                        <h2 className="text-2xl font-black uppercase tracking-tight text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+                          {activeItem.title}
+                        </h2>
+                      </div>
+
+                      <div className="space-y-4">
+                        {/* Meta info boxes */}
+                        <div className="grid grid-cols-2 gap-4 text-xs">
+                          <div className="bg-white/5 border border-white/5 p-3.5 rounded-2xl space-y-1">
+                            <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-gray-400 block">Date & Time</span>
+                            <span className="font-bold text-white flex items-center gap-1.5">
+                              <Calendar className="h-3.5 w-3.5 text-[#92D000]" /> {activeItem.date} {('time' in activeItem) && `• ${(activeItem as any).time}`}
+                            </span>
+                          </div>
+                          <div className="bg-white/5 border border-white/5 p-3.5 rounded-2xl space-y-1">
+                            <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-gray-400 block">Location</span>
+                            <span className="font-bold text-white flex items-center gap-1.5 truncate">
+                              <MapPin className="h-3.5 w-3.5 text-[#92D000]" /> {('location' in activeItem) ? (activeItem as any).location : (activeItem as any).organizer}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Description text */}
+                        <div className="space-y-2">
+                          <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-gray-400 block">Description</span>
+                          <p className="text-xs text-gray-300 leading-relaxed font-light line-clamp-5 whitespace-pre-wrap">
+                            {activeItem.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Actions and buttons */}
+                    <div className="pt-6 border-t border-white/5 flex items-center gap-4">
+                      {'ownershipType' in activeItem && (
+                        <button 
+                          onClick={() => saveToggle(activeItem.id)}
+                          className="h-12 w-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:scale-103 transition-all text-white shadow-md cursor-pointer"
+                        >
+                          <Heart className={`h-5 w-5 ${isSaved ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
+                        </button>
+                      )}
+                      
+                      <button 
+                        onClick={() => {
+                          if ('ownershipType' in activeItem) {
+                            window.location.href = `mailto:?subject=Check out this event: ${activeItem.title}&body=Link: ${window.location.origin}/events/${activeItem.id}`;
+                          } else {
+                            window.location.href = `mailto:${(activeItem as any).contactInfo}?subject=Inquiry about: ${activeItem.title}`;
+                          }
+                        }}
+                        className="h-12 w-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:scale-103 transition-all text-white shadow-md cursor-pointer"
+                      >
+                        <Mail className="h-5 w-5" />
+                      </button>
+
+                      <Button 
+                        variant="neon" 
+                        size="lg" 
+                        onClick={() => handleCardClick(activeItem)}
+                        className="flex-1 h-12 shadow-lg shadow-[#92D000]/15 uppercase tracking-widest font-extrabold text-xs"
+                      >
+                        {'ownershipType' in activeItem ? 'RSVP & Info' : 'Contact Organizer'}
+                      </Button>
                     </div>
                   </div>
                 );
-              })}
+              })()}
             </div>
-          </div>
+          )
         ) : (
           <EmptyState
             icon={<Compass className="h-8 w-8 text-gray-400" />}
@@ -543,135 +736,7 @@ export default function StudentEventsFeed() {
         )}
       </AnimatePresence>
 
-      {/* Full-Screen Immersive TikTok-Style Feed Overlay */}
-      <AnimatePresence>
-        {isTikTokExpanded && (
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed inset-0 z-55 bg-[#151515] flex flex-col justify-between w-screen h-screen overflow-hidden font-sans"
-          >
-            {/* Close Button floating at top right */}
-            <button 
-              onClick={() => setIsTikTokExpanded(false)}
-              className="absolute top-6 right-6 z-60 h-11 w-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center backdrop-blur-md border border-white/10 transition-all cursor-pointer shadow-lg"
-            >
-              <X className="h-5 w-5" />
-            </button>
-
-            {/* Immersive Scroll Container */}
-            <div className="h-full w-full overflow-y-scroll snap-y snap-mandatory scrollbar-none flex flex-col items-center">
-              {filteredItems.map((item) => {
-                const isSaved = 'ownershipType' in item ? item.savedBy?.includes(currentUser?.name || '') : false;
-                const cover = 'ownershipType' in item ? item.coverImage : 'bg-gradient-to-tr from-purple-900/60 via-slate-900 to-violet-950/40';
-                
-                const isGradient = cover ? cover.includes('from-') : false;
-                const bgClass = isGradient ? cover : '';
-                const bgStyle = (!isGradient && cover) ? { backgroundImage: `url(${cover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
-                
-                return (
-                  <div 
-                    key={`expanded-${item.id}`}
-                    className="snap-start shrink-0 h-screen w-full max-w-md mx-auto relative overflow-hidden flex flex-col justify-between p-8 text-white border-x border-white/5 bg-[#191919]"
-                  >
-                    <div 
-                      className={`absolute inset-0 opacity-55 z-0 bg-cover bg-center ${bgClass}`}
-                      style={bgStyle}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-black/55 z-10" />
-
-                    {/* Top Segment */}
-                    <div className="relative z-20 flex justify-between items-center pt-8">
-                      <span className="px-3.5 py-1.5 text-[9px] font-extrabold uppercase tracking-wider bg-[#92D000] text-[#191919] rounded-full border border-[#92D000]/20 shadow-sm">
-                        {'ownershipType' in item ? item.category : 'Promotion'}
-                      </span>
-                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#92D000]/80">
-                        {'ownershipType' in item ? item.ownershipType : 'Services'}
-                      </span>
-                    </div>
-
-                    {/* Bottom segment and Right-side Action Column */}
-                    <div className="relative z-20 flex items-end gap-6 mt-auto pb-10">
-                      {/* Left: Info Details */}
-                      <div className="flex-1 space-y-4 text-left">
-                        <div className="space-y-2.5">
-                          <div className="text-[#92D000] text-[10.5px] font-extrabold uppercase tracking-widest flex items-center gap-1.5">
-                            <Calendar className="h-3.5 w-3.5" /> {item.date} {('time' in item) && `• ${(item as any).time}`}
-                          </div>
-                          <h2 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-                            {item.title}
-                          </h2>
-                          <p className="text-xs text-gray-300 leading-relaxed font-light line-clamp-4">
-                            {item.description}
-                          </p>
-                        </div>
-
-                        <div className="flex items-center gap-2 text-xs text-gray-400 font-semibold pt-1">
-                          <MapPin className="h-4.5 w-4.5 text-[#92D000]" />
-                          <span className="truncate">{('location' in item) ? (item as any).location : (item as any).organizer}</span>
-                        </div>
-
-                        <div className="pt-2">
-                          <Button 
-                            variant="neon" 
-                            size="lg" 
-                            fullWidth
-                            onClick={() => {
-                              setIsTikTokExpanded(false);
-                              handleCardClick(item);
-                            }}
-                            className="h-12 shadow-lg shadow-[#92D000]/20 font-extrabold tracking-widest uppercase text-xs"
-                          >
-                            {'ownershipType' in item ? 'RSVP & Event Info' : 'Contact Organizer / Info'}
-                          </Button>
-                        </div>
-                      </div>
-
-                      {/* Right: Vertical TikTok Interaction Bar */}
-                      <div className="flex flex-col gap-5 items-center pb-2">
-                        {/* Heart Save Button */}
-                        {'ownershipType' in item && (
-                          <button 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              saveToggle(item.id);
-                            }}
-                            className="flex flex-col items-center gap-1 group cursor-pointer"
-                          >
-                            <div className="h-12 w-12 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all text-white shadow-md">
-                              <Heart className={`h-5.5 w-5.5 ${isSaved ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
-                            </div>
-                            <span className="text-[9px] font-bold uppercase tracking-wider text-gray-300">{isSaved ? 'Saved' : 'Save'}</span>
-                          </button>
-                        )}
-
-                        {/* Contact/Share Button (Mail) */}
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if ('ownershipType' in item) {
-                              window.location.href = `mailto:?subject=Check out this event: ${item.title}&body=Link: ${window.location.origin}/events/${item.id}`;
-                            } else {
-                              window.location.href = `mailto:${(item as any).contactInfo}?subject=Inquiry about: ${item.title}`;
-                            }
-                          }}
-                          className="flex flex-col items-center gap-1 group cursor-pointer"
-                        >
-                          <div className="h-12 w-12 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all text-white shadow-md">
-                            <Mail className="h-5.5 w-5.5" />
-                          </div>
-                          <span className="text-[9px] font-bold uppercase tracking-wider text-gray-300">Share</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Full-screen TikTok overlay modal removed - TikTok mobile/web layouts are now rendered directly inline. */}
     </div>
   );
 }
