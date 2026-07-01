@@ -53,27 +53,24 @@ export default function LandingPage() {
             </span>
           </motion.div>
 
-          {/* Headline Word Reveal (Fitted/Centered to avoid line overflows on mobile) */}
+          {/* Headline Fluid Word Reveal (Fully responsive & optimized for all devices) */}
           <h1 
             style={{ fontFamily: 'var(--font-display)' }}
-            className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight md:leading-[1.1] tracking-tight select-none uppercase max-w-lg md:max-w-5xl mx-auto"
+            className="text-[clamp(1.45rem,6vw,4.5rem)] font-extrabold text-white leading-[1.15] md:leading-[1.1] tracking-tight select-none uppercase max-w-[280px] sm:max-w-xl md:max-w-5xl mx-auto"
           >
-            <span className="md:hidden text-[#92D000]">Discover Evida,<br />the digital home<br />of campus life</span>
-            <span className="hidden md:inline">
-              {headlineLines.map((line, idx) => (
-                <React.Fragment key={idx}>
-                  {idx > 0 && <br />}
-                  <motion.span
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.15 + idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                    className={`inline-block whitespace-nowrap ${idx === 2 ? "text-[#92D000]" : "text-white"}`}
-                  >
-                    {line}
-                  </motion.span>
-                </React.Fragment>
-              ))}
-            </span>
+            {headlineLines.map((line, idx) => (
+              <React.Fragment key={idx}>
+                {idx > 0 && <br />}
+                <motion.span
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.15 + idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                  className={`inline-block ${idx === 2 ? "text-[#92D000]" : "text-white"}`}
+                >
+                  {line}
+                </motion.span>
+              </React.Fragment>
+            ))}
           </h1>
 
           {/* Subtext */}
