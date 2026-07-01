@@ -17,8 +17,8 @@ export default function Chip({ label, active = false, onClick, className = '' }:
         inline-flex items-center rounded-full px-4 py-1.5
         text-xs font-medium transition-all duration-200 cursor-pointer
         ${active
-          ? 'bg-[#80B0EC]/20 text-[#80B0EC] border border-[#80B0EC]/30'
-          : 'bg-[#FFFDE1]/[0.06] text-[#B8BBC8] border border-transparent hover:bg-[#FFFDE1]/[0.1] hover:text-white'
+          ? 'bg-[#191919] text-white border border-transparent font-bold shadow-sm'
+          : 'bg-black/[0.04] text-[#4F5666] border border-transparent hover:bg-black/[0.08] hover:text-[#191919]'
         }
         ${className}
       `}
