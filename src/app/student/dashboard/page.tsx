@@ -84,9 +84,11 @@ export default function StudentDashboardPage() {
             {currentUser.avatar || currentUser.name.substring(0, 2).toUpperCase()}
           </div>
           <div>
-            <span className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block leading-none mb-1.5">Campus</span>
-            <button className="flex items-center gap-1 text-sm font-extrabold text-[#191919] uppercase tracking-wide hover:text-[#191919]/80 transition-colors">
-              {currentUser.school} <ChevronDown className="h-4 w-4 text-[#191919]" />
+            <h1 className="text-base font-black text-[#191919] tracking-tight leading-none mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>
+              Yo {currentUser.name.split(' ')[0]}!
+            </h1>
+            <button className="flex items-center gap-1 text-[10px] font-extrabold text-[#4F5666] uppercase tracking-wider hover:text-[#191919] transition-colors">
+              {currentUser.school} <ChevronDown className="h-3.5 w-3.5 text-[#4F5666]" />
             </button>
           </div>
         </div>

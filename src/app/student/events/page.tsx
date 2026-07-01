@@ -160,7 +160,7 @@ export default function StudentEventsFeed() {
               <p className="text-sm text-[#4F5666] mt-1">Discover what's happening around campus</p>
             </div>
             
-            {/* View Mode Toggle */}
+             {/* View Mode Toggle */}
             <div className="flex bg-black/[0.04] p-1 rounded-full border border-black/[0.04] shrink-0">
               <button
                 type="button"
@@ -171,7 +171,7 @@ export default function StudentEventsFeed() {
                     : 'text-[#4F5666] hover:text-[#191919]'
                 }`}
               >
-                TikTok Feed
+                Feed
               </button>
               <button
                 type="button"
@@ -182,7 +182,7 @@ export default function StudentEventsFeed() {
                     : 'text-[#4F5666] hover:text-[#191919]'
                 }`}
               >
-                Grid List
+                Grid
               </button>
             </div>
           </div>
