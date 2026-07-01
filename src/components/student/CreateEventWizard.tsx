@@ -161,7 +161,7 @@ export default function CreateEventWizard({
       {/* Modal */}
       <div className="relative w-full max-w-2xl overflow-hidden rounded-[28px] max-sm:rounded-t-[28px] max-sm:rounded-b-none border border-black/5 bg-[#DFDED7] text-[#191919] shadow-[var(--shadow-premium-xl)] transition-all">
         {/* Header decoration */}
-        <div className="h-1.5 w-full bg-gradient-to-r from-[#BDFB04] to-[#9DC4D5]" />
+        <div className="h-1.5 w-full bg-gradient-to-r from-[#92D000] to-[#9DC4D5]" />
 
         {/* Close Button */}
         <button
@@ -174,7 +174,7 @@ export default function CreateEventWizard({
         {statusScreen === 'form' ? (
           <form onSubmit={handleFormSubmit} className="p-6 md:p-8 space-y-6 max-h-[85vh] overflow-y-auto">
             <div>
-              <span className="rounded-full bg-[#BDFB04]/15 border border-[#BDFB04]/25 px-3 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#191919]">
+              <span className="rounded-full bg-[#92D000]/15 border border-[#92D000]/25 px-3 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#191919]">
                 SUBMIT EXPERIENCE
               </span>
               <h2 className="text-xl font-extrabold text-[#191919] uppercase tracking-tight mt-1.5 flex items-center gap-2">
@@ -189,7 +189,7 @@ export default function CreateEventWizard({
                 <select
                   value={ownershipType}
                   onChange={(e) => setOwnershipType(e.target.value as any)}
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 >
                   <option value="student">Me (Individual Student Event)</option>
                   {userOrgs.length > 0 && (
@@ -204,7 +204,7 @@ export default function CreateEventWizard({
                   <select
                     value={selectedOrgId}
                     onChange={(e) => setSelectedOrgId(e.target.value)}
-                    className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                    className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                   >
                     {userOrgs.map((org) => (
                       <option key={org.id} value={org.id}>
@@ -226,7 +226,7 @@ export default function CreateEventWizard({
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Greek Yard Show"
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 />
               </div>
 
@@ -236,7 +236,7 @@ export default function CreateEventWizard({
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 >
                   <option value="Social">Social</option>
                   <option value="Academic">Academic</option>
@@ -257,7 +257,7 @@ export default function CreateEventWizard({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Details of step performance lineups, entry requirements..."
-                className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium resize-none"
+                className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium resize-none"
               />
             </div>
 
@@ -270,7 +270,7 @@ export default function CreateEventWizard({
                   required
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 />
               </div>
 
@@ -281,7 +281,7 @@ export default function CreateEventWizard({
                   required
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 />
               </div>
 
@@ -291,7 +291,7 @@ export default function CreateEventWizard({
                   type="time"
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 />
               </div>
             </div>
@@ -306,7 +306,7 @@ export default function CreateEventWizard({
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="e.g. Alumni Amphitheater"
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 />
               </div>
 
@@ -315,7 +315,7 @@ export default function CreateEventWizard({
                 <select
                   value={locationType}
                   onChange={(e) => setLocationType(e.target.value as any)}
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 >
                   <option value="indoor">Indoor Venue</option>
                   <option value="outdoor">Outdoor Field/Plaza</option>
@@ -338,7 +338,7 @@ export default function CreateEventWizard({
                     style={{ borderColor: coverGradient === grad.value ? '#191919' : 'transparent' }}
                   >
                     {coverGradient === grad.value && (
-                      <span className="text-[8px] font-bold text-[#191919] bg-[#BDFB04] rounded px-1.5 py-0.5 font-extrabold">OK</span>
+                      <span className="text-[8px] font-bold text-[#191919] bg-[#92D000] rounded px-1.5 py-0.5 font-extrabold">OK</span>
                     )}
                   </button>
                 ))}
@@ -352,7 +352,7 @@ export default function CreateEventWizard({
                 <select
                   value={isFree ? 'free' : 'paid'}
                   onChange={(e) => setIsFree(e.target.value === 'free')}
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 >
                   <option value="free">Free Access</option>
                   <option value="paid">Paid Ticket</option>
@@ -366,7 +366,7 @@ export default function CreateEventWizard({
                   placeholder="Unlimited"
                   value={capacity}
                   onChange={(e) => setCapacity(e.target.value)}
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 />
               </div>
 
@@ -375,7 +375,7 @@ export default function CreateEventWizard({
                 <select
                   value={visibility}
                   onChange={(e) => setVisibility(e.target.value as any)}
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 >
                   <option value="public">Public (All Campus)</option>
                   <option value="private">Private (Invite-Only)</option>
@@ -395,7 +395,7 @@ export default function CreateEventWizard({
                   min={1}
                   value={estimatedAttendance}
                   onChange={(e) => setEstimatedAttendance(Math.max(1, Number(e.target.value)))}
-                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                  className="w-full rounded-2xl border border-black/[0.08] bg-white py-3 px-3.5 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                 />
               </div>
 
@@ -448,7 +448,7 @@ export default function CreateEventWizard({
               <button
                 type="submit"
                 disabled={submitting}
-                className="rounded-full bg-[#BDFB04] text-[#191919] shadow-[0_4px_14px_rgba(32,54,39,0.1)] hover:bg-[#BDFB04]/90 transition-all hover:scale-[1.01] px-6 py-3.5 text-xs font-bold cursor-pointer"
+                className="rounded-full bg-[#92D000] text-[#191919] shadow-[0_4px_14px_rgba(32,54,39,0.1)] hover:bg-[#92D000]/90 transition-all hover:scale-[1.01] px-6 py-3.5 text-xs font-bold cursor-pointer"
               >
                 {submitting ? 'Submitting...' : 'Submit Event'}
               </button>
@@ -485,7 +485,7 @@ export default function CreateEventWizard({
                   onClose();
                   setStatusScreen('form');
                 }}
-                className="rounded-full bg-[#BDFB04] text-[#191919] px-6 py-3 text-xs font-bold hover:bg-[#BDFB04]/90 transition-colors cursor-pointer"
+                className="rounded-full bg-[#92D000] text-[#191919] px-6 py-3 text-xs font-bold hover:bg-[#92D000]/90 transition-colors cursor-pointer"
               >
                 Return to Explore
               </button>

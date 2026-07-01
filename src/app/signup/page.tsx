@@ -190,9 +190,9 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-[var(--color-primary-bg)] flex items-center justify-center p-6 max-sm:p-4 relative overflow-hidden font-sans">
       {/* Dynamic Background Glowing Blobs */}
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#BDFB04]/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#BDFB04]/4 blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#BDFB04]/3 blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#92D000]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#92D000]/4 blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#92D000]/3 blur-[140px] pointer-events-none" />
 
       {/* Back to Home Button */}
       {step === 'role-selection' && (
@@ -265,10 +265,10 @@ export default function SignupPage() {
                     {/* Student Option */}
                     <button
                       onClick={() => handleRoleSelect('student')}
-                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#BDFB04] transition-all duration-300 cursor-pointer text-left group"
+                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#92D000] transition-all duration-300 cursor-pointer text-left group"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="h-12 w-12 rounded-xl bg-[#BDFB04]/10 text-[#BDFB04] flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <div className="h-12 w-12 rounded-xl bg-[#92D000]/10 text-[#92D000] flex items-center justify-center group-hover:scale-105 transition-transform">
                           <GraduationCap className="h-6 w-6" />
                         </div>
                         <div>
@@ -276,7 +276,7 @@ export default function SignupPage() {
                           <p className="text-xs text-[#4F5666] mt-0.5 max-w-[220px]">Register with your official school email and build your profile.</p>
                         </div>
                       </div>
-                      <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#BDFB04] group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#92D000] group-hover:translate-x-1 transition-all" />
                     </button>
 
                     {/* Admin Option */}
@@ -300,7 +300,7 @@ export default function SignupPage() {
                   <div className="pt-4 border-t border-black/[0.06] text-center">
                     <p className="text-xs text-[#4F5666]">
                       Already have an account?{' '}
-                      <Link href="/login" className="text-[#191919] font-bold underline decoration-2 decoration-[#BDFB04] hover:text-[#191919]/80 transition-all">
+                      <Link href="/login" className="text-[#191919] font-bold underline decoration-2 decoration-[#92D000] hover:text-[#191919]/80 transition-all">
                         Sign in here
                       </Link>
                     </p>
@@ -327,7 +327,7 @@ export default function SignupPage() {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           placeholder="e.g. Alex Morgan"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -347,7 +347,7 @@ export default function SignupPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="e.g. alex.morgan@university.edu"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -368,7 +368,7 @@ export default function SignupPage() {
                             value={major}
                             onChange={(e) => setMajor(e.target.value)}
                             placeholder="e.g. Economics"
-                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                           />
                         </div>
                       </div>
@@ -384,7 +384,7 @@ export default function SignupPage() {
                           <select
                             value={gradYear}
                             onChange={(e) => setGradYear(e.target.value)}
-                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium cursor-pointer"
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium cursor-pointer"
                           >
                             <option value="2026">2026</option>
                             <option value="2027">2027</option>
@@ -401,7 +401,7 @@ export default function SignupPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
+                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
                   >
                     {isLoading ? 'Creating Profile...' : 'Register Profile'}
                     {!isLoading && <ArrowRight className="h-4 w-4" />}
@@ -428,7 +428,7 @@ export default function SignupPage() {
                           value={schoolName}
                           onChange={(e) => setSchoolName(e.target.value)}
                           placeholder="e.g. Gotham University"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -448,7 +448,7 @@ export default function SignupPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="e.g. admin@gotham.edu"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -468,7 +468,7 @@ export default function SignupPage() {
                           value={department}
                           onChange={(e) => setDepartment(e.target.value)}
                           placeholder="e.g. Student Involvement Office"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -488,7 +488,7 @@ export default function SignupPage() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="••••••••"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -499,7 +499,7 @@ export default function SignupPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
+                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
                   >
                     {isLoading ? 'Registering...' : 'Register Institution'}
                     {!isLoading && <ArrowRight className="h-4 w-4" />}
@@ -525,7 +525,7 @@ export default function SignupPage() {
                         value={verificationCode}
                         onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
                         placeholder="123456"
-                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-bold"
+                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-bold"
                       />
                     </div>
                     <p className="text-[10px] text-[#4F5666] leading-relaxed">
@@ -539,7 +539,7 @@ export default function SignupPage() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
                     >
                       {isLoading ? 'Verifying...' : 'Verify & Complete Signup'}
                     </button>
@@ -585,7 +585,7 @@ export default function SignupPage() {
                   </div>
 
                   <div className="flex justify-center pt-2">
-                    <div className="w-6 h-6 border-2 border-[#BDFB04] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-6 h-6 border-2 border-[#92D000] border-t-transparent rounded-full animate-spin" />
                   </div>
                 </div>
               )}

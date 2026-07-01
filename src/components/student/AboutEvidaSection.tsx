@@ -61,7 +61,7 @@ export default function AboutEvidaSection() {
           <motion.div 
             whileHover={{ y: -8 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className="bg-[#BDFB04] rounded-[24px] p-8 md:p-10 flex flex-col justify-between aspect-[4/5] text-left shadow-[var(--shadow-premium-md)] hover:shadow-[var(--shadow-premium-lg)] transition-shadow duration-300"
+            className="bg-[#92D000] rounded-[24px] p-8 md:p-10 flex flex-col justify-between aspect-[4/5] text-left shadow-[var(--shadow-premium-md)] hover:shadow-[var(--shadow-premium-lg)] transition-shadow duration-300"
           >
             <div>
               <span className="text-[#191919]/70 text-[10px] font-bold tracking-[0.2em] uppercase">ENGAGEMENT</span>
@@ -114,7 +114,7 @@ export default function AboutEvidaSection() {
               </h4>
             </div>
             <div>
-              <div className="text-[#BDFB04] font-extrabold text-5xl md:text-6xl lg:text-7xl leading-none" style={{ fontFamily: 'var(--font-display)' }}>
+              <div className="text-[#92D000] font-extrabold text-5xl md:text-6xl lg:text-7xl leading-none" style={{ fontFamily: 'var(--font-display)' }}>
                 100%
               </div>
               <p className="text-white/80 text-xs mt-4 font-light leading-relaxed">

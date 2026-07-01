@@ -9,7 +9,7 @@ import Input from '@/components/ui/Input';
 import EmptyState from '@/components/ui/EmptyState';
 import Modal from '@/components/ui/Modal';
 import Button from '@/components/ui/Button';
-import { Search, Compass, Shield, Users, GraduationCap, Megaphone, Calendar, MapPin, Mail, X } from 'lucide-react';
+import { Search, Compass, Shield, Users, GraduationCap, Megaphone, Calendar, MapPin, Mail, X, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Event, Promotion } from '@/lib/types';
 
@@ -25,6 +25,7 @@ export default function StudentEventsFeed() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [selectedPromo, setSelectedPromo] = useState<Promotion | null>(null);
+  const [feedMode, setFeedMode] = useState<'grid' | 'tiktok'>('tiktok');
 
   // Fetch promotions
   useEffect(() => {
@@ -151,9 +152,39 @@ export default function StudentEventsFeed() {
       {/* Search & Filter Header */}
       <div className="space-y-6 sticky top-[120px] md:top-16 z-30 bg-[#DFDED7]/90 backdrop-blur-xl py-4 -mx-6 px-6 md:mx-0 md:px-0 border-b border-black/[0.04]">
         <div className="flex flex-col md:flex-row gap-4 justify-between">
-          <div>
-            <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>Explore</h1>
-            <p className="text-sm text-[#4F5666] mt-1">Discover what's happening around campus</p>
+          <div className="flex justify-between items-center w-full md:w-auto">
+            <div>
+              <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight flex items-center gap-3" style={{ fontFamily: 'var(--font-display)' }}>
+                Explore
+              </h1>
+              <p className="text-sm text-[#4F5666] mt-1">Discover what's happening around campus</p>
+            </div>
+            
+            {/* View Mode Toggle */}
+            <div className="flex bg-black/[0.04] p-1 rounded-full border border-black/[0.04] shrink-0">
+              <button
+                type="button"
+                onClick={() => setFeedMode('tiktok')}
+                className={`px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                  feedMode === 'tiktok' 
+                    ? 'bg-[#191919] text-white shadow-sm' 
+                    : 'text-[#4F5666] hover:text-[#191919]'
+                }`}
+              >
+                TikTok Feed
+              </button>
+              <button
+                type="button"
+                onClick={() => setFeedMode('grid')}
+                className={`px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                  feedMode === 'grid' 
+                    ? 'bg-[#191919] text-white shadow-sm' 
+                    : 'text-[#4F5666] hover:text-[#191919]'
+                }`}
+              >
+                Grid List
+              </button>
+            </div>
           </div>
           <div className="w-full md:w-96">
             <div className="relative">
@@ -187,7 +218,7 @@ export default function StudentEventsFeed() {
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   className={`relative flex items-center justify-center gap-2.5 px-6 py-3 h-12 rounded-full text-xs font-extrabold uppercase tracking-widest border-2 cursor-pointer select-none transition-all duration-200 ${
                     isActive
-                      ? 'border-[#BDFB04] text-[#191919] shadow-md shadow-[#BDFB04]/10'
+                      ? 'border-[#92D000] text-[#191919] shadow-md shadow-[#92D000]/10'
                       : 'border-black/[0.06] bg-black/[0.01] text-[#4F5666] hover:border-black/15'
                   }`}
                 >
@@ -195,7 +226,7 @@ export default function StudentEventsFeed() {
                   {isActive && (
                     <motion.div
                       layoutId="activeOrganizerBg"
-                      className="absolute inset-0 bg-[#BDFB04] rounded-full z-0"
+                      className="absolute inset-0 bg-[#92D000] rounded-full z-0"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -232,7 +263,7 @@ export default function StudentEventsFeed() {
                   {isActive && (
                     <motion.div
                       layoutId="activeCategoryBg"
-                      className="absolute inset-0 bg-[#BDFB04] rounded-full z-0"
+                      className="absolute inset-0 bg-[#92D000] rounded-full z-0"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -275,38 +306,131 @@ export default function StudentEventsFeed() {
         </div>
       )}
 
-      {/* Grid */}
-      {filteredItems.length > 0 ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filteredItems.map((item) => (
-              <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.2 }}
-              >
-                <EventCard
-                  event={item}
-                  onClick={() => handleCardClick(item)}
-                  isSaved={'ownershipType' in item ? item.savedBy?.includes(currentUser?.name || '') : false}
-                  onSave={'ownershipType' in item ? (e) => {
-                    e.stopPropagation();
-                    saveToggle(item.id);
-                  } : undefined}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+      {/* Grid or TikTok Feed */}
+      {feedMode === 'tiktok' ? (
+        filteredItems.length > 0 ? (
+          <div className="relative max-w-md mx-auto w-full h-[calc(100vh-21rem)] md:h-[calc(100vh-23rem)] rounded-[32px] overflow-hidden border border-black/10 bg-[#191919] shadow-[var(--shadow-premium-xl)]">
+            <div className="h-full w-full overflow-y-scroll snap-y snap-mandatory scrollbar-none">
+              {filteredItems.map((item) => {
+                const isSaved = 'ownershipType' in item ? item.savedBy?.includes(currentUser?.name || '') : false;
+                const cover = 'ownershipType' in item ? item.coverImage : 'bg-gradient-to-tr from-purple-900/60 via-slate-900 to-violet-950/40';
+                
+                const isGradient = cover ? cover.includes('from-') : false;
+                const bgClass = isGradient ? cover : '';
+                const bgStyle = (!isGradient && cover) ? { backgroundImage: `url(${cover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
+                
+                return (
+                  <div 
+                    key={item.id}
+                    className="snap-start shrink-0 h-full w-full relative overflow-hidden flex flex-col justify-between p-6 text-white"
+                  >
+                    <div 
+                      className={`absolute inset-0 opacity-40 z-0 bg-cover bg-center ${bgClass}`}
+                      style={bgStyle}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/60 z-10" />
+
+                    <div className="relative z-20 flex justify-between items-center">
+                      <span className="px-3.5 py-1 text-[9px] font-extrabold uppercase tracking-wider bg-[#92D000] text-[#191919] rounded-full border border-[#92D000]/20 shadow-sm">
+                        {'ownershipType' in item ? item.category : 'Promotion'}
+                      </span>
+                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#92D000]/80">
+                        {'ownershipType' in item ? item.ownershipType : 'Services'}
+                      </span>
+                    </div>
+
+                    <div className="relative z-20 space-y-4 mt-auto text-left">
+                      <div className="space-y-2">
+                        <div className="text-[#92D000] text-[10px] font-extrabold uppercase tracking-widest">
+                          {item.date} {('time' in item) && `• ${(item as any).time}`}
+                        </div>
+                        <h2 className="text-2xl font-extrabold uppercase tracking-tight text-white line-clamp-2 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+                          {item.title}
+                        </h2>
+                        <p className="text-xs text-gray-300 line-clamp-3 leading-relaxed font-light">
+                          {item.description}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 text-xs text-gray-400 font-semibold">
+                        <MapPin className="h-4 w-4 text-[#92D000]" />
+                        <span className="truncate">{('location' in item) ? (item as any).location : (item as any).organizer}</span>
+                      </div>
+
+                      <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          {'ownershipType' in item && (
+                            <button 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                saveToggle(item.id);
+                              }}
+                              className="flex flex-col items-center gap-1 cursor-pointer group"
+                            >
+                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all text-white">
+                                <Heart className={`h-4.5 w-4.5 ${isSaved ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
+                              </div>
+                              <span className="text-[8px] font-bold uppercase tracking-wider text-gray-400">Save</span>
+                            </button>
+                          )}
+                        </div>
+
+                        <Button 
+                          variant="neon" 
+                          size="sm" 
+                          onClick={() => handleCardClick(item)}
+                          className="h-11 px-6 shadow-lg shadow-[#92D000]/10"
+                        >
+                          {'ownershipType' in item ? 'RSVP & Info' : 'Contact / Info'}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <EmptyState
+            icon={<Compass className="h-8 w-8 text-gray-400" />}
+            title="No events found"
+            description="Try adjusting your search or category filters to discover campus activities."
+          />
+        )
       ) : (
-        <EmptyState
-          icon={<Compass className="h-8 w-8 text-gray-400" />}
-          title="No events found"
-          description="Try adjusting your search or category filters to discover campus activities."
-        />
+        /* Original Grid view */
+        filteredItems.length > 0 ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <AnimatePresence mode="popLayout">
+              {filteredItems.map((item) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <EventCard
+                    event={item}
+                    onClick={() => handleCardClick(item)}
+                    isSaved={'ownershipType' in item ? item.savedBy?.includes(currentUser?.name || '') : false}
+                    onSave={'ownershipType' in item ? (e) => {
+                      e.stopPropagation();
+                      saveToggle(item.id);
+                    } : undefined}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        ) : (
+          <EmptyState
+            icon={<Compass className="h-8 w-8 text-gray-400" />}
+            title="No events found"
+            description="Try adjusting your search or category filters to discover campus activities."
+          />
+        )
       )}
 
       {/* Custom Promotion Details Modal */}
@@ -358,7 +482,7 @@ export default function StudentEventsFeed() {
                       Category: {selectedPromo.category}
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <Calendar className="h-3.5 w-3.5 text-[#BDFB04]" />
+                      <Calendar className="h-3.5 w-3.5 text-[#92D000]" />
                       Posted: {new Date(selectedPromo.date).toLocaleDateString()}
                     </span>
                   </div>
@@ -380,7 +504,7 @@ export default function StudentEventsFeed() {
                         <span className="font-bold">{selectedPromo.organizer}</span>
                       </div>
                       <div className="flex items-center gap-2 text-xs text-[#4F5666]">
-                        <Mail className="h-3.5 w-3.5 text-[#BDFB04] shrink-0" />
+                        <Mail className="h-3.5 w-3.5 text-[#92D000] shrink-0" />
                         <span className="break-all">{selectedPromo.contactInfo}</span>
                       </div>
                     </div>
@@ -397,7 +521,7 @@ export default function StudentEventsFeed() {
                   </Button>
                   <a 
                     href={`mailto:${selectedPromo.contactInfo}?subject=Inquiry about: ${selectedPromo.title}`}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#BDFB04] hover:bg-[#BDFB04]/90 text-[#191919] rounded-xl text-xs font-bold transition-all shadow-lg shadow-orange-500/10"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#92D000] hover:bg-[#92D000]/90 text-[#191919] rounded-xl text-xs font-bold transition-all shadow-lg shadow-orange-500/10"
                   >
                     <Mail className="h-4 w-4" />
                     Contact Organizer

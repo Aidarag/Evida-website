@@ -14,14 +14,14 @@ export default function AboutPage() {
       {/* Hero Header */}
       <section className="relative w-full bg-[#191919] pt-36 pb-20 overflow-hidden text-center flex flex-col items-center">
         {/* Ambient Brand Glowing Blob */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#BDFB04]/8 rounded-full blur-[110px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#92D000]/8 rounded-full blur-[110px] pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 space-y-4">
           <span className="rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white/90 backdrop-blur-md">
             MEET EVIDA
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
-            About <span className="text-[#BDFB04]">Evida</span>
+            About <span className="text-[#92D000]">Evida</span>
           </h1>
           <p className="text-white/70 text-sm md:text-base max-w-xl mx-auto font-light leading-relaxed">
             Discover how we are building the digital home of campus life, connecting students and organizations in one unified experience.
@@ -51,7 +51,7 @@ export default function AboutPage() {
             <div className="space-y-1 text-xs font-semibold">
               <p className="text-white font-bold text-base mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
               <p>Campus Event & Engagement Platform</p>
-              <p className="pt-2 hover:text-[#BDFB04] transition-colors cursor-pointer">Email: hello@evida.app</p>
+              <p className="pt-2 hover:text-[#92D000] transition-colors cursor-pointer">Email: hello@evida.app</p>
             </div>
           </div>
 
@@ -96,12 +96,12 @@ export default function AboutPage() {
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#BDFB04] transition-colors"
+                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#92D000] transition-colors"
                 required
               />
               <button 
                 type="submit"
-                className="bg-[#BDFB04] text-[#191919] px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#191919] transition-all duration-300 whitespace-nowrap"
+                className="bg-[#92D000] text-[#191919] px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#191919] transition-all duration-300 whitespace-nowrap"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 Subscribe
@@ -112,7 +112,7 @@ export default function AboutPage() {
 
         {/* Bottom Slogan */}
         <div className="relative text-center border-t border-white/5 pt-8 pb-4">
-          <p className="text-[#BDFB04] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+          <p className="text-[#92D000] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
             Evida — Campus life, all in one place.
           </p>
         </div>

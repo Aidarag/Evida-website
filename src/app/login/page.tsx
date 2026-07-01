@@ -87,7 +87,7 @@ export default function LoginPage() {
       
       setTimeout(() => {
         if (selectedRole === 'student') {
-          router.push('/student/events');
+          router.push('/student/dashboard');
         } else {
           router.push('/school/dashboard');
         }
@@ -150,7 +150,7 @@ export default function LoginPage() {
       navigateTo('success');
       
       setTimeout(() => {
-        router.push('/student/events');
+        router.push('/student/dashboard');
       }, 1500);
     }, 1000);
   };
@@ -201,9 +201,9 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[var(--color-primary-bg)] flex items-center justify-center p-6 max-sm:p-4 relative overflow-hidden font-sans">
       {/* Dynamic Background Glowing Blobs */}
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#BDFB04]/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#BDFB04]/4 blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#BDFB04]/3 blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#92D000]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#92D000]/4 blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#92D000]/3 blur-[140px] pointer-events-none" />
 
       {/* Back to Home Button */}
       {step === 'role-selection' && (
@@ -276,10 +276,10 @@ export default function LoginPage() {
                     {/* Student Option */}
                     <button
                       onClick={() => handleRoleSelect('student')}
-                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#BDFB04] transition-all duration-300 cursor-pointer text-left group"
+                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#92D000] transition-all duration-300 cursor-pointer text-left group"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="h-12 w-12 rounded-xl bg-[#BDFB04]/10 text-[#BDFB04] flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <div className="h-12 w-12 rounded-xl bg-[#92D000]/10 text-[#92D000] flex items-center justify-center group-hover:scale-105 transition-transform">
                           <GraduationCap className="h-6 w-6" />
                         </div>
                         <div>
@@ -287,7 +287,7 @@ export default function LoginPage() {
                           <p className="text-xs text-[#4F5666] mt-0.5 max-w-[220px]">Discover events, join clubs, and connect with peers.</p>
                         </div>
                       </div>
-                      <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#BDFB04] group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#92D000] group-hover:translate-x-1 transition-all" />
                     </button>
 
                     {/* Admin Option */}
@@ -311,7 +311,7 @@ export default function LoginPage() {
                   <div className="pt-4 border-t border-black/[0.06] text-center">
                     <p className="text-xs text-[#4F5666]">
                       Don't have an account?{' '}
-                      <Link href="/signup" className="text-[#191919] font-bold underline decoration-2 decoration-[#BDFB04] hover:text-[#191919]/80 transition-all">
+                      <Link href="/signup" className="text-[#191919] font-bold underline decoration-2 decoration-[#92D000] hover:text-[#191919]/80 transition-all">
                         Sign up here
                       </Link>
                     </p>
@@ -336,7 +336,7 @@ export default function LoginPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="e.g. yourname@university.edu"
-                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                       />
                     </div>
                   </div>
@@ -346,7 +346,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
+                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
                   >
                     {isLoading ? 'Sending Code...' : 'Send Verification Code'}
                     {!isLoading && <ArrowRight className="h-4 w-4" />}
@@ -372,7 +372,7 @@ export default function LoginPage() {
                         value={verificationCode}
                         onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
                         placeholder="123456"
-                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-bold"
+                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-bold"
                       />
                     </div>
                     <p className="text-[10px] text-[#4F5666] leading-relaxed">
@@ -386,7 +386,7 @@ export default function LoginPage() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
                     >
                       {isLoading ? 'Verifying...' : 'Verify & Sign In'}
                     </button>
@@ -429,7 +429,7 @@ export default function LoginPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="dean.williams@university.edu"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -449,7 +449,7 @@ export default function LoginPage() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="••••••••"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
                         />
                       </div>
                     </div>
@@ -461,7 +461,7 @@ export default function LoginPage() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50 shadow-[0_4px_14px_rgba(32, 54, 39, 0.1)]"
                     >
                       {isLoading ? 'Authenticating...' : 'Sign In as Admin'}
                     </button>
@@ -508,7 +508,7 @@ export default function LoginPage() {
                   </div>
 
                   <div className="flex justify-center pt-2">
-                    <div className="w-6 h-6 border-2 border-[#BDFB04] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-6 h-6 border-2 border-[#92D000] border-t-transparent rounded-full animate-spin" />
                   </div>
                 </div>
               )}

@@ -30,7 +30,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
             className="fixed inset-0 z-55 flex flex-col items-center justify-center bg-[#DFDED7]"
           >
             {/* Ambient Brand Glowing Blob */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#BDFB04]/4 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#92D000]/4 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="flex flex-col items-center gap-4 z-10">
               {/* Custom SVG Logo Assembly */}
@@ -45,7 +45,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
                   {/* Left Ribbon: slides from the left and snaps into place */}
                   <motion.path
                     d="M 6 42 L 6 22 L 24 6 L 24 15 L 15 24 L 15 42 Z"
-                    fill="#BDFB04"
+                    fill="#92D000"
                     initial={{ x: -40, opacity: 0 }}
                     animate={{ x: 0, opacity: 0.95 }}
                     transition={{ 
@@ -59,7 +59,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
                   {/* Right Ribbon: slides from the right and snaps into place */}
                   <motion.path
                     d="M 42 42 L 42 22 L 24 6 L 24 15 L 33 24 L 33 42 Z"
-                    fill="#BDFB04"
+                    fill="#92D000"
                     initial={{ x: 40, opacity: 0 }}
                     animate={{ x: 0, opacity: 0.95 }}
                     transition={{ 
@@ -89,7 +89,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
                 <motion.text
                   x="56"
                   y="33"
-                  fill="#BDFB04"
+                  fill="#92D000"
                   fontFamily="var(--font-display), Inter, sans-serif"
                   fontWeight="900"
                   fontSize="28"
@@ -117,7 +117,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
-                  className="w-4 h-4 border-2 border-[#BDFB04]/20 border-t-[#BDFB04] rounded-full"
+                  className="w-4 h-4 border-2 border-[#92D000]/20 border-t-[#92D000] rounded-full"
                 />
               </motion.div>
             </div>

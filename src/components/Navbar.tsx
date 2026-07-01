@@ -59,7 +59,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                   <Link 
                     key={link.href}
                     href={link.href} 
-                    className="text-[11px] font-bold uppercase tracking-widest text-[#4F5666] hover:text-[#BDFB04] transition-colors duration-300"
+                    className="text-[11px] font-bold uppercase tracking-widest text-[#4F5666] hover:text-[#92D000] transition-colors duration-300"
                   >
                     {link.label}
                   </Link>
@@ -75,13 +75,13 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                 <div className="hidden md:flex items-center gap-4">
                   <Link 
                     href="/login" 
-                    className="px-5 py-2 font-bold uppercase tracking-widest text-[11px] text-[#4F5666] hover:text-[#BDFB04] transition-colors duration-300"
+                    className="px-5 py-2 font-bold uppercase tracking-widest text-[11px] text-[#4F5666] hover:text-[#92D000] transition-colors duration-300"
                   >
                     Sign In
                   </Link>
                   <Link 
                     href="/signup" 
-                    className="px-6 py-2.5 font-bold uppercase tracking-widest text-[11px] rounded-full bg-[#BDFB04] text-[#191919] shadow-[0_4px_12px_rgba(32, 54, 39, 0.1)] hover:bg-[#BDFB04]/90 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                    className="px-6 py-2.5 font-bold uppercase tracking-widest text-[11px] rounded-full bg-[#92D000] text-[#191919] shadow-[0_4px_12px_rgba(32, 54, 39, 0.1)] hover:bg-[#92D000]/90 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                   >
                     Sign Up
                   </Link>
@@ -90,7 +90,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                 {/* Mobile Hamburger Button */}
                 <button 
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="lg:hidden p-2 focus:outline-none text-[#191919] hover:text-[#BDFB04] transition-colors z-55 cursor-pointer"
+                  className="lg:hidden p-2 focus:outline-none text-[#191919] hover:text-[#92D000] transition-colors z-55 cursor-pointer"
                 >
                   {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
@@ -99,10 +99,10 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
             {/* Student Logged In */}
             {variant === 'student' && (
               <>
-                <Link href="/student/create" className="px-5 py-2 rounded-full bg-[#BDFB04] text-[#191919] text-[11px] font-bold uppercase tracking-wider hover:bg-[#BDFB04]/90 transition-colors shadow-[0_4px_12px_rgba(255,90,31,0.15)]">
+                <Link href="/student/create" className="px-5 py-2 rounded-full bg-[#92D000] text-[#191919] text-[11px] font-bold uppercase tracking-wider hover:bg-[#92D000]/90 transition-colors shadow-[0_4px_12px_rgba(255,90,31,0.15)]">
                   Create
                 </Link>
-                <Link href="/student/profile" className="h-9 w-9 rounded-full bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex items-center justify-center text-[#BDFB04] text-xs font-bold cursor-pointer">
+                <Link href="/student/profile" className="h-9 w-9 rounded-full bg-[#92D000]/10 border border-[#92D000]/20 flex items-center justify-center text-[#92D000] text-xs font-bold cursor-pointer">
                   MC
                 </Link>
               </>
@@ -110,7 +110,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
             {/* School Logged In */}
             {variant === 'school' && (
               <>
-                <Link href="/student/events" className="text-xs font-bold text-[#BDFB04] hover:text-[#d8ee2e] uppercase tracking-wider transition-colors cursor-pointer">
+                <Link href="/student/events" className="text-xs font-bold text-[#92D000] hover:text-[#d8ee2e] uppercase tracking-wider transition-colors cursor-pointer">
                   Student Portal
                 </Link>
                 <div className="h-9 w-9 rounded-full bg-black/5 border border-black/10 flex items-center justify-center text-[#191919] text-xs font-bold">
@@ -131,7 +131,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
                 key={link.href}
                 href={link.href} 
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-lg font-bold text-[#191919] hover:text-[#BDFB04] uppercase tracking-wider transition-colors py-2 border-b border-black/[0.04]"
+                className="text-lg font-bold text-[#191919] hover:text-[#92D000] uppercase tracking-wider transition-colors py-2 border-b border-black/[0.04]"
               >
                 {link.label}
               </Link>
@@ -148,7 +148,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
             <Link 
               href="/signup" 
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-3.5 text-xs font-bold bg-[#BDFB04] text-[#191919] rounded-full uppercase tracking-widest hover:bg-[#BDFB04]/90 shadow-[0_4px_12px_rgba(32, 54, 39, 0.1)] transition-all"
+              className="w-full text-center py-3.5 text-xs font-bold bg-[#92D000] text-[#191919] rounded-full uppercase tracking-widest hover:bg-[#92D000]/90 shadow-[0_4px_12px_rgba(32, 54, 39, 0.1)] transition-all"
             >
               Sign Up
             </Link>
@@ -200,7 +200,7 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
               <Link key={tab.href} href={tab.href} className="-mt-6">
                 <motion.div
                   whileTap={{ scale: 0.9 }}
-                  className="h-14 w-14 rounded-full bg-[#BDFB04] flex items-center justify-center shadow-lg shadow-[#191919]/10 cursor-pointer"
+                  className="h-14 w-14 rounded-full bg-[#92D000] flex items-center justify-center shadow-lg shadow-[#191919]/10 cursor-pointer"
                 >
                   <Plus className="h-6 w-6 text-[#191919] stroke-[2.5]" />
                 </motion.div>
@@ -252,8 +252,8 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
   ];
 
   const links = variant === 'school' ? schoolLinks : studentLinks;
-  const activeColorClass = 'bg-[#BDFB04]/8 text-[#BDFB04] border-[#BDFB04]/10';
-  const hoverColorClass = 'hover:text-[#BDFB04] hover:bg-black/[0.01]';
+  const activeColorClass = 'bg-[#92D000]/8 text-[#92D000] border-[#92D000]/10';
+  const hoverColorClass = 'hover:text-[#92D000] hover:bg-black/[0.01]';
 
   return (
     <aside className="hidden md:flex w-64 bg-[#DFDED7] border-r border-black/[0.04] flex-col justify-between p-6 sticky top-16 h-[calc(100vh-64px)] shrink-0">
@@ -284,12 +284,12 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
       <div className="space-y-3">
         <div className="border-t border-black/[0.04] pt-4">
           {variant === 'student' ? (
-            <Link href="/school/dashboard" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#7B8290] hover:text-[#BDFB04] transition-colors cursor-pointer">
+            <Link href="/school/dashboard" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#7B8290] hover:text-[#92D000] transition-colors cursor-pointer">
               <Shield className="h-4 w-4" />
               School Dashboard
             </Link>
           ) : (
-            <Link href="/student/events" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#7B8290] hover:text-[#BDFB04] transition-colors cursor-pointer">
+            <Link href="/student/events" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#7B8290] hover:text-[#92D000] transition-colors cursor-pointer">
               <Compass className="h-4 w-4" />
               Student Portal
             </Link>

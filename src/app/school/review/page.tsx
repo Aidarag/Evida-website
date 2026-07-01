@@ -27,7 +27,7 @@ export default function ReviewQueuePage() {
 
   const getComplexityColor = (type: string) => {
     if (type === 'quick') return 'bg-[#eb5e28]/10 text-[#191919] border-[#eb5e28]/20';
-    if (type === 'standard') return 'bg-[#BDFB04]/15 text-[#191919] border-[#BDFB04]/25';
+    if (type === 'standard') return 'bg-[#92D000]/15 text-[#191919] border-[#92D000]/25';
     return 'bg-[#EE3D5A]/10 text-[#191919] border-[#EE3D5A]/20';
   };
 

@@ -16,7 +16,7 @@
   --color-tertiary-text: #7B8290;
   
   /* Colors – Brand Accents */
-  --color-evida-orange: #BDFB04;
+  --color-evida-orange: #92D000;
   --color-evida-blue: #9DC4D5;
   --color-evida-purple: #9DC4D5;
   --color-evida-success: #22C55E;
@@ -141,7 +141,7 @@ h3, .text-heading-3 {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #FFFFFF;
-  background: #BDFB04;
+  background: #92D000;
   border: none;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);

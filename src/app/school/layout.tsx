@@ -13,7 +13,7 @@ export default function SchoolLayout({
       <div className="md:hidden sticky top-0 z-40 w-full h-14 border-b border-black/[0.04] bg-[#DFDED7]/90 backdrop-blur-xl flex items-center justify-center">
         <span className="text-lg font-bold tracking-tight text-[#191919] flex items-center gap-2">
           <EvidaLogo size={22} showText={true} lightMode={true} />
-          <span className="text-[10px] bg-[#BDFB04] text-[#191919] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider">Admin</span>
+          <span className="text-[10px] bg-[#92D000] text-[#191919] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider">Admin</span>
         </span>
       </div>
 

@@ -375,7 +375,7 @@ export default function CreateListingPage() {
                       <label className="block text-[10px] font-bold text-[#4F5666] uppercase tracking-widest">Select Club / Organization</label>
                       {myOrgs.length > 0 ? (
                         <select 
-                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] font-medium cursor-pointer"
+                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] font-medium cursor-pointer"
                           value={eventForm.selectedOrgId}
                           onChange={e => setEventForm({...eventForm, selectedOrgId: e.target.value})}
                           required
@@ -420,7 +420,7 @@ export default function CreateListingPage() {
                     <div className="space-y-1.5">
                       <label className="block text-[10px] font-bold text-[#4F5666] uppercase tracking-widest">Description</label>
                       <textarea 
-                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] min-h-[120px] resize-none font-medium leading-relaxed"
+                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] min-h-[120px] resize-none font-medium leading-relaxed"
                         placeholder="What should campus know about this event?"
                         value={eventForm.description}
                         onChange={e => setEventForm({...eventForm, description: e.target.value})}
@@ -459,7 +459,7 @@ export default function CreateListingPage() {
                         <div className="space-y-1.5">
                           <label className="block text-[10px] font-bold text-[#4F5666] uppercase tracking-widest">Category</label>
                           <select 
-                            className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] font-medium cursor-pointer"
+                            className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] font-medium cursor-pointer"
                             value={eventForm.category}
                             onChange={e => setEventForm({...eventForm, category: e.target.value})}
                           >
@@ -497,7 +497,7 @@ export default function CreateListingPage() {
                                 onChange={e => setEventForm({...eventForm, isFeatured: e.target.checked})}
                                 className="sr-only peer" 
                               />
-                              <div className="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#BDFB04]"></div>
+                              <div className="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#92D000]"></div>
                               <span className="ml-3 text-xs font-semibold text-[#191919]">Feature on Landing Page</span>
                             </label>
                           </div>
@@ -548,7 +548,7 @@ export default function CreateListingPage() {
                     <div className="space-y-1.5">
                       <label className="block text-[10px] font-bold text-[#4F5666] uppercase tracking-widest">Service Description</label>
                       <textarea 
-                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] min-h-[120px] resize-none font-medium leading-relaxed"
+                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] min-h-[120px] resize-none font-medium leading-relaxed"
                         placeholder="Explain your service, rates, timings, or initiative details..."
                         value={promoForm.description}
                         onChange={e => setPromoForm({...promoForm, description: e.target.value})}
@@ -560,7 +560,7 @@ export default function CreateListingPage() {
                       <div className="space-y-1.5">
                         <label className="block text-[10px] font-bold text-[#4F5666] uppercase tracking-widest">Promotion Category</label>
                         <select 
-                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] font-medium cursor-pointer"
+                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] font-medium cursor-pointer"
                           value={promoForm.category}
                           onChange={e => setPromoForm({...promoForm, category: e.target.value})}
                         >

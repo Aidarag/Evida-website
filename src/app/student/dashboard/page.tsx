@@ -55,11 +55,11 @@ export default function StudentDashboardPage() {
   const upcomingEvents = filteredEvents.slice(3, 8);
 
   const categories = [
-    { name: 'All', icon: Compass, color: '#BDFB04', img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=80&h=80&fit=crop' },
+    { name: 'All', icon: Compass, color: '#92D000', img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=80&h=80&fit=crop' },
     { name: 'Sports', icon: Trophy, color: '#22C55E', img: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=80&h=80&fit=crop' },
-    { name: 'Music', icon: Music, color: '#BDFB04', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=80&h=80&fit=crop' },
-    { name: 'Parties', icon: Wine, color: '#BDFB04', img: 'https://images.unsplash.com/photo-1496337589254-7e19d01eae44?w=80&h=80&fit=crop' },
-    { name: 'Workshops', icon: Cpu, color: '#BDFB04', img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=80&h=80&fit=crop' },
+    { name: 'Music', icon: Music, color: '#92D000', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=80&h=80&fit=crop' },
+    { name: 'Parties', icon: Wine, color: '#92D000', img: 'https://images.unsplash.com/photo-1496337589254-7e19d01eae44?w=80&h=80&fit=crop' },
+    { name: 'Workshops', icon: Cpu, color: '#92D000', img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=80&h=80&fit=crop' },
     { name: 'Clubs', icon: GraduationCap, color: '#FFB800', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=80&h=80&fit=crop' }
   ];
 
@@ -80,7 +80,7 @@ export default function StudentDashboardPage() {
       {/* 1. Header (Avatar + School Location Selector & Circular Actions) */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="h-11 w-11 rounded-full bg-[#BDFB04] text-[#191919] flex items-center justify-center font-bold border-2 border-white shadow-md text-sm cursor-pointer hover:scale-102 transition-transform" onClick={() => router.push('/student/profile')}>
+          <div className="h-11 w-11 rounded-full bg-[#92D000] text-[#191919] flex items-center justify-center font-bold border-2 border-white shadow-md text-sm cursor-pointer hover:scale-102 transition-transform" onClick={() => router.push('/student/profile')}>
             {currentUser.avatar || currentUser.name.substring(0, 2).toUpperCase()}
           </div>
           <div>
@@ -115,10 +115,10 @@ export default function StudentDashboardPage() {
             placeholder="Search events..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-black/[0.025] border border-black/[0.04] text-[#191919] placeholder-gray-400 rounded-full pl-12 pr-4 py-3.5 text-xs focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all"
+            className="w-full bg-black/[0.025] border border-black/[0.04] text-[#191919] placeholder-gray-400 rounded-full pl-12 pr-4 py-3.5 text-xs focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all"
           />
         </div>
-        <button className="h-11 w-11 rounded-full bg-black/[0.025] border border-black/[0.04] flex items-center justify-center text-[#4F5666] hover:text-[#BDFB04] transition-colors shrink-0 cursor-pointer">
+        <button className="h-11 w-11 rounded-full bg-black/[0.025] border border-black/[0.04] flex items-center justify-center text-[#4F5666] hover:text-[#92D000] transition-colors shrink-0 cursor-pointer">
           <SlidersHorizontal className="h-4 w-4" />
         </button>
       </div>
@@ -129,7 +129,7 @@ export default function StudentDashboardPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-0" />
         
         <div className="relative z-10 space-y-2 text-left">
-          <span className="bg-[#BDFB04]/90 backdrop-blur-sm text-[8px] font-bold text-white px-2.5 py-1 rounded-full uppercase tracking-[0.2em] w-fit block mb-1">
+          <span className="bg-[#92D000]/90 backdrop-blur-sm text-[8px] font-bold text-white px-2.5 py-1 rounded-full uppercase tracking-[0.2em] w-fit block mb-1">
             Featured Event
           </span>
           <h2 className="text-white font-extrabold text-lg sm:text-xl uppercase tracking-wide leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -147,7 +147,7 @@ export default function StudentDashboardPage() {
           <h3 className="text-sm font-bold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
             Categories for you
           </h3>
-          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#BDFB04] hover:text-[#d8ee2e] transition-colors">
+          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#92D000] hover:text-[#d8ee2e] transition-colors">
             See all
           </Link>
         </div>
@@ -164,13 +164,13 @@ export default function StudentDashboardPage() {
                 {/* Clean icon container like mockup */}
                 <div className={`h-12 w-12 rounded-2xl flex items-center justify-center transition-all ${
                   isActive 
-                    ? 'bg-[#BDFB04] text-[#191919] shadow-lg shadow-[#BDFB04]/20 border border-[#BDFB04]' 
+                    ? 'bg-[#92D000] text-[#191919] shadow-lg shadow-[#92D000]/20 border border-[#92D000]' 
                     : 'bg-black/[0.03] border border-black/[0.04] text-[#4F5666] hover:bg-black/5 hover:text-[#191919]'
                 }`}>
                   <cat.icon className="h-4.5 w-4.5 stroke-[2.5]" />
                 </div>
                 <span className={`text-[9px] font-extrabold uppercase tracking-wider transition-colors ${
-                  isActive ? 'text-[#BDFB04]' : 'text-[#4F5666]'
+                  isActive ? 'text-[#92D000]' : 'text-[#4F5666]'
                 }`}>
                   {cat.name}
                 </span>
@@ -186,7 +186,7 @@ export default function StudentDashboardPage() {
           <h3 className="text-sm font-bold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
             Featured Events
           </h3>
-          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#BDFB04] hover:text-[#d8ee2e] transition-colors">
+          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#92D000] hover:text-[#d8ee2e] transition-colors">
             See all
           </Link>
         </div>
@@ -224,8 +224,8 @@ export default function StudentDashboardPage() {
                       }}
                       className={`h-7 w-7 rounded-full flex items-center justify-center backdrop-blur-md transition-all border ${
                         isSaved 
-                          ? 'bg-[#BDFB04] border-[#BDFB04] text-[#191919]' 
-                          : 'bg-black/30 border-white/10 text-white hover:bg-white hover:text-[#BDFB04]'
+                          ? 'bg-[#92D000] border-[#92D000] text-[#191919]' 
+                          : 'bg-black/30 border-white/10 text-white hover:bg-white hover:text-[#92D000]'
                       }`}
                     >
                       <Heart className="h-3.5 w-3.5 stroke-[2.5]" />
@@ -280,7 +280,7 @@ export default function StudentDashboardPage() {
           <h3 className="text-sm font-bold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
             Upcoming Events
           </h3>
-          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#BDFB04] hover:text-[#d8ee2e] transition-colors">
+          <Link href="/student/events" className="text-[11px] font-bold uppercase tracking-widest text-[#92D000] hover:text-[#d8ee2e] transition-colors">
             See all
           </Link>
         </div>
@@ -307,7 +307,7 @@ export default function StudentDashboardPage() {
                         e.stopPropagation();
                         saveToggle(event.id);
                       }}
-                      className="absolute top-1 left-1 h-5.5 w-5.5 rounded-full bg-black/30 border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-[#BDFB04] transition-all"
+                      className="absolute top-1 left-1 h-5.5 w-5.5 rounded-full bg-black/30 border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-[#92D000] transition-all"
                     >
                       <Heart className={`h-3 w-3 ${isSaved ? 'fill-white text-white' : ''}`} />
                     </button>
@@ -316,7 +316,7 @@ export default function StudentDashboardPage() {
                   {/* Right Side: Event Details */}
                   <div className="flex-1 flex justify-between items-end gap-3 text-left">
                     <div className="space-y-1">
-                      <span className="text-[9px] font-bold text-[#BDFB04] uppercase tracking-wider block">
+                      <span className="text-[9px] font-bold text-[#92D000] uppercase tracking-wider block">
                         October {day}, 2026
                       </span>
                       <h4 className="font-extrabold text-[13px] text-[#191919] uppercase tracking-wide leading-tight line-clamp-1" style={{ fontFamily: 'var(--font-display)' }}>
@@ -330,7 +330,7 @@ export default function StudentDashboardPage() {
                     {/* Join button */}
                     <button 
                       onClick={(e) => handleRsvpClick(event.id, e)}
-                      className="bg-[#BDFB04] hover:bg-[#BDFB04]/90 text-[#191919] text-[8px] font-bold uppercase tracking-widest px-4 py-2.5 rounded-full transition-colors shadow-md shadow-orange-500/10 cursor-pointer shrink-0"
+                      className="bg-[#92D000] hover:bg-[#92D000]/90 text-[#191919] text-[8px] font-bold uppercase tracking-widest px-4 py-2.5 rounded-full transition-colors shadow-md shadow-orange-500/10 cursor-pointer shrink-0"
                     >
                       Join Now
                     </button>
