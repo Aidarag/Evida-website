@@ -56,7 +56,7 @@ export default function LandingPage() {
           {/* Headline Fluid Word Reveal (Fully responsive & optimized for all devices) */}
           <h1 
             style={{ fontFamily: 'var(--font-display)' }}
-            className="text-[clamp(1.45rem,6vw,4.5rem)] font-extrabold text-white leading-[1.15] md:leading-[1.1] tracking-tight select-none uppercase max-w-[280px] sm:max-w-xl md:max-w-5xl mx-auto"
+            className="text-[clamp(1.45rem,6.5vw,4.5rem)] font-extrabold text-white leading-[1.15] md:leading-[1.1] tracking-tight select-none uppercase max-w-xs sm:max-w-xl md:max-w-5xl mx-auto"
           >
             {headlineLines.map((line, idx) => (
               <React.Fragment key={idx}>
@@ -65,7 +65,7 @@ export default function LandingPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.15 + idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                  className={`inline-block ${idx === 2 ? "text-[#92D000]" : "text-white"}`}
+                  className={`inline-block whitespace-nowrap ${idx === 2 ? "text-[#92D000]" : "text-white"}`}
                 >
                   {line}
                 </motion.span>
