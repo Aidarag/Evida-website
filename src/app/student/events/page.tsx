@@ -304,7 +304,13 @@ export default function StudentEventsFeed() {
           onClick={() => router.push(`/events/${featuredEvent.id}`)}
           className="relative rounded-[32px] overflow-hidden aspect-[16/9] md:aspect-[21/9] cursor-pointer group border border-black/[0.04] shadow-md"
         >
-          <div className={`absolute inset-0 bg-gradient-to-tr ${featuredEvent.coverImage} opacity-45 group-hover:opacity-55 transition-opacity duration-500`} />
+          <div 
+            className="absolute inset-0 opacity-45 group-hover:opacity-55 transition-opacity duration-500"
+            style={featuredEvent.coverImage.startsWith('/') 
+              ? { backgroundImage: `url(${featuredEvent.coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+              : { background: `linear-gradient(to top right, var(--tw-gradient-stops))` }
+            }
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent z-10" />
           
           <div className="absolute inset-x-8 bottom-8 z-20 flex flex-col items-start gap-3">
@@ -334,7 +340,7 @@ export default function StudentEventsFeed() {
         filteredItems.length > 0 ? (
           isMobile ? (
             /* MOBILE SCREEN-FILLING TIKTOK SWIPE FEED */
-            <div className="fixed inset-0 z-40 bg-[#151515] flex flex-col justify-between w-screen h-screen overflow-hidden font-sans">
+            <div className="fixed inset-0 z-[60] bg-[#151515] flex flex-col w-screen h-screen overflow-hidden font-sans">
               
               {/* Floating Header Mode Toggle for Mobile TikTok Feed */}
               <div className="absolute top-6 inset-x-0 z-50 flex justify-center pointer-events-none">
@@ -369,7 +375,7 @@ export default function StudentEventsFeed() {
                   return (
                     <div 
                       key={`mobile-feed-${item.id}`}
-                      className="snap-start shrink-0 h-screen w-full relative overflow-hidden flex flex-col justify-between p-6 pb-24 text-white bg-[#191919]"
+                      className="snap-start shrink-0 h-[100svh] w-full relative overflow-hidden flex flex-col justify-between text-white bg-[#191919]"
                     >
                       <div 
                         className={`absolute inset-0 opacity-55 z-0 bg-cover bg-center ${bgClass}`}
@@ -377,8 +383,8 @@ export default function StudentEventsFeed() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-black/55 z-10" />
 
-                      {/* Top Segment spacing */}
-                      <div className="relative z-20 flex justify-between items-center pt-20">
+                      {/* Top Segment - pushed down past the floating toggle */}
+                      <div className="relative z-20 flex justify-between items-center px-5 pt-24">
                         <span className="px-3.5 py-1.5 text-[9px] font-extrabold uppercase tracking-wider bg-[#92D000] text-[#191919] rounded-full border border-[#92D000]/20 shadow-sm">
                           {'ownershipType' in item ? item.category : 'Promotion'}
                         </span>
@@ -388,7 +394,8 @@ export default function StudentEventsFeed() {
                       </div>
 
                       {/* Bottom segment and Right-side Action Column */}
-                      <div className="relative z-20 flex items-end gap-4 mt-auto pb-4">
+                      {/* pb-28 = ~112px clears the bottom nav (4rem float + 4rem height) */}
+                      <div className="relative z-20 flex items-end gap-4 px-5 pb-28">
                         {/* Left: Info Details */}
                         <div className="flex-1 space-y-3.5 text-left">
                           <div className="space-y-2">
