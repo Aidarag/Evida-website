@@ -200,7 +200,7 @@ export default function EventFeed({
             </p>
           </div>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="-mx-4 flex space-x-4 overflow-x-auto pb-4 snap-x scroll-smooth md:mx-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredEvents.map((event) => {
               const isRsvped = event.attendees.includes(currentUser.name);
               const isInterested = event.interested.includes(currentUser.name);
@@ -209,7 +209,7 @@ export default function EventFeed({
                 <div
                   key={event.id}
                   onClick={() => onOpenDetails(event)}
-                  className={`relative flex flex-col justify-between overflow-hidden rounded-2xl glass-card p-5 cursor-pointer ${
+                  className={`relative flex flex-col justify-between overflow-hidden rounded-2xl glass-card p-5 cursor-pointer snap-center min-w-[280px] ${
                     event.featured ? 'border-violet-500/40 ring-1 ring-violet-500/20' : ''
                   }`}
                 >
@@ -317,11 +317,11 @@ export default function EventFeed({
             </p>
           </div>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="-mx-4 flex space-x-4 overflow-x-auto pb-4 snap-x scroll-smooth md:mx-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPromos.map((promo) => (
               <div
                 key={promo.id}
-                className="relative flex flex-col justify-between overflow-hidden rounded-2xl glass-card p-5 border border-white/5"
+                className="relative flex flex-col justify-between overflow-hidden rounded-2xl glass-card p-5 border border-white/5 snap-center min-w-[280px]"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
