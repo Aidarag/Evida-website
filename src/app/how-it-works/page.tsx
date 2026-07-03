@@ -18,9 +18,7 @@ export default function HowItWorksPage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#92D000]/8 rounded-full blur-[110px] pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 space-y-4">
-          <span className="rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white/90 backdrop-blur-md">
-            THE PLATFORM
-          </span>
+
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
             How It <span className="text-[#92D000]">Works</span>
           </h1>
@@ -45,14 +43,14 @@ export default function HowItWorksPage() {
                 lightBg: "bg-[#92D000]/8",
                 description: "Find exactly what you're looking for. Filter by category, date, or organization to discover the best of campus life."
               },
-              {
-                number: "02",
-                title: "Create",
-                icon: MousePointer2,
-                color: "#191919",
-                lightBg: "bg-black/5",
-                description: "Host your own event, workshop, or promotion. Customize the details and publish instantly for your club or community."
-              },
+                {
+                  number: "02",
+                  title: "Create",
+                  icon: MousePointer2,
+                  color: "#92D000",
+                  lightBg: "bg-[#92D000]/8",
+                  description: "Host your own event, workshop, or promotion. Customize the details and publish instantly for your club or community."
+                },
               {
                 number: "03",
                 title: "Attend",

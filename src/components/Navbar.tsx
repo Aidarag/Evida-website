@@ -73,16 +73,16 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
               <>
                 <div className="hidden md:flex items-center gap-4">
                   <Link 
-                    href="/login" 
-                    className="px-5 py-2 font-bold uppercase tracking-widest text-[11px] text-[#4F5666] hover:text-[#92D000] transition-colors duration-300"
-                  >
-                    Sign In
-                  </Link>
-                  <Link 
                     href="/signup" 
                     className="px-6 py-2.5 font-bold uppercase tracking-widest text-[11px] rounded-full bg-[#92D000] text-[#191919] shadow-[0_4px_12px_rgba(32, 54, 39, 0.1)] hover:bg-[#92D000]/90 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                   >
                     Sign Up
+                  </Link>
+                  <Link 
+                    href="/login" 
+                    className="px-5 py-2 font-bold uppercase tracking-widest text-[11px] text-[#4F5666] hover:text-[#92D000] transition-colors duration-300"
+                  >
+                    Sign In
                   </Link>
                 </div>
 

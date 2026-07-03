@@ -17,9 +17,7 @@ export default function AboutPage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#92D000]/8 rounded-full blur-[110px] pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 space-y-4">
-          <span className="rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white/90 backdrop-blur-md">
-            MEET EVIDA
-          </span>
+
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
             About <span className="text-[#92D000]">Evida</span>
           </h1>
