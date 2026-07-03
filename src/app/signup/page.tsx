@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, ArrowLeft, ArrowRight, GraduationCap, Shield, Mail, KeyRound, CheckCircle2, User, BookOpen, Calendar, Building, Lock, Upload, Camera, AlertCircle, ShieldCheck, Phone } from 'lucide-react';
+import { Sparkles, ArrowLeft, ArrowRight, GraduationCap, Shield, Mail, KeyRound, CheckCircle2, User, BookOpen, Calendar, Building, Upload, Camera, AlertCircle, ShieldCheck, Phone } from 'lucide-react';
 import { useUser } from '@/lib/context/UserContext';
 import Card from '@/components/ui/Card';
 import EvidaLogo from '@/components/ui/EvidaLogo';
@@ -20,8 +20,7 @@ export default function SignupPage() {
   
   // Auth Options Form State
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  // Password removed — easy access mode
   
   // Student Profile Onboarding State
   const [firstName, setFirstName] = useState('');
@@ -94,16 +93,8 @@ export default function SignupPage() {
 
   const handleEmailAuthSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError('Please enter both email and password.');
-      return;
-    }
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters.');
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+    if (!email) {
+      setError('Please enter your email.');
       return;
     }
 
@@ -112,17 +103,12 @@ export default function SignupPage() {
 
     setTimeout(() => {
       setIsLoading(false);
-      if (role === 'student') {
-        const code = Math.floor(100000 + Math.random() * 900000).toString();
-        setGeneratedCode(code);
-        navigateTo('verify-email', 'forward');
-      } else {
+      if (role === 'school') {
         setCustomSchoolName(detectSchool(email));
-        // Schools also need to verify email first
-        const code = Math.floor(100000 + Math.random() * 900000).toString();
-        setGeneratedCode(code);
-        navigateTo('verify-email', 'forward');
       }
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      setGeneratedCode(code);
+      navigateTo('verify-email', 'forward');
     }, 800);
   };
 
@@ -477,45 +463,7 @@ export default function SignupPage() {
                         </div>
                       </div>
 
-                      {/* Password */}
-                      <div className="space-y-1.5">
-                        <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
-                          Password
-                        </label>
-                        <div className="relative">
-                          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                            <Lock className="h-4 w-4" />
-                          </div>
-                          <input
-                            type="password"
-                            required
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Min. 6 characters"
-                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
-                          />
-                        </div>
-                      </div>
 
-                      {/* Confirm Password */}
-                      <div className="space-y-1.5">
-                        <label className="text-[10px] font-bold text-[#4F5666] uppercase tracking-widest block">
-                          Confirm Password
-                        </label>
-                        <div className="relative">
-                          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                            <Lock className="h-4 w-4" />
-                          </div>
-                          <input
-                            type="password"
-                            required
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            placeholder="Re-enter password"
-                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
-                          />
-                        </div>
-                      </div>
                     </div>
 
                     {error && (

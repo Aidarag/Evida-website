@@ -19,10 +19,10 @@ export async function POST(request: Request) {
       department,
     } = body;
 
-    // Validate required fields
-    if (!email || !password || !name || !role) {
+    // Validate required fields (password no longer required)
+    if (!email || !name || !role) {
       return NextResponse.json(
-        { error: 'Missing required fields: email, password, name, role' },
+        { error: 'Missing required fields: email, name, role' },
         { status: 400 }
       );
     }
@@ -35,12 +35,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (password.length < 6) {
-      return NextResponse.json(
-        { error: 'Password must be at least 6 characters.' },
-        { status: 400 }
-      );
-    }
+    // Password is optional for demo mode
 
     const db = readDB();
 

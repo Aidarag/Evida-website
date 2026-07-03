@@ -4,18 +4,18 @@ import { readDB } from '@/lib/db';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { email, password, role } = body;
+    const { email, role } = body;
 
-    if (!email || !password) {
+    if (!email) {
       return NextResponse.json(
-        { error: 'Email and password are required.' },
+        { error: 'Email is required.' },
         { status: 400 }
       );
     }
 
     const db = readDB();
 
-    // Find matching user
+    // Find matching user by email
     const user = db.users.find(
       (u) => u.email?.toLowerCase() === email.toLowerCase()
     );
@@ -23,14 +23,6 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json(
         { error: 'No account found with this email address.' },
-        { status: 401 }
-      );
-    }
-
-    // Check password
-    if (user.password !== password) {
-      return NextResponse.json(
-        { error: 'Incorrect password. Please try again.' },
         { status: 401 }
       );
     }

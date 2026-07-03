@@ -77,9 +77,20 @@ export function UserProvider({ children }: { children: ReactNode }) {
         if (parsed && parsed.username) {
           const matched = DEFAULT_USERS.find((u) => u.username === parsed.username);
           setCurrentUser(matched || parsed);
+        } else {
+          // No valid stored user — auto-login as default student
+          setCurrentUser(DEFAULT_USERS[0]);
+          localStorage.setItem('evida-user', JSON.stringify(DEFAULT_USERS[0]));
         }
       } catch {
         setCurrentUser(DEFAULT_USERS[0]);
+        localStorage.setItem('evida-user', JSON.stringify(DEFAULT_USERS[0]));
+      }
+    } else {
+      // No stored session at all — auto-login as default student
+      setCurrentUser(DEFAULT_USERS[0]);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('evida-user', JSON.stringify(DEFAULT_USERS[0]));
       }
     }
     setIsLoading(false);
@@ -97,7 +108,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('evida-user');
       sessionStorage.setItem('evida_force_redirect_splash', 'true');
-      window.location.href = '/login';
+      window.location.href = '/';
     }
   }, []);
 
