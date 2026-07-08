@@ -47,7 +47,7 @@ export default function FAQPage() {
       <main className="flex-1 max-w-3xl mx-auto w-full px-6 py-28 md:py-36 space-y-12">
         {/* Header */}
         <div className="text-center space-y-4">
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#191919] text-[#92D000] text-[10px] font-extrabold uppercase tracking-widest">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#191919] text-[#BDFB04] text-[10px] font-extrabold uppercase tracking-widest">
             <HelpCircle className="h-3.5 w-3.5" /> Frequently Asked Questions
           </span>
           <h1 className="text-4xl md:text-5xl font-extrabold uppercase tracking-tighter text-[#191919]" style={{ fontFamily: 'var(--font-display)' }}>
@@ -78,7 +78,7 @@ export default function FAQPage() {
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                     className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
-                      isOpen ? 'bg-[#92D000] text-[#191919]' : 'bg-black/5 text-[#4F5666]'
+                      isOpen ? 'bg-[#BDFB04] text-[#191919]' : 'bg-black/5 text-[#4F5666]'
                     }`}
                   >
                     <ChevronDown className="h-4 w-4" />
@@ -107,7 +107,7 @@ export default function FAQPage() {
         {/* Footer Accent */}
         <div className="pt-8 text-center">
           <p className="text-[10px] font-bold text-[#4F5666] uppercase tracking-wider flex items-center justify-center gap-1.5">
-            <Sparkles className="h-3.5 w-3.5 text-[#92D000]" />
+            <Sparkles className="h-3.5 w-3.5 text-[#BDFB04]" />
             Still confused? Contact hello@evida.app
           </p>
         </div>

@@ -21,6 +21,7 @@ export default function SignupPage() {
   // Auth Options Form State
   const [email, setEmail] = useState('');
   // Password removed — easy access mode
+  const password = 'nopassword';
   
   // Student Profile Onboarding State
   const [firstName, setFirstName] = useState('');
@@ -32,7 +33,7 @@ export default function SignupPage() {
   // Avatar Selection State
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
-  const [selectedColor, setSelectedColor] = useState('#92D000');
+  const [selectedColor, setSelectedColor] = useState('#BDFB04');
   const [avatarType, setAvatarType] = useState<'initials' | 'upload'>('initials');
 
   // School Onboarding State
@@ -280,9 +281,9 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-[var(--color-primary-bg)] flex items-center justify-center p-6 max-sm:p-4 relative overflow-hidden font-sans">
       {/* Background blobs */}
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#92D000]/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#92D000]/4 blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#92D000]/3 blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#BDFB04]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#BDFB04]/4 blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#BDFB04]/3 blur-[140px] pointer-events-none" />
 
       {/* Back to Home */}
       {step === 'role-selection' && (
@@ -316,7 +317,7 @@ export default function SignupPage() {
               </div>
               <div className="w-full h-1 bg-black/[0.06] rounded-full overflow-hidden">
                 <motion.div
-                  className="h-full bg-[#92D000] rounded-full"
+                  className="h-full bg-[#BDFB04] rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: `${(currentStepIdx / (totalSteps - 1)) * 100}%` }}
                   transition={{ duration: 0.4 }}
@@ -376,10 +377,10 @@ export default function SignupPage() {
                   <div className="grid grid-cols-1 gap-3">
                     <button
                       onClick={() => handleRoleSelect('student')}
-                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#92D000] transition-all duration-300 cursor-pointer text-left group"
+                      className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#BDFB04] transition-all duration-300 cursor-pointer text-left group"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="h-12 w-12 rounded-xl bg-[#92D000]/10 text-[#92D000] flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <div className="h-12 w-12 rounded-xl bg-[#BDFB04]/10 text-[#BDFB04] flex items-center justify-center group-hover:scale-105 transition-transform">
                           <GraduationCap className="h-6 w-6" />
                         </div>
                         <div>
@@ -387,7 +388,7 @@ export default function SignupPage() {
                           <p className="text-xs text-[#4F5666] mt-0.5 max-w-[220px]">Register with school email to join events and verify tickets.</p>
                         </div>
                       </div>
-                      <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#92D000] group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#BDFB04] group-hover:translate-x-1 transition-all" />
                     </button>
 
                     <button
@@ -410,7 +411,7 @@ export default function SignupPage() {
                   <div className="pt-4 border-t border-black/[0.06] text-center">
                     <p className="text-xs text-[#4F5666]">
                       Already have an account?{' '}
-                      <Link href="/login" className="text-[#191919] font-bold underline decoration-2 decoration-[#92D000] hover:text-[#191919]/80 transition-all">
+                      <Link href="/login" className="text-[#191919] font-bold underline decoration-2 decoration-[#BDFB04] hover:text-[#191919]/80 transition-all">
                         Sign in here
                       </Link>
                     </p>
@@ -458,7 +459,7 @@ export default function SignupPage() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder={role === 'student' ? "e.g. yourname@stateuni.edu" : "e.g. admin@stateuni.edu"}
-                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium"
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
                           />
                         </div>
                       </div>
@@ -476,7 +477,7 @@ export default function SignupPage() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
                     >
                       {isLoading ? 'Processing...' : 'Continue'}
                     </button>
@@ -511,7 +512,7 @@ export default function SignupPage() {
                         value={verificationCode}
                         onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
                         placeholder="123456"
-                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-bold"
+                        className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-3 pl-11 pr-4 text-xs text-[#191919] text-center tracking-[0.4em] font-mono focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-bold"
                       />
                     </div>
                   </div>
@@ -522,7 +523,7 @@ export default function SignupPage() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
                     >
                       {isLoading ? 'Verifying...' : 'Verify Code'}
                     </button>
@@ -550,7 +551,7 @@ export default function SignupPage() {
               {step === 'data-privacy' && (
                 <div className="space-y-5 pt-1">
                   <div className="text-center space-y-2">
-                    <div className="mx-auto h-12 w-12 rounded-full bg-[#92D000]/10 flex items-center justify-center text-[#92D000] border border-[#92D000]/20">
+                    <div className="mx-auto h-12 w-12 rounded-full bg-[#BDFB04]/10 flex items-center justify-center text-[#BDFB04] border border-[#BDFB04]/20">
                       <ShieldCheck className="h-5 w-5" />
                     </div>
                     <p className="text-[11px] text-[#4F5666] leading-relaxed max-w-xs mx-auto">
@@ -561,7 +562,7 @@ export default function SignupPage() {
                   {/* Policy Summary Card */}
                   <div className="bg-black/[0.02] border border-black/[0.06] rounded-2xl p-4 space-y-3 text-left max-h-44 overflow-y-auto">
                     <h3 className="text-[10px] font-extrabold text-[#191919] uppercase tracking-widest flex items-center gap-1.5">
-                      <ShieldCheck className="h-3 w-3 text-[#92D000]" /> What data we collect
+                      <ShieldCheck className="h-3 w-3 text-[#BDFB04]" /> What data we collect
                     </h3>
                     <ul className="text-[10px] text-[#4F5666] space-y-1.5 leading-relaxed list-disc pl-4">
                       <li><strong className="text-[#191919]">Account info:</strong> name, email, school, major, graduation year, profile photo</li>
@@ -571,7 +572,7 @@ export default function SignupPage() {
                     </ul>
 
                     <h3 className="text-[10px] font-extrabold text-[#191919] uppercase tracking-widest flex items-center gap-1.5 pt-2">
-                      <ShieldCheck className="h-3 w-3 text-[#92D000]" /> How we use your data
+                      <ShieldCheck className="h-3 w-3 text-[#BDFB04]" /> How we use your data
                     </h3>
                     <ul className="text-[10px] text-[#4F5666] space-y-1.5 leading-relaxed list-disc pl-4">
                       <li>To personalize your event feed and recommendations</li>
@@ -581,7 +582,7 @@ export default function SignupPage() {
                     </ul>
 
                     <h3 className="text-[10px] font-extrabold text-[#191919] uppercase tracking-widest flex items-center gap-1.5 pt-2">
-                      <ShieldCheck className="h-3 w-3 text-[#92D000]" /> Your rights
+                      <ShieldCheck className="h-3 w-3 text-[#BDFB04]" /> Your rights
                     </h3>
                     <ul className="text-[10px] text-[#4F5666] space-y-1.5 leading-relaxed list-disc pl-4">
                       <li>You can request data export or account deletion at any time</li>
@@ -597,10 +598,10 @@ export default function SignupPage() {
                         type="checkbox"
                         checked={consentTerms}
                         onChange={(e) => setConsentTerms(e.target.checked)}
-                        className="mt-0.5 h-4 w-4 rounded border-2 border-black/[0.15] text-[#92D000] focus:ring-[#92D000] cursor-pointer accent-[#92D000]"
+                        className="mt-0.5 h-4 w-4 rounded border-2 border-black/[0.15] text-[#BDFB04] focus:ring-[#BDFB04] cursor-pointer accent-[#BDFB04]"
                       />
                       <span className="text-[11px] text-[#4F5666] leading-relaxed group-hover:text-[#191919] transition-colors">
-                        I agree to Evida's <strong className="text-[#191919] underline decoration-[#92D000]">Terms of Service</strong> and <strong className="text-[#191919] underline decoration-[#92D000]">Privacy Policy</strong>
+                        I agree to Evida's <strong className="text-[#191919] underline decoration-[#BDFB04]">Terms of Service</strong> and <strong className="text-[#191919] underline decoration-[#BDFB04]">Privacy Policy</strong>
                       </span>
                     </label>
 
@@ -609,7 +610,7 @@ export default function SignupPage() {
                         type="checkbox"
                         checked={consentData}
                         onChange={(e) => setConsentData(e.target.checked)}
-                        className="mt-0.5 h-4 w-4 rounded border-2 border-black/[0.15] text-[#92D000] focus:ring-[#92D000] cursor-pointer accent-[#92D000]"
+                        className="mt-0.5 h-4 w-4 rounded border-2 border-black/[0.15] text-[#BDFB04] focus:ring-[#BDFB04] cursor-pointer accent-[#BDFB04]"
                       />
                       <span className="text-[11px] text-[#4F5666] leading-relaxed group-hover:text-[#191919] transition-colors">
                         I consent to the collection and use of my data as described above
@@ -621,7 +622,7 @@ export default function SignupPage() {
                         type="checkbox"
                         checked={consentAge}
                         onChange={(e) => setConsentAge(e.target.checked)}
-                        className="mt-0.5 h-4 w-4 rounded border-2 border-black/[0.15] text-[#92D000] focus:ring-[#92D000] cursor-pointer accent-[#92D000]"
+                        className="mt-0.5 h-4 w-4 rounded border-2 border-black/[0.15] text-[#BDFB04] focus:ring-[#BDFB04] cursor-pointer accent-[#BDFB04]"
                       />
                       <span className="text-[11px] text-[#4F5666] leading-relaxed group-hover:text-[#191919] transition-colors">
                         I am at least <strong className="text-[#191919]">18 years old</strong> or have parental/guardian consent
@@ -639,7 +640,7 @@ export default function SignupPage() {
                   <button
                     onClick={handleConsentSubmit}
                     disabled={!consentTerms || !consentData || !consentAge}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     I Agree — Continue
                   </button>
@@ -675,7 +676,7 @@ export default function SignupPage() {
                     </div>
                     <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" className="hidden" />
                     <div className="flex gap-2.5 items-center justify-center">
-                      {['#92D000', '#FF7A1A', '#9C27B0', '#2196F3', '#FF5722'].map((c) => (
+                      {['#BDFB04', '#FF7A1A', '#9C27B0', '#2196F3', '#FF5722'].map((c) => (
                         <button
                           key={c}
                           type="button"
@@ -695,7 +696,7 @@ export default function SignupPage() {
                         <div className="relative">
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"><User className="h-3.5 w-3.5" /></div>
                           <input type="text" required value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="e.g. Alex"
-                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium" />
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
                         </div>
                       </div>
                       <div className="space-y-1.5">
@@ -703,7 +704,7 @@ export default function SignupPage() {
                         <div className="relative">
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"><User className="h-3.5 w-3.5" /></div>
                           <input type="text" required value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="e.g. Rivera"
-                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium" />
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
                         </div>
                       </div>
                     </div>
@@ -715,7 +716,7 @@ export default function SignupPage() {
                         <div className="relative">
                           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400"><BookOpen className="h-4 w-4" /></div>
                           <input type="text" required value={major} onChange={(e) => setMajor(e.target.value)} placeholder="e.g. Computer Science"
-                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium" />
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
                         </div>
                       </div>
                       <div className="space-y-1.5">
@@ -723,7 +724,7 @@ export default function SignupPage() {
                         <div className="relative">
                           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400"><Calendar className="h-4 w-4" /></div>
                           <select value={gradYear} onChange={(e) => setGradYear(e.target.value)}
-                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium cursor-pointer">
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium cursor-pointer">
                             <option value="2026">2026</option>
                             <option value="2027">2027</option>
                             <option value="2028">2028</option>
@@ -742,7 +743,7 @@ export default function SignupPage() {
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400"><Phone className="h-4 w-4" /></div>
                         <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="e.g. (555) 123-4567"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium" />
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
                       </div>
                     </div>
 
@@ -769,7 +770,7 @@ export default function SignupPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
                   >
                     {isLoading ? 'Creating Your Account...' : 'Join Evida'}
                   </button>
@@ -785,7 +786,7 @@ export default function SignupPage() {
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400"><User className="h-4 w-4" /></div>
                         <input type="text" required value={department} onChange={(e) => setDepartment(e.target.value)} placeholder="e.g. Student Affairs Board"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium" />
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
                       </div>
                     </div>
                     <div className="space-y-1.5">
@@ -793,7 +794,7 @@ export default function SignupPage() {
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400"><Building className="h-4 w-4" /></div>
                         <input type="text" required value={customSchoolName} onChange={(e) => setCustomSchoolName(e.target.value)} placeholder="e.g. State University"
-                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] focus:ring-1 focus:ring-[#92D000] transition-all font-medium" />
+                          className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
                       </div>
                     </div>
                   </div>
@@ -808,7 +809,7 @@ export default function SignupPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#92D000] hover:bg-[#92D000]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
                   >
                     {isLoading ? 'Saving Institution Profile...' : 'Complete Administration Setup'}
                   </button>
@@ -837,7 +838,7 @@ export default function SignupPage() {
                   </div>
 
                   <div className="flex justify-center pt-2">
-                    <div className="w-6 h-6 border-2 border-[#92D000] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-6 h-6 border-2 border-[#BDFB04] border-t-transparent rounded-full animate-spin" />
                   </div>
                 </div>
               )}

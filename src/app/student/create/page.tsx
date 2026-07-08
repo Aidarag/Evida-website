@@ -168,14 +168,14 @@ export default function CreateListingPage() {
             <div className="grid md:grid-cols-2 gap-6">
               <Card 
                 onClick={() => { setCreateType('event'); handleNext(); }}
-                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[#92D000]/50 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 rounded-[28px] bg-white border border-black/[0.04]"
+                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[#BDFB04]/50 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 rounded-[28px] bg-white border border-black/[0.04]"
               >
                 {/* Custom Badge Indicator */}
                 <div className="absolute top-4 left-4 bg-[#191919] text-white text-[9px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-white/10 shadow-sm flex items-center gap-1 select-none">
                   <span>🗓️</span> People attend
                 </div>
 
-                <div className="h-16 w-16 rounded-2xl bg-[#92D000]/10 text-[#92D000] flex items-center justify-center group-hover:scale-105 transition-transform mt-6">
+                <div className="h-16 w-16 rounded-2xl bg-[#BDFB04]/10 text-[#BDFB04] flex items-center justify-center group-hover:scale-105 transition-transform mt-6">
                   <Calendar className="h-8 w-8" />
                 </div>
                 <div className="w-full text-center space-y-4">
@@ -185,19 +185,19 @@ export default function CreateListingPage() {
                   </p>
                   <ul className="text-xs text-left max-w-[160px] mx-auto space-y-2 text-[#4F5666] font-medium border-t border-black/[0.04] pt-4">
                     <li className="flex items-center gap-2">
-                      <span className="text-[#92D000] text-sm">•</span> Club meeting
+                      <span className="text-[#BDFB04] text-sm">•</span> Club meeting
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#92D000] text-sm">•</span> Workshop
+                      <span className="text-[#BDFB04] text-sm">•</span> Workshop
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#92D000] text-sm">•</span> Party
+                      <span className="text-[#BDFB04] text-sm">•</span> Party
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#92D000] text-sm">•</span> Sports game
+                      <span className="text-[#BDFB04] text-sm">•</span> Sports game
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#92D000] text-sm">•</span> Career fair
+                      <span className="text-[#BDFB04] text-sm">•</span> Career fair
                     </li>
                   </ul>
                 </div>
@@ -205,14 +205,14 @@ export default function CreateListingPage() {
 
               <Card 
                 onClick={() => { setCreateType('promotion'); setStep(4); }} // Go straight to Promo Form
-                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[#92D000]/50 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 rounded-[28px] bg-white border border-black/[0.04]"
+                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[#BDFB04]/50 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 rounded-[28px] bg-white border border-black/[0.04]"
               >
                 {/* Custom Badge Indicator */}
                 <div className="absolute top-4 left-4 bg-[#191919] text-white text-[9px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-white/10 shadow-sm flex items-center gap-1 select-none">
                   <span>📢</span> People discover
                 </div>
 
-                <div className="h-16 w-16 rounded-2xl bg-[#92D000]/10 text-[#92D000] flex items-center justify-center group-hover:scale-105 transition-transform mt-6">
+                <div className="h-16 w-16 rounded-2xl bg-[#BDFB04]/10 text-[#BDFB04] flex items-center justify-center group-hover:scale-105 transition-transform mt-6">
                   <Tag className="h-8 w-8" />
                 </div>
                 <div className="w-full text-center space-y-4">
@@ -222,19 +222,19 @@ export default function CreateListingPage() {
                   </p>
                   <ul className="text-xs text-left max-w-[160px] mx-auto space-y-2 text-[#4F5666] font-medium border-t border-black/[0.04] pt-4">
                     <li className="flex items-center gap-2">
-                      <span className="text-[#92D000] text-sm">•</span> Tutoring
+                      <span className="text-[#BDFB04] text-sm">•</span> Tutoring
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#92D000] text-sm">•</span> Student business
+                      <span className="text-[#BDFB04] text-sm">•</span> Student business
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#92D000] text-sm">•</span> Food sale
+                      <span className="text-[#BDFB04] text-sm">•</span> Food sale
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#92D000] text-sm">•</span> Photography
+                      <span className="text-[#BDFB04] text-sm">•</span> Photography
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#92D000] text-sm">•</span> Student initiative
+                      <span className="text-[#BDFB04] text-sm">•</span> Student initiative
                     </li>
                   </ul>
                 </div>
@@ -421,7 +421,7 @@ export default function CreateListingPage() {
                       <label className="block text-[10px] font-bold text-[#4F5666] uppercase tracking-widest">Select Club / Organization</label>
                       {myOrgs.length > 0 ? (
                         <select 
-                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] font-medium cursor-pointer"
+                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] font-medium cursor-pointer"
                           value={eventForm.selectedOrgId}
                           onChange={e => setEventForm({...eventForm, selectedOrgId: e.target.value})}
                           required
@@ -466,7 +466,7 @@ export default function CreateListingPage() {
                     <div className="space-y-1.5">
                       <label className="block text-[10px] font-bold text-[#4F5666] uppercase tracking-widest">Description</label>
                       <textarea 
-                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] min-h-[120px] resize-none font-medium leading-relaxed"
+                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] min-h-[120px] resize-none font-medium leading-relaxed"
                         placeholder="What should campus know about this event?"
                         value={eventForm.description}
                         onChange={e => setEventForm({...eventForm, description: e.target.value})}
@@ -505,7 +505,7 @@ export default function CreateListingPage() {
                         <div className="space-y-1.5">
                           <label className="block text-[10px] font-bold text-[#4F5666] uppercase tracking-widest">Category</label>
                           <select 
-                            className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] font-medium cursor-pointer"
+                            className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] font-medium cursor-pointer"
                             value={eventForm.category}
                             onChange={e => setEventForm({...eventForm, category: e.target.value})}
                           >
@@ -543,7 +543,7 @@ export default function CreateListingPage() {
                                 onChange={e => setEventForm({...eventForm, isFeatured: e.target.checked})}
                                 className="sr-only peer" 
                               />
-                              <div className="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#92D000]"></div>
+                              <div className="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#BDFB04]"></div>
                               <span className="ml-3 text-xs font-semibold text-[#191919]">Feature on Landing Page</span>
                             </label>
                           </div>
@@ -594,7 +594,7 @@ export default function CreateListingPage() {
                     <div className="space-y-1.5">
                       <label className="block text-[10px] font-bold text-[#4F5666] uppercase tracking-widest">Service Description</label>
                       <textarea 
-                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#92D000] min-h-[120px] resize-none font-medium leading-relaxed"
+                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] placeholder-gray-400 focus:outline-none focus:border-[#BDFB04] min-h-[120px] resize-none font-medium leading-relaxed"
                         placeholder="Explain your service, rates, timings, or initiative details..."
                         value={promoForm.description}
                         onChange={e => setPromoForm({...promoForm, description: e.target.value})}
@@ -606,7 +606,7 @@ export default function CreateListingPage() {
                       <div className="space-y-1.5">
                         <label className="block text-[10px] font-bold text-[#4F5666] uppercase tracking-widest">Promotion Category</label>
                         <select 
-                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#92D000] font-medium cursor-pointer"
+                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] font-medium cursor-pointer"
                           value={promoForm.category}
                           onChange={e => setPromoForm({...promoForm, category: e.target.value})}
                         >

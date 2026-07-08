@@ -25,44 +25,44 @@ const visionData: Record<VisionKey, VisionContent> = {
   Students: {
     tagline: "Your campus, all in one place",
     description: "Evida gives every student a simple way to discover what’s happening on campus, stay informed, and never miss opportunities that matter.",
-    color: "#92D000",
-    lightBg: "bg-[#92D000]/8",
-    borderHover: "group-hover:border-[#92D000]/20"
+    color: "#BDFB04",
+    lightBg: "bg-[#BDFB04]/8",
+    borderHover: "group-hover:border-[#BDFB04]/20"
   },
   Schools: {
     tagline: "A smarter way to engage your campus",
     description: "Evida helps schools centralize events, improve communication, and better connect with students through one trusted platform.",
-    color: "#92D000",
-    lightBg: "bg-[#92D000]/8",
-    borderHover: "group-hover:border-[#92D000]/20"
+    color: "#BDFB04",
+    lightBg: "bg-[#BDFB04]/8",
+    borderHover: "group-hover:border-[#BDFB04]/20"
   },
   Discovery: {
     tagline: "Find experiences, not just events",
     description: "From career fairs to game nights, Evida makes it easy to explore opportunities based on your interests and campus life.",
-    color: "#92D000",
-    lightBg: "bg-[#92D000]/8",
-    borderHover: "group-hover:border-[#92D000]/20"
+    color: "#BDFB04",
+    lightBg: "bg-[#BDFB04]/8",
+    borderHover: "group-hover:border-[#BDFB04]/20"
   },
   Connection: {
     tagline: "Meaningful connections start here",
     description: "Every event is a chance to meet new people, join organizations, and build relationships that last beyond college.",
-    color: "#92D000",
-    lightBg: "bg-[#92D000]/8",
-    borderHover: "group-hover:border-[#92D000]/20"
+    color: "#BDFB04",
+    lightBg: "bg-[#BDFB04]/8",
+    borderHover: "group-hover:border-[#BDFB04]/20"
   },
   Community: {
     tagline: "One campus. One community",
     description: "Evida brings students, organizations, and schools together in one connected ecosystem where everyone belongs.",
-    color: "#92D000",
-    lightBg: "bg-[#92D000]/8",
-    borderHover: "group-hover:border-[#92D000]/20"
+    color: "#BDFB04",
+    lightBg: "bg-[#BDFB04]/8",
+    borderHover: "group-hover:border-[#BDFB04]/20"
   },
   Memories: {
     tagline: "College ends. Memories don’t",
     description: "The best moments deserve to be remembered. Evida helps preserve the experiences, friendships, and milestones of your journey.",
-    color: "#92D000",
-    lightBg: "bg-[#92D000]/8",
-    borderHover: "group-hover:border-[#92D000]/20"
+    color: "#BDFB04",
+    lightBg: "bg-[#BDFB04]/8",
+    borderHover: "group-hover:border-[#BDFB04]/20"
   }
 };
 
@@ -81,20 +81,20 @@ export default function OurVisionSection() {
   return (
     <section id="our-mission" className="w-full bg-[#DFDED7] py-24 border-y border-black/[0.04] font-sans relative overflow-hidden">
       {/* Subtle Background Radial Glows */}
-      <div className="absolute -left-[10%] top-1/4 w-[45%] h-[55%] bg-[#92D000]/3 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute -left-[10%] top-1/4 w-[45%] h-[55%] bg-[#BDFB04]/3 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute -right-[10%] bottom-1/4 w-[45%] h-[55%] bg-black/[0.01] rounded-full blur-[120px] pointer-events-none" />
       
       <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Title & Subtitle */}
         <div className="text-center mb-16 space-y-3">
-          <span className="text-[#92D000] font-bold uppercase text-xs tracking-[0.2em]">
+          <span className="text-[#BDFB04] font-bold uppercase text-xs tracking-[0.2em]">
             Why Choose Evida?
           </span>
           <h2 className="text-[#191919] font-extrabold text-3xl md:text-5xl uppercase tracking-tight max-w-5xl mx-auto leading-[1.08]" style={{ fontFamily: 'var(--font-display)' }}>
             <span className="block sm:whitespace-nowrap">More Than a Platform,</span>
             <span className="block sm:whitespace-nowrap">The Future of Campus Life</span>
-            <span className="block sm:whitespace-nowrap text-[#92D000]">Is Here</span>
+            <span className="block sm:whitespace-nowrap text-[#BDFB04]">Is Here</span>
           </h2>
         </div>
 

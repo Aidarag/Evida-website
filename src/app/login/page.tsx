@@ -56,9 +56,9 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[var(--color-primary-bg)] flex items-center justify-center p-6 max-sm:p-4 relative overflow-hidden font-sans">
       {/* Dynamic Background Glowing Blobs */}
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#92D000]/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#92D000]/4 blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#92D000]/3 blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#BDFB04]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#BDFB04]/4 blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#BDFB04]/3 blur-[140px] pointer-events-none" />
 
       {/* Back to Home Button */}
       {step === 'role-selection' && (
@@ -104,10 +104,10 @@ export default function LoginPage() {
                       <button
                         onClick={() => handleRoleSelect('student')}
                         disabled={isLoading}
-                        className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#92D000] transition-all duration-300 cursor-pointer text-left group disabled:opacity-50"
+                        className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#BDFB04] transition-all duration-300 cursor-pointer text-left group disabled:opacity-50"
                       >
                         <div className="flex items-center gap-4">
-                          <div className="h-12 w-12 rounded-xl bg-[#92D000]/10 text-[#92D000] flex items-center justify-center group-hover:scale-105 transition-transform">
+                          <div className="h-12 w-12 rounded-xl bg-[#BDFB04]/10 text-[#BDFB04] flex items-center justify-center group-hover:scale-105 transition-transform">
                             <GraduationCap className="h-6 w-6" />
                           </div>
                           <div>
@@ -115,7 +115,7 @@ export default function LoginPage() {
                             <p className="text-xs text-[#4F5666] mt-0.5 max-w-[220px]">Join events, coordinate clubs, and verify tickets.</p>
                           </div>
                         </div>
-                        <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#92D000] group-hover:translate-x-1 transition-all" />
+                        <ArrowRight className="h-5 w-5 text-[#4F5666] group-hover:text-[#BDFB04] group-hover:translate-x-1 transition-all" />
                       </button>
 
                       {/* School Option */}
@@ -139,14 +139,14 @@ export default function LoginPage() {
 
                     {isLoading && (
                       <div className="flex justify-center pt-2">
-                        <div className="w-5 h-5 border-2 border-[#92D000] border-t-transparent rounded-full animate-spin" />
+                        <div className="w-5 h-5 border-2 border-[#BDFB04] border-t-transparent rounded-full animate-spin" />
                       </div>
                     )}
 
                     <div className="pt-4 border-t border-black/[0.06] text-center">
                       <p className="text-xs text-[#4F5666]">
                         Don&apos;t have an account?{' '}
-                        <Link href="/signup" className="text-[#191919] font-bold underline decoration-2 decoration-[#92D000] hover:text-[#191919]/80 transition-all">
+                        <Link href="/signup" className="text-[#191919] font-bold underline decoration-2 decoration-[#BDFB04] hover:text-[#191919]/80 transition-all">
                           Sign up here
                         </Link>
                       </p>
@@ -177,7 +177,7 @@ export default function LoginPage() {
                   </div>
 
                   <div className="flex justify-center pt-2">
-                    <div className="w-6 h-6 border-2 border-[#92D000] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-6 h-6 border-2 border-[#BDFB04] border-t-transparent rounded-full animate-spin" />
                   </div>
                 </div>
               )}

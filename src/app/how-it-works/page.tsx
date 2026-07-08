@@ -15,12 +15,12 @@ export default function HowItWorksPage() {
       {/* Hero Header */}
       <section className="relative w-full bg-[#191919] pt-36 pb-20 overflow-hidden text-center flex flex-col items-center">
         {/* Ambient Brand Glowing Blob */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#92D000]/8 rounded-full blur-[110px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#BDFB04]/8 rounded-full blur-[110px] pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 space-y-4">
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
-            How It <span className="text-[#92D000]">Works</span>
+            How It <span className="text-[#BDFB04]">Works</span>
           </h1>
           <p className="text-white/70 text-sm md:text-base max-w-xl mx-auto font-light leading-relaxed">
             Evida streamlines campus event discovery, creation, attendance tracking, and organization engagement in four simple steps.
@@ -39,32 +39,32 @@ export default function HowItWorksPage() {
                 number: "01",
                 title: "Discover",
                 icon: Search,
-                color: "#92D000",
-                lightBg: "bg-[#92D000]/8",
+                color: "#BDFB04",
+                lightBg: "bg-[#BDFB04]/8",
                 description: "Find exactly what you're looking for. Filter by category, date, or organization to discover the best of campus life."
               },
                 {
                   number: "02",
                   title: "Create",
                   icon: MousePointer2,
-                  color: "#92D000",
-                  lightBg: "bg-[#92D000]/8",
+                  color: "#BDFB04",
+                  lightBg: "bg-[#BDFB04]/8",
                   description: "Host your own event, workshop, or promotion. Customize the details and publish instantly for your club or community."
                 },
               {
                 number: "03",
                 title: "Attend",
                 icon: UserCheck,
-                color: "#92D000",
-                lightBg: "bg-[#92D000]/8",
+                color: "#BDFB04",
+                lightBg: "bg-[#BDFB04]/8",
                 description: "RSVP to events, save them to your profile, and receive reminders. Show up and connect with your fellow students."
               },
               {
                 number: "04",
                 title: "Engage",
                 icon: LineChart,
-                color: "#92D000",
-                lightBg: "bg-[#92D000]/8",
+                color: "#BDFB04",
+                lightBg: "bg-[#BDFB04]/8",
                 description: "Track attendance, collect feedback, and analyze engagement. Administrators and student leaders get real-time analytics."
               }
             ].map((step, index) => {
@@ -120,7 +120,7 @@ export default function HowItWorksPage() {
             <div className="space-y-1 text-xs font-semibold">
               <p className="text-white font-bold text-base mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
               <p>Campus Event & Engagement Platform</p>
-              <p className="pt-2 hover:text-[#92D000] transition-colors cursor-pointer">Email: hello@evida.app</p>
+              <p className="pt-2 hover:text-[#BDFB04] transition-colors cursor-pointer">Email: hello@evida.app</p>
             </div>
           </div>
 
@@ -165,12 +165,12 @@ export default function HowItWorksPage() {
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#92D000] transition-colors"
+                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#BDFB04] transition-colors"
                 required
               />
               <button 
                 type="submit"
-                className="bg-[#92D000] text-[#191919] px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#191919] transition-all duration-300 whitespace-nowrap"
+                className="bg-[#BDFB04] text-[#191919] px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#191919] transition-all duration-300 whitespace-nowrap"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 Subscribe
@@ -181,7 +181,7 @@ export default function HowItWorksPage() {
 
         {/* Bottom Slogan */}
         <div className="relative text-center border-t border-white/5 pt-8 pb-4">
-          <p className="text-[#92D000] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+          <p className="text-[#BDFB04] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
             Evida — Campus life, all in one place.
           </p>
         </div>

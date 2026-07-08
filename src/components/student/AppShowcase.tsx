@@ -40,7 +40,7 @@ export default function AppShowcase() {
           name: 'Student-Owned Event',
           desc: 'Created by an individual student.',
           examples: ['Study group', 'Networking meetup', 'Cultural gathering'],
-          color: '#92D000',
+          color: '#BDFB04',
           icon: GraduationCap
         },
         {
@@ -54,7 +54,7 @@ export default function AppShowcase() {
           name: 'School-Owned Event',
           desc: 'Created by official school accounts.',
           examples: ['Orientation', 'Homecoming', 'Career Fair'],
-          color: '#92D000',
+          color: '#BDFB04',
           icon: Shield
         }
       ]
@@ -69,7 +69,7 @@ export default function AppShowcase() {
           name: 'Event',
           desc: 'An activity with Date, Time, Location, and Attendees.',
           examples: ['Club meeting', 'Workshop', 'Cultural event'],
-          color: '#92D000',
+          color: '#BDFB04',
           icon: Calendar
         },
         {
@@ -91,7 +91,7 @@ export default function AppShowcase() {
           name: 'Auto-Categorization',
           desc: 'The platform automatically analyzes request parameters and routes them to the correct admin review queues.',
           examples: ['Fast Track (Instant)', 'Standard Review', 'Complex Case Audit'],
-          color: '#92D000',
+          color: '#BDFB04',
           icon: Brain
         },
         {
@@ -163,7 +163,7 @@ export default function AppShowcase() {
         <div className="w-full lg:w-1/2 space-y-10">
           
           <div className="space-y-4">
-            <span className="text-[#92D000] font-bold uppercase text-xs tracking-[0.2em]">
+            <span className="text-[#BDFB04] font-bold uppercase text-xs tracking-[0.2em]">
               Product Tour
             </span>
             
@@ -247,7 +247,7 @@ export default function AppShowcase() {
         <div className="w-full lg:w-1/2 flex justify-center relative max-sm:-mx-4">
           
           {/* Subtle Ambient Radial Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#92D000]/5 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#BDFB04]/5 rounded-full blur-[100px] pointer-events-none" />
 
           {/* iPhone body - responsive size */}
           <div className="relative w-[280px] h-[570px] min-w-[280px] sm:w-[300px] sm:h-[610px] rounded-[42px] sm:rounded-[50px] border-[8px] sm:border-[9px] border-[#27272A] bg-[#191919] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col select-none ring-1 ring-white/10">
@@ -373,7 +373,7 @@ export default function AppShowcase() {
                     {/* Floating Bottom Tab Bar matching screenshot */}
                     <div className="mt-4 bg-white/[0.07] backdrop-blur-xl border border-white/10 rounded-full py-2 px-3 flex items-center justify-between shadow-2xl z-30">
                       <div className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center cursor-pointer text-white">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#92D000]"></span>
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#BDFB04]"></span>
                       </div>
                       <Users className="h-4 w-4 text-white/40 cursor-pointer" />
                       {/* Big White Circular Add Button */}
@@ -401,7 +401,7 @@ export default function AppShowcase() {
                   >
                     {/* Header */}
                     <div>
-                      <span className="text-[#92D000] text-[9px] font-bold uppercase tracking-[0.2em] block mb-1">
+                      <span className="text-[#BDFB04] text-[9px] font-bold uppercase tracking-[0.2em] block mb-1">
                         Evida Wizard
                       </span>
                       <h3 className="text-xl font-bold uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -426,11 +426,11 @@ export default function AppShowcase() {
                             onClick={() => setActiveTab('approval')}
                             className={`p-3 rounded-2xl border flex flex-col items-center justify-center text-center gap-2 h-20 transition-all cursor-pointer ${
                               cell.active 
-                                ? 'bg-white/15 border-[#92D000] shadow-[0_4px_12px_rgba(255,90,31,0.1)]' 
+                                ? 'bg-white/15 border-[#BDFB04] shadow-[0_4px_12px_rgba(255,90,31,0.1)]' 
                                 : 'bg-white/[0.04] border-white/5 hover:border-white/15'
                             }`}
                           >
-                            <Icon className={`h-4.5 w-4.5 ${cell.active ? 'text-[#92D000]' : 'text-white/60'}`} />
+                            <Icon className={`h-4.5 w-4.5 ${cell.active ? 'text-[#BDFB04]' : 'text-white/60'}`} />
                             <span className="text-[9px] font-bold uppercase tracking-wider">{cell.label}</span>
                           </div>
                         );
@@ -459,7 +459,7 @@ export default function AppShowcase() {
                     className="flex-1 flex flex-col justify-between h-full py-4"
                   >
                     <div>
-                      <span className="text-[#92D000] text-[9px] font-bold uppercase tracking-[0.2em] block mb-1">
+                      <span className="text-[#BDFB04] text-[9px] font-bold uppercase tracking-[0.2em] block mb-1">
                         Smart Engine
                       </span>
                       <h3 className="text-xl font-bold uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -480,14 +480,14 @@ export default function AppShowcase() {
                             step.status === 'done'
                               ? 'bg-white/10 border-white/10'
                               : step.status === 'pulse'
-                              ? 'bg-[#92D000]/10 border-[#92D000]/30 animate-pulse'
+                              ? 'bg-[#BDFB04]/10 border-[#BDFB04]/30 animate-pulse'
                               : 'bg-white/[0.02] border-white/5 opacity-55'
                           }`}
                         >
                           {step.status === 'done' ? (
                             <CheckCircle className="h-5 w-5 text-white shrink-0" />
                           ) : step.status === 'pulse' ? (
-                            <Brain className="h-5 w-5 text-[#92D000] shrink-0" />
+                            <Brain className="h-5 w-5 text-[#BDFB04] shrink-0" />
                           ) : (
                             <div className="h-5 w-5 rounded-full border border-white/20 shrink-0" />
                           )}
@@ -505,7 +505,7 @@ export default function AppShowcase() {
                         setActiveTab('ownership');
                         setOwnershipCat('student');
                       }}
-                      className="w-full py-3 bg-[#92D000] hover:bg-[#92D000]/90 text-[#191919] rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-orange-500/10 hover:scale-[1.02] transition-transform active:scale-[0.98] cursor-pointer text-center"
+                      className="w-full py-3 bg-[#BDFB04] hover:bg-[#BDFB04]/90 text-[#191919] rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-orange-500/10 hover:scale-[1.02] transition-transform active:scale-[0.98] cursor-pointer text-center"
                       style={{ fontFamily: 'var(--font-display)' }}
                     >
                       Reset Simulator
@@ -521,7 +521,7 @@ export default function AppShowcase() {
 
           {/* Mobile floating tip icon */}
           <div className="absolute -bottom-6 flex items-center gap-1.5 text-[9px] font-bold text-gray-400 uppercase tracking-widest pointer-events-none select-none">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#92D000] animate-ping"></span>
+            <span className="h-1.5 w-1.5 rounded-full bg-[#BDFB04] animate-ping"></span>
             Click elements inside phone to interact
           </div>
 

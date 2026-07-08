@@ -38,7 +38,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#191919]/90 via-[#191919]/75 to-[#191919] z-0" />
 
         {/* Ambient Gradient Blobs */}
-        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-[#92D000]/8 rounded-full blur-[100px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-[#BDFB04]/8 rounded-full blur-[100px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/5 rounded-full blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '12s' }} />
 
         {/* Hero Content: Single Centered Grid Container */}
@@ -67,7 +67,7 @@ export default function LandingPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.15 + idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                  className={`inline-block whitespace-normal sm:whitespace-nowrap ${idx === 2 ? "text-[#92D000]" : "text-white"}`}
+                  className={`inline-block whitespace-normal sm:whitespace-nowrap ${idx === 2 ? "text-[#BDFB04]" : "text-white"}`}
                 >
                   {line}
                 </motion.span>
@@ -94,7 +94,7 @@ export default function LandingPage() {
           >
             <Link 
               href="/login" 
-              className="bg-[#92D000] text-[#191919] font-bold uppercase tracking-widest text-[10px] sm:text-[11px] px-8 py-3.5 sm:py-4 hover:bg-[#92D000]/90 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 rounded-full shadow-[0_4px_18px_rgba(32,54,39,0.15)] w-fit mx-auto"
+              className="bg-[#BDFB04] text-[#191919] font-bold uppercase tracking-widest text-[10px] sm:text-[11px] px-8 py-3.5 sm:py-4 hover:bg-[#BDFB04]/90 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 rounded-full shadow-[0_4px_18px_rgba(32,54,39,0.15)] w-fit mx-auto"
             >
               Get Started <ArrowRight className="h-4 w-4" />
             </Link>
@@ -165,7 +165,7 @@ export default function LandingPage() {
             <div className="space-y-1 text-xs font-semibold">
               <p className="text-white font-bold text-base mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
               <p>Campus Event & Engagement Platform</p>
-              <p className="pt-2 hover:text-[#92D000] transition-colors cursor-pointer">Email: hello@evida.app</p>
+              <p className="pt-2 hover:text-[#BDFB04] transition-colors cursor-pointer">Email: hello@evida.app</p>
             </div>
           </div>
 
@@ -208,7 +208,7 @@ export default function LandingPage() {
             </p>
             <form onSubmit={(e) => { e.preventDefault(); if (emailInput) setSubscribed(true); }} className="flex flex-col sm:flex-row gap-2 pt-2">
               {subscribed ? (
-                <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#92D000]/15 border border-[#92D000]/30 text-[#92D000] text-xs font-bold">
+                <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#BDFB04]/15 border border-[#BDFB04]/30 text-[#BDFB04] text-xs font-bold">
                   ✓ Subscribed! Welcome aboard.
                 </div>
               ) : (
@@ -218,12 +218,12 @@ export default function LandingPage() {
                     placeholder="Enter your email" 
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#92D000] transition-colors"
+                    className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#BDFB04] transition-colors"
                     required
                   />
                   <button 
                     type="submit"
-                    className="bg-[#92D000] text-[#191919] px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#191919] transition-all duration-300 whitespace-nowrap"
+                    className="bg-[#BDFB04] text-[#191919] px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#191919] transition-all duration-300 whitespace-nowrap"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
                     Subscribe
@@ -236,7 +236,7 @@ export default function LandingPage() {
 
         {/* Bottom Slogan */}
         <div className="relative text-center border-t border-white/5 pt-8 pb-4">
-          <p className="text-[#92D000] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+          <p className="text-[#BDFB04] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
             Evida — Campus life, all in one place.
           </p>
         </div>

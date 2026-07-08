@@ -39,12 +39,12 @@ export default function SchoolDashboardPage() {
 
       {/* Primary Action Needs (Queues) */}
       <div className="grid md:grid-cols-3 gap-6">
-        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#92D000]">
+        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#BDFB04]">
           <div className="flex justify-between items-start">
-            <div className="h-10 w-10 rounded-full bg-[#92D000]/10 flex items-center justify-center text-[#191919]">
+            <div className="h-10 w-10 rounded-full bg-[#BDFB04]/10 flex items-center justify-center text-[#191919]">
               <AlertTriangle className="h-5 w-5" />
             </div>
-            <span className="rounded-full bg-[#92D000]/10 text-[#191919] px-3 py-1 text-[10px] font-bold uppercase">High Priority</span>
+            <span className="rounded-full bg-[#BDFB04]/10 text-[#191919] px-3 py-1 text-[10px] font-bold uppercase">High Priority</span>
           </div>
           <div>
             <div className="text-3xl font-bold text-[#191919]">{complexQueue.length}</div>
@@ -52,12 +52,12 @@ export default function SchoolDashboardPage() {
           </div>
         </Card>
 
-        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#92D000]">
+        <Card className="p-6 flex flex-col justify-between h-40 border-l-4 border-l-[#BDFB04]">
           <div className="flex justify-between items-start">
             <div className="h-10 w-10 rounded-full bg-[#9DC4D5]/10 flex items-center justify-center text-[#191919]/70">
               <Clock className="h-5 w-5" />
             </div>
-            <span className="rounded-full bg-[#92D000]/15 text-[#191919] px-3 py-1 text-[10px] font-bold uppercase">Standard</span>
+            <span className="rounded-full bg-[#BDFB04]/15 text-[#191919] px-3 py-1 text-[10px] font-bold uppercase">Standard</span>
           </div>
           <div>
             <div className="text-3xl font-bold text-[#191919]">{standardQueue.length}</div>
@@ -85,28 +85,28 @@ export default function SchoolDashboardPage() {
           <h2 className="text-xl font-bold text-[#191919]" style={{ fontFamily: 'var(--font-display)' }}>System Modules</h2>
           <div className="grid grid-cols-2 gap-4">
              <Link href="/school/review">
-              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#92D000]/40 transition-colors">
+              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#BDFB04]/40 transition-colors">
                 <ClipboardList className="h-6 w-6 text-[#191919]/70" />
                 <span className="text-sm font-bold text-[#191919]">Review Queue</span>
               </Card>
             </Link>
             <Link href="/school/featured">
-              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#92D000]/40 transition-colors">
-                <Star className="h-6 w-6 text-[#92D000]" />
+              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#BDFB04]/40 transition-colors">
+                <Star className="h-6 w-6 text-[#BDFB04]" />
                 <span className="text-sm font-bold text-[#191919]">Featured Events</span>
               </Card>
             </Link>
             <Link href="/school/organizations">
-              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#92D000]/40 transition-colors relative">
+              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#BDFB04]/40 transition-colors relative">
                 {unverifiedOrgs > 0 && (
-                  <span className="absolute top-3 right-3 h-2 w-2 rounded-full bg-[#92D000]"></span>
+                  <span className="absolute top-3 right-3 h-2 w-2 rounded-full bg-[#BDFB04]"></span>
                 )}
                 <Building2 className="h-6 w-6 text-[#191919]/70" />
                 <span className="text-sm font-bold text-[#191919]">Organizations</span>
               </Card>
             </Link>
             <Link href="/school/analytics">
-              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#92D000]/40 transition-colors">
+              <Card className="p-5 flex flex-col items-center justify-center text-center gap-3 h-32 hover:border-[#BDFB04]/40 transition-colors">
                 <BarChart3 className="h-6 w-6 text-[#191919]/70" />
                 <span className="text-sm font-bold text-[#191919]">Analytics</span>
               </Card>

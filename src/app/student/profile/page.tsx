@@ -84,11 +84,11 @@ export default function StudentProfilePage() {
       <div className="bg-[#DFDED7] px-5 md:px-10 pt-0 pb-5">
         {/* Avatar row — sits half over the banner */}
         <div className="-mt-12 mb-4 flex items-end justify-between">
-          <div className="h-20 w-20 md:h-24 md:w-24 rounded-2xl bg-[#92D000] flex items-center justify-center shadow-lg border-4 border-[#DFDED7] shrink-0">
+          <div className="h-20 w-20 md:h-24 md:w-24 rounded-2xl bg-[#BDFB04] flex items-center justify-center shadow-lg border-4 border-[#DFDED7] shrink-0">
             <span className="text-2xl md:text-3xl font-extrabold text-[#191919]">{currentUser.avatar}</span>
           </div>
           {savedFeedback && (
-            <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#92D000]/20 border border-[#92D000]/40 text-[10px] font-bold text-[#3a5200] uppercase tracking-wider">
+            <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#BDFB04]/20 border border-[#BDFB04]/40 text-[10px] font-bold text-[#3a5200] uppercase tracking-wider">
               <Check className="h-3 w-3" /> Saved
             </span>
           )}
@@ -105,15 +105,15 @@ export default function StudentProfilePage() {
         {/* Badges */}
         <div className="flex flex-wrap gap-2">
           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-black/[0.07] text-[10px] font-semibold text-[#4F5666]">
-            <Award className="h-3 w-3 text-[#92D000]" />
+            <Award className="h-3 w-3 text-[#BDFB04]" />
             {currentUser.major || 'Undeclared'}
           </span>
           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-black/[0.07] text-[10px] font-semibold text-[#4F5666]">
-            <Calendar className="h-3 w-3 text-[#92D000]" />
+            <Calendar className="h-3 w-3 text-[#BDFB04]" />
             Class of {currentUser.graduationYear}
           </span>
           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-black/[0.07] text-[10px] font-semibold text-[#4F5666]">
-            <Shield className="h-3 w-3 text-[#92D000]" />
+            <Shield className="h-3 w-3 text-[#BDFB04]" />
             {currentUser.school}
           </span>
         </div>
@@ -123,7 +123,7 @@ export default function StudentProfilePage() {
       <div className="px-5 md:px-10 py-4">
         <div className="grid grid-cols-3 gap-3">
           {[
-            { label: 'Attended', value: totalRsvps, Icon: CalendarCheck, color: '#92D000', bg: '#92D00018' },
+            { label: 'Attended', value: totalRsvps, Icon: CalendarCheck, color: '#BDFB04', bg: '#BDFB0418' },
             { label: 'Hosted', value: totalCreated, Icon: Star, color: '#191919', bg: '#19191910' },
             { label: 'Saved', value: totalSaved, Icon: BookOpen, color: '#4F5666', bg: '#4F566612' },
           ].map(stat => (
@@ -144,13 +144,13 @@ export default function StudentProfilePage() {
         {/* My Organizations */}
         <div className="space-y-3">
           <h2 className="text-xs font-extrabold text-[#191919] flex items-center gap-2 uppercase tracking-widest">
-            <Users className="h-3.5 w-3.5 text-[#92D000]" /> My Organizations
+            <Users className="h-3.5 w-3.5 text-[#BDFB04]" /> My Organizations
           </h2>
           {myOrgs.length > 0 ? (
             <div className="space-y-2">
               {myOrgs.map(org => (
                 <div key={org.id} className="bg-white rounded-2xl p-4 flex items-center gap-3 border border-black/[0.04] shadow-sm">
-                  <div className="h-10 w-10 rounded-xl bg-[#92D000]/15 border border-[#92D000]/20 flex items-center justify-center shrink-0">
+                  <div className="h-10 w-10 rounded-xl bg-[#BDFB04]/15 border border-[#BDFB04]/20 flex items-center justify-center shrink-0">
                     <span className="font-extrabold text-[#3a5200] text-base">{org.name.charAt(0)}</span>
                   </div>
                   <div className="flex-1 min-w-0">
@@ -180,7 +180,7 @@ export default function StudentProfilePage() {
               onClick={openEdit}
               className="w-full p-4 flex items-center gap-3 hover:bg-black/[0.02] active:bg-black/[0.04] transition-colors cursor-pointer group"
             >
-              <div className="h-9 w-9 rounded-xl bg-[#92D000]/15 flex items-center justify-center shrink-0">
+              <div className="h-9 w-9 rounded-xl bg-[#BDFB04]/15 flex items-center justify-center shrink-0">
                 <Edit3 className="h-4 w-4 text-[#3a5200]" />
               </div>
               <div className="flex-1 text-left">
@@ -212,14 +212,14 @@ export default function StudentProfilePage() {
                           type={field.type}
                           value={field.value}
                           onChange={e => field.set(e.target.value)}
-                          className="w-full bg-white border border-black/[0.08] rounded-xl px-3 py-2.5 text-sm text-[#191919] focus:outline-none focus:border-[#92D000] transition-colors"
+                          className="w-full bg-white border border-black/[0.08] rounded-xl px-3 py-2.5 text-sm text-[#191919] focus:outline-none focus:border-[#BDFB04] transition-colors"
                         />
                       </div>
                     ))}
                     <div className="flex gap-2 pt-1">
                       <button
                         onClick={saveEdit}
-                        className="flex-1 bg-[#92D000] text-[#191919] text-xs font-bold uppercase tracking-wider py-2.5 rounded-xl hover:bg-[#92D000]/90 transition-colors"
+                        className="flex-1 bg-[#BDFB04] text-[#191919] text-xs font-bold uppercase tracking-wider py-2.5 rounded-xl hover:bg-[#BDFB04]/90 transition-colors"
                       >
                         Save changes
                       </button>
@@ -273,7 +273,7 @@ export default function StudentProfilePage() {
                         </div>
                         <button
                           onClick={() => toggleNotif(item.key)}
-                          className={`relative h-6 w-11 rounded-full transition-colors duration-200 shrink-0 ${notifSettings[item.key] ? 'bg-[#92D000]' : 'bg-black/[0.12]'}`}
+                          className={`relative h-6 w-11 rounded-full transition-colors duration-200 shrink-0 ${notifSettings[item.key] ? 'bg-[#BDFB04]' : 'bg-black/[0.12]'}`}
                         >
                           <div className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-200 ${notifSettings[item.key] ? 'translate-x-[22px]' : 'translate-x-0.5'}`} />
                         </button>

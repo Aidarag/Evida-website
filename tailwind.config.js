@@ -9,29 +9,29 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Core dark backgrounds
-        "primary-bg": "#08080B",
-        "secondary-bg": "#111118",
-        "surface": "#171722",
+        // Core light backgrounds
+        "primary-bg": "#FFFFFF",
+        "secondary-bg": "#DFDED7",
+        "surface": "#FFFFFF",
         // Text
-        "primary-text": "#FFFFFF",
-        "secondary-text": "#B8BBC8",
+        "primary-text": "#191919",
+        "secondary-text": "#4F5666",
         // Borders
-        "border": "rgba(255,255,255,0.08)",
+        "border": "rgba(25,25,25,0.08)",
         // Neon accent (reserved for CTA, FAB, QR)
-        "neon-green": "#B7FF2D",
+        "neon-green": "#BDFB04",
         // Brand accent colors
-        "electric-blue": "#2563EB",
-        "coral": "#FFFFFF",
-        "neon-lime": "#DAFB71",
+        "electric-blue": "#BDFB04",
+        "coral": "#191919",
+        "neon-lime": "#BDFB04",
         // Gradient colors (for utilities)
-        "gradient-primary-start": "#584BFF",
-        "gradient-primary-end": "#7A2CFF",
-        "gradient-secondary": "#166BFF",
-        "gradient-pink": "#FF2D7A",
-        "gradient-purple": "#7A2CFF",
-        "gradient-blue": "#166BFF",
-        "gradient-green": "#B7FF2D"
+        "gradient-primary-start": "#BDFB04",
+        "gradient-primary-end": "#191919",
+        "gradient-secondary": "#BDFB04",
+        "gradient-pink": "#BDFB04",
+        "gradient-purple": "#191919",
+        "gradient-blue": "#DFDED7",
+        "gradient-green": "#BDFB04"
       },
       spacing: {
         // 8‑point system (4px base)

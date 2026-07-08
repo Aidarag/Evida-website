@@ -26,10 +26,11 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import VerifiedBadge from '@/components/ui/VerifiedBadge';
 
 export default function StudentDashboardPage() {
   const { currentUser } = useUser();
-  const { events, notifications, saveToggle, rsvpToggle } = useEvents();
+  const { events, organizations, notifications, saveToggle, rsvpToggle } = useEvents();
   const router = useRouter();
   
   const [searchQuery, setSearchQuery] = useState('');
@@ -69,11 +70,35 @@ export default function StudentDashboardPage() {
 
   const filteredEvents = approvedEvents.filter(event => {
     const matchesSearch = event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          event.location.toLowerCase().includes(searchQuery.toLowerCase());
+                          event.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          (event.organizationName || '').toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || 
                             event.category?.toLowerCase() === selectedCategory.toLowerCase();
     return matchesSearch && matchesCategory;
   });
+
+  const sortedFilteredEvents = [...filteredEvents].sort((a, b) => {
+    // 1. Featured pins at top
+    const aFeat = a.featured || a.isFeatured || false;
+    const bFeat = b.featured || b.isFeatured || false;
+    if (aFeat && !bFeat) return -1;
+    if (!aFeat && bFeat) return 1;
+
+    // 2. School-scoped priority
+    if (a.ownershipType === 'school' && b.ownershipType !== 'school') return -1;
+    if (a.ownershipType !== 'school' && b.ownershipType === 'school') return 1;
+
+    // 3. Organization-scoped priority
+    if (a.ownershipType === 'organization' && b.ownershipType === 'student') return -1;
+    if (a.ownershipType === 'student' && b.ownershipType === 'organization') return 1;
+
+    // 4. Default sort by date
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
+  });
+
+  const matchedOrgs = searchQuery.trim() !== '' 
+    ? organizations.filter(org => org.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    : [];
 
   const categories = [
     { name: 'All', icon: Compass },
@@ -134,7 +159,7 @@ export default function StudentDashboardPage() {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
             <div 
-              className="h-10 w-10 rounded-full bg-[#92D000] text-[#191919] flex items-center justify-center font-bold border-2 border-white shadow-md text-xs cursor-pointer hover:scale-105 transition-transform" 
+              className="h-10 w-10 rounded-full bg-[#BDFB04] text-[#191919] flex items-center justify-center font-bold border-2 border-white shadow-md text-xs cursor-pointer hover:scale-105 transition-transform" 
               onClick={() => router.push('/student/profile')}
             >
               {currentUser.avatar || currentUser.name.substring(0, 2).toUpperCase()}
@@ -156,7 +181,7 @@ export default function StudentDashboardPage() {
             <Link href="/student/my-events" className="h-10 w-10 rounded-full bg-white border border-black/[0.04] flex items-center justify-center text-[#4F5666] hover:text-[#191919] transition-colors shadow-sm relative">
               <Bell className="h-4 w-4" />
               {unreadNotifs.length > 0 && (
-                <span className="absolute top-0.5 right-0.5 h-2.5 w-2.5 rounded-full bg-[#92D000] border-2 border-white" />
+                <span className="absolute top-0.5 right-0.5 h-2.5 w-2.5 rounded-full bg-[#BDFB04] border-2 border-white" />
               )}
             </Link>
           </div>
@@ -171,10 +196,10 @@ export default function StudentDashboardPage() {
               placeholder="Search events..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white/70 border border-black/[0.04] text-[#191919] placeholder-gray-400 rounded-full pl-10 pr-4 py-2.5 text-[11px] focus:outline-none focus:border-[#92D000] transition-all"
+              className="w-full bg-white/70 border border-black/[0.04] text-[#191919] placeholder-gray-400 rounded-full pl-10 pr-4 py-2.5 text-[11px] focus:outline-none focus:border-[#BDFB04] transition-all"
             />
           </div>
-          <Link href="/student/events" className="h-10 w-10 rounded-full bg-white/70 border border-black/[0.04] flex items-center justify-center text-[#4F5666] hover:text-[#92D000] transition-colors shrink-0">
+          <Link href="/student/events" className="h-10 w-10 rounded-full bg-white/70 border border-black/[0.04] flex items-center justify-center text-[#4F5666] hover:text-[#BDFB04] transition-colors shrink-0">
             <SlidersHorizontal className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -189,7 +214,7 @@ export default function StudentDashboardPage() {
                 onClick={() => setSelectedCategory(cat.name)}
                 className={`flex items-center gap-1.5 shrink-0 px-3.5 py-1.5 rounded-full text-[9px] font-extrabold uppercase tracking-wider transition-all ${
                   isActive 
-                    ? 'bg-[#92D000] text-[#191919] shadow-sm' 
+                    ? 'bg-[#BDFB04] text-[#191919] shadow-sm' 
                     : 'bg-white/60 border border-black/[0.04] text-[#4F5666] hover:bg-white hover:text-[#191919]'
                 }`}
               >
@@ -201,10 +226,42 @@ export default function StudentDashboardPage() {
         </div>
       </div>
 
+      {/* ── Matched Organizations Panel (LinkedIn-style Search) ── */}
+      {matchedOrgs.length > 0 && (
+        <div className="px-3 pt-4 space-y-3">
+          <h3 className="text-xs font-extrabold text-[#7B8290] tracking-widest uppercase">// MATCHED ORGANIZATIONS</h3>
+          <div className="space-y-2">
+            {matchedOrgs.map((org) => (
+              <div 
+                key={org.id} 
+                onClick={() => router.push(`/student/organizations/${org.id}`)}
+                className="bg-white rounded-2xl p-4 flex items-center justify-between border border-black/[0.04] shadow-sm hover:border-[#BDFB04] transition-all cursor-pointer group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-xl bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex items-center justify-center text-[#191919] font-extrabold uppercase shadow-sm">
+                    {org.name.charAt(0)}
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-[#191919] uppercase tracking-tight flex items-center group-hover:text-[#BDFB04] transition-colors">
+                      {org.name}
+                      {org.verified && <VerifiedBadge className="h-3.5 w-3.5 ml-1" />}
+                    </h4>
+                    <p className="text-[10px] text-[#4F5666] mt-0.5">{org.members.length} members • Campus Group</p>
+                  </div>
+                </div>
+                <div className="text-[10px] font-bold text-[#7B8290] group-hover:text-[#191919] transition-colors uppercase tracking-wider">
+                  View Page →
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* ── Feed ── */}
       <div className="space-y-5 px-3 pt-5">
-        {filteredEvents.length > 0 ? (
-          filteredEvents.map((event) => {
+        {sortedFilteredEvents.length > 0 ? (
+          sortedFilteredEvents.map((event) => {
             const isLiked = likedEvents.has(event.id);
             const isSaved = event.savedBy?.includes(currentUser.name);
             const isAttending = event.attendees.includes(currentUser.name);
@@ -226,18 +283,26 @@ export default function StudentDashboardPage() {
                 {/* ── Post Header (like IG) ── */}
                 <div className="flex items-center justify-between px-4 py-3">
                   <div className="flex items-center gap-2.5">
-                    <div className="h-8 w-8 rounded-full bg-[#92D000]/15 border border-[#92D000]/20 flex items-center justify-center">
+                    <div className="h-8 w-8 rounded-full bg-[#BDFB04]/15 border border-[#BDFB04]/20 flex items-center justify-center">
                       <span className="text-[9px] font-extrabold text-[#3a5200]">{getOrgInitial(event.organizer)}</span>
                     </div>
                     <div>
-                      <p className="text-[11px] font-bold text-[#191919] leading-tight">{event.organizationName || event.organizer}</p>
+                      <p 
+                        onClick={() => event.organizationId && router.push(`/student/organizations/${event.organizationId}`)}
+                        className={`text-[11px] font-bold text-[#191919] leading-tight flex items-center ${event.organizationId ? 'cursor-pointer hover:underline' : ''}`}
+                      >
+                        {event.organizationName || event.organizer}
+                        {event.organizationId && organizations.find(o => o.id === event.organizationId)?.verified && (
+                          <VerifiedBadge className="h-3.5 w-3.5 ml-1" />
+                        )}
+                      </p>
                       <p className="text-[9px] text-[#7B8290] font-medium flex items-center gap-1">
                         <MapPin className="h-2.5 w-2.5" /> {event.location}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[8px] font-bold text-[#92D000] bg-[#92D000]/10 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    <span className="text-[8px] font-bold text-[#BDFB04] bg-[#BDFB04]/10 px-2 py-0.5 rounded-full uppercase tracking-wider">
                       {monthName} {day}
                     </span>
                   </div>
@@ -309,7 +374,7 @@ export default function StudentDashboardPage() {
                     >
                       <div className={`h-10 w-10 rounded-full flex items-center justify-center transition-all ${
                         isSaved 
-                          ? 'bg-[#92D000] text-[#191919]' 
+                          ? 'bg-[#BDFB04] text-[#191919]' 
                           : 'bg-black/30 backdrop-blur-md text-white hover:bg-white/20'
                       }`}>
                         <Bookmark className={`h-5 w-5 ${isSaved ? 'fill-[#191919]' : ''}`} />
@@ -343,7 +408,7 @@ export default function StudentDashboardPage() {
                         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                         className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none"
                       >
-                        <div className="bg-[#92D000] rounded-2xl px-6 py-3 shadow-2xl">
+                        <div className="bg-[#BDFB04] rounded-2xl px-6 py-3 shadow-2xl">
                           <span className="text-[#191919] font-extrabold text-lg uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>You're in! 🎉</span>
                         </div>
                       </motion.div>
@@ -357,7 +422,7 @@ export default function StudentDashboardPage() {
                     onClick={() => handleImIn(event.id)}
                     className={`flex-1 py-2.5 rounded-full text-[11px] font-extrabold uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${
                       isAttending
-                        ? 'bg-[#92D000] text-[#191919] shadow-md shadow-[#92D000]/20'
+                        ? 'bg-[#BDFB04] text-[#191919] shadow-md shadow-[#BDFB04]/20'
                         : 'bg-[#191919] text-white hover:bg-[#2a2a2a]'
                     }`}
                   >
@@ -383,7 +448,7 @@ export default function StudentDashboardPage() {
                           key={i} 
                           className="h-5 w-5 rounded-full border-2 border-white flex items-center justify-center text-[6px] font-extrabold"
                           style={{ 
-                            background: i % 2 === 0 ? '#92D000' : '#191919',
+                            background: i % 2 === 0 ? '#BDFB04' : '#191919',
                             color: i % 2 === 0 ? '#191919' : '#fff'
                           }}
                         >
@@ -435,7 +500,7 @@ export default function StudentDashboardPage() {
 
                         {/* Comment input */}
                         <div className="flex items-center gap-2">
-                          <div className="h-6 w-6 rounded-full bg-[#92D000] text-[#191919] flex items-center justify-center text-[7px] font-bold shrink-0">
+                          <div className="h-6 w-6 rounded-full bg-[#BDFB04] text-[#191919] flex items-center justify-center text-[7px] font-bold shrink-0">
                             {currentUser.avatar || currentUser.name.substring(0, 2).toUpperCase()}
                           </div>
                           <input
@@ -443,12 +508,12 @@ export default function StudentDashboardPage() {
                             onChange={(e) => setCommentText(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleComment(event.id)}
                             placeholder="Add a comment..."
-                            className="flex-1 bg-black/[0.03] border border-black/[0.04] rounded-full px-3 py-1.5 text-[11px] text-[#191919] placeholder-[#7B8290] focus:outline-none focus:border-[#92D000] transition-colors"
+                            className="flex-1 bg-black/[0.03] border border-black/[0.04] rounded-full px-3 py-1.5 text-[11px] text-[#191919] placeholder-[#7B8290] focus:outline-none focus:border-[#BDFB04] transition-colors"
                           />
                           <button 
                             onClick={() => handleComment(event.id)}
                             disabled={!commentText.trim()}
-                            className="text-[#92D000] font-bold text-[10px] uppercase tracking-wider disabled:opacity-30 transition-opacity"
+                            className="text-[#BDFB04] font-bold text-[10px] uppercase tracking-wider disabled:opacity-30 transition-opacity"
                           >
                             Post
                           </button>

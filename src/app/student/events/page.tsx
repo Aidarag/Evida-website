@@ -13,10 +13,12 @@ import { Search, Compass, Shield, Users, GraduationCap, Megaphone, Calendar, Map
 import { motion, AnimatePresence } from 'framer-motion';
 import { Event, Promotion } from '@/lib/types';
 
+import VerifiedBadge from '@/components/ui/VerifiedBadge';
+
 type OwnershipFilter = 'school' | 'organization' | 'student' | 'promotion';
 
 export default function StudentEventsFeed() {
-  const { events, saveToggle } = useEvents();
+  const { events, organizations, saveToggle } = useEvents();
   const { currentUser } = useUser();
   const router = useRouter();
 
@@ -150,6 +152,21 @@ export default function StudentEventsFeed() {
     }
   })();
 
+  const sortedFilteredItems = [...filteredItems].sort((a, b) => {
+    // 1. Featured pins at top
+    const aFeat = ('ownershipType' in a) && (a.featured || a.isFeatured) ? 1 : 0;
+    const bFeat = ('ownershipType' in b) && (b.featured || b.isFeatured) ? 1 : 0;
+    if (aFeat > bFeat) return -1;
+    if (aFeat < bFeat) return 1;
+
+    // 2. Default by date
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
+  });
+
+  const matchedOrgs = searchQuery.trim() !== '' 
+    ? organizations.filter(org => org.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    : [];
+
   const handleCardClick = (item: Event | Promotion) => {
     if ('ownershipType' in item) {
       router.push(`/events/${item.id}`);
@@ -161,7 +178,7 @@ export default function StudentEventsFeed() {
   const handleWebFeedScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
     const index = Math.round(target.scrollTop / target.clientHeight);
-    if (index >= 0 && index < filteredItems.length && index !== activeFeedIndex) {
+    if (index >= 0 && index < sortedFilteredItems.length && index !== activeFeedIndex) {
       setActiveFeedIndex(index);
     }
   };
@@ -221,6 +238,34 @@ export default function StudentEventsFeed() {
                 </div>
               </div>
 
+              {/* Matched Organizations */}
+              {matchedOrgs.length > 0 && (
+                <div className="space-y-2 mt-2 max-w-md">
+                  <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// MATCHED ORGANIZATIONS</span>
+                  {matchedOrgs.map(org => (
+                    <div 
+                      key={org.id} 
+                      onClick={() => router.push(`/student/organizations/${org.id}`)}
+                      className="bg-white rounded-2xl p-3 flex items-center justify-between border border-black/[0.04] shadow-sm hover:border-[#BDFB04] transition-all cursor-pointer group"
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="h-8 w-8 rounded-lg bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex items-center justify-center text-[#191919] font-extrabold uppercase text-xs shadow-sm">
+                          {org.name.charAt(0)}
+                        </div>
+                        <div>
+                          <h4 className="text-[11px] font-bold text-[#191919] uppercase tracking-tight flex items-center group-hover:text-[#BDFB04] transition-colors">
+                            {org.name}
+                            {org.verified && <VerifiedBadge className="h-3 w-3 ml-1" />}
+                          </h4>
+                          <p className="text-[9px] text-[#4F5666]">{org.members.length} members • Campus Group</p>
+                        </div>
+                      </div>
+                      <span className="text-[9px] font-bold text-[#7B8290] group-hover:text-[#191919] transition-colors uppercase">View →</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {/* Row 1: Organizer Filters */}
               <div className="space-y-3">
                 <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// Organizer</span>
@@ -240,14 +285,14 @@ export default function StudentEventsFeed() {
                         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                         className={`relative shrink-0 flex items-center justify-center gap-2 px-4 py-2 h-9.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider border cursor-pointer select-none transition-all duration-200 ${
                           isActive
-                            ? 'border-[#92D000] text-[#191919] shadow-md shadow-[#92D000]/10'
+                            ? 'border-[#BDFB04] text-[#191919] shadow-md shadow-[#BDFB04]/10'
                             : 'border-black/[0.06] bg-black/[0.01] text-[#4F5666] hover:border-black/15'
                         }`}
                       >
                         {isActive && (
                           <motion.div
                             layoutId="activeOrganizerBg"
-                            className="absolute inset-0 bg-[#92D000] rounded-full z-0"
+                            className="absolute inset-0 bg-[#BDFB04] rounded-full z-0"
                             transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                           />
                         )}
@@ -283,7 +328,7 @@ export default function StudentEventsFeed() {
                         {isActive && (
                           <motion.div
                             layoutId="activeCategoryBg"
-                            className="absolute inset-0 bg-[#92D000] rounded-full z-0"
+                            className="absolute inset-0 bg-[#BDFB04] rounded-full z-0"
                             transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                           />
                         )}
@@ -337,7 +382,7 @@ export default function StudentEventsFeed() {
 
       {/* Grid or TikTok Feed */}
       {feedMode === 'tiktok' ? (
-        filteredItems.length > 0 ? (
+        sortedFilteredItems.length > 0 ? (
           isMobile ? (
             /* MOBILE SCREEN-FILLING TIKTOK SWIPE FEED */
             <div className="fixed inset-0 z-[60] bg-[#151515] flex flex-col w-screen h-screen overflow-hidden font-sans">
@@ -364,7 +409,7 @@ export default function StudentEventsFeed() {
 
               {/* Mobile Swipe Container */}
               <div className="h-full w-full overflow-y-scroll snap-y snap-mandatory scrollbar-none flex flex-col items-center">
-                {filteredItems.map((item) => {
+                {sortedFilteredItems.map((item) => {
                   const isSaved = 'ownershipType' in item ? item.savedBy?.includes(currentUser?.name || '') : false;
                   const cover = 'ownershipType' in item ? item.coverImage : '/pexels-markus-winkler-1430818-12199407.jpg';
                   
@@ -385,10 +430,10 @@ export default function StudentEventsFeed() {
 
                       {/* Top Segment - pushed down past the floating toggle */}
                       <div className="relative z-20 flex justify-between items-center px-5 pt-24">
-                        <span className="px-3.5 py-1.5 text-[9px] font-extrabold uppercase tracking-wider bg-[#92D000] text-[#191919] rounded-full border border-[#92D000]/20 shadow-sm">
+                        <span className="px-3.5 py-1.5 text-[9px] font-extrabold uppercase tracking-wider bg-[#BDFB04] text-[#191919] rounded-full border border-[#BDFB04]/20 shadow-sm">
                           {'ownershipType' in item ? item.category : 'Promotion'}
                         </span>
-                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#92D000]/80">
+                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#BDFB04]/80">
                           {'ownershipType' in item ? item.ownershipType : 'Services'}
                         </span>
                       </div>
@@ -399,7 +444,7 @@ export default function StudentEventsFeed() {
                         {/* Left: Info Details */}
                         <div className="flex-1 space-y-3.5 text-left">
                           <div className="space-y-2">
-                            <div className="text-[#92D000] text-[10px] font-extrabold uppercase tracking-widest flex items-center gap-1">
+                            <div className="text-[#BDFB04] text-[10px] font-extrabold uppercase tracking-widest flex items-center gap-1">
                               <Calendar className="h-3 w-3" /> {item.date} {('time' in item) && `• ${(item as any).time}`}
                             </div>
                             <h2 className="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -411,7 +456,7 @@ export default function StudentEventsFeed() {
                           </div>
 
                           <div className="flex items-center gap-2 text-xs text-gray-400 font-semibold">
-                            <MapPin className="h-4 w-4 text-[#92D000]" />
+                            <MapPin className="h-4 w-4 text-[#BDFB04]" />
                             <span className="truncate">{('location' in item) ? (item as any).location : (item as any).organizer}</span>
                           </div>
 
@@ -421,7 +466,7 @@ export default function StudentEventsFeed() {
                               size="sm" 
                               fullWidth
                               onClick={() => handleCardClick(item)}
-                              className="h-10 shadow-lg shadow-[#92D000]/20 font-extrabold tracking-widest uppercase text-[10px]"
+                              className="h-10 shadow-lg shadow-[#BDFB04]/20 font-extrabold tracking-widest uppercase text-[10px]"
                             >
                               {'ownershipType' in item ? 'RSVP & Info' : 'Contact / Info'}
                             </Button>
@@ -479,7 +524,7 @@ export default function StudentEventsFeed() {
                   onScroll={handleWebFeedScroll}
                   className="h-full w-full overflow-y-scroll snap-y snap-mandatory scrollbar-none"
                 >
-                  {filteredItems.map((item) => {
+                  {sortedFilteredItems.map((item) => {
                     const cover = 'ownershipType' in item ? item.coverImage : '/pexels-markus-winkler-1430818-12199407.jpg';
                     const isGradient = cover ? cover.includes('from-') : false;
                     const bgClass = isGradient ? cover : '';
@@ -498,7 +543,7 @@ export default function StudentEventsFeed() {
                         
                         {/* Tags */}
                         <div className="relative z-20 flex justify-between items-center">
-                          <span className="px-3.5 py-1.5 text-[8.5px] font-extrabold uppercase tracking-wider bg-[#92D000] text-[#191919] rounded-full border border-[#92D000]/20 shadow-sm">
+                          <span className="px-3.5 py-1.5 text-[8.5px] font-extrabold uppercase tracking-wider bg-[#BDFB04] text-[#191919] rounded-full border border-[#BDFB04]/20 shadow-sm">
                             {'ownershipType' in item ? item.category : 'Promotion'}
                           </span>
                           <span className="text-[9px] font-extrabold uppercase tracking-widest text-white/80">
@@ -508,7 +553,7 @@ export default function StudentEventsFeed() {
 
                         {/* Title overlay */}
                         <div className="relative z-20 mt-auto text-left space-y-1.5">
-                          <span className="text-[9px] text-[#92D000] font-black uppercase tracking-widest">// Swipe to scroll</span>
+                          <span className="text-[9px] text-[#BDFB04] font-black uppercase tracking-widest">// Swipe to scroll</span>
                           <h3 className="text-xl font-extrabold uppercase tracking-tight text-white line-clamp-2 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
                             {item.title}
                           </h3>
@@ -521,7 +566,7 @@ export default function StudentEventsFeed() {
 
               {/* Right Column: Synced Info Panel */}
               {(() => {
-                const activeItem = filteredItems[activeFeedIndex];
+                const activeItem = sortedFilteredItems[activeFeedIndex];
                 if (!activeItem) return null;
                 const isSaved = 'ownershipType' in activeItem ? activeItem.savedBy?.includes(currentUser?.name || '') : false;
 
@@ -529,7 +574,7 @@ export default function StudentEventsFeed() {
                   <div className="flex-1 h-full bg-[#18181b] p-8 flex flex-col justify-between text-white text-left">
                     <div className="space-y-6">
                       <div className="space-y-2">
-                        <span className="text-[10px] font-bold text-[#92D000] uppercase tracking-[0.2em] block">// Event Details</span>
+                        <span className="text-[10px] font-bold text-[#BDFB04] uppercase tracking-[0.2em] block">// Event Details</span>
                         <h2 className="text-2xl font-black uppercase tracking-tight text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
                           {activeItem.title}
                         </h2>
@@ -541,13 +586,13 @@ export default function StudentEventsFeed() {
                           <div className="bg-white/5 border border-white/5 p-3.5 rounded-2xl space-y-1">
                             <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-gray-400 block">Date & Time</span>
                             <span className="font-bold text-white flex items-center gap-1.5">
-                              <Calendar className="h-3.5 w-3.5 text-[#92D000]" /> {activeItem.date} {('time' in activeItem) && `• ${(activeItem as any).time}`}
+                              <Calendar className="h-3.5 w-3.5 text-[#BDFB04]" /> {activeItem.date} {('time' in activeItem) && `• ${(activeItem as any).time}`}
                             </span>
                           </div>
                           <div className="bg-white/5 border border-white/5 p-3.5 rounded-2xl space-y-1">
                             <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-gray-400 block">Location</span>
                             <span className="font-bold text-white flex items-center gap-1.5 truncate">
-                              <MapPin className="h-3.5 w-3.5 text-[#92D000]" /> {('location' in activeItem) ? (activeItem as any).location : (activeItem as any).organizer}
+                              <MapPin className="h-3.5 w-3.5 text-[#BDFB04]" /> {('location' in activeItem) ? (activeItem as any).location : (activeItem as any).organizer}
                             </span>
                           </div>
                         </div>
@@ -590,7 +635,7 @@ export default function StudentEventsFeed() {
                         variant="neon" 
                         size="lg" 
                         onClick={() => handleCardClick(activeItem)}
-                        className="flex-1 h-12 shadow-lg shadow-[#92D000]/15 uppercase tracking-widest font-extrabold text-xs"
+                        className="flex-1 h-12 shadow-lg shadow-[#BDFB04]/15 uppercase tracking-widest font-extrabold text-xs"
                       >
                         {'ownershipType' in activeItem ? 'RSVP & Info' : 'Contact Organizer'}
                       </Button>
@@ -609,10 +654,10 @@ export default function StudentEventsFeed() {
         )
       ) : (
         /* Original Grid view */
-        filteredItems.length > 0 ? (
+        sortedFilteredItems.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
-              {filteredItems.map((item) => (
+              {sortedFilteredItems.map((item) => (
                 <motion.div
                   key={item.id}
                   layout
@@ -692,7 +737,7 @@ export default function StudentEventsFeed() {
                       Category: {selectedPromo.category}
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <Calendar className="h-3.5 w-3.5 text-[#92D000]" />
+                      <Calendar className="h-3.5 w-3.5 text-[#BDFB04]" />
                       Posted: {new Date(selectedPromo.date).toLocaleDateString()}
                     </span>
                   </div>
@@ -714,7 +759,7 @@ export default function StudentEventsFeed() {
                         <span className="font-bold">{selectedPromo.organizer}</span>
                       </div>
                       <div className="flex items-center gap-2 text-xs text-[#4F5666]">
-                        <Mail className="h-3.5 w-3.5 text-[#92D000] shrink-0" />
+                        <Mail className="h-3.5 w-3.5 text-[#BDFB04] shrink-0" />
                         <span className="break-all">{selectedPromo.contactInfo}</span>
                       </div>
                     </div>
@@ -731,7 +776,7 @@ export default function StudentEventsFeed() {
                   </Button>
                   <a 
                     href={`mailto:${selectedPromo.contactInfo}?subject=Inquiry about: ${selectedPromo.title}`}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#92D000] hover:bg-[#92D000]/90 text-[#191919] rounded-xl text-xs font-bold transition-all shadow-lg shadow-orange-500/10"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#BDFB04] hover:bg-[#BDFB04]/90 text-[#191919] rounded-xl text-xs font-bold transition-all shadow-lg shadow-orange-500/10"
                   >
                     <Mail className="h-4 w-4" />
                     Contact Organizer

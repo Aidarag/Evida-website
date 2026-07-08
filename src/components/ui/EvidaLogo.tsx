@@ -31,17 +31,17 @@ export default function EvidaLogo({
       className={`select-none ${className}`}
     >
       <g id="evida-logo-mark">
-        {/* Left Ribbon (Vibrant Orange) */}
+        {/* Left Ribbon (Vibrant Lime) */}
         <path
           d="M 6 42 L 6 22 L 24 6 L 24 15 L 15 24 L 15 42 Z"
-          fill="#92D000"
+          fill="#BDFB04"
           opacity="0.95"
         />
         
-        {/* Right Ribbon (Vibrant Orange) */}
+        {/* Right Ribbon (Vibrant Lime) */}
         <path
           d="M 42 42 L 42 22 L 24 6 L 24 15 L 33 24 L 33 42 Z"
-          fill="#92D000"
+          fill="#BDFB04"
           opacity="0.95"
         />
         
@@ -57,7 +57,7 @@ export default function EvidaLogo({
         <text
           x="56"
           y="33"
-          fill={lightMode ? '#191919' : '#92D000'}
+          fill={lightMode ? '#191919' : '#BDFB04'}
           fontFamily="var(--font-display), Syne, sans-serif"
           fontWeight="800"
           fontSize="26"

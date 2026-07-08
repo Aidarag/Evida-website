@@ -95,7 +95,7 @@ export default function AnalyticsPage() {
                       initial={{ width: 0 }}
                       animate={{ width: `${percentage}%` }}
                       transition={{ duration: 1, ease: "easeOut" }}
-                      className="h-full bg-gradient-to-r from-[#9DC4D5] to-[#92D000] rounded-full"
+                      className="h-full bg-gradient-to-r from-[#9DC4D5] to-[#BDFB04] rounded-full"
                     />
                   </div>
                 </div>

@@ -1,0 +1,71 @@
+{
+  "brand": "Evida",
+  "version": "2026",
+
+  "colorPalette": {
+    "backgrounds": {
+      "primary":   "#FFFFFF",
+      "secondary": "#DFDED7",
+      "surface":   "#FFFFFF",
+      "warm":      "#DFDED7"
+    },
+    "text": {
+      "primary":   "#191919",
+      "secondary": "#4F5666",
+      "tertiary":  "#7B8290"
+    },
+    "brandAccents": {
+      "lime":    "#BDFB04",
+      "success": "#22C55E",
+      "dark":    "#191919"
+    },
+    "softBackgrounds": {
+      "limeLight":    "rgba(189, 251, 4, 0.12)",
+      "successLight": "rgba(34, 197, 94, 0.08)"
+    },
+    "buttons": {
+      "primaryBg":       "#BDFB04",
+      "primaryText":     "#191919",
+      "primaryHover":    "#D1FA3C",
+      "outlineText":     "#191919",
+      "outlineBorder":   "#191919",
+      "outlineHoverBg":  "#191919",
+      "outlineHoverText": "#DFDED7",
+      "ghostText":       "#4F5666",
+      "ghostHoverText":  "#191919"
+    }
+  },
+
+  "logo": {
+    "formats": {
+      "svg": "evida-logo-2026.svg",
+      "png": "evida-logo-2026.png"
+    },
+    "svgInline": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 48\" width=\"100%\" height=\"100%\"><g id=\"evida-logo-mark\"><path d=\"M 6 42 L 6 22 L 24 6 L 24 15 L 15 24 L 15 42 Z\" fill=\"#BDFB04\" opacity=\"0.95\" /><path d=\"M 42 42 L 42 22 L 24 6 L 24 15 L 33 24 L 33 42 Z\" fill=\"#BDFB04\" opacity=\"0.95\" /><path d=\"M 24 10 L 36 22 L 24 34 L 12 22 Z M 24 16 L 30 22 L 24 28 L 18 22 Z\" fill=\"#191919\" opacity=\"0.95\" /></g><text x=\"56\" y=\"33\" fill=\"#BDFB04\" font-family=\"var(--font-display), Syne, sans-serif\" font-weight=\"800\" font-size=\"26\" letter-spacing=\"0.03em\">Evida</text></svg>",
+    "logoColors": {
+      "ribbons":      "#BDFB04",
+      "centerDiamond": "#191919",
+      "wordmark":     "#BDFB04"
+    }
+  },
+
+  "typography": {
+    "fontFamily": "Inter, sans-serif",
+    "displayFont": "Inter, sans-serif",
+    "logoFont": "Syne, sans-serif"
+  },
+
+  "borderRadius": {
+    "large":   "24px",
+    "pill":    "9999px",
+    "default": "16px",
+    "medium":  "12px"
+  },
+
+  "shadows": {
+    "sm": "0 2px 8px rgba(18,18,18,0.02), 0 1px 2px rgba(18,18,18,0.02)",
+    "md": "0 12px 34px rgba(18,18,18,0.04), 0 4px 12px rgba(18,18,18,0.02)",
+    "lg": "0 24px 48px rgba(18,18,18,0.08), 0 8px 24px rgba(18,18,18,0.04)",
+    "xl": "0 32px 64px rgba(18,18,18,0.12), 0 16px 32px rgba(18,18,18,0.06)"
+  }
+}

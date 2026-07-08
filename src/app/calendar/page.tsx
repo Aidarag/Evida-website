@@ -82,8 +82,8 @@ export default function CalendarPage() {
     if (day === 3 || day === 12 || day === 20 || day === 26) {
       const IconComp = day === 3 ? GraduationCap : day === 12 ? Music : day === 20 ? Palette : Sparkles;
       return {
-        bgColor: 'bg-[#92D000]/15 hover:bg-[#92D000]/25',
-        borderColor: 'border-[#92D000]/40',
+        bgColor: 'bg-[#BDFB04]/15 hover:bg-[#BDFB04]/25',
+        borderColor: 'border-[#BDFB04]/40',
         textColor: 'text-[#191919]',
         icon: <IconComp className="h-4 w-4 text-[#191919] stroke-[2] max-md:h-3 max-md:w-3" />,
       };
@@ -100,8 +100,8 @@ export default function CalendarPage() {
     if (day === 8 || day === 18 || day === 29) {
       const IconComp = day === 8 ? Briefcase : day === 18 ? Code : Film;
       return {
-        bgColor: 'bg-[#92D000]/15 hover:bg-[#92D000]/25',
-        borderColor: 'border-[#92D000]/40',
+        bgColor: 'bg-[#BDFB04]/15 hover:bg-[#BDFB04]/25',
+        borderColor: 'border-[#BDFB04]/40',
         textColor: 'text-[#191919]',
         icon: <IconComp className="h-4 w-4 text-[#191919] stroke-[2] max-md:h-3 max-md:w-3" />,
       };
@@ -152,14 +152,14 @@ export default function CalendarPage() {
       {/* Hero Header */}
       <section className="relative w-full bg-[#191919] pt-36 pb-20 overflow-hidden text-center flex flex-col items-center">
         {/* Ambient Brand Glowing Blob */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#92D000]/8 rounded-full blur-[110px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#BDFB04]/8 rounded-full blur-[110px] pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 space-y-4">
           <span className="rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white/90 backdrop-blur-md">
             TIMELINE
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
-            Tactile <span className="text-[#92D000]">Calendar</span>
+            Tactile <span className="text-[#BDFB04]">Calendar</span>
           </h1>
           <p className="text-white/70 text-sm md:text-base max-w-xl mx-auto font-light leading-relaxed">
             Click on any day to inspect campus activities. Keep track of orientation, games, tailgates, and career fairs.
@@ -180,13 +180,13 @@ export default function CalendarPage() {
             <div className="flex gap-2">
               <button 
                 onClick={() => handleMonthNav('prev')}
-                className="h-10 w-10 border border-black/5 hover:border-[#92D000]/30 hover:bg-[#92D000]/5 text-black hover:text-[#92D000] rounded-full flex items-center justify-center transition-all cursor-pointer"
+                className="h-10 w-10 border border-black/5 hover:border-[#BDFB04]/30 hover:bg-[#BDFB04]/5 text-black hover:text-[#BDFB04] rounded-full flex items-center justify-center transition-all cursor-pointer"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
               <button 
                 onClick={() => handleMonthNav('next')}
-                className="h-10 w-10 border border-black/5 hover:border-[#92D000]/30 hover:bg-[#92D000]/5 text-black hover:text-[#92D000] rounded-full flex items-center justify-center transition-all cursor-pointer"
+                className="h-10 w-10 border border-black/5 hover:border-[#BDFB04]/30 hover:bg-[#BDFB04]/5 text-black hover:text-[#BDFB04] rounded-full flex items-center justify-center transition-all cursor-pointer"
               >
                 <ChevronRight className="h-5 w-5" />
               </button>
@@ -240,7 +240,7 @@ export default function CalendarPage() {
         {/* Right Side: Day Details & Inspector */}
         <div className="lg:col-span-4 bg-white border border-black/[0.04] rounded-[24px] p-6 shadow-[var(--shadow-premium-md)] space-y-6">
           <div className="border-b border-black/[0.04] pb-4">
-            <span className="text-[#92D000] text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 mb-1">
+            <span className="text-[#BDFB04] text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 mb-1">
               <CalendarDays className="h-3.5 w-3.5" /> Events on
             </span>
             <h3 className="font-extrabold text-[#191919] text-lg uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -253,7 +253,7 @@ export default function CalendarPage() {
               selectedDayEvents.map((evt, idx) => (
                 <div 
                   key={idx}
-                  className="p-4 rounded-2xl bg-black/[0.02] border border-black/[0.03] space-y-2 hover:border-[#92D000]/20 hover:bg-[#92D000]/3 transition-all duration-300"
+                  className="p-4 rounded-2xl bg-black/[0.02] border border-black/[0.03] space-y-2 hover:border-[#BDFB04]/20 hover:bg-[#BDFB04]/3 transition-all duration-300"
                 >
                   <h4 className="font-bold text-xs sm:text-sm text-[#191919] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
                     {evt.title}
@@ -291,7 +291,7 @@ export default function CalendarPage() {
             <div className="space-y-1 text-xs font-semibold">
               <p className="text-white font-bold text-base mb-2 tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>EVIDA</p>
               <p>Campus Event & Engagement Platform</p>
-              <p className="pt-2 hover:text-[#92D000] transition-colors cursor-pointer">Email: hello@evida.app</p>
+              <p className="pt-2 hover:text-[#BDFB04] transition-colors cursor-pointer">Email: hello@evida.app</p>
             </div>
           </div>
 
@@ -336,12 +336,12 @@ export default function CalendarPage() {
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#92D000] transition-colors"
+                className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-[#BDFB04] transition-colors"
                 required
               />
               <button 
                 type="submit"
-                className="bg-[#92D000] text-[#191919] px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#191919] transition-all duration-300 whitespace-nowrap"
+                className="bg-[#BDFB04] text-[#191919] px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#191919] transition-all duration-300 whitespace-nowrap"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 Subscribe
@@ -352,7 +352,7 @@ export default function CalendarPage() {
 
         {/* Bottom Slogan */}
         <div className="relative text-center border-t border-white/5 pt-8 pb-4">
-          <p className="text-[#92D000] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+          <p className="text-[#BDFB04] font-bold text-xs uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
             Evida — Campus life, all in one place.
           </p>
         </div>
