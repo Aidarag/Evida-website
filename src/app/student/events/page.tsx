@@ -340,169 +340,174 @@ export default function StudentEventsFeed() {
   };
 
   return (
-    <div className={`space-y-8 max-w-7xl mx-auto ${feedMode === 'tiktok' && isMobile ? 'p-0 overflow-hidden' : 'p-6 md:p-10'}`}>
+    <div className={`mx-auto ${
+      feedMode === 'tiktok' 
+        ? 'w-full max-w-none h-screen overflow-hidden p-0 relative bg-[#DFDED7]' 
+        : 'max-w-7xl p-6 md:p-10 space-y-8'
+    }`}>
       {/* Search & Filter Header */}
-      {!(feedMode === 'tiktok' && isMobile) && (
-        <div className="space-y-4 py-4 -mx-6 px-6 md:mx-0 md:px-0 border-b border-black/[0.04]">
-          <div className="flex flex-col md:flex-row gap-4 justify-between md:items-center">
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => router.back()}
-                className="h-10 w-10 rounded-full border border-black/10 flex items-center justify-center text-[#191919] hover:bg-black/5 transition-all cursor-pointer bg-white shadow-sm"
-                title="Go Back"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <div>
-                <h1 className="text-2xl font-extrabold text-[#191919] tracking-tight flex items-center gap-3" style={{ fontFamily: 'var(--font-display)' }}>
-                  Explore Events
-                </h1>
-                <p className="text-xs text-[#4F5666] mt-0.5">Discover what's happening around campus</p>
-              </div>
-            </div>
-            
-            {/* View Mode Toggle - Immediately below the short description */}
-            <div className="flex bg-black/[0.04] p-1 rounded-full border border-black/[0.04] shrink-0 w-fit">
-              <button
-                type="button"
-                onClick={() => setFeedMode('tiktok')}
-                className={`px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
-                  feedMode === 'tiktok' 
-                    ? 'bg-[#191919] text-white shadow-sm' 
-                    : 'text-[#4F5666] hover:text-[#191919]'
-                }`}
-              >
-                Feed
-              </button>
-              <button
-                type="button"
-                onClick={() => setFeedMode('grid')}
-                className={`px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
-                  feedMode === 'grid' 
-                    ? 'bg-[#191919] text-white shadow-sm' 
-                    : 'text-[#4F5666] hover:text-[#191919]'
-                }`}
-              >
-                Grid
-              </button>
+      <div className={`space-y-4 py-4 px-6 border-b border-black/[0.04] ${
+        feedMode === 'tiktok' 
+          ? 'fixed top-0 inset-x-0 z-50 bg-[#DFDED7]/80 backdrop-blur-md w-full border-b border-black/[0.04] max-w-none' 
+          : '-mx-6 md:mx-0 md:px-0'
+      }`}>
+        <div className="flex flex-col md:flex-row gap-4 justify-between md:items-center">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="h-10 w-10 rounded-full border border-black/10 flex items-center justify-center text-[#191919] hover:bg-black/5 transition-all cursor-pointer bg-white shadow-sm"
+              title="Go Back"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <div>
+              <h1 className="text-2xl font-extrabold text-[#191919] tracking-tight flex items-center gap-3" style={{ fontFamily: 'var(--font-display)' }}>
+                Explore Events
+              </h1>
+              <p className="text-xs text-[#4F5666] mt-0.5">Discover what's happening around campus</p>
             </div>
           </div>
- 
-          {/* Conditional Filters: Only visible in Grid Mode */}
-          {feedMode === 'grid' && (
-            <div className="space-y-4 pt-2">
-              <div className="w-full md:w-96">
-                <div className="relative">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <Input
-                    placeholder="Search events, organizers, or keywords..."
-                    className="pl-12 rounded-full"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-              </div>
- 
-              {/* Matched Organizations */}
-              {matchedOrgs.length > 0 && (
-                <div className="space-y-2 mt-2 max-w-md">
-                  <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// MATCHED ORGANIZATIONS</span>
-                  {matchedOrgs.map(org => (
-                    <div 
-                      key={org.id} 
-                      onClick={() => router.push(`/student/organizations/${org.id}`)}
-                      className="bg-white rounded-2xl p-3 flex items-center justify-between border border-black/[0.04] shadow-sm hover:border-[#BDFB04] transition-all cursor-pointer group"
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-lg bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex items-center justify-center text-[#191919] font-extrabold uppercase text-xs shadow-sm">
-                          {org.name.charAt(0)}
-                        </div>
-                        <div>
-                          <h4 className="text-[11px] font-bold text-[#191919] uppercase tracking-tight flex items-center group-hover:text-[#BDFB04] transition-colors">
-                            {org.name}
-                            {org.verified && <VerifiedBadge className="h-3 w-3 ml-1" />}
-                          </h4>
-                          <p className="text-[9px] text-[#4F5666]">{org.members.length} members • Campus Group</p>
-                        </div>
-                      </div>
-                      <span className="text-[9px] font-bold text-[#7B8290] group-hover:text-[#191919] transition-colors uppercase">View →</span>
-                    </div>
-                  ))}
-                </div>
-              )}
- 
-              {/* Row 1: Simple Tab Filters */}
-              <div className="space-y-3">
-                <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// Tab</span>
-                <div className="flex bg-black/[0.04] p-1 rounded-full border border-black/[0.04] shrink-0 w-fit">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedTab('campus');
-                      setSelectedCategory('All');
-                    }}
-                    className={`px-5 py-2 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
-                      selectedTab === 'campus' 
-                        ? 'bg-[#191919] text-white shadow-sm' 
-                        : 'text-[#4F5666] hover:text-[#191919]'
-                    }`}
-                  >
-                    Campus's events
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedTab('promotions');
-                      setSelectedCategory('All');
-                    }}
-                    className={`px-5 py-2 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
-                      selectedTab === 'promotions' 
-                        ? 'bg-[#191919] text-white shadow-sm' 
-                        : 'text-[#4F5666] hover:text-[#191919]'
-                    }`}
-                  >
-                    Promotions
-                  </button>
-                </div>
-              </div>
- 
-              {/* Row 2: Category Filters */}
-              <div className="space-y-3 pt-1">
-                <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// Category</span>
-                <div className="flex gap-2.5 overflow-x-auto pb-3 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
-                  {categories.map((cat) => {
-                    const isActive = selectedCategory === cat;
-                    return (
-                      <motion.button
-                        key={cat}
-                        onClick={() => setSelectedCategory(cat)}
-                        whileHover={{ y: -1.5, scale: 1.01 }}
-                        whileTap={{ scale: 0.98 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                        className={`relative shrink-0 px-5.5 py-2.5 h-9.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider cursor-pointer select-none transition-colors duration-200 ${
-                          isActive
-                            ? 'text-[#191919]'
-                            : 'bg-black/[0.02] border border-black/[0.06] text-[#4F5666] hover:bg-black/[0.04] hover:text-[#191919]'
-                        }`}
-                      >
-                        {isActive && (
-                          <motion.div
-                            layoutId="activeCategoryBg"
-                            className="absolute inset-0 bg-[#BDFB04] rounded-full z-0"
-                            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                          />
-                        )}
-                        <span className="relative z-10">{cat}</span>
-                      </motion.button>
-                    );
-                  })}
-                </div>
+          
+          {/* View Mode Toggle - Immediately below the short description */}
+          <div className="flex bg-black/[0.04] p-1 rounded-full border border-black/[0.04] shrink-0 w-fit">
+            <button
+              type="button"
+              onClick={() => setFeedMode('tiktok')}
+              className={`px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                feedMode === 'tiktok' 
+                  ? 'bg-[#191919] text-white shadow-sm' 
+                  : 'text-[#4F5666] hover:text-[#191919]'
+              }`}
+            >
+              Feed
+            </button>
+            <button
+              type="button"
+              onClick={() => setFeedMode('grid')}
+              className={`px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                feedMode === 'grid' 
+                  ? 'bg-[#191919] text-white shadow-sm' 
+                  : 'text-[#4F5666] hover:text-[#191919]'
+              }`}
+            >
+              Grid
+            </button>
+          </div>
+        </div>
+
+        {/* Tab Filters */}
+        <div className="space-y-3">
+          <div className="flex bg-black/[0.04] p-1 rounded-full border border-black/[0.04] shrink-0 w-fit">
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedTab('campus');
+                setSelectedCategory('All');
+              }}
+              className={`px-5 py-2 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                selectedTab === 'campus' 
+                  ? 'bg-[#191919] text-white font-black' 
+                  : 'text-[#4F5666] hover:text-[#191919]'
+              }`}
+            >
+              Campus's events
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedTab('promotions');
+                setSelectedCategory('All');
+              }}
+              className={`px-5 py-2 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                selectedTab === 'promotions' 
+                  ? 'bg-[#191919] text-white font-black' 
+                  : 'text-[#4F5666] hover:text-[#191919]'
+              }`}
+            >
+              Promotions
+            </button>
+          </div>
+        </div>
+
+        {/* Search & Category Filters - Only visible in Grid Mode */}
+        {feedMode === 'grid' && (
+          <div className="space-y-4 pt-2">
+            <div className="w-full md:w-96">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Input
+                  placeholder="Search events, organizers, or keywords..."
+                  className="pl-12 rounded-full"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
               </div>
             </div>
-          )}
-        </div>
-      )}
+
+            {/* Matched Organizations */}
+            {matchedOrgs.length > 0 && (
+              <div className="space-y-2 mt-2 max-w-md">
+                <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// MATCHED ORGANIZATIONS</span>
+                {matchedOrgs.map(org => (
+                  <div 
+                    key={org.id} 
+                    onClick={() => router.push(`/student/organizations/${org.id}`)}
+                    className="bg-white rounded-2xl p-3 flex items-center justify-between border border-black/[0.04] shadow-sm hover:border-[#BDFB04] transition-all cursor-pointer group"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="h-8 w-8 rounded-lg bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex items-center justify-center text-[#191919] font-extrabold uppercase text-xs shadow-sm">
+                        {org.name.charAt(0)}
+                      </div>
+                      <div>
+                        <h4 className="text-[11px] font-bold text-[#191919] uppercase tracking-tight flex items-center group-hover:text-[#BDFB04] transition-colors">
+                          {org.name}
+                          {org.verified && <VerifiedBadge className="h-3 w-3 ml-1" />}
+                        </h4>
+                        <p className="text-[9px] text-[#4F5666]">{org.members.length} members • Campus Group</p>
+                      </div>
+                    </div>
+                    <span className="text-[9px] font-bold text-[#7B8290] group-hover:text-[#191919] transition-colors uppercase">View →</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Category Filters */}
+            <div className="space-y-3 pt-1">
+              <span className="text-[9px] font-bold text-[#4F5666] uppercase tracking-[0.2em] block pl-1">// Category</span>
+              <div className="flex gap-2.5 overflow-x-auto pb-3 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
+                {categories.map((cat) => {
+                  const isActive = selectedCategory === cat;
+                  return (
+                    <motion.button
+                      key={cat}
+                      onClick={() => setSelectedCategory(cat)}
+                      whileHover={{ y: -1.5, scale: 1.01 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                      className={`relative shrink-0 px-5.5 py-2.5 h-9.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider cursor-pointer select-none transition-colors duration-200 ${
+                        isActive
+                          ? 'text-[#191919]'
+                          : 'bg-black/[0.02] border border-black/[0.06] text-[#4F5666] hover:bg-black/[0.04] hover:text-[#191919]'
+                      }`}
+                    >
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeCategoryBg"
+                          className="absolute inset-0 bg-[#BDFB04] rounded-full z-0"
+                          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                      <span className="relative z-10">{cat}</span>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
  
       {/* Featured Hero (Only show in Grid mode if no search/filter applied and featured exists) */}
       {feedMode === 'grid' && featuredEvent && searchQuery === '' && selectedCategory === 'All' && selectedTab === 'campus' && (
@@ -544,7 +549,7 @@ export default function StudentEventsFeed() {
       {/* Grid or TikTok Feed */}
       {feedMode === 'tiktok' ? (
         sortedFilteredItems.length > 0 ? (
-          <div className="relative w-full h-[calc(100vh-14rem)] flex flex-col items-center">
+          <div className="relative w-full h-full flex flex-col items-center">
             
             {/* TikTok Vertical Swipe Container */}
             <div className="h-full w-full overflow-y-scroll snap-y snap-mandatory scrollbar-none flex flex-col items-center">
@@ -583,8 +588,16 @@ export default function StudentEventsFeed() {
                 const isSaved = 'ownershipType' in item ? item.savedBy?.includes(currentUser?.name || '') : false;
 
                 return (
-                  <div key={item.id} className="snap-start shrink-0 h-full w-full max-w-md mx-auto flex items-center justify-center p-4">
-                    <div className="w-full bg-white rounded-[32px] overflow-hidden border border-black/[0.04] shadow-[var(--shadow-premium-md)] flex flex-col justify-between h-full max-h-[580px] relative text-left">
+                  <div key={item.id} className="snap-start shrink-0 h-full w-full flex items-center justify-center pt-28 pb-32 px-4 relative overflow-hidden bg-[#DFDED7]">
+                    {/* Blurred background image for full-screen immersive aesthetic */}
+                    {!isPromo && coverImage && !isGradient && (
+                      <div 
+                        className="absolute inset-0 bg-cover bg-center filter blur-3xl opacity-20 scale-110 z-0 select-none pointer-events-none"
+                        style={bgStyle}
+                      />
+                    )}
+                    
+                    <div className="relative z-10 w-full max-w-md bg-white rounded-[32px] overflow-hidden border border-black/[0.04] shadow-[var(--shadow-premium-lg)] flex flex-col justify-between h-[64vh] max-h-[560px] text-left">
                       
                       {/* 1. Image Container */}
                       <div 
