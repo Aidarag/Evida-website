@@ -91,6 +91,26 @@ export default function StudentProfilePage() {
 
   const handleLogout = () => logout();
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, target: 'avatar' | 'banner') => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 1.2 * 1024 * 1024) {
+        alert('File is too large! Please choose an image smaller than 1.2MB.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        if (target === 'avatar') {
+          setEditAvatar(base64String);
+        } else {
+          setEditBanner(base64String);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const openEdit = () => {
     setEditName(currentUser.name);
     setEditMajor(currentUser.major || '');
@@ -218,8 +238,12 @@ export default function StudentProfilePage() {
       <div className="bg-[#DFDED7] px-5 md:px-10 pt-0 pb-5">
         {/* Avatar row — sits half over the banner */}
         <div className="-mt-12 mb-4 flex items-end justify-between">
-          <div className="h-20 w-20 md:h-24 md:w-24 rounded-2xl bg-[#BDFB04] flex items-center justify-center shadow-lg border-4 border-[#DFDED7] shrink-0">
-            <span className="text-2xl md:text-3xl font-extrabold text-[#191919]">{currentUser.avatar}</span>
+          <div className="h-20 w-20 md:h-24 md:w-24 rounded-2xl bg-[#BDFB04] flex items-center justify-center shadow-lg border-4 border-[#DFDED7] shrink-0 overflow-hidden">
+            {currentUser.avatar && (currentUser.avatar.startsWith('data:') || currentUser.avatar.startsWith('http') || currentUser.avatar.startsWith('/')) ? (
+              <img src={currentUser.avatar} className="h-full w-full object-cover" alt={currentUser.name} />
+            ) : (
+              <span className="text-2xl md:text-3xl font-extrabold text-[#191919]">{currentUser.avatar || '🎓'}</span>
+            )}
           </div>
           {savedFeedback && (
             <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#BDFB04]/20 border border-[#BDFB04]/40 text-[10px] font-bold text-[#3a5200] uppercase tracking-wider">
@@ -431,16 +455,31 @@ export default function StudentProfilePage() {
                           </button>
                         ))}
                       </div>
-                      <div className="space-y-1 pt-1">
-                        <label className="text-[8px] font-bold text-[#374151] uppercase tracking-wider block pl-0.5">Or Custom Initials/Emoji</label>
-                        <input
-                          type="text"
-                          maxLength={3}
-                          value={editAvatar}
-                          onChange={e => setEditAvatar(e.target.value)}
-                          className="w-24 bg-white border border-black/[0.08] rounded-xl px-3 py-2 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] transition-colors"
-                          placeholder="e.g. MC"
-                        />
+                      
+                      <div className="grid grid-cols-2 gap-3 pt-1">
+                        <div className="space-y-1">
+                          <label className="text-[8px] font-bold text-[#374151] uppercase tracking-wider block pl-0.5">Custom Initials/Emoji</label>
+                          <input
+                            type="text"
+                            maxLength={3}
+                            value={editAvatar.startsWith('data:') ? '' : editAvatar}
+                            onChange={e => setEditAvatar(e.target.value)}
+                            className="w-full bg-white border border-black/[0.08] rounded-xl px-3 py-2 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] transition-colors"
+                            placeholder="e.g. MC"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-[8px] font-bold text-[#374151] uppercase tracking-wider block pl-0.5">Or Upload Photo</label>
+                          <label className="relative flex items-center justify-center border border-dashed border-black/20 hover:border-black/40 rounded-xl px-3 py-2 text-xs text-[#374151] hover:text-[#191919] transition-all cursor-pointer bg-white h-9">
+                            <span className="truncate text-[10px] font-semibold">{editAvatar.startsWith('data:') ? '✓ Photo selected' : 'Upload file'}</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={e => handleFileChange(e, 'avatar')}
+                              className="sr-only"
+                            />
+                          </label>
+                        </div>
                       </div>
                     </div>
 
@@ -463,15 +502,30 @@ export default function StudentProfilePage() {
                           </button>
                         ))}
                       </div>
-                      <div className="space-y-1 pt-1">
-                        <label className="text-[8px] font-bold text-[#374151] uppercase tracking-wider block pl-0.5">Or Paste Custom Image URL</label>
-                        <input
-                          type="text"
-                          value={editBanner}
-                          onChange={e => setEditBanner(e.target.value)}
-                          className="w-full bg-white border border-black/[0.08] rounded-xl px-3 py-2 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] transition-colors"
-                          placeholder="https://example.com/banner.jpg"
-                        />
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                        <div className="space-y-1">
+                          <label className="text-[8px] font-bold text-[#374151] uppercase tracking-wider block pl-0.5">Paste Custom Image URL</label>
+                          <input
+                            type="text"
+                            value={editBanner.startsWith('data:') ? '' : editBanner}
+                            onChange={e => setEditBanner(e.target.value)}
+                            className="w-full bg-white border border-black/[0.08] rounded-xl px-3 py-2 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] transition-colors"
+                            placeholder="https://example.com/banner.jpg"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-[8px] font-bold text-[#374151] uppercase tracking-wider block pl-0.5">Or Upload Photo</label>
+                          <label className="relative flex items-center justify-center border border-dashed border-black/20 hover:border-black/40 rounded-xl px-3 py-2 text-xs text-[#374151] hover:text-[#191919] transition-all cursor-pointer bg-white h-9">
+                            <span className="truncate text-[10px] font-semibold">{editBanner.startsWith('data:') ? '✓ Photo selected' : 'Upload file'}</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={e => handleFileChange(e, 'banner')}
+                              className="sr-only"
+                            />
+                          </label>
+                        </div>
                       </div>
                     </div>
 
