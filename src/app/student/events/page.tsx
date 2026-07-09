@@ -9,7 +9,7 @@ import Input from '@/components/ui/Input';
 import EmptyState from '@/components/ui/EmptyState';
 import Modal from '@/components/ui/Modal';
 import Button from '@/components/ui/Button';
-import { Search, Compass, Shield, Users, GraduationCap, Megaphone, Calendar, MapPin, Mail, X, Heart } from 'lucide-react';
+import { Search, Compass, Shield, Users, GraduationCap, Megaphone, Calendar, MapPin, Mail, X, Heart, Plus, MessageSquare, Bookmark, Share2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Event, Promotion } from '@/lib/types';
 
@@ -30,6 +30,169 @@ export default function StudentEventsFeed() {
   const [feedMode, setFeedMode] = useState<'grid' | 'tiktok'>('tiktok');
   const [isMobile, setIsMobile] = useState(false);
   const [activeFeedIndex, setActiveFeedIndex] = useState(0);
+
+  // TikTok feed states
+  const [tiktokTab, setTiktokTab] = useState<'foryou' | 'school' | 'organization'>('foryou');
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [likedItems, setLikedItems] = useState<Record<string, boolean>>({});
+  const [likesCounts, setLikesCounts] = useState<Record<string, number>>({});
+  const [commentsMap, setCommentsMap] = useState<Record<string, { user: string; text: string; time: string }[]>>({});
+  const [followedOrganizers, setFollowedOrganizers] = useState<Record<string, boolean>>({});
+  const [commentsOpenItem, setCommentsOpenItem] = useState<(Event | Promotion) | null>(null);
+  const [newCommentText, setNewCommentText] = useState('');
+  const [copiedItemId, setCopiedItemId] = useState<string | null>(null);
+  const [activeRightTab, setActiveRightTab] = useState<'details' | 'comments'>('details');
+
+  const getMockComments = (id: string, title: string) => {
+    const commentsPool = [
+      "Can't wait for this! Count me in!",
+      "Is this open to non-majors?",
+      "Finally, an event like this on campus!",
+      "Who wants to go together? Let's make a group chat.",
+      "Last year was super fun, definitely going again.",
+      "Highly recommended! 🔥",
+      "Is RSVP required or can we just show up?",
+      "Will there be free food?",
+      "So excited for this!"
+    ];
+    const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const count = (hash % 3) + 2; // 2 to 4 comments
+    const selected: { user: string; text: string; time: string }[] = [];
+    const names = ["Alex Smith", "Emma Watson", "John Doe", "Sophia Lee", "Michael Chen", "Olivia Taylor"];
+    for (let i = 0; i < count; i++) {
+      const nameIndex = (hash + i) % names.length;
+      const commentIndex = (hash * (i + 1)) % commentsPool.length;
+      selected.push({
+        user: names[nameIndex],
+        text: commentsPool[commentIndex],
+        time: `${(hash + i) % 12 + 1}h ago`
+      });
+    }
+    return selected;
+  };
+
+  useEffect(() => {
+    if (events.length === 0 && promotions.length === 0) return;
+
+    const storedLikes = localStorage.getItem('evida_feed_likes');
+    const storedLikedItems = localStorage.getItem('evida_feed_liked_items');
+    const storedComments = localStorage.getItem('evida_feed_comments');
+    const storedFollowed = localStorage.getItem('evida_feed_followed');
+
+    let parsedLikes = storedLikes ? JSON.parse(storedLikes) : {};
+    let parsedLikedItems = storedLikedItems ? JSON.parse(storedLikedItems) : {};
+    let parsedComments = storedComments ? JSON.parse(storedComments) : {};
+    let parsedFollowed = storedFollowed ? JSON.parse(storedFollowed) : {};
+
+    events.forEach(e => {
+      if (parsedLikes[e.id] === undefined) {
+        parsedLikes[e.id] = Math.max(3, Math.floor(e.views * 0.3) + (e.title.length % 7));
+      }
+      if (parsedComments[e.id] === undefined) {
+        parsedComments[e.id] = getMockComments(e.id, e.title);
+      }
+    });
+
+    promotions.forEach(p => {
+      if (parsedLikes[p.id] === undefined) {
+        parsedLikes[p.id] = Math.max(5, (p.title.length * 2) % 35 + 4);
+      }
+      if (parsedComments[p.id] === undefined) {
+        parsedComments[p.id] = getMockComments(p.id, p.title);
+      }
+    });
+
+    setLikesCounts(parsedLikes);
+    setLikedItems(parsedLikedItems);
+    setCommentsMap(parsedComments);
+    setFollowedOrganizers(parsedFollowed);
+  }, [events, promotions]);
+
+  const handleLikeToggle = (itemId: string) => {
+    const isLiked = !likedItems[itemId];
+    const newLikedItems = { ...likedItems, [itemId]: isLiked };
+    const newLikesCounts = {
+      ...likesCounts,
+      [itemId]: (likesCounts[itemId] || 0) + (isLiked ? 1 : -1)
+    };
+
+    setLikedItems(newLikedItems);
+    setLikesCounts(newLikesCounts);
+
+    localStorage.setItem('evida_feed_liked_items', JSON.stringify(newLikedItems));
+    localStorage.setItem('evida_feed_likes', JSON.stringify(newLikesCounts));
+  };
+
+  const handleFollowToggle = (organizer: string) => {
+    const isFollowed = !followedOrganizers[organizer];
+    const newFollowed = { ...followedOrganizers, [organizer]: isFollowed };
+    setFollowedOrganizers(newFollowed);
+    localStorage.setItem('evida_feed_followed', JSON.stringify(newFollowed));
+  };
+
+  const handleAddComment = (itemId: string) => {
+    if (!newCommentText.trim() || !currentUser) return;
+    const userComments = commentsMap[itemId] || [];
+    const newComment = {
+      user: currentUser.name,
+      text: newCommentText.trim(),
+      time: 'Just now'
+    };
+    const newComments = { ...commentsMap, [itemId]: [newComment, ...userComments] };
+    setCommentsMap(newComments);
+    setNewCommentText('');
+    localStorage.setItem('evida_feed_comments', JSON.stringify(newComments));
+  };
+
+  const handleShare = (item: Event | Promotion) => {
+    const isEvent = 'ownershipType' in item;
+    const link = isEvent 
+      ? `${window.location.origin}/events/${item.id}`
+      : `mailto:${item.contactInfo}?subject=Check out this promotion: ${item.title}`;
+    
+    if (isEvent) {
+      navigator.clipboard.writeText(link);
+      setCopiedItemId(item.id);
+      setTimeout(() => setCopiedItemId(null), 2000);
+    } else {
+      window.location.href = link;
+    }
+  };
+
+  // Compute combined/filtered items for the TikTok feed tab
+  const tiktokFeedItems = (() => {
+    let items: (Event | Promotion)[] = [];
+    if (tiktokTab === 'foryou') {
+      // Combined approved student events and promotions
+      const studentEvents = events.filter(e => e.status === 'approved' && e.ownershipType === 'student');
+      const approvedPromos = promotions;
+      items = [...studentEvents, ...approvedPromos];
+    } else if (tiktokTab === 'school') {
+      items = events.filter(e => e.status === 'approved' && e.ownershipType === 'school');
+    } else if (tiktokTab === 'organization') {
+      items = events.filter(e => e.status === 'approved' && e.ownershipType === 'organization');
+    }
+
+    if (searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase();
+      items = items.filter(item => {
+        const title = item.title.toLowerCase();
+        const desc = item.description.toLowerCase();
+        const org = 'ownershipType' in item 
+          ? (item.organizationName || item.organizer || '').toLowerCase() 
+          : item.organizer.toLowerCase();
+        const loc = 'ownershipType' in item ? (item.location || '').toLowerCase() : '';
+        return title.includes(q) || desc.includes(q) || org.includes(q) || loc.includes(q);
+      });
+    }
+
+    return [...items].sort((a, b) => {
+      const aFeat = ('ownershipType' in a) && (a.featured || a.isFeatured) ? 1 : 0;
+      const bFeat = ('ownershipType' in b) && (b.featured || b.isFeatured) ? 1 : 0;
+      if (aFeat !== bFeat) return bFeat - aFeat;
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+  })();
 
   useEffect(() => {
     const handleResize = () => {
@@ -382,41 +545,118 @@ export default function StudentEventsFeed() {
 
       {/* Grid or TikTok Feed */}
       {feedMode === 'tiktok' ? (
-        sortedFilteredItems.length > 0 ? (
+        tiktokFeedItems.length > 0 ? (
           isMobile ? (
             /* MOBILE SCREEN-FILLING TIKTOK SWIPE FEED */
             <div className="fixed inset-0 z-[60] bg-[#151515] flex flex-col w-screen h-screen overflow-hidden font-sans">
               
-              {/* Floating Header Mode Toggle for Mobile TikTok Feed */}
-              <div className="absolute top-6 inset-x-0 z-50 flex justify-center pointer-events-none">
+              {/* Floating Header Mode Toggle & Tabs for Mobile TikTok Feed */}
+              <div className="absolute top-6 inset-x-0 z-50 flex items-center justify-between px-6">
+                {/* Switch back to Grid view */}
+                <button
+                  type="button"
+                  onClick={() => setFeedMode('grid')}
+                  className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-black/60 transition-all cursor-pointer shadow-lg pointer-events-auto"
+                  title="Grid View"
+                >
+                  <Compass className="h-5 w-5" />
+                </button>
+
+                {/* TikTok Tabs */}
                 <div className="flex bg-black/40 backdrop-blur-md p-1 rounded-full border border-white/10 shrink-0 shadow-lg pointer-events-auto">
                   <button
                     type="button"
-                    onClick={() => setFeedMode('tiktok')}
-                    className="px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer bg-white text-[#191919] shadow"
+                    onClick={() => setTiktokTab('school')}
+                    className={`px-3.5 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                      tiktokTab === 'school' ? 'bg-[#BDFB04] text-[#191919] font-black' : 'text-white/80 hover:text-white'
+                    }`}
                   >
-                    Feed
+                    School
                   </button>
                   <button
                     type="button"
-                    onClick={() => setFeedMode('grid')}
-                    className="px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer text-white/80 hover:text-white"
+                    onClick={() => setTiktokTab('organization')}
+                    className={`px-3.5 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                      tiktokTab === 'organization' ? 'bg-[#BDFB04] text-[#191919] font-black' : 'text-white/80 hover:text-white'
+                    }`}
                   >
-                    Grid
+                    Orgs
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setTiktokTab('foryou')}
+                    className={`px-3.5 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                      tiktokTab === 'foryou' ? 'bg-[#BDFB04] text-[#191919] font-black' : 'text-white/80 hover:text-white'
+                    }`}
+                  >
+                    For You
                   </button>
                 </div>
+
+                {/* Search icon */}
+                <button
+                  type="button"
+                  onClick={() => setSearchOpen(true)}
+                  className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-black/60 transition-all cursor-pointer shadow-lg pointer-events-auto"
+                  title="Search Feed"
+                >
+                  <Search className="h-5 w-5" />
+                </button>
               </div>
+
+              {/* Sliding Search Overlay for Mobile TikTok Feed */}
+              <AnimatePresence>
+                {searchOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className="absolute inset-x-0 top-0 z-[70] bg-[#151515]/95 backdrop-blur-lg border-b border-white/10 p-6 pt-16 flex flex-col gap-4 shadow-xl"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="relative flex-1">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#BDFB04]" />
+                        <input
+                          type="text"
+                          placeholder="Search events, promotions..."
+                          className="w-full bg-white/10 border border-white/10 text-white pl-10 pr-4 py-2.5 rounded-full text-xs focus:outline-none focus:ring-1 focus:ring-[#BDFB04] placeholder-white/40"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          autoFocus
+                        />
+                      </div>
+                      <button
+                        onClick={() => {
+                          setSearchQuery('');
+                          setSearchOpen(false);
+                        }}
+                        className="text-white text-xs font-bold hover:text-[#BDFB04]"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/* Mobile Swipe Container */}
               <div className="h-full w-full overflow-y-scroll snap-y snap-mandatory scrollbar-none flex flex-col items-center">
-                {sortedFilteredItems.map((item) => {
+                {tiktokFeedItems.map((item) => {
                   const isSaved = 'ownershipType' in item ? item.savedBy?.includes(currentUser?.name || '') : false;
                   const cover = 'ownershipType' in item ? item.coverImage : '/pexels-markus-winkler-1430818-12199407.jpg';
-                  
                   const isGradient = cover ? cover.includes('from-') : false;
                   const bgClass = isGradient ? cover : '';
                   const bgStyle = (!isGradient && cover) ? { backgroundImage: `url(${cover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
                   
+                  const orgName = 'ownershipType' in item ? (item.organizationName || item.organizer) : item.organizer;
+                  const isFollowed = followedOrganizers[orgName] || false;
+                  
+                  const isLiked = likedItems[item.id] || false;
+                  const likesCount = likesCounts[item.id] || 0;
+                  const commentsCount = (commentsMap[item.id] || []).length;
+                  const savesCount = 'ownershipType' in item ? (item.savedBy?.length || 0) : 0;
+                  const isCopied = copiedItemId === item.id;
+
                   return (
                     <div 
                       key={`mobile-feed-${item.id}`}
@@ -428,7 +668,7 @@ export default function StudentEventsFeed() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-black/55 z-10" />
 
-                      {/* Top Segment - pushed down past the floating toggle */}
+                      {/* Top Segment */}
                       <div className="relative z-20 flex justify-between items-center px-5 pt-24">
                         <span className="px-3.5 py-1.5 text-[9px] font-extrabold uppercase tracking-wider bg-[#BDFB04] text-[#191919] rounded-full border border-[#BDFB04]/20 shadow-sm">
                           {'ownershipType' in item ? item.category : 'Promotion'}
@@ -439,15 +679,14 @@ export default function StudentEventsFeed() {
                       </div>
 
                       {/* Bottom segment and Right-side Action Column */}
-                      {/* pb-28 = ~112px clears the bottom nav (4rem float + 4rem height) */}
                       <div className="relative z-20 flex items-end gap-4 px-5 pb-28">
                         {/* Left: Info Details */}
-                        <div className="flex-1 space-y-3.5 text-left">
+                        <div className="flex-1 space-y-3.5 text-left min-w-0">
                           <div className="space-y-2">
                             <div className="text-[#BDFB04] text-[10px] font-extrabold uppercase tracking-widest flex items-center gap-1">
                               <Calendar className="h-3 w-3" /> {item.date} {('time' in item) && `• ${(item as any).time}`}
                             </div>
-                            <h2 className="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+                            <h2 className="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-white leading-tight truncate" style={{ fontFamily: 'var(--font-display)' }}>
                               {item.title}
                             </h2>
                             <p className="text-xs text-gray-300 leading-relaxed font-light line-clamp-3">
@@ -458,6 +697,18 @@ export default function StudentEventsFeed() {
                           <div className="flex items-center gap-2 text-xs text-gray-400 font-semibold">
                             <MapPin className="h-4 w-4 text-[#BDFB04]" />
                             <span className="truncate">{('location' in item) ? (item as any).location : (item as any).organizer}</span>
+                          </div>
+
+                          {/* Dynamic Search Banner styled like TikTok bottom search overlay */}
+                          <div 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSearchOpen(true);
+                            }}
+                            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-black/45 text-[10px] font-bold text-white/95 border border-white/5 cursor-pointer hover:bg-black/60 transition-colors w-fit pointer-events-auto"
+                          >
+                            <Search className="h-3 w-3 text-[#BDFB04]" />
+                            <span>Search · {item.title.split(' ')[0]}</span>
                           </div>
 
                           <div>
@@ -474,40 +725,103 @@ export default function StudentEventsFeed() {
                         </div>
 
                         {/* Right: Vertical TikTok Interaction Bar */}
-                        <div className="flex flex-col gap-4 items-center pb-2">
-                          {/* Heart Save Button */}
-                          {'ownershipType' in item && (
+                        <div className="flex flex-col gap-4 items-center pb-2 shrink-0 z-30 pointer-events-auto">
+                          {/* Follow/Profile Avatar */}
+                          <div className="relative mb-1">
+                            <div className="h-11 w-11 rounded-full border-2 border-[#BDFB04] bg-zinc-800 flex items-center justify-center text-white font-extrabold text-sm shadow-md">
+                              {orgName.charAt(0).toUpperCase()}
+                            </div>
                             <button 
                               onClick={(e) => {
                                 e.stopPropagation();
-                                saveToggle(item.id);
+                                handleFollowToggle(orgName);
                               }}
-                              className="flex flex-col items-center gap-1 group cursor-pointer"
+                              className={`absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-5 w-5 rounded-full border border-black/20 flex items-center justify-center transition-all ${
+                                isFollowed ? 'bg-[#BDFB04] text-[#191919] rotate-45 scale-90' : 'bg-red-500 text-white'
+                              }`}
                             >
-                              <div className="h-11 w-11 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all text-white shadow-md">
-                                <Heart className={`h-5 w-5 ${isSaved ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
-                              </div>
-                              <span className="text-[8px] font-bold uppercase tracking-wider text-gray-300">{isSaved ? 'Saved' : 'Save'}</span>
+                              <Plus className="h-3.5 w-3.5" />
                             </button>
-                          )}
+                          </div>
 
-                          {/* Contact/Share Button (Mail) */}
+                          {/* Likes (Heart) */}
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleLikeToggle(item.id);
+                            }}
+                            className="flex flex-col items-center gap-1 group cursor-pointer"
+                          >
+                            <div className="h-11 w-11 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all text-white shadow-md">
+                              <Heart className={`h-5 w-5 transition-transform ${isLiked ? 'fill-rose-500 text-rose-500 scale-110' : 'text-white'}`} />
+                            </div>
+                            <span className="text-[9px] font-bold text-gray-300">{likesCount}</span>
+                          </button>
+
+                          {/* Comments (Speech Bubble) */}
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCommentsOpenItem(item);
+                            }}
+                            className="flex flex-col items-center gap-1 group cursor-pointer"
+                          >
+                            <div className="h-11 w-11 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all text-white shadow-md">
+                              <MessageSquare className="h-5 w-5 text-white" />
+                            </div>
+                            <span className="text-[9px] font-bold text-gray-300">{commentsCount}</span>
+                          </button>
+
+                          {/* Saves (Bookmark Ribbon) */}
                           <button 
                             onClick={(e) => {
                               e.stopPropagation();
                               if ('ownershipType' in item) {
-                                window.location.href = `mailto:?subject=Check out this event: ${item.title}&body=Link: ${window.location.origin}/events/${item.id}`;
+                                saveToggle(item.id);
                               } else {
-                                window.location.href = `mailto:${(item as any).contactInfo}?subject=Inquiry about: ${item.title}`;
+                                handleLikeToggle(`promo-save-${item.id}`);
                               }
                             }}
                             className="flex flex-col items-center gap-1 group cursor-pointer"
                           >
                             <div className="h-11 w-11 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all text-white shadow-md">
-                              <Mail className="h-5 w-5" />
+                              <Bookmark className={`h-5 w-5 ${isSaved ? 'fill-[#BDFB04] text-[#BDFB04]' : 'text-white'}`} />
                             </div>
-                            <span className="text-[8px] font-bold uppercase tracking-wider text-gray-300">Share</span>
+                            <span className="text-[9px] font-bold text-gray-300">{savesCount}</span>
                           </button>
+
+                          {/* Share (Curved Arrow) */}
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleShare(item);
+                            }}
+                            className="flex flex-col items-center gap-1 group cursor-pointer"
+                          >
+                            <div className="h-11 w-11 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all text-white shadow-md">
+                              {isCopied ? (
+                                <svg className="h-5 w-5 text-[#BDFB04]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                              ) : (
+                                <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                  <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z" />
+                                </svg>
+                              )}
+                            </div>
+                            <span className="text-[9px] font-bold text-gray-300">{isCopied ? 'Copied' : 'Share'}</span>
+                          </button>
+
+                          {/* Rotating vinyl record */}
+                          <div 
+                            className="mt-1 h-9.5 w-9.5 rounded-full bg-gradient-to-tr from-zinc-800 to-black border border-white/20 flex items-center justify-center shadow-lg"
+                            style={{ animation: 'spin 8s linear infinite' }}
+                          >
+                            <div className="h-4 w-4 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center">
+                              <div className="h-1.5 w-1.5 rounded-full bg-[#BDFB04]" />
+                            </div>
+                          </div>
+
                         </div>
                       </div>
                     </div>
@@ -517,46 +831,246 @@ export default function StudentEventsFeed() {
             </div>
           ) : (
             /* TABLET / LAPTOP TIKTOK WEB SPLIT PLAYER VIEW */
-            <div className="relative max-w-4xl mx-auto w-full h-[calc(100vh-16rem)] rounded-[32px] overflow-hidden border border-black/10 bg-[#191919] shadow-[var(--shadow-premium-xl)] flex flex-row">
+            <div className="relative max-w-5xl mx-auto w-full h-[calc(100vh-14rem)] rounded-[32px] overflow-hidden border border-black/10 bg-[#121212] shadow-[var(--shadow-premium-xl)] flex flex-row">
+              
               {/* Left Column: Visual Snap Player */}
-              <div className="relative w-[380px] h-full shrink-0 overflow-hidden bg-black border-r border-white/5">
+              <div className="relative w-[400px] h-full shrink-0 overflow-hidden bg-black border-r border-white/5 flex flex-col">
+                
+                {/* Floating Tabs & Search overlay within Left Player Column */}
+                <div className="absolute top-4 inset-x-4 z-30 flex items-center justify-between pointer-events-none">
+                  {/* Left: Switch feed mode button */}
+                  <button
+                    onClick={() => setFeedMode('grid')}
+                    className="h-9 w-9 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-black/80 transition-all pointer-events-auto cursor-pointer"
+                    title="Switch to Grid View"
+                  >
+                    <Compass className="h-4.5 w-4.5" />
+                  </button>
+
+                  {/* Tabs */}
+                  <div className="flex bg-black/60 backdrop-blur-md p-0.5 rounded-full border border-white/10 pointer-events-auto shrink-0 shadow-lg">
+                    <button
+                      onClick={() => setTiktokTab('school')}
+                      className={`px-3 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                        tiktokTab === 'school' ? 'bg-[#BDFB04] text-[#191919] font-black' : 'text-white/80 hover:text-white'
+                      }`}
+                    >
+                      School
+                    </button>
+                    <button
+                      onClick={() => setTiktokTab('organization')}
+                      className={`px-3 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                        tiktokTab === 'organization' ? 'bg-[#BDFB04] text-[#191919] font-black' : 'text-white/80 hover:text-white'
+                      }`}
+                    >
+                      Orgs
+                    </button>
+                    <button
+                      onClick={() => setTiktokTab('foryou')}
+                      className={`px-3 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                        tiktokTab === 'foryou' ? 'bg-[#BDFB04] text-[#191919] font-black' : 'text-white/80 hover:text-white'
+                      }`}
+                    >
+                      For You
+                    </button>
+                  </div>
+
+                  {/* Right: Search button overlay */}
+                  <button
+                    onClick={() => setSearchOpen(prev => !prev)}
+                    className="h-9 w-9 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-black/80 transition-all pointer-events-auto cursor-pointer"
+                    title="Search"
+                  >
+                    <Search className="h-4.5 w-4.5" />
+                  </button>
+                </div>
+
+                {/* Left Column search sliding overlay */}
+                <AnimatePresence>
+                  {searchOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="absolute inset-x-0 top-0 z-40 bg-black/90 backdrop-blur-md p-4 pt-16 border-b border-white/5"
+                    >
+                      <div className="relative">
+                        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="Search feed..."
+                          className="w-full bg-white/10 border border-white/15 text-white pl-9 pr-8 py-1.5 rounded-full text-xs focus:outline-none focus:ring-1 focus:ring-[#BDFB04] placeholder-white/40"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        {searchQuery && (
+                          <button
+                            onClick={() => setSearchQuery('')}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white text-[10px] font-bold"
+                          >
+                            Clear
+                          </button>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Sync Feed Container */}
                 <div 
                   onScroll={handleWebFeedScroll}
                   className="h-full w-full overflow-y-scroll snap-y snap-mandatory scrollbar-none"
                 >
-                  {sortedFilteredItems.map((item) => {
+                  {tiktokFeedItems.map((item, idx) => {
                     const cover = 'ownershipType' in item ? item.coverImage : '/pexels-markus-winkler-1430818-12199407.jpg';
                     const isGradient = cover ? cover.includes('from-') : false;
                     const bgClass = isGradient ? cover : '';
                     const bgStyle = (!isGradient && cover) ? { backgroundImage: `url(${cover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
                     
+                    const orgName = 'ownershipType' in item ? (item.organizationName || item.organizer) : item.organizer;
+                    const isFollowed = followedOrganizers[orgName] || false;
+                    const isLiked = likedItems[item.id] || false;
+                    const likesCount = likesCounts[item.id] || 0;
+                    const commentsCount = (commentsMap[item.id] || []).length;
+                    const isSaved = 'ownershipType' in item ? item.savedBy?.includes(currentUser?.name || '') : false;
+                    const savesCount = 'ownershipType' in item ? (item.savedBy?.length || 0) : 0;
+                    const isCopied = copiedItemId === item.id;
+
+                    const isCurrent = idx === activeFeedIndex;
+
                     return (
                       <div 
                         key={`web-feed-left-${item.id}`} 
-                        className="h-full w-full snap-start shrink-0 relative overflow-hidden flex flex-col justify-between p-8 text-white"
+                        className="h-full w-full snap-start shrink-0 relative overflow-hidden flex flex-row items-end justify-between p-6 text-white"
                       >
                         <div 
-                          className={`absolute inset-0 opacity-45 z-0 bg-cover bg-center ${bgClass}`}
+                          className={`absolute inset-0 opacity-45 z-0 bg-cover bg-center transition-all ${isCurrent ? 'scale-100 opacity-55' : 'scale-95 opacity-25'}`}
                           style={bgStyle}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 z-10" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10 z-10" />
                         
-                        {/* Tags */}
-                        <div className="relative z-20 flex justify-between items-center">
-                          <span className="px-3.5 py-1.5 text-[8.5px] font-extrabold uppercase tracking-wider bg-[#BDFB04] text-[#191919] rounded-full border border-[#BDFB04]/20 shadow-sm">
+                        {/* Title details & dynamic search banner on player */}
+                        <div className="relative z-20 flex-1 text-left space-y-2 mt-auto min-w-0">
+                          <span className="px-2.5 py-1 text-[8px] font-extrabold uppercase tracking-wider bg-[#BDFB04] text-[#191919] rounded-full border border-[#BDFB04]/20 shadow-sm w-fit block">
                             {'ownershipType' in item ? item.category : 'Promotion'}
                           </span>
-                          <span className="text-[9px] font-extrabold uppercase tracking-widest text-white/80">
-                            {'ownershipType' in item ? item.ownershipType : 'Services'}
-                          </span>
-                        </div>
-
-                        {/* Title overlay */}
-                        <div className="relative z-20 mt-auto text-left space-y-1.5">
-                          <span className="text-[9px] text-[#BDFB04] font-black uppercase tracking-widest">// Swipe to scroll</span>
-                          <h3 className="text-xl font-extrabold uppercase tracking-tight text-white line-clamp-2 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+                          <h3 className="text-lg font-black uppercase tracking-tight text-white line-clamp-2 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
                             {item.title}
                           </h3>
+                          <span className="text-[8.5px] text-[#BDFB04] font-black uppercase tracking-widest flex items-center gap-1">
+                            <span className="inline-block animate-bounce">//</span> Swipe / scroll to browse
+                          </span>
+                          {/* Search Banner Overlay on Card */}
+                          <div 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSearchOpen(true);
+                            }}
+                            className="flex items-center gap-1.5 px-2 py-1 rounded bg-black/60 text-[9px] font-extrabold text-white/95 border border-white/10 cursor-pointer hover:bg-black/80 transition-colors w-fit pointer-events-auto"
+                          >
+                            <Search className="h-2.5 w-2.5 text-[#BDFB04]" />
+                            <span>Search · {item.title.split(' ')[0]}</span>
+                          </div>
+                        </div>
+
+                        {/* Floating Interaction Column on Player */}
+                        <div className="relative z-20 flex flex-col gap-3.5 items-center shrink-0 ml-3 pointer-events-auto">
+                          {/* Profile Avatar + Follow */}
+                          <div className="relative mb-0.5">
+                            <div className="h-9 w-9 rounded-full border border-[#BDFB04] bg-zinc-800 flex items-center justify-center text-white font-extrabold text-xs shadow-md">
+                              {orgName.charAt(0).toUpperCase()}
+                            </div>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleFollowToggle(orgName);
+                              }}
+                              className={`absolute -bottom-1 left-1/2 -translate-x-1/2 h-4 w-4 rounded-full border border-black/20 flex items-center justify-center transition-all ${
+                                isFollowed ? 'bg-[#BDFB04] text-[#191919] rotate-45 scale-90' : 'bg-red-500 text-white'
+                              }`}
+                            >
+                              <Plus className="h-2.5 w-2.5" />
+                            </button>
+                          </div>
+
+                          {/* Heart Likes */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleLikeToggle(item.id);
+                            }}
+                            className="flex flex-col items-center cursor-pointer group"
+                          >
+                            <div className="h-9 w-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 transition-all text-white shadow">
+                              <Heart className={`h-4.5 w-4.5 ${isLiked ? 'fill-rose-500 text-rose-500 scale-105' : 'text-white'}`} />
+                            </div>
+                            <span className="text-[8px] font-bold text-gray-300 mt-0.5">{likesCount}</span>
+                          </button>
+
+                          {/* Comments */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveRightTab('comments');
+                            }}
+                            className="flex flex-col items-center cursor-pointer group"
+                          >
+                            <div className="h-9 w-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 transition-all text-white shadow">
+                              <MessageSquare className="h-4.5 w-4.5 text-white" />
+                            </div>
+                            <span className="text-[8px] font-bold text-gray-300 mt-0.5">{commentsCount}</span>
+                          </button>
+
+                          {/* Saved */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if ('ownershipType' in item) {
+                                saveToggle(item.id);
+                              } else {
+                                handleLikeToggle(`promo-save-${item.id}`);
+                              }
+                            }}
+                            className="flex flex-col items-center cursor-pointer group"
+                          >
+                            <div className="h-9 w-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 transition-all text-white shadow">
+                              <Bookmark className={`h-4.5 w-4.5 ${isSaved ? 'fill-[#BDFB04] text-[#BDFB04]' : 'text-white'}`} />
+                            </div>
+                            <span className="text-[8px] font-bold text-gray-300 mt-0.5">{savesCount}</span>
+                          </button>
+
+                          {/* Share */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleShare(item);
+                            }}
+                            className="flex flex-col items-center cursor-pointer group"
+                          >
+                            <div className="h-9 w-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 transition-all text-white shadow">
+                              {isCopied ? (
+                                <svg className="h-4 w-4 text-[#BDFB04]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                              ) : (
+                                <svg className="h-4 w-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                  <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z" />
+                                </svg>
+                              )}
+                            </div>
+                            <span className="text-[8px] font-bold text-gray-300 mt-0.5">{isCopied ? 'Copied' : 'Share'}</span>
+                          </button>
+
+                          {/* Music spinner */}
+                          <div 
+                            className="h-8 w-8 rounded-full bg-gradient-to-tr from-zinc-800 to-black border border-white/20 flex items-center justify-center shadow"
+                            style={{ animation: 'spin 8s linear infinite' }}
+                          >
+                            <div className="h-3 w-3 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center">
+                              <div className="h-1 w-1 rounded-full bg-[#BDFB04]" />
+                            </div>
+                          </div>
+
                         </div>
                       </div>
                     );
@@ -564,69 +1078,144 @@ export default function StudentEventsFeed() {
                 </div>
               </div>
 
-              {/* Right Column: Synced Info Panel */}
+              {/* Right Column: Synced Info & Comments Drawer Panel */}
               {(() => {
-                const activeItem = sortedFilteredItems[activeFeedIndex];
+                const activeItem = tiktokFeedItems[activeFeedIndex];
                 if (!activeItem) return null;
                 const isSaved = 'ownershipType' in activeItem ? activeItem.savedBy?.includes(currentUser?.name || '') : false;
+                const itemComments = commentsMap[activeItem.id] || [];
 
                 return (
-                  <div className="flex-1 h-full bg-[#18181b] p-8 flex flex-col justify-between text-white text-left">
-                    <div className="space-y-6">
-                      <div className="space-y-2">
-                        <span className="text-[10px] font-bold text-[#BDFB04] uppercase tracking-[0.2em] block">// Event Details</span>
-                        <h2 className="text-2xl font-black uppercase tracking-tight text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-                          {activeItem.title}
-                        </h2>
-                      </div>
+                  <div className="flex-1 h-full bg-[#18181b] p-8 flex flex-col justify-between text-white text-left overflow-hidden">
+                    
+                    {/* Header Tabs */}
+                    <div className="flex items-center gap-6 border-b border-white/5 pb-4 mb-4">
+                      <button
+                        onClick={() => setActiveRightTab('details')}
+                        className={`text-sm font-extrabold uppercase tracking-wider pb-1 transition-colors cursor-pointer ${
+                          activeRightTab === 'details' ? 'text-[#BDFB04] border-b border-[#BDFB04]' : 'text-gray-400 hover:text-white'
+                        }`}
+                      >
+                        Details
+                      </button>
+                      <button
+                        onClick={() => setActiveRightTab('comments')}
+                        className={`text-sm font-extrabold uppercase tracking-wider pb-1 transition-colors cursor-pointer ${
+                          activeRightTab === 'comments' ? 'text-[#BDFB04] border-b border-[#BDFB04]' : 'text-gray-400 hover:text-white'
+                        }`}
+                      >
+                        Comments ({itemComments.length})
+                      </button>
+                    </div>
 
-                      <div className="space-y-4">
-                        {/* Meta info boxes */}
-                        <div className="grid grid-cols-2 gap-4 text-xs">
-                          <div className="bg-white/5 border border-white/5 p-3.5 rounded-2xl space-y-1">
-                            <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-gray-400 block">Date & Time</span>
-                            <span className="font-bold text-white flex items-center gap-1.5">
-                              <Calendar className="h-3.5 w-3.5 text-[#BDFB04]" /> {activeItem.date} {('time' in activeItem) && `• ${(activeItem as any).time}`}
-                            </span>
+                    {/* Tab contents */}
+                    <div className="flex-1 overflow-y-auto mb-4 scrollbar-thin">
+                      {activeRightTab === 'details' ? (
+                        <div className="space-y-6 animate-fadeIn">
+                          <div className="space-y-2">
+                            <span className="text-[10px] font-bold text-[#BDFB04] uppercase tracking-[0.2em] block">// Event Details</span>
+                            <h2 className="text-2xl font-black uppercase tracking-tight text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+                              {activeItem.title}
+                            </h2>
                           </div>
-                          <div className="bg-white/5 border border-white/5 p-3.5 rounded-2xl space-y-1">
-                            <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-gray-400 block">Location</span>
-                            <span className="font-bold text-white flex items-center gap-1.5 truncate">
-                              <MapPin className="h-3.5 w-3.5 text-[#BDFB04]" /> {('location' in activeItem) ? (activeItem as any).location : (activeItem as any).organizer}
-                            </span>
+
+                          <div className="space-y-4">
+                            <div className="grid grid-cols-2 gap-4 text-xs">
+                              <div className="bg-white/5 border border-white/5 p-3.5 rounded-2xl space-y-1">
+                                <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-gray-400 block">Date & Time</span>
+                                <span className="font-bold text-white flex items-center gap-1.5">
+                                  <Calendar className="h-3.5 w-3.5 text-[#BDFB04]" /> {activeItem.date} {('time' in activeItem) && `• ${(activeItem as any).time}`}
+                                </span>
+                              </div>
+                              <div className="bg-white/5 border border-white/5 p-3.5 rounded-2xl space-y-1">
+                                <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-gray-400 block">Location</span>
+                                <span className="font-bold text-white flex items-center gap-1.5 truncate">
+                                  <MapPin className="h-3.5 w-3.5 text-[#BDFB04]" /> {('location' in activeItem) ? (activeItem as any).location : (activeItem as any).organizer}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="space-y-2">
+                              <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-gray-400 block">Description</span>
+                              <p className="text-xs text-gray-300 leading-relaxed font-light whitespace-pre-wrap">
+                                {activeItem.description}
+                              </p>
+                            </div>
                           </div>
                         </div>
+                      ) : (
+                        /* Comments List & Posting inside Synced Right Panel */
+                        <div className="flex flex-col h-full justify-between animate-fadeIn">
+                          <div className="flex-1 space-y-4 overflow-y-auto pr-1 pb-4 scrollbar-thin text-left">
+                            {itemComments.length === 0 ? (
+                              <div className="text-center py-12 text-xs text-gray-500 font-medium">
+                                No comments yet. Share your thoughts below!
+                              </div>
+                            ) : (
+                              itemComments.map((c, i) => (
+                                <div key={i} className="flex gap-2.5 items-start animate-fadeIn">
+                                  <div className="h-7 w-7 rounded-full bg-gradient-to-tr from-white/10 to-white/5 border border-white/10 flex items-center justify-center font-bold text-[10px] uppercase text-[#BDFB04] shrink-0">
+                                    {c.user.charAt(0)}
+                                  </div>
+                                  <div className="flex-1 space-y-0.5 min-w-0">
+                                    <div className="flex items-center justify-between">
+                                      <span className="text-[10px] font-extrabold text-gray-300 truncate">{c.user}</span>
+                                      <span className="text-[8.5px] text-gray-500 shrink-0">{c.time}</span>
+                                    </div>
+                                    <p className="text-[11px] text-gray-200 font-light leading-relaxed break-words">{c.text}</p>
+                                  </div>
+                                </div>
+                              ))
+                            )}
+                          </div>
 
-                        {/* Description text */}
-                        <div className="space-y-2">
-                          <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-gray-400 block">Description</span>
-                          <p className="text-xs text-gray-300 leading-relaxed font-light line-clamp-5 whitespace-pre-wrap">
-                            {activeItem.description}
-                          </p>
+                          {/* Write comment at the bottom of Right Comments Tab */}
+                          <div className="pt-3 border-t border-white/5 flex items-center gap-2">
+                            <div className="h-7.5 w-7.5 rounded-full bg-[#BDFB04] text-[#191919] flex items-center justify-center font-bold text-xs">
+                              {currentUser?.name?.charAt(0) || 'U'}
+                            </div>
+                            <div className="flex-1 relative">
+                              <input
+                                type="text"
+                                placeholder="Add comment..."
+                                className="w-full bg-white/5 border border-white/10 text-white pl-4 pr-10 py-2 rounded-full text-xs focus:outline-none focus:ring-1 focus:ring-[#BDFB04]"
+                                value={newCommentText}
+                                onChange={(e) => setNewCommentText(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') handleAddComment(activeItem.id);
+                                }}
+                              />
+                              <button
+                                onClick={() => handleAddComment(activeItem.id)}
+                                disabled={!newCommentText.trim()}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-[#BDFB04] disabled:text-white/20 hover:scale-105 transition-all cursor-pointer"
+                              >
+                                <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
 
                     {/* Actions and buttons */}
-                    <div className="pt-6 border-t border-white/5 flex items-center gap-4">
+                    <div className="pt-4 border-t border-white/5 flex items-center gap-4">
                       {'ownershipType' in activeItem && (
                         <button 
                           onClick={() => saveToggle(activeItem.id)}
                           className="h-12 w-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:scale-103 transition-all text-white shadow-md cursor-pointer"
+                          title={isSaved ? 'Unsave Event' : 'Save Event'}
                         >
-                          <Heart className={`h-5 w-5 ${isSaved ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
+                          <Bookmark className={`h-5 w-5 ${isSaved ? 'fill-[#BDFB04] text-[#BDFB04]' : 'text-white'}`} />
                         </button>
                       )}
                       
                       <button 
-                        onClick={() => {
-                          if ('ownershipType' in activeItem) {
-                            window.location.href = `mailto:?subject=Check out this event: ${activeItem.title}&body=Link: ${window.location.origin}/events/${activeItem.id}`;
-                          } else {
-                            window.location.href = `mailto:${(activeItem as any).contactInfo}?subject=Inquiry about: ${activeItem.title}`;
-                          }
-                        }}
+                        onClick={() => handleShare(activeItem)}
                         className="h-12 w-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:scale-103 transition-all text-white shadow-md cursor-pointer"
+                        title="Share Link"
                       >
                         <Mail className="h-5 w-5" />
                       </button>
@@ -781,6 +1370,97 @@ export default function StudentEventsFeed() {
                     <Mail className="h-4 w-4" />
                     Contact Organizer
                   </a>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Slide-Up Comments Drawer Overlay */}
+      <AnimatePresence>
+        {commentsOpenItem && isMobile && (
+          <div className="fixed inset-0 z-[100] flex items-end justify-center">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setCommentsOpenItem(null)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-xs"
+            />
+            
+            {/* Drawer Body */}
+            <motion.div
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 250 }}
+              className="relative z-10 w-full max-w-lg bg-[#18181b] border-t border-white/10 rounded-t-[32px] p-6 flex flex-col h-[70vh] text-white font-sans"
+            >
+              {/* Drawer Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-white/5">
+                <div className="w-8" />
+                <h3 className="text-sm font-bold uppercase tracking-wider text-white">
+                  Comments ({(commentsMap[commentsOpenItem.id] || []).length})
+                </h3>
+                <button
+                  onClick={() => setCommentsOpenItem(null)}
+                  className="p-1 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors cursor-pointer"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              {/* Comments Scroll Area */}
+              <div className="flex-1 overflow-y-auto py-4 space-y-4 scrollbar-thin text-left">
+                {(commentsMap[commentsOpenItem.id] || []).length === 0 ? (
+                  <div className="text-center py-12 text-xs text-gray-500 font-medium">
+                    No comments yet. Share your thoughts!
+                  </div>
+                ) : (
+                  (commentsMap[commentsOpenItem.id] || []).map((comment, idx) => (
+                    <div key={idx} className="flex gap-3 items-start animate-fadeIn">
+                      <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-white/10 to-white/5 border border-white/10 flex items-center justify-center font-bold text-xs uppercase text-[#BDFB04] shrink-0">
+                        {comment.user.charAt(0)}
+                      </div>
+                      <div className="flex-1 space-y-0.5 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] font-extrabold text-gray-300 truncate">{comment.user}</span>
+                          <span className="text-[9px] text-gray-500 shrink-0">{comment.time}</span>
+                        </div>
+                        <p className="text-xs text-gray-200 font-light leading-relaxed break-words">{comment.text}</p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* Comment Input Footer */}
+              <div className="pt-4 border-t border-white/5 flex items-center gap-3">
+                <div className="h-8 w-8 rounded-full bg-[#BDFB04] text-[#191919] flex items-center justify-center font-bold text-xs">
+                  {currentUser?.name?.charAt(0) || 'U'}
+                </div>
+                <div className="flex-1 relative">
+                  <input
+                    type="text"
+                    placeholder="Add comment..."
+                    className="w-full bg-white/5 border border-white/10 text-white pl-4 pr-12 py-2.5 rounded-full text-xs focus:outline-none focus:ring-1 focus:ring-[#BDFB04]"
+                    value={newCommentText}
+                    onChange={(e) => setNewCommentText(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handleAddComment(commentsOpenItem.id);
+                    }}
+                  />
+                  <button
+                    onClick={() => handleAddComment(commentsOpenItem.id)}
+                    disabled={!newCommentText.trim()}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-[#BDFB04] disabled:text-white/20 hover:scale-105 transition-all cursor-pointer"
+                  >
+                    <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </motion.div>
