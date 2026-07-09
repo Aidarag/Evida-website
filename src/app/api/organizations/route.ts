@@ -37,8 +37,45 @@ export async function POST(request: Request) {
       const mIdx = org.members.indexOf(member);
       if (mIdx > -1) {
         org.members.splice(mIdx, 1); // Leave org
+        if (org.memberRoles && org.memberRoles[member]) {
+          delete org.memberRoles[member];
+        }
       } else {
         org.members.push(member); // Join org
+      }
+      writeDB(db);
+      return NextResponse.json(org);
+    }
+
+    if (action === 'update-role') {
+      const idx = db.organizations.findIndex((o) => o.id === id);
+      if (idx === -1) {
+        return NextResponse.json({ error: 'Organization not found' }, { status: 404 });
+      }
+      const org = db.organizations[idx];
+      if (!org.memberRoles) org.memberRoles = {};
+      org.memberRoles[member] = body.role;
+      writeDB(db);
+      return NextResponse.json(org);
+    }
+
+    if (action === 'remove-member') {
+      const idx = db.organizations.findIndex((o) => o.id === id);
+      if (idx === -1) {
+        return NextResponse.json({ error: 'Organization not found' }, { status: 404 });
+      }
+      const org = db.organizations[idx];
+      const mIdx = org.members.indexOf(member);
+      if (mIdx > -1) {
+        org.members.splice(mIdx, 1);
+      }
+      if (org.memberRoles && org.memberRoles[member]) {
+        delete org.memberRoles[member];
+      }
+      // Also remove organization from user's record
+      const uIdx = db.users.findIndex(u => u.name === member || u.username === member);
+      if (uIdx > -1) {
+        db.users[uIdx].organizations = db.users[uIdx].organizations.filter(oId => oId !== id);
       }
       writeDB(db);
       return NextResponse.json(org);

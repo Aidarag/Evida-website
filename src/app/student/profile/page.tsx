@@ -32,6 +32,13 @@ export default function StudentProfilePage() {
   const [editSchool, setEditSchool] = useState('');
   const [editAvatar, setEditAvatar] = useState('');
   const [editBanner, setEditBanner] = useState('');
+  const [editBio, setEditBio] = useState('');
+  const [editInterests, setEditInterests] = useState('');
+  const [editLinkedin, setEditLinkedin] = useState('');
+  const [editGithub, setEditGithub] = useState('');
+  const [editInstagram, setEditInstagram] = useState('');
+  const [orgSearchQuery, setOrgSearchQuery] = useState('');
+  const [orgFilterVerified, setOrgFilterVerified] = useState<boolean | null>(null);
   const [savedFeedback, setSavedFeedback] = useState(false);
 
   const [notifOpen, setNotifOpen] = useState(false);
@@ -85,6 +92,10 @@ export default function StudentProfilePage() {
   const totalCreated = events.filter(e => e.organizer === currentUser.name).length;
   const totalSaved = events.filter(e => e.savedBy?.includes(currentUser.name)).length;
   const myOrgs = organizations.filter(org => currentUser.organizations.includes(org.id));
+  const rsvpEvents = events.filter(e => e.status === 'approved' && e.attendees.includes(currentUser.name));
+  const now = new Date();
+  const upcomingEvents = rsvpEvents.filter(e => new Date(e.date) >= now);
+  const pastEvents = rsvpEvents.filter(e => new Date(e.date) < now);
 
   const bannerIdx = currentUser.username.charCodeAt(0) % PROFILE_BANNERS.length;
   const bannerPhoto = currentUser.banner || PROFILE_BANNERS[bannerIdx];
@@ -118,11 +129,21 @@ export default function StudentProfilePage() {
     setEditSchool(currentUser.school || '');
     setEditAvatar(currentUser.avatar || '');
     setEditBanner(currentUser.banner || PROFILE_BANNERS[bannerIdx]);
+    setEditBio(currentUser.bio || '');
+    setEditInterests((currentUser.interests || []).join(', '));
+    setEditLinkedin(currentUser.socials?.linkedin || '');
+    setEditGithub(currentUser.socials?.github || '');
+    setEditInstagram(currentUser.socials?.instagram || '');
     setEditOpen(true);
     setNotifOpen(false);
   };
 
   const saveEdit = async () => {
+    const interestsArray = editInterests
+      .split(',')
+      .map(i => i.trim())
+      .filter(i => i.length > 0);
+
     try {
       const res = await fetch('/api/users/profile', {
         method: 'POST',
@@ -134,7 +155,14 @@ export default function StudentProfilePage() {
           graduationYear: editYear.trim(),
           school: editSchool.trim(),
           avatar: editAvatar.trim(),
-          banner: editBanner.trim()
+          banner: editBanner.trim(),
+          bio: editBio.trim(),
+          interests: interestsArray,
+          socials: {
+            linkedin: editLinkedin.trim(),
+            github: editGithub.trim(),
+            instagram: editInstagram.trim()
+          }
         })
       });
 
@@ -150,9 +178,8 @@ export default function StudentProfilePage() {
     setEditOpen(false);
   };
 
-  const handleApplyJoin = async () => {
-    if (!newOrgSelection) return;
-    const org = organizations.find(o => o.id === newOrgSelection);
+  const handleApplyJoin = async (orgId: string) => {
+    const org = organizations.find(o => o.id === orgId);
     if (!org) return;
 
     try {
@@ -176,7 +203,7 @@ export default function StudentProfilePage() {
         alert(err.error || 'Failed to submit application');
       }
     } catch (e) {
-      console.error(e);
+      console.error('Failed to submit membership application:', e);
     }
   };
 
@@ -225,19 +252,25 @@ export default function StudentProfilePage() {
     setNotifSettings(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
+  // Custom fields fallbacks
+  const bio = currentUser.bio || "Computer Science student at the School of Engineering. Passionate about building campus communities, design, and interactive software experiences.";
+  const interests = currentUser.interests || ["Campus Life", "Software Development", "Music Production", "Outdoor Activities"];
+  const socials = currentUser.socials || { linkedin: "https://linkedin.com", github: "https://github.com", instagram: "https://instagram.com" };
+  const achievements = currentUser.achievements || ["Verified Leader", "Event Pro", "Social Catalyst"];
+
   return (
-    <div className="max-w-4xl mx-auto pb-8">
+    <div className="max-w-4xl mx-auto pb-40">
 
       {/* ── Banner ── */}
       <div
-        className="h-32 md:h-44 w-full"
+        className="h-40 md:h-56 w-full"
         style={{ backgroundImage: `url(${bannerPhoto})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
       />
 
       {/* ── Profile Header Card ── */}
-      <div className="bg-[#DFDED7] px-5 md:px-10 pt-0 pb-5">
+      <div className="bg-[#DFDED7] px-5 md:px-10 pt-0 pb-6">
         {/* Avatar row — sits half over the banner */}
-        <div className="-mt-12 mb-4 flex items-end justify-between">
+        <div className="-mt-16 mb-6 flex items-end justify-between">
           <div className="h-20 w-20 md:h-24 md:w-24 rounded-2xl bg-[#BDFB04] flex items-center justify-center shadow-lg border-4 border-[#DFDED7] shrink-0 overflow-hidden">
             {currentUser.avatar && (currentUser.avatar.startsWith('data:') || currentUser.avatar.startsWith('http') || currentUser.avatar.startsWith('/')) ? (
               <img src={currentUser.avatar} className="h-full w-full object-cover" alt={currentUser.name} />
@@ -261,7 +294,7 @@ export default function StudentProfilePage() {
         </div>
 
         {/* Badges */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-3.5 mt-3">
           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-black/[0.07] text-[10px] font-semibold text-[#374151]">
             <Award className="h-3 w-3 text-[#BDFB04]" />
             {currentUser.major || 'Undeclared'}
@@ -275,23 +308,81 @@ export default function StudentProfilePage() {
             {currentUser.school}
           </span>
         </div>
+
+        {/* Bio Section */}
+        <div className="mt-6 pt-6 border-t border-black/[0.05] text-left space-y-2">
+          <div className="text-[10px] font-black text-[#4B5563] uppercase tracking-widest">// Biography</div>
+          <p className="text-xs text-[#374151] leading-relaxed max-w-2xl">{bio}</p>
+          
+          {/* Social links */}
+          <div className="flex gap-4 pt-2">
+            {socials.linkedin && (
+              <a href={socials.linkedin} target="_blank" rel="noreferrer" className="text-xs font-bold text-[#4B5563] hover:text-[#3B5C00] transition-colors flex items-center gap-1">
+                LinkedIn ↗
+              </a>
+            )}
+            {socials.github && (
+              <a href={socials.github} target="_blank" rel="noreferrer" className="text-xs font-bold text-[#4B5563] hover:text-[#3B5C00] transition-colors flex items-center gap-1">
+                GitHub ↗
+              </a>
+            )}
+            {socials.instagram && (
+              <a href={socials.instagram} target="_blank" rel="noreferrer" className="text-xs font-bold text-[#4B5563] hover:text-[#3B5C00] transition-colors flex items-center gap-1">
+                Instagram ↗
+              </a>
+            )}
+          </div>
+        </div>
+
+        {/* Interests and Achievements Grid */}
+        <div className="grid sm:grid-cols-2 gap-6 mt-6 pt-6 border-t border-black/[0.05] text-left">
+          {/* Interests */}
+          <div className="space-y-2">
+            <div className="text-[10px] font-black text-[#4B5563] uppercase tracking-widest">// Areas of Interest</div>
+            <div className="flex flex-wrap gap-2">
+              {interests.map(item => (
+                <span key={item} className="px-2.5 py-1 rounded-lg bg-black/[0.03] border border-black/[0.06] text-[10px] text-[#374151] font-bold uppercase">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+          
+          {/* Achievements */}
+          <div className="space-y-2">
+            <div className="text-[10px] font-black text-[#4B5563] uppercase tracking-widest">// Achievements & Badges</div>
+            <div className="flex flex-wrap gap-2">
+              {achievements.map(badge => (
+                <span key={badge} className="px-2.5 py-1 rounded-lg bg-[#BDFB04]/10 border border-[#BDFB04]/30 text-[10px] text-[#3B5C00] font-black uppercase tracking-wider flex items-center gap-1">
+                  ★ {badge}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* ── Stats Row ── */}
       <div className="px-5 md:px-10 py-4">
         <div className="grid grid-cols-3 gap-3">
           {[
-            { label: 'Attended', value: totalRsvps, Icon: CalendarCheck, color: '#BDFB04', bg: '#BDFB0418' },
-            { label: 'Hosted', value: totalCreated, Icon: Star, color: '#191919', bg: '#19191910' },
-            { label: 'Saved', value: totalSaved, Icon: BookOpen, color: '#374151', bg: '#37415112' },
+            { label: 'Attended', value: totalRsvps, Icon: CalendarCheck, color: '#BDFB04', bg: '#BDFB0418', route: '/student/my-events' },
+            { label: 'Hosted', value: totalCreated, Icon: Star, color: '#191919', bg: '#19191910', route: '/student/my-events' },
+            { label: 'Saved', value: totalSaved, Icon: BookOpen, color: '#374151', bg: '#37415112', route: '/student/saved' },
           ].map(stat => (
-            <div key={stat.label} className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2 shadow-sm border border-black/[0.04]">
+            <motion.div
+              key={stat.label}
+              whileTap={{ scale: 0.95 }}
+              whileHover={{ y: -2 }}
+              onClick={() => router.push(stat.route)}
+              className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2 shadow-sm border border-black/[0.04] transition-all hover:border-[#BDFB04]/30 cursor-pointer select-none"
+            >
               <div className="h-8 w-8 rounded-xl flex items-center justify-center" style={{ background: stat.bg }}>
                 <stat.Icon className="h-4 w-4" style={{ color: stat.color }} />
               </div>
               <div className="text-2xl font-extrabold text-[#191919]">{stat.value}</div>
               <div className="text-[9px] font-bold text-[#374151] uppercase tracking-widest">{stat.label}</div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -301,22 +392,46 @@ export default function StudentProfilePage() {
 
         {/* My Organizations */}
         <div className="space-y-3">
-          <h2 className="text-xs font-extrabold text-[#191919] flex items-center gap-2 uppercase tracking-widest">
+          <div className="text-[11px] font-black text-[#4B5563] flex items-center gap-2 uppercase tracking-widest">
             <Users className="h-3.5 w-3.5 text-[#BDFB04]" /> My Organizations
-          </h2>
+          </div>
           {myOrgs.length > 0 ? (
             <div className="space-y-2">
-              {myOrgs.map(org => (
-                <div key={org.id} className="bg-white rounded-2xl p-4 flex items-center gap-3 border border-black/[0.04] shadow-sm">
-                  <div className="h-10 w-10 rounded-xl bg-[#BDFB04]/15 border border-[#BDFB04]/20 flex items-center justify-center shrink-0">
-                    <span className="font-extrabold text-[#3a5200] text-base">{org.name.charAt(0)}</span>
+              {myOrgs.map((org) => {
+                const userRole = org.memberRoles?.[currentUser.name] || 
+                                 org.memberRoles?.[currentUser.username] || 
+                                 (org.members[0] === currentUser.name ? 'President' : 'Member');
+                return (
+                  <div 
+                    key={org.id} 
+                    onClick={() => router.push(`/student/organizations/${org.id}`)}
+                    className="bg-white rounded-2xl p-4 flex items-center justify-between border border-black/[0.04] shadow-sm hover:border-[#BDFB04]/40 hover:scale-[1.01] transition-all cursor-pointer group"
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <div 
+                        className="h-11 w-11 rounded-xl flex items-center justify-center font-black text-white text-sm shrink-0 shadow-sm transition-transform group-hover:scale-105"
+                        style={{ backgroundColor: org.logoColor || '#191919' }}
+                      >
+                        {org.name.substring(0, 2).toUpperCase()}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-bold text-[#191919] text-sm uppercase tracking-tight group-hover:text-[#3B5C00] transition-colors truncate">
+                          {org.name}
+                        </p>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <span className="px-1.5 py-0.5 rounded-md bg-black/[0.04] text-[#4B5563] text-[8px] font-bold uppercase tracking-wider">
+                            {userRole}
+                          </span>
+                          <span className="text-[9px] text-[#4B5563] font-semibold">
+                            {org.members.length} members
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-bold text-[#4B5563] group-hover:text-[#191919] pl-2 transition-colors">Manage →</span>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-bold text-[#191919] text-sm uppercase tracking-tight truncate">{org.name}</p>
-                    <p className="text-[10px] text-[#374151]">{org.verified ? '✓ Verified organization' : 'Student group'}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="bg-white rounded-2xl p-6 text-center border border-black/[0.04]">
@@ -331,29 +446,87 @@ export default function StudentProfilePage() {
               org => !currentUser.organizations.includes(org.id) &&
               !membershipRequests.some(r => r.orgId === org.id && r.username === currentUser.username && r.status === 'pending')
             );
+            
+            const filteredJoinable = joinableOrgs.filter(org => {
+              const matchesSearch = org.name.toLowerCase().includes(orgSearchQuery.toLowerCase());
+              const matchesVerified = orgFilterVerified === null || org.verified === orgFilterVerified;
+              return matchesSearch && matchesVerified;
+            });
+            
             if (joinableOrgs.length === 0) return null;
+            
             return (
-              <div className="bg-white rounded-2xl p-4 border border-black/[0.04] shadow-sm space-y-3 mt-3">
-                <h3 className="text-[9px] font-extrabold text-[#374151] uppercase tracking-wider">// Apply for Membership</h3>
-                <div className="flex gap-2">
-                  <select
-                    value={newOrgSelection}
-                    onChange={(e) => setNewOrgSelection(e.target.value)}
-                    className="flex-1 bg-black/[0.03] border border-black/[0.08] rounded-xl px-3 py-2 text-xs text-[#191919] focus:outline-none"
-                  >
-                    <option value="">Select an organization...</option>
-                    {joinableOrgs.map(org => (
-                      <option key={org.id} value={org.id}>{org.name}</option>
-                    ))}
-                  </select>
-                  <button
-                    onClick={handleApplyJoin}
-                    disabled={!newOrgSelection}
-                    className="bg-[#BDFB04] text-[#191919] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#c5ff0a] transition-all px-3.5 py-2 rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer shadow-sm flex items-center gap-1 shrink-0"
-                  >
-                    Apply <ArrowUpRight className="h-3.5 w-3.5" />
-                  </button>
+              <div className="bg-white rounded-2xl p-5 border border-black/[0.04] shadow-sm space-y-4 mt-3 text-left">
+                <div className="text-[10px] font-black text-[#4B5563] uppercase tracking-wider">// Apply for Membership</div>
+                
+                {/* Search & Filters */}
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <input
+                    type="text"
+                    placeholder="Search campus organizations..."
+                    value={orgSearchQuery}
+                    onChange={e => setOrgSearchQuery(e.target.value)}
+                    className="flex-1 bg-black/[0.03] border border-black/[0.08] rounded-xl px-3 py-2 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] transition-colors"
+                  />
+                  
+                  <div className="flex gap-1">
+                    <button
+                      type="button"
+                      onClick={() => setOrgFilterVerified(null)}
+                      className={`px-3 py-2 rounded-xl text-[9px] font-bold uppercase tracking-wider border transition-all ${
+                        orgFilterVerified === null 
+                          ? 'bg-[#BDFB04] border-[#BDFB04] text-[#191919]' 
+                          : 'bg-white border-black/10 text-[#4B5563] hover:bg-slate-50'
+                      }`}
+                    >
+                      All
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setOrgFilterVerified(true)}
+                      className={`px-3 py-2 rounded-xl text-[9px] font-bold uppercase tracking-wider border transition-all ${
+                        orgFilterVerified === true 
+                          ? 'bg-[#BDFB04] border-[#BDFB04] text-[#191919]' 
+                          : 'bg-white border-black/10 text-[#4B5563] hover:bg-slate-50'
+                      }`}
+                    >
+                      Verified
+                    </button>
+                  </div>
                 </div>
+                
+                {/* List Grid */}
+                {filteredJoinable.length > 0 ? (
+                  <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
+                    {filteredJoinable.map(org => (
+                      <div key={org.id} className="bg-slate-50 border border-black/[0.04] rounded-xl p-3.5 flex items-center justify-between shadow-sm">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div 
+                            className="h-10 w-10 rounded-lg flex items-center justify-center font-black text-white text-xs shrink-0"
+                            style={{ backgroundColor: org.logoColor || '#191919' }}
+                          >
+                            {org.name.substring(0, 2).toUpperCase()}
+                          </div>
+                          <div className="min-w-0">
+                            <h4 className="text-xs font-bold text-[#191919] uppercase tracking-tight truncate flex items-center">
+                              {org.name}
+                              {org.verified && <VerifiedBadge className="h-3.5 w-3.5 ml-1" />}
+                            </h4>
+                            <p className="text-[9px] text-[#4B5563]">{org.members.length} members • Campus Group</p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => handleApplyJoin(org.id)}
+                          className="bg-[#BDFB04] text-[#191919] hover:bg-[#c5ff0a] px-3.5 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider cursor-pointer transition-all shadow-sm shrink-0"
+                        >
+                          Apply
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-[10px] text-[#4B5563] italic text-center py-2">No joinable campus groups match your query.</p>
+                )}
               </div>
             );
           })()}
@@ -366,7 +539,7 @@ export default function StudentProfilePage() {
             if (pendingUserRequests.length === 0) return null;
             return (
               <div className="space-y-2 mt-4">
-                <h3 className="text-[9px] font-extrabold text-[#374151] uppercase tracking-wider block pl-1">// Pending Applications</h3>
+                <h3 className="text-[9px] font-bold text-[#4B5563] uppercase tracking-wider block pl-1">// Pending Applications</h3>
                 {pendingUserRequests.map(req => (
                   <div key={req.id} className="bg-white rounded-2xl p-4 flex items-center justify-between border border-amber-500/20 bg-amber-500/[0.02] shadow-sm">
                     <div className="min-w-0 flex-1 pr-3">
@@ -388,9 +561,9 @@ export default function StudentProfilePage() {
 
         {/* Account Actions */}
         <div className="space-y-3">
-          <h2 className="text-xs font-extrabold text-[#191919] flex items-center gap-2 uppercase tracking-widest">
+          <div className="text-[11px] font-black text-[#4B5563] flex items-center gap-2 uppercase tracking-widest">
             <Settings className="h-3.5 w-3.5 text-[#374151]" /> Account Actions
-          </h2>
+          </div>
           <div className="bg-white rounded-2xl overflow-hidden divide-y divide-black/[0.05] border border-black/[0.04] shadow-sm">
 
             {/* Edit Profile */}
@@ -424,6 +597,11 @@ export default function StudentProfilePage() {
                       { label: 'School Division', value: editSchool, set: setEditSchool, type: 'text' },
                       { label: 'Major', value: editMajor, set: setEditMajor, type: 'text' },
                       { label: 'Graduation Year', value: editYear, set: setEditYear, type: 'text' },
+                      { label: 'Biography', value: editBio, set: setEditBio, type: 'text' },
+                      { label: 'Interests (comma-separated)', value: editInterests, set: setEditInterests, type: 'text' },
+                      { label: 'LinkedIn URL', value: editLinkedin, set: setEditLinkedin, type: 'text' },
+                      { label: 'GitHub URL', value: editGithub, set: setEditGithub, type: 'text' },
+                      { label: 'Instagram URL', value: editInstagram, set: setEditInstagram, type: 'text' },
                     ].map(field => (
                       <div key={field.label} className="space-y-1">
                         <label className="text-[9px] font-bold text-[#374151] uppercase tracking-widest">{field.label}</label>
@@ -620,9 +798,9 @@ export default function StudentProfilePage() {
       {/* Advisor Review Section (visible to advisors only) */}
       {currentUser.role === 'admin' && (
         <div className="px-5 md:px-10 mt-8 space-y-3">
-          <h2 className="text-xs font-extrabold text-[#191919] flex items-center gap-2 uppercase tracking-widest">
+          <div className="text-[11px] font-black text-[#4B5563] flex items-center gap-2 uppercase tracking-widest">
             <UserCheck className="h-4 w-4 text-[#BDFB04]" /> Pending Membership Applications Review
-          </h2>
+          </div>
           {membershipRequests.filter(r => r.status === 'pending').length > 0 ? (
             <div className="grid gap-3 sm:grid-cols-2">
               {membershipRequests.filter(r => r.status === 'pending').map(req => (
@@ -657,6 +835,61 @@ export default function StudentProfilePage() {
           )}
         </div>
       )}
+
+      {/* ── Event Schedules ── */}
+      <div className="px-5 md:px-10 mt-8 space-y-6 text-left">
+        {/* Upcoming events */}
+        <div className="space-y-3">
+          <div className="text-[11px] font-black text-[#4B5563] uppercase tracking-widest">// My Upcoming Experiences</div>
+          {upcomingEvents.length > 0 ? (
+            <div className="grid gap-4 sm:grid-cols-2">
+              {upcomingEvents.map(event => (
+                <div 
+                  key={event.id}
+                  onClick={() => router.push(`/events/${event.id}`)}
+                  className="bg-white rounded-2xl p-4 border border-black/[0.04] shadow-sm hover:border-[#BDFB04]/40 transition-all cursor-pointer flex gap-3 items-center"
+                >
+                  <div className="h-10 w-10 rounded-xl bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex flex-col items-center justify-center shrink-0">
+                    <Calendar className="h-4.5 w-4.5 text-[#3B5C00]" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs font-bold text-[#191919] uppercase tracking-tight truncate leading-snug">{event.title}</h4>
+                    <p className="text-[9px] text-[#4B5563] mt-0.5">{new Date(event.date).toLocaleDateString()} • {event.location}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-xs text-[#4B5563] italic py-4 bg-white rounded-2xl border border-black/[0.04] text-center">No upcoming RSVPs.</p>
+          )}
+        </div>
+
+        {/* Recently Attended */}
+        <div className="space-y-3">
+          <div className="text-[11px] font-black text-[#4B5563] uppercase tracking-widest">// Recently Attended</div>
+          {pastEvents.length > 0 ? (
+            <div className="grid gap-4 sm:grid-cols-2">
+              {pastEvents.map(event => (
+                <div 
+                  key={event.id}
+                  onClick={() => router.push(`/events/${event.id}`)}
+                  className="bg-white rounded-2xl p-4 border border-black/[0.04] shadow-sm hover:border-[#BDFB04]/40 transition-all cursor-pointer flex gap-3 items-center opacity-85 hover:opacity-100"
+                >
+                  <div className="h-10 w-10 rounded-xl bg-slate-100 border border-black/5 flex flex-col items-center justify-center shrink-0">
+                    <Check className="h-4.5 w-4.5 text-emerald-600" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs font-bold text-[#191919] uppercase tracking-tight truncate leading-snug">{event.title}</h4>
+                    <p className="text-[9px] text-[#4B5563] mt-0.5">{new Date(event.date).toLocaleDateString()} • {event.location}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-xs text-[#4B5563] italic py-4 bg-white rounded-2xl border border-black/[0.04] text-center">No recently attended events.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

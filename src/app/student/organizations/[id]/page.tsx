@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useEvents } from '@/lib/context/EventContext';
 import { useUser } from '@/lib/context/UserContext';
-import { Building, Users, Calendar, MapPin, ShieldCheck, ArrowLeft, Globe, Mail, Info, Award, Heart } from 'lucide-react';
+import { Building, Users, Calendar, MapPin, ShieldCheck, ArrowLeft, Globe, Mail, Info, Award, Heart, Check, X } from 'lucide-react';
 import VerifiedBadge from '@/components/ui/VerifiedBadge';
 import EventCard from '@/components/student/EventCard';
 import Link from 'next/link';
@@ -23,10 +23,95 @@ export default function OrganizationProfilePage() {
   const { events, organizations, saveToggle } = useEvents();
   const { currentUser } = useUser();
 
-  const [activeTab, setActiveTab] = useState<'home' | 'events' | 'about'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'events' | 'about' | 'manage'>('home');
+  const [membershipRequests, setMembershipRequests] = useState<any[]>([]);
+
+  const fetchMembershipRequests = async () => {
+    try {
+      const res = await fetch('/api/organizations/membership');
+      if (res.ok) {
+        const data = await res.json();
+        setMembershipRequests(data);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchMembershipRequests();
+  }, []);
 
   // Find organization
   const org = organizations.find((o) => o.id === id);
+
+  const handleUpdateRole = async (member: string, role: string) => {
+    if (!org) return;
+    try {
+      const res = await fetch('/api/organizations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'update-role',
+          id: org.id,
+          member,
+          role
+        })
+      });
+      if (res.ok) {
+        window.location.reload();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleRemoveMember = async (member: string) => {
+    if (!org) return;
+    if (org.members.length <= 1) {
+      alert('Cannot remove the only member from this organization.');
+      return;
+    }
+    if (!confirm(`Are you sure you want to remove ${member} from this organization?`)) {
+      return;
+    }
+    try {
+      const res = await fetch('/api/organizations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'remove-member',
+          id: org.id,
+          member
+        })
+      });
+      if (res.ok) {
+        window.location.reload();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleReviewRequest = async (requestId: string, status: 'approved' | 'rejected') => {
+    try {
+      const res = await fetch('/api/organizations/membership', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'review',
+          id: requestId,
+          status
+        })
+      });
+      if (res.ok) {
+        fetchMembershipRequests();
+        window.location.reload();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   if (!org) {
     return (
@@ -46,6 +131,15 @@ export default function OrganizationProfilePage() {
 
   // Filter events created by members of this organization or under this org ID
   const orgEvents = events.filter((e) => e.status === 'approved' && (e.organizationId === id || e.organizationName === org.name));
+
+  const isAdminOrLeader = currentUser && (
+    currentUser.role === 'admin' ||
+    currentUser.role === 'student_leader' ||
+    org.members[0] === currentUser.name ||
+    org.memberRoles?.[currentUser.name] === 'President' ||
+    org.memberRoles?.[currentUser.name] === 'Admin' ||
+    org.memberRoles?.[currentUser.name] === 'Vice President'
+  );
 
   const bannerIdx = org.name.charCodeAt(0) % ORG_BANNERS.length;
   const bannerPhoto = ORG_BANNERS[bannerIdx];
@@ -131,7 +225,8 @@ export default function OrganizationProfilePage() {
               { id: 'home' as const, label: 'Home' },
               { id: 'events' as const, label: `Events (${orgEvents.length})` },
               { id: 'about' as const, label: 'About' },
-            ].map(tab => (
+              isAdminOrLeader ? { id: 'manage' as const, label: 'Manage' } : null,
+            ].filter((t): t is { id: 'home' | 'events' | 'about' | 'manage'; label: string } => !!t).map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
@@ -286,6 +381,93 @@ export default function OrganizationProfilePage() {
                   </p>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* MANAGE TAB */}
+          {activeTab === 'manage' && isAdminOrLeader && (
+            <div className="space-y-6 text-left">
+              
+              {/* Member Roster & Role Manager */}
+              <div className="bg-white rounded-[24px] border border-black/[0.06] p-6 space-y-4 shadow-sm">
+                <h3 className="text-xs font-extrabold tracking-widest text-[#4B5563] uppercase">// Manage Member Roles</h3>
+                <div className="space-y-3">
+                  {org.members.map((member) => {
+                    const currentRole = org.memberRoles?.[member] || (org.members[0] === member ? 'President' : 'Member');
+                    return (
+                      <div key={member} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-50 border border-black/[0.04]">
+                        <div className="flex items-center gap-3">
+                          <div className="h-8 w-8 rounded-lg bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex items-center justify-center text-[10px] font-extrabold text-[#191919]">
+                            {member.substring(0, 2).toUpperCase()}
+                          </div>
+                          <div>
+                            <p className="text-xs font-bold text-[#191919] uppercase">{member}</p>
+                            <p className="text-[9px] text-[#4B5563]">Current Role: {currentRole}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <select
+                            value={currentRole}
+                            onChange={(e) => handleUpdateRole(member, e.target.value)}
+                            className="bg-white border border-black/[0.08] rounded-xl px-2.5 py-1.5 text-xs text-[#191919] focus:outline-none"
+                          >
+                            <option value="President">President</option>
+                            <option value="Vice President">Vice President</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Member">Member</option>
+                          </select>
+                          
+                          <button
+                            onClick={() => handleRemoveMember(member)}
+                            className="h-8 w-8 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500 flex items-center justify-center transition-colors cursor-pointer"
+                            title="Remove Member"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Pending Membership Requests */}
+              <div className="bg-white rounded-[24px] border border-black/[0.06] p-6 space-y-4 shadow-sm">
+                <h3 className="text-xs font-extrabold tracking-widest text-[#4B5563] uppercase">// Pending Membership Applications</h3>
+                {membershipRequests.filter(r => r.orgId === org.id && r.status === 'pending').length > 0 ? (
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {membershipRequests.filter(r => r.orgId === org.id && r.status === 'pending').map((req) => (
+                      <div key={req.id} className="bg-slate-50 rounded-2xl p-4 border border-black/[0.04] flex flex-col justify-between gap-4">
+                        <div>
+                          <span className="text-[9px] font-bold text-[#4B5563] uppercase tracking-widest block">// APPLICATION</span>
+                          <h4 className="text-xs font-extrabold text-[#191919] uppercase tracking-tight mt-1">{req.studentName}</h4>
+                          <p className="text-[9px] text-[#4B5563]">Wants to join this organization</p>
+                        </div>
+                        <div className="flex gap-2 w-full">
+                          <button
+                            onClick={() => handleReviewRequest(req.id, 'approved')}
+                            className="flex-1 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider py-2 rounded-xl hover:bg-emerald-600 transition-colors cursor-pointer flex items-center justify-center gap-1 shadow-sm"
+                          >
+                            <Check className="h-3.5 w-3.5" /> Approve
+                          </button>
+                          <button
+                            onClick={() => handleReviewRequest(req.id, 'rejected')}
+                            className="flex-1 bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider py-2 rounded-xl hover:bg-red-600 transition-colors cursor-pointer flex items-center justify-center gap-1 shadow-sm"
+                          >
+                            <X className="h-3.5 w-3.5" /> Reject
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="py-6 text-center text-xs text-[#4B5563] italic">
+                    No pending membership applications.
+                  </div>
+                )}
+              </div>
+
             </div>
           )}
 

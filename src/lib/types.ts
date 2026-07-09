@@ -18,6 +18,14 @@ export interface User {
   phone?: string;
   consentGiven?: boolean;
   consentDate?: string;     // ISO timestamp
+  bio?: string;
+  interests?: string[];
+  socials?: {
+    linkedin?: string;
+    github?: string;
+    instagram?: string;
+  };
+  achievements?: string[];
 }
 
 export interface Organization {
@@ -31,6 +39,7 @@ export interface Organization {
   views?: number;
   saves?: number;
   rsvps?: number;
+  memberRoles?: Record<string, string>; // username -> role
 }
 
 export interface Event {
