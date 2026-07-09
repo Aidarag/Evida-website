@@ -1,0 +1,63 @@
+import { NextResponse } from 'next/server';
+import { readDB, writeDB } from '@/lib/db';
+
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const username = searchParams.get('username');
+
+    if (!username) {
+      return NextResponse.json({ error: 'Username parameter is required' }, { status: 400 });
+    }
+
+    const db = readDB();
+    const user = db.users.find((u) => u.username === username);
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    const { password: _, ...safeUser } = user;
+    return NextResponse.json(safeUser);
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to retrieve user profile' }, { status: 500 });
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const { username, name, major, graduationYear, school, avatar, banner } = body;
+
+    if (!username) {
+      return NextResponse.json({ error: 'Username is required to update profile' }, { status: 400 });
+    }
+
+    const db = readDB();
+    const idx = db.users.findIndex((u) => u.username === username);
+    if (idx === -1) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    const user = db.users[idx];
+
+    // Perform updates
+    if (name !== undefined) user.name = name.trim() || user.name;
+    if (major !== undefined) user.major = major.trim();
+    if (graduationYear !== undefined) user.graduationYear = graduationYear.trim();
+    if (school !== undefined) user.school = school.trim();
+    if (avatar !== undefined) user.avatar = avatar.trim();
+    if (banner !== undefined) user.banner = banner.trim();
+
+    // Also update gradYear in sync with graduationYear
+    if (user.graduationYear) {
+      user.gradYear = user.graduationYear;
+    }
+
+    writeDB(db);
+
+    const { password: _, ...safeUser } = user;
+    return NextResponse.json(safeUser);
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to update user profile' }, { status: 500 });
+  }
+}

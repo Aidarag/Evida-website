@@ -13,6 +13,7 @@ export interface User {
   graduationYear?: string;
   school?: string;
   avatar?: string;
+  banner?: string;
   password?: string;        // stored server-side only
   phone?: string;
   consentGiven?: boolean;
@@ -88,4 +89,14 @@ export interface Promotion {
   feedback?: string;
   image?: string;
   createdAt?: string;
+}
+
+export interface MembershipRequest {
+  id: string;
+  orgId: string;
+  orgName: string;
+  username: string;
+  studentName: string;
+  status: 'pending' | 'approved' | 'rejected';
+  createdAt: string;
 }

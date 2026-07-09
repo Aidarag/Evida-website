@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { Event, Promotion, Organization, User, Notification } from './types';
+import { Event, Promotion, Organization, User, Notification, MembershipRequest } from './types';
 
 const DB_PATH = path.join(process.cwd(), 'data', 'db.json');
 
@@ -10,6 +10,7 @@ export interface DBStructure {
   organizations: Organization[];
   users: User[];
   notifications: Notification[];
+  membershipRequests: MembershipRequest[];
 }
 
 const initialOrganizations: Organization[] = [
@@ -1103,7 +1104,8 @@ function ensureDB() {
       promotions: initialPromotions,
       organizations: initialOrganizations,
       users: initialUsers,
-      notifications: initialNotifications
+      notifications: initialNotifications,
+      membershipRequests: []
     };
     fs.writeFileSync(DB_PATH, JSON.stringify(defaultData, null, 2), 'utf8');
   }
@@ -1112,7 +1114,11 @@ function ensureDB() {
 export function readDB(): DBStructure {
   ensureDB();
   const data = fs.readFileSync(DB_PATH, 'utf8');
-  return JSON.parse(data) as DBStructure;
+  const db = JSON.parse(data) as DBStructure;
+  if (!db.membershipRequests) {
+    db.membershipRequests = [];
+  }
+  return db;
 }
 
 export function writeDB(data: DBStructure) {
@@ -1126,7 +1132,8 @@ export function resetDB() {
     promotions: initialPromotions,
     organizations: initialOrganizations,
     users: initialUsers,
-    notifications: initialNotifications
+    notifications: initialNotifications,
+    membershipRequests: []
   };
   writeDB(defaultData);
   return defaultData;
