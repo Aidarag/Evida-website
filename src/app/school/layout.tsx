@@ -22,7 +22,7 @@ export default function SchoolLayout({
       <div className="flex-1 flex flex-col min-w-0">
         <DesktopNav variant="school" />
         
-        <main className="flex-1 pb-24 md:pb-8 relative">
+        <main className="flex-1 pb-32 md:pb-8 relative">
           {children}
         </main>
       </div>

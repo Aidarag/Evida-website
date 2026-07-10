@@ -183,12 +183,12 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
   const tabs = variant === 'school' ? schoolTabs : studentTabs;
 
   return (
-    <div className="md:hidden fixed bottom-4 left-4 right-4 z-50">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-t border-black/[0.06] pb-5 pt-1.5 shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
       <motion.nav
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="flex items-center justify-around rounded-full bg-white/90 backdrop-blur-2xl border border-black/[0.04] px-2 py-2 shadow-[var(--shadow-premium-lg)]"
+        className="flex items-center justify-around px-2"
       >
         {tabs.map((tab: any) => {
           const isActive = pathname === tab.href || pathname.startsWith(tab.href + '/');
@@ -196,10 +196,10 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
 
           if (tab.isFab) {
             return (
-              <Link key={tab.href} href={tab.href} className="-mt-4">
+              <Link key={tab.href} href={tab.href} className="-mt-6">
                 <motion.div
                   whileTap={{ scale: 0.95 }}
-                  className="h-11 w-11 rounded-full bg-[#BDFB04] flex items-center justify-center shadow-md shadow-[#BDFB04]/25 cursor-pointer hover:scale-105 transition-all"
+                  className="h-12 w-12 rounded-full bg-[#BDFB04] flex items-center justify-center shadow-lg shadow-[#BDFB04]/25 cursor-pointer hover:scale-105 transition-all border-4 border-white"
                 >
                   <Plus className="h-5 w-5 text-[#191919] stroke-[3]" />
                 </motion.div>
@@ -211,7 +211,7 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
             <Link
               key={tab.href}
               href={tab.href}
-              className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-colors cursor-pointer ${
+              className={`flex flex-col items-center gap-0.5 px-3 py-1 transition-colors cursor-pointer ${
                 isActive 
                   ? 'text-[#3B5C00] font-extrabold' 
                   : 'text-[#4B5563] hover:text-[#191919]'
