@@ -23,7 +23,8 @@ import {
   ArrowLeft,
   GraduationCap,
   Mail,
-  Plus
+  Plus,
+  Compass
 } from 'lucide-react';
 import { Event } from '@/lib/types';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
@@ -915,8 +916,8 @@ export default function LandingPage({
             {/* Card 1 */}
             <div className="p-8 space-y-4 text-left border-b md:border-r border-black/[0.06]">
               <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 01</span>
-              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
-                (^_~)
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner">
+                <Compass className="h-4 w-4" />
               </div>
               <div className="space-y-1">
                 <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
@@ -934,8 +935,8 @@ export default function LandingPage({
             {/* Card 2 */}
             <div className="p-8 space-y-4 text-left border-b md:border-r border-black/[0.06]">
               <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 02</span>
-              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
-                [o_o]
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner">
+                <Calendar className="h-4 w-4" />
               </div>
               <div className="space-y-1">
                 <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
@@ -953,8 +954,8 @@ export default function LandingPage({
             {/* Card 3 */}
             <div className="p-8 space-y-4 text-left border-b border-black/[0.06]">
               <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 03</span>
-              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
-                (^o^)
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner">
+                <Users className="h-4 w-4" />
               </div>
               <div className="space-y-1">
                 <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
@@ -972,8 +973,8 @@ export default function LandingPage({
             {/* Card 4 */}
             <div className="p-8 space-y-4 text-left border-b md:border-b-0 md:border-r border-black/[0.06]">
               <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 04</span>
-              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
-                (:-D)
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner">
+                <Clock className="h-4 w-4" />
               </div>
               <div className="space-y-1">
                 <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
@@ -991,8 +992,8 @@ export default function LandingPage({
             {/* Card 5 */}
             <div className="p-8 space-y-4 text-left border-b md:border-b-0 md:border-r border-black/[0.06]">
               <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 05</span>
-              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
-                (::)
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner">
+                <Plus className="h-4 w-4" />
               </div>
               <div className="space-y-1">
                 <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
@@ -1010,8 +1011,8 @@ export default function LandingPage({
             {/* Card 6 */}
             <div className="p-8 space-y-4 text-left">
               <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 06</span>
-              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
-                (*_*)
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner">
+                <Sparkles className="h-4 w-4" />
               </div>
               <div className="space-y-1">
                 <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
