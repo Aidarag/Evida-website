@@ -218,8 +218,7 @@ export default function LandingPage({
             className="relative w-full max-w-[380px] aspect-[3/4] rounded-[32px] overflow-hidden border border-black/[0.08] shadow-xl float-glowing"
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-[#BDFB04]/25 via-transparent to-transparent z-10" />
-            {/* Background generated image */}
-            <div className="absolute inset-0 bg-[url('/campus_life_hero.png')] bg-cover bg-center" />
+            <div className="absolute inset-0 bg-[url('/pexels-hanna-elesha-abraham-1587801282-27498756.jpg')] bg-cover bg-center" />
             
             {/* Overlay Gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-white via-white/10 to-transparent z-10" />
