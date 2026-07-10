@@ -3,6 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import LandingPage from '@/components/LandingPage';
+import { Event } from '@/lib/types';
 
 export default function HomePage() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function HomePage() {
   const handleLogin = () => router.push('/login');
 
   // Placeholder for featured events; replace with real data as needed
-  const featuredEvents = [];
+  const featuredEvents: Event[] = [];
 
   return (
     <LandingPage

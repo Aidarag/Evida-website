@@ -90,7 +90,7 @@ export interface Promotion {
   id: string;
   title: string;
   description: string;
-  category: 'tutoring' | 'photography' | 'food' | 'initiative' | 'self-care' | 'other';
+  category: 'academic' | 'jobs' | 'creative' | 'food' | 'beauty' | 'marketplace' | 'housing' | 'sports' | 'projects' | 'other';
   status: 'pending' | 'approved' | 'rejected';
   date: string;
   organizer: string;

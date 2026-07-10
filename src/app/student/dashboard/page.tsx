@@ -4,14 +4,14 @@ import React, { useState, useRef } from 'react';
 import { useUser } from '@/lib/context/UserContext';
 import { useEvents } from '@/lib/context/EventContext';
 import { useRouter } from 'next/navigation';
-import { 
-  Calendar, 
-  Bell, 
-  MapPin, 
-  Search, 
-  SlidersHorizontal, 
-  Heart, 
-  Clock, 
+import {
+  Calendar,
+  Bell,
+  MapPin,
+  Search,
+  SlidersHorizontal,
+  Heart,
+  Clock,
   Compass,
   Trophy,
   Music,
@@ -32,7 +32,7 @@ export default function StudentDashboardPage() {
   const { currentUser } = useUser();
   const { events, organizations, notifications, saveToggle, rsvpToggle } = useEvents();
   const router = useRouter();
-  
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [likedEvents, setLikedEvents] = useState<Set<string>>(new Set());
@@ -72,10 +72,10 @@ export default function StudentDashboardPage() {
 
   const filteredEvents = approvedEvents.filter(event => {
     const matchesSearch = event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          event.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          (event.organizationName || '').toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || 
-                            event.category?.toLowerCase() === selectedCategory.toLowerCase();
+      event.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (event.organizationName || '').toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === 'All' ||
+      event.category?.toLowerCase() === selectedCategory.toLowerCase();
     return matchesSearch && matchesCategory;
   });
 
@@ -98,7 +98,7 @@ export default function StudentDashboardPage() {
     return new Date(a.date).getTime() - new Date(b.date).getTime();
   });
 
-  const matchedOrgs = searchQuery.trim() !== '' 
+  const matchedOrgs = searchQuery.trim() !== ''
     ? organizations.filter(org => org.name.toLowerCase().includes(searchQuery.toLowerCase()))
     : [];
 
@@ -129,7 +129,7 @@ export default function StudentDashboardPage() {
 
   const handleShare = () => {
     if (navigator.share) {
-      navigator.share({ title: 'Check this event on Evida!', url: window.location.href }).catch(() => {});
+      navigator.share({ title: 'Check this event on Evida!', url: window.location.href }).catch(() => { });
     }
     setShareToast(true);
     setTimeout(() => setShareToast(false), 2000);
@@ -155,7 +155,7 @@ export default function StudentDashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 md:py-10 pb-28 md:pb-12 space-y-6">
-      
+
       {/* ── Header ── */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-black/[0.04] pb-5">
         <div>
@@ -196,9 +196,9 @@ export default function StudentDashboardPage() {
         <div className="flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#4B5563]" />
-            <input 
-              type="text" 
-              placeholder="Search title, venue, host or keywords..." 
+            <input
+              type="text"
+              placeholder="Search title, venue, host or keywords..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-white border border-black/[0.06] text-[#191919] placeholder-[#4B5563] rounded-full pl-10 pr-4 py-2.5 text-xs focus:outline-none focus:border-[#BDFB04] transition-all shadow-inner"
@@ -217,11 +217,10 @@ export default function StudentDashboardPage() {
               <button
                 key={cat.name}
                 onClick={() => setSelectedCategory(cat.name)}
-                className={`flex items-center gap-1.5 shrink-0 px-3.5 py-1.5 rounded-full text-[9px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
-                  isActive 
-                    ? 'bg-[#BDFB04] text-[#191919] shadow-sm' 
-                    : 'bg-white border border-black/[0.04] text-[#374151] hover:bg-white hover:text-[#191919]'
-                }`}
+                className={`flex items-center gap-1.5 shrink-0 px-3.5 py-1.5 rounded-full text-[9px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${isActive
+                  ? 'bg-[#BDFB04] text-[#191919] shadow-sm'
+                  : 'bg-white border border-black/[0.04] text-[#374151] hover:bg-white hover:text-[#191919]'
+                  }`}
               >
                 <cat.icon className="h-3 w-3" />
                 {cat.name}
@@ -233,7 +232,7 @@ export default function StudentDashboardPage() {
 
       {/* ── Main Dashboard Layout ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Main Events Feed Column */}
         <div className="lg:col-span-2 space-y-5">
           <div className="flex items-center justify-between">
@@ -263,18 +262,18 @@ export default function StudentDashboardPage() {
                     className="bg-white rounded-3xl border border-black/[0.04] shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group"
                   >
                     {/* Event Image Banner */}
-                    <div 
+                    <div
                       className="relative h-44 w-full bg-[#191919] overflow-hidden cursor-pointer"
                       onClick={() => router.push(`/events/${event.id}`)}
                     >
-                      <img 
-                        src={getEventImg(event.coverImage, event.id)} 
+                      <img
+                        src={getEventImg(event.coverImage, event.id)}
                         alt={event.title}
                         className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
                       />
                       {/* Dark overlay gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                      
+
                       {/* Left Badge: Category */}
                       <div className="absolute top-4 left-4 z-10">
                         <span className="rounded-full bg-white/90 border border-black/5 px-2.5 py-1 text-[8px] font-extrabold uppercase text-[#191919] shadow-sm">
@@ -302,7 +301,7 @@ export default function StudentDashboardPage() {
                       <div className="space-y-2">
                         {/* Host details & verified green checkmark */}
                         <div className="flex items-center gap-1.5">
-                          <p 
+                          <p
                             onClick={() => event.organizationId && router.push(`/student/organizations/${event.organizationId}`)}
                             className={`text-[10px] font-extrabold text-[#374151] uppercase tracking-wider flex items-center leading-none ${event.organizationId ? 'cursor-pointer hover:underline' : ''}`}
                           >
@@ -314,7 +313,7 @@ export default function StudentDashboardPage() {
                         </div>
 
                         {/* Event Title */}
-                        <h3 
+                        <h3
                           onClick={() => router.push(`/events/${event.id}`)}
                           className="text-base font-bold text-[#191919] tracking-tight leading-snug line-clamp-1 hover:text-[#BDFB04] transition-colors cursor-pointer uppercase"
                           style={{ fontFamily: 'var(--font-display)' }}
@@ -345,8 +344,8 @@ export default function StudentDashboardPage() {
                         <div className="flex items-center gap-2 pt-1">
                           <div className="flex -space-x-1.5">
                             {event.attendees.slice(0, 3).map((name, i) => (
-                              <div 
-                                key={i} 
+                              <div
+                                key={i}
                                 className="h-5 w-5 rounded-full border border-white bg-slate-200 flex items-center justify-center text-[7px] font-black text-gray-700"
                               >
                                 {name.substring(0, 2).toUpperCase()}
@@ -395,11 +394,10 @@ export default function StudentDashboardPage() {
                         {/* "I'm in" RSVP button */}
                         <button
                           onClick={() => handleImIn(event.id)}
-                          className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                            isAttending
-                              ? 'bg-[#BDFB04]/20 border border-[#BDFB04]/30 text-[#191919] shadow-sm'
-                              : 'bg-[#191919] text-white hover:bg-[#2a2a2a]'
-                          }`}
+                          className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${isAttending
+                            ? 'bg-[#BDFB04]/20 border border-[#BDFB04]/30 text-[#191919] shadow-sm'
+                            : 'bg-[#191919] text-white hover:bg-[#2a2a2a]'
+                            }`}
                         >
                           {isAttending ? (
                             <>
@@ -416,11 +414,10 @@ export default function StudentDashboardPage() {
                         {/* Save (Heart) button */}
                         <button
                           onClick={() => saveToggle(event.id)}
-                          className={`h-9 w-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${
-                            isSaved
-                              ? 'bg-white border-[#BDFB04] text-rose-500 shadow-sm'
-                              : 'bg-white border-black/10 text-[#4B5563] hover:text-rose-500'
-                          }`}
+                          className={`h-9 w-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${isSaved
+                            ? 'bg-white border-[#BDFB04] text-rose-500 shadow-sm'
+                            : 'bg-white border-black/10 text-[#4B5563] hover:text-rose-500'
+                            }`}
                           title={isSaved ? "Saved" : "Save Event"}
                         >
                           <Heart className={`h-4.5 w-4.5 ${isSaved ? 'fill-rose-500' : ''}`} />
@@ -429,9 +426,8 @@ export default function StudentDashboardPage() {
                         {/* Write Comment Icon trigger */}
                         <button
                           onClick={() => setCommentOpen(isCommentOpen ? null : event.id)}
-                          className={`h-9 w-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${
-                            isCommentOpen ? 'bg-black/5 border-black/20 text-[#191919]' : 'bg-white border-black/10 text-[#374151] hover:text-[#191919]'
-                          }`}
+                          className={`h-9 w-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${isCommentOpen ? 'bg-black/5 border-black/20 text-[#191919]' : 'bg-white border-black/10 text-[#374151] hover:text-[#191919]'
+                            }`}
                           title="Add comment"
                         >
                           <MessageCircle className="h-4.5 w-4.5" />
@@ -448,7 +444,7 @@ export default function StudentDashboardPage() {
                             placeholder="Add comment..."
                             className="flex-1 bg-black/[0.03] border border-black/[0.04] rounded-xl px-3 py-1.5 text-[11px] text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04]"
                           />
-                          <button 
+                          <button
                             onClick={() => handleComment(event.id)}
                             disabled={!commentText.trim()}
                             className="bg-[#BDFB04] text-[#191919] hover:bg-[#d1fa3c] px-3 py-1 rounded-xl text-[10px] font-bold uppercase tracking-wider disabled:opacity-30 transition-opacity cursor-pointer"
@@ -472,15 +468,15 @@ export default function StudentDashboardPage() {
 
         {/* Sidebar Column */}
         <div className="space-y-6">
-          
+
           {/* Matched Organizations Widget */}
           {matchedOrgs.length > 0 && (
             <div className="bg-white border border-black/[0.04] rounded-3xl p-5 shadow-sm space-y-4">
               <h3 className="text-xs font-black tracking-widest text-[#191919] uppercase">Matched Groups</h3>
               <div className="space-y-2">
                 {matchedOrgs.map((org) => (
-                  <div 
-                    key={org.id} 
+                  <div
+                    key={org.id}
                     onClick={() => router.push(`/student/organizations/${org.id}`)}
                     className="p-3 bg-slate-50 hover:bg-slate-100/50 rounded-2xl flex items-center justify-between border border-black/[0.03] transition-all cursor-pointer group"
                   >
@@ -521,7 +517,7 @@ export default function StudentDashboardPage() {
                   const monthName = monthNames[parseInt(month)] || 'Oct';
 
                   return (
-                    <div 
+                    <div
                       key={`schedule-${event.id}`}
                       onClick={() => router.push(`/events/${event.id}`)}
                       className="group flex gap-3 items-center p-2.5 rounded-2xl border border-black/[0.03] hover:border-black/10 bg-slate-50/50 hover:bg-slate-50 transition-all cursor-pointer text-left"
@@ -531,7 +527,7 @@ export default function StudentDashboardPage() {
                         <span className="text-[9px] font-extrabold uppercase text-[#4B5563] leading-none">{monthName}</span>
                         <span className="text-sm font-black text-[#191919] mt-0.5 leading-none">{day}</span>
                       </div>
-                      
+
                       {/* Event Details */}
                       <div className="min-w-0 flex-1">
                         <h4 className="text-xs font-bold text-[#191919] truncate uppercase group-hover:text-[#BDFB04] transition-colors leading-snug">
@@ -557,13 +553,13 @@ export default function StudentDashboardPage() {
             <h3 className="text-xs font-black tracking-widest text-[#191919] uppercase">Verified Campus Groups</h3>
             <div className="space-y-2.5">
               {organizations.slice(0, 5).map((org) => (
-                <div 
+                <div
                   key={org.id}
                   onClick={() => router.push(`/student/organizations/${org.id}`)}
                   className="group flex items-center justify-between p-2 rounded-2xl hover:bg-slate-50 transition-all cursor-pointer"
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div 
+                    <div
                       className="h-8 w-8 rounded-xl flex items-center justify-center font-bold text-[10px] text-white shrink-0 shadow-sm"
                       style={{ backgroundColor: org.logoColor || '#191919' }}
                     >
