@@ -496,14 +496,13 @@ export default function LandingPage({
             </p>
           </div>
 
-          <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 text-left">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 text-left max-w-5xl mx-auto border-y border-black/[0.06]">
             
             {/* Card 1 */}
-            <div className="space-y-2">
-              <span className="text-4xl md:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-5 sm:p-8 border-r border-b lg:border-b-0 border-black/[0.06] flex flex-col space-y-2">
+              <span className="text-4xl sm:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 89%
               </span>
-              <div className="h-1 w-8 bg-[#BDFB04] rounded-full my-2" />
               <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
                 Miss important opportunities
               </h3>
@@ -513,11 +512,10 @@ export default function LandingPage({
             </div>
 
             {/* Card 2 */}
-            <div className="space-y-2">
-              <span className="text-4xl md:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-5 sm:p-8 border-b lg:border-b-0 lg:border-r border-black/[0.06] flex flex-col space-y-2">
+              <span className="text-4xl sm:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 36%
               </span>
-              <div className="h-1 w-8 bg-[#BDFB04] rounded-full my-2" />
               <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
                 Never participate
               </h3>
@@ -527,11 +525,10 @@ export default function LandingPage({
             </div>
 
             {/* Card 3 */}
-            <div className="space-y-2">
-              <span className="text-4xl md:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-5 sm:p-8 border-r border-black/[0.06] flex flex-col space-y-2">
+              <span className="text-4xl sm:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 31%
               </span>
-              <div className="h-1 w-8 bg-[#BDFB04] rounded-full my-2" />
               <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
                 Don’t know what’s happening
               </h3>
@@ -541,11 +538,10 @@ export default function LandingPage({
             </div>
 
             {/* Card 4 */}
-            <div className="space-y-2">
-              <span className="text-4xl md:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-5 sm:p-8 flex flex-col space-y-2">
+              <span className="text-4xl sm:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 26%
               </span>
-              <div className="h-1 w-8 bg-[#BDFB04] rounded-full my-2" />
               <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
                 Check campus email daily
               </h3>
