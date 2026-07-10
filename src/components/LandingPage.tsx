@@ -1,17 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   ArrowRight, 
   Calendar, 
   Shield, 
   Users, 
   Trophy,
-  Mail,
-  User as UserIcon,
-  CheckCircle2,
   ChevronDown,
-  HelpCircle,
   Sparkles
 } from 'lucide-react';
 import { Event } from '@/lib/types';
@@ -31,66 +27,8 @@ export default function LandingPage({
   onCreateEvent,
   onLogin,
 }: LandingPageProps) {
-  // Waitlist State
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [role, setRole] = useState('student');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [queueNumber, setQueueNumber] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   // FAQ Accordion State
   const [faqOpenIndex, setFaqOpenIndex] = useState<number | null>(null);
-
-  // Check if already joined on load
-  useEffect(() => {
-    const joined = localStorage.getItem('evida_waitlist_joined');
-    if (joined) {
-      try {
-        const parsed = JSON.parse(joined);
-        setName(parsed.name);
-        setEmail(parsed.email);
-        setRole(parsed.role);
-        setIsSubmitted(true);
-        const hash = parsed.email.split('').reduce((acc: number, char: string) => acc + char.charCodeAt(0), 0);
-        setQueueNumber((hash % 300) + 1240);
-      } catch (e) {
-        // ignore
-      }
-    }
-  }, []);
-
-  const handleWaitlistSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !email.trim()) return;
-
-    setIsSubmitting(true);
-    
-    // Simulate API request delay
-    setTimeout(() => {
-      const waitlistData = { name, email, role, date: new Date().toISOString() };
-      localStorage.setItem('evida_waitlist_joined', JSON.stringify(waitlistData));
-      
-      const hash = email.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-      const mockNum = (hash % 300) + 1240;
-      
-      setQueueNumber(mockNum);
-      setIsSubmitted(true);
-      setIsSubmitting(false);
-    }, 800);
-  };
-
-  const handleScrollToWaitlist = () => {
-    const element = document.getElementById('waitlist');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      // Focus name input if element is present
-      const nameInput = document.getElementById('waitlist-name');
-      if (nameInput) {
-        setTimeout(() => nameInput.focus(), 800);
-      }
-    }
-  };
 
   const toggleFaq = (index: number) => {
     setFaqOpenIndex(faqOpenIndex === index ? null : index);
@@ -102,8 +40,8 @@ export default function LandingPage({
       answer: "Evida is a premium, unified digital home for student life. It aggregates campus events, student organizations, promotions, and opportunities into a high-end, responsive feed."
     },
     {
-      question: "How does the waitlist early access work?",
-      answer: "We are currently accepting waitlist registrations for our select campus rollouts. By joining, you secure an early spot in the queue. Invitations will be dispatched in batches based on registration numbers and school launch phases."
+      question: "How do I get started?",
+      answer: "Click any 'Get Started' button to go to our access selection screen, select whether you are a Student or a School Administrator, and immediately explore the platforms and dashboards."
     },
     {
       question: "Can universities use Evida for administration?",
@@ -146,10 +84,10 @@ export default function LandingPage({
           {/* Right side single CTA */}
           <div className="flex items-center">
             <button
-              onClick={handleScrollToWaitlist}
+              onClick={onLogin}
               className="rounded-full bg-[#BDFB04] text-[#191919] text-[10px] font-black px-5 py-2.5 hover:bg-[#d1fa3c] transition-all hover:scale-[1.02] border border-black/5 cursor-pointer shadow-sm uppercase tracking-wider"
             >
-              Join the Waitlist
+              Get Started
             </button>
           </div>
         </div>
@@ -187,16 +125,16 @@ export default function LandingPage({
             </p>
             <div>
               <button
-                onClick={handleScrollToWaitlist}
+                onClick={onLogin}
                 className="flex items-center gap-2 rounded-full bg-[#BDFB04] hover:bg-[#d1fa3c] px-7 py-4 text-xs font-black text-[#191919] shadow-lg shadow-[#BDFB04]/20 hover:scale-[1.03] transition-all cursor-pointer uppercase tracking-wider"
               >
-                Join the Waitlist
+                <span>Get Started</span>
                 <ArrowRight className="h-4 w-4 text-[#191919]" />
               </button>
             </div>
           </div>
 
-          {/* Bottom Row: Additional waitlist info / badge */}
+          {/* Bottom Row: Additional info / badge */}
           <div className="relative z-20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-white/10 pt-6">
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
@@ -204,7 +142,7 @@ export default function LandingPage({
               </span>
             </div>
 
-            {/* Waitlist Queue Counter */}
+            {/* Platform Access Badge */}
             <div className="flex items-center gap-3 bg-black/40 backdrop-blur-md border border-white/10 rounded-full px-4 py-2 w-fit">
               <div className="flex -space-x-2">
                 <div className="h-6 w-6 rounded-full border border-neutral-900 bg-[#BDFB04] text-neutral-900 flex items-center justify-center text-[8px] font-black">JD</div>
@@ -212,7 +150,7 @@ export default function LandingPage({
                 <div className="h-6 w-6 rounded-full border border-neutral-900 bg-purple-500 text-white flex items-center justify-center text-[8px] font-black">SK</div>
               </div>
               <span className="text-[10px] font-bold text-white uppercase tracking-wider">
-                {isSubmitted ? `You are #${queueNumber}` : '1,240+ on the waitlist'} ●
+                Explore Dashboards ●
               </span>
             </div>
           </div>
@@ -298,7 +236,7 @@ export default function LandingPage({
               <span className="h-8 w-8 rounded-lg bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex items-center justify-center text-[#BDFB04]">
                 <Sparkles className="h-4 w-4" />
               </span>
-              <span className="text-[10px] font-black uppercase tracking-wider text-[#BDFB04]">Designed for early access</span>
+              <span className="text-[10px] font-black uppercase tracking-wider text-[#BDFB04]">Designed for instant access</span>
             </div>
           </div>
         </div>
@@ -361,7 +299,7 @@ export default function LandingPage({
               {featuredEvents.slice(0, 3).map((event) => (
                 <div
                   key={event.id}
-                  onClick={handleScrollToWaitlist}
+                  onClick={onLogin}
                   className="group relative rounded-[24px] aspect-[4/3] overflow-hidden border border-black/[0.06] bg-white cursor-pointer transition-all hover:border-[#BDFB04] shadow-sm hover:shadow-md"
                 >
                   <div className={`absolute inset-0 bg-gradient-to-tr ${event.coverImage} opacity-20 group-hover:opacity-30 transition-opacity`} />
@@ -482,140 +420,30 @@ export default function LandingPage({
         </div>
       </section>
 
-      {/* Waitlist Form Section */}
+      {/* Get Started CTA Section */}
       <section id="waitlist" className="py-24 bg-[#191919] text-white relative border-t border-black">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-900 via-[#191919] to-[#191919] z-0" />
         
         <div className="relative z-10 max-w-xl mx-auto px-6 text-center space-y-8">
           <div className="space-y-3">
-            <span className="rounded-full bg-[#BDFB04]/10 border border-[#BDFB04]/30 px-3.5 py-1.5 text-[9px] font-black uppercase tracking-widest text-[#BDFB04] inline-block">
-              Limited Beta Slots
+            <span className="rounded-full bg-[#BDFB04]/10 border border-[#BDFB04]/30 px-3.5 py-1.5 text-[9px] font-black uppercase tracking-widest text-[#BDFB04] inline-block animate-pulse">
+              Fall 2026 Rollout
             </span>
             <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter" style={{ fontFamily: 'var(--font-display)' }}>
-              Join the Waitlist
+              Ready to Experience Evida?
             </h2>
             <p className="text-xs text-gray-400 font-medium max-w-sm mx-auto leading-relaxed">
-              Sign up today to lock in your priority queue number and campus launch updates.
+              Explore your campus events, support student communities, or manage administrative approvals in a single unified dashboard.
             </p>
           </div>
 
-          <AnimatePresence mode="wait">
-            {!isSubmitted ? (
-              <motion.form
-                key="waitlist-form"
-                onSubmit={handleWaitlistSubmit}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="bg-neutral-950/40 backdrop-blur-md border border-white/5 rounded-3xl p-8 shadow-2xl text-left space-y-5"
-              >
-                <div className="space-y-2">
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-gray-400">Full Name</label>
-                  <div className="relative">
-                    <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-                    <input
-                      id="waitlist-name"
-                      type="text"
-                      required
-                      placeholder="Jane Doe"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3.5 pl-11 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04]/25 transition-all duration-200"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-gray-400">Email Address</label>
-                  <div className="relative">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-                    <input
-                      type="email"
-                      required
-                      placeholder="jane.doe@university.edu"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3.5 pl-11 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04]/25 transition-all duration-200"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-gray-400">Your Role</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setRole('student')}
-                      className={`py-3.5 rounded-2xl border text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer text-center ${
-                        role === 'student'
-                          ? 'bg-[#BDFB04] border-[#BDFB04] text-[#191919]'
-                          : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
-                      }`}
-                    >
-                      Student
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setRole('admin')}
-                      className={`py-3.5 rounded-2xl border text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer text-center ${
-                        role === 'admin'
-                          ? 'bg-[#BDFB04] border-[#BDFB04] text-[#191919]'
-                          : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
-                      }`}
-                    >
-                      Administrator
-                    </button>
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full rounded-2xl bg-[#BDFB04] hover:bg-[#d1fa3c] disabled:bg-[#BDFB04]/50 py-4 text-xs font-black text-[#191919] uppercase tracking-wider shadow-lg shadow-[#BDFB04]/20 transition-all hover:scale-[1.01] cursor-pointer flex items-center justify-center gap-2 mt-2"
-                >
-                  {isSubmitting ? (
-                    <span>Registering...</span>
-                  ) : (
-                    <>
-                      <span>Join the Waitlist</span>
-                      <ArrowRight className="h-4 w-4" />
-                    </>
-                  )}
-                </button>
-              </motion.form>
-            ) : (
-              <motion.div
-                key="waitlist-success"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-neutral-950/40 backdrop-blur-md border border-[#BDFB04]/25 rounded-3xl p-8 md:p-10 shadow-2xl space-y-6"
-              >
-                <div className="h-16 w-16 bg-[#BDFB04]/10 rounded-full flex items-center justify-center border border-[#BDFB04]/30 mx-auto text-[#BDFB04]">
-                  <CheckCircle2 className="h-8 w-8" />
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-xl font-extrabold uppercase tracking-tight text-[#BDFB04]">You are on the list!</h3>
-                  <p className="text-xs text-gray-300 font-medium max-w-sm mx-auto leading-relaxed">
-                    Thank you for joining, <span className="text-[#BDFB04] font-bold">{name}</span>. We've registered your email (<span className="text-white font-semibold">{email}</span>).
-                  </p>
-                </div>
-
-                <div className="p-4 bg-white/5 border border-white/10 rounded-2xl max-w-xs mx-auto">
-                  <span className="block text-[9px] font-black uppercase text-gray-400 tracking-wider">Your Queue Position</span>
-                  <span className="text-3xl font-black text-[#BDFB04] font-mono mt-1 block">#{queueNumber}</span>
-                </div>
-
-                <p className="text-[10px] text-gray-500 font-medium">
-                  We'll contact you at your email address as soon as early access builds are live for your role.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          
-          <div className="pt-2 text-[10px] text-gray-500 font-medium">
-            Already have private beta login credentials?{' '}
-            <button onClick={onLogin} className="text-[#BDFB04] font-black underline hover:text-[#d1fa3c] cursor-pointer">
-              Sign In here
+          <div className="pt-4 flex justify-center">
+            <button
+              onClick={onLogin}
+              className="rounded-full bg-[#BDFB04] hover:bg-[#d1fa3c] px-8 py-4 text-xs font-black text-[#191919] uppercase tracking-wider shadow-lg shadow-[#BDFB04]/20 transition-all hover:scale-[1.03] cursor-pointer flex items-center justify-center gap-2"
+            >
+              <span>Get Started</span>
+              <ArrowRight className="h-4 w-4 text-[#191919]" />
             </button>
           </div>
         </div>
