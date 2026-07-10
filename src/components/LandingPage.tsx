@@ -301,13 +301,13 @@ export default function LandingPage({
       <section ref={sectionRef} className="py-24 bg-[#DFDED7]/25 border-y border-black/[0.06] overflow-hidden flex flex-col items-center">
         <div className="max-w-3xl mx-auto px-6 text-center space-y-4 mb-12">
           <span className="rounded-full bg-[#191919] text-[#BDFB04] px-3.5 py-1.5 text-[10px] font-black uppercase tracking-widest inline-block shadow-sm">
-            Interactive Preview
+            Take a tour
           </span>
           <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter" style={{ fontFamily: 'var(--font-display)' }}>
             Experience Evida
           </h2>
           <p className="text-xs text-[#4B5563] font-semibold max-w-md mx-auto leading-relaxed">
-            Click the phone below to unlock interactive scroll controls and browse a live demo of the app interface.
+            Click the phone below to unlock scroll controls and browse a live tour of the app interface.
           </p>
         </div>
 
@@ -389,11 +389,11 @@ export default function LandingPage({
             {/* Locked screen guide overlay */}
             {!phoneActive && (
               <div className="absolute inset-0 bg-black/40 backdrop-blur-xs z-30 flex flex-col items-center justify-center text-center p-6 text-white space-y-4">
-                <div className="h-12 w-12 rounded-full bg-[#BDFB04] text-[#191919] flex items-center justify-center shadow-lg animate-bounce">
-                  <Sparkles className="h-5 w-5" />
+                <div className="h-12 w-12 rounded-full bg-[#BDFB04] flex items-center justify-center shadow-lg animate-bounce">
+                  <EvidaLogo size={22} showText={false} lightMode={false} />
                 </div>
                 <div className="space-y-1">
-                  <span className="block text-[10px] font-black uppercase tracking-widest text-[#BDFB04]">Interactive Demo</span>
+                  <span className="block text-[10px] font-black uppercase tracking-widest text-[#BDFB04]">Take a tour</span>
                   <span className="block text-[11px] font-bold text-gray-200">Tap to unlock screen</span>
                 </div>
               </div>
@@ -647,7 +647,7 @@ export default function LandingPage({
                   className="bg-black text-[#BDFB04] border border-white/10 px-4 py-3 rounded-2xl shadow-xl flex items-center justify-center gap-2 pointer-events-none"
                 >
                   <span className="text-[10px] font-black uppercase tracking-wider animate-pulse">
-                    👆 Click the phone to explore Evida
+                    Click the phone to explore Evida
                   </span>
                 </motion.div>
               ) : (
@@ -659,7 +659,7 @@ export default function LandingPage({
                   className="bg-[#191919] text-white border border-white/10 px-4 py-3 rounded-2xl shadow-xl space-y-2 pointer-events-none"
                 >
                   <span className="block text-[8px] font-black uppercase tracking-widest text-[#BDFB04] animate-pulse">
-                    Interactive Mode
+                    Take a tour
                   </span>
                   <p className="text-[9px] text-gray-300 leading-snug">
                     Use your mouse scroll wheel or swipe up/down on your phone to navigate pages.
