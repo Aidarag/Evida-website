@@ -21,7 +21,7 @@ export default function StudentLayout({
       <div className="flex-1 flex flex-col min-w-0">
         <DesktopNav variant="student" />
         
-        <main className="flex-1 pb-24 md:pb-8 relative">
+        <main className="flex-1 pb-20 md:pb-8 relative">
           {children}
         </main>
       </div>

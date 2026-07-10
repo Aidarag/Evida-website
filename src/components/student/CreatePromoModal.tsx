@@ -18,7 +18,7 @@ export default function CreatePromoModal({
   onSubmit,
 }: CreatePromoModalProps) {
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState<'tutoring' | 'photography' | 'food' | 'initiative' | 'self-care' | 'other'>('tutoring');
+  const [category, setCategory] = useState<'academic' | 'jobs' | 'creative' | 'food' | 'beauty' | 'marketplace' | 'housing' | 'sports' | 'projects' | 'other'>('academic');
   const [contactInfo, setContactInfo] = useState('');
   const [description, setDescription] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -46,7 +46,7 @@ export default function CreatePromoModal({
       onClose();
       // Reset fields
       setTitle('');
-      setCategory('tutoring');
+      setCategory('academic');
       setContactInfo('');
       setDescription('');
     } catch (error) {
@@ -108,12 +108,16 @@ export default function CreatePromoModal({
                 onChange={(e) => setCategory(e.target.value as any)}
                 className="w-full rounded-xl border border-white/10 bg-slate-900/50 py-2 px-3 text-xs text-white focus:border-indigo-500 focus:outline-none"
               >
-                <option value="tutoring">Tutoring Services</option>
-                <option value="photography">Photography Gigs</option>
-                <option value="food">Food & Bake Sales</option>
-                <option value="initiative">Student Initiatives</option>
-                <option value="self-care">Self Care (hair, makeup, nails, etc)</option>
-                <option value="other">Other Promotions</option>
+                <option value="academic">Academic</option>
+                <option value="jobs">Jobs</option>
+                <option value="creative">Creative</option>
+                <option value="food">Food</option>
+                <option value="beauty">Beauty</option>
+                <option value="marketplace">Marketplace</option>
+                <option value="housing">Housing</option>
+                <option value="sports">Sports</option>
+                <option value="projects">Projects</option>
+                <option value="other">Other</option>
               </select>
             </div>
           </div>

@@ -41,7 +41,7 @@ export default function CreateListingPage() {
   const [promoForm, setPromoForm] = useState({
     title: '',
     description: '',
-    category: 'tutoring',
+    category: 'academic',
     organizerName: '',
     contactInfo: '',
   });
@@ -84,14 +84,14 @@ export default function CreateListingPage() {
       date: eventForm.date,
       time: eventForm.time,
       location: eventForm.location,
-      category: isSchool ? eventForm.category : (eventSubtype === 'quick' ? 'Academic' : eventForm.category),
+      category: isSchool ? eventForm.category : eventForm.category,
       capacity: eventForm.capacity ? parseInt(eventForm.capacity) : undefined,
       ownershipType: creatorEntity, // 'student' | 'organization' | 'school'
       organizationId: isOrg ? org?.id : undefined,
       organizationName: isOrg ? org?.name : undefined,
       organizer: isSchool ? (eventForm.departmentName || 'School Administration') : currentUser.name,
-      status: (isSchool || creatorEntity === 'student') ? 'approved' : 'pending',
-      complexityType: eventSubtype === 'quick' ? 'quick' : 'standard',
+      status: (isSchool || (creatorEntity === 'student' && eventSubtype === 'quick')) ? 'approved' : 'pending',
+      usesSchoolFacilities: eventSubtype === 'standard',
       coverImage: isSchool 
         ? 'from-red-500 via-pink-500 to-orange-500' // School admin gradient
         : (isOrg ? 'from-blue-600 to-indigo-900' : 'from-teal-400 to-emerald-600'),
@@ -103,7 +103,15 @@ export default function CreateListingPage() {
     setIsSubmitting(false);
 
     if (success) {
-      alert(isSchool ? 'School event published successfully!' : (creatorEntity === 'student' ? 'Event shared successfully!' : 'Event submitted successfully! Waiting for moderation.'));
+      alert(
+        isSchool 
+          ? 'School event published successfully!' 
+          : (creatorEntity === 'student' && eventSubtype === 'quick') 
+            ? 'Event shared successfully!' 
+            : (creatorEntity === 'student' && eventSubtype === 'standard')
+              ? 'Event submitted for school review!'
+              : 'Event submitted successfully! Waiting for moderation.'
+      );
       router.push('/student/my-events');
     } else {
       alert('Failed to create event. Please try again.');
@@ -269,8 +277,8 @@ export default function CreateListingPage() {
                   <User className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="text-md font-bold text-[#191919] uppercase tracking-wider">Me - Personal Independent</h3>
-                  <p className="text-xs text-[#374151] mt-0.5">Personal events without using the school facilities.</p>
+                  <h3 className="text-md font-bold text-[#191919] uppercase tracking-wider">My Events</h3>
+                  <p className="text-xs text-[#374151] mt-0.5">Create personal student events — share instantly or request school facilities.</p>
                 </div>
                 <ArrowRight className="h-5 w-5 text-[#374151] ml-auto group-hover:text-[#191919] group-hover:translate-x-1 transition-all" />
               </button>
@@ -323,7 +331,7 @@ export default function CreateListingPage() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              {/* Quick Event */}
+              {/* Without Facilities — Share Immediately */}
               <Card 
                 onClick={() => { setEventSubtype('quick'); handleNext(); }}
                 className="p-6 flex flex-col items-center text-center gap-4 hover:border-[var(--color-evida-lime)]/50 cursor-pointer group"
@@ -332,26 +340,28 @@ export default function CreateListingPage() {
                   <Sparkles className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white uppercase tracking-wide">Quick Event</h3>
+                  <h3 className="text-lg font-bold text-[#191919] uppercase tracking-wide">Without School Facilities</h3>
                   <p className="text-xs text-[#374151] mt-2 leading-relaxed">
-                    Minimal 5-field form for small student activities like study groups, tutoring, or small meetings. Fast-tracked approval.
+                    Not using any school spaces or resources. Your event will be shared with the campus community immediately.
                   </p>
+                  <span className="inline-block mt-3 text-[9px] font-extrabold uppercase tracking-widest text-emerald-700 bg-emerald-100 border border-emerald-200 rounded-full px-3 py-0.5">Instant Share</span>
                 </div>
               </Card>
 
-              {/* Standard Event */}
+              {/* With Facilities — Needs School Review */}
               <Card 
                 onClick={() => { setEventSubtype('standard'); handleNext(); }}
                 className="p-6 flex flex-col items-center text-center gap-4 hover:border-[var(--color-evida-blue)]/50 cursor-pointer group"
               >
                 <div className="h-12 w-12 rounded-xl bg-[var(--color-evida-blue)]/10 text-[var(--color-evida-blue)] flex items-center justify-center group-hover:scale-105 transition-transform shrink-0">
-                  <Calendar className="h-5 w-5" />
+                  <Shield className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white uppercase tracking-wide">Standard Event</h3>
+                  <h3 className="text-lg font-bold text-[#191919] uppercase tracking-wide">Using School Facilities</h3>
                   <p className="text-xs text-[#374151] mt-2 leading-relaxed">
-                    Full form for larger student gatherings, public meetups, or cultural events. Normal moderation process.
+                    Requesting campus rooms, fields, or school resources. Your event will be submitted for school review before publishing.
                   </p>
+                  <span className="inline-block mt-3 text-[9px] font-extrabold uppercase tracking-widest text-amber-700 bg-amber-100 border border-amber-200 rounded-full px-3 py-0.5">Requires Review</span>
                 </div>
               </Card>
             </div>
@@ -381,7 +391,7 @@ export default function CreateListingPage() {
                 <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">
                   {createType === 'promotion' 
                     ? 'Promotion Campaign' 
-                    : `${creatorEntity}-owned ${eventSubtype === 'quick' ? 'quick' : 'standard'} event`}
+                    : `${creatorEntity === 'student' ? 'My Event' : 'Organization Event'} — ${eventSubtype === 'quick' ? 'No Facilities' : 'Using School Facilities'}`}
                 </span>
                 <h1 className="text-2xl font-extrabold text-[#191919] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
                   {createType === 'promotion' ? 'Create Promotion' : 'Event Details'}
@@ -554,7 +564,7 @@ export default function CreateListingPage() {
                       variant="neon" 
                       icon={<Check className="h-4 w-4" />}
                     >
-                      {isSubmitting ? 'Publishing...' : creatorEntity === 'school' ? 'Publish Event' : (creatorEntity === 'student' ? 'Share' : 'Submit for Review')}
+                      {isSubmitting ? 'Publishing...' : creatorEntity === 'school' ? 'Publish Event' : (creatorEntity === 'student' && eventSubtype === 'quick') ? 'Share Now' : 'Submit for Review'}
                     </Button>
                   </div>
                 </form>
@@ -591,12 +601,16 @@ export default function CreateListingPage() {
                           value={promoForm.category}
                           onChange={e => setPromoForm({...promoForm, category: e.target.value})}
                         >
-                          <option value="tutoring">Tutoring & Academic Services</option>
-                          <option value="photography">Photography & Design</option>
-                          <option value="food">Food Sales & Catering</option>
-                          <option value="initiative">Student Initiatives & Projects</option>
-                          <option value="self-care">Self Care (hair, makeup, nails, etc)</option>
-                          <option value="other">Other Student Service</option>
+                          <option value="academic">Academic</option>
+                          <option value="jobs">Jobs</option>
+                          <option value="creative">Creative</option>
+                          <option value="food">Food</option>
+                          <option value="beauty">Beauty</option>
+                          <option value="marketplace">Marketplace</option>
+                          <option value="housing">Housing</option>
+                          <option value="sports">Sports</option>
+                          <option value="projects">Projects</option>
+                          <option value="other">Other</option>
                         </select>
                       </div>
 

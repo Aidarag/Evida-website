@@ -420,7 +420,7 @@ export default function StudentEventsFeed() {
             {/* Matched Organizations */}
             {matchedOrgs.length > 0 && (
               <div className="space-y-2 mt-2 max-w-md">
-                <span className="text-[9px] font-bold text-[#374151] uppercase tracking-[0.2em] block pl-1">// MATCHED ORGANIZATIONS</span>
+                <h2 className="text-[10px] font-extrabold text-[#191919] uppercase tracking-widest">Matched Organizations</h2>
                 {matchedOrgs.map(org => (
                   <div 
                     key={org.id} 
@@ -447,7 +447,7 @@ export default function StudentEventsFeed() {
 
             {/* Category Filters */}
             <div className="space-y-3 pt-1">
-              <span className="text-[9px] font-bold text-[#374151] uppercase tracking-[0.2em] block pl-1">// Category</span>
+              <h2 className="text-[10px] font-extrabold text-[#191919] uppercase tracking-widest">Category</h2>
               <div className="flex gap-2.5 overflow-x-auto pb-3 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
                 {categories.map((cat) => {
                   const isActive = selectedCategory === cat;
@@ -546,7 +546,7 @@ export default function StudentEventsFeed() {
             <div className="relative flex items-center gap-6 justify-center w-full h-full max-w-lg md:max-w-xl">
               
               {/* The Phone-Shaped Portrait Player Frame */}
-              <div className="relative w-full h-full md:w-[380px] md:h-[82vh] md:max-h-[640px] md:rounded-[32px] md:border md:border-white/10 md:shadow-2xl overflow-hidden bg-black z-30">
+              <div className="relative w-full h-full md:w-[380px] md:h-[85vh] md:max-h-[720px] md:rounded-[32px] md:border md:border-white/10 md:shadow-2xl overflow-hidden bg-black z-30">
                 
                 {/* Header Floating inside the phone frame wrapper */}
                 <div className="absolute top-0 inset-x-0 z-40 bg-black/35 backdrop-blur-md border-b border-white/5 px-4 py-3 flex items-center justify-between text-white">
@@ -650,7 +650,7 @@ export default function StudentEventsFeed() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-black/60 z-10 pointer-events-none" />
 
                         {/* Bottom-Left Details Inside Player Frame */}
-                        <div className="absolute bottom-24 left-4 z-20 max-w-[85%] text-white text-left space-y-3.5 select-none">
+                        <div className="absolute bottom-16 left-4 z-20 max-w-[85%] text-white text-left space-y-3 select-none">
                           <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#BDFB04]">
                             <span>@{orgName.toLowerCase().replace(/\s+/g, '')}</span>
                             {isOrgVerified && <VerifiedBadge className="h-4 w-4 fill-[#BDFB04] text-black" />}
@@ -756,7 +756,7 @@ export default function StudentEventsFeed() {
                         </div>
 
                         {/* Mobile Interactions Overlay (Hidden on desktop) */}
-                        <div className="md:hidden absolute right-4 bottom-24 z-20 flex flex-col gap-5.5 items-center">
+                        <div className="md:hidden absolute right-4 bottom-16 z-20 flex flex-col gap-5 items-center">
                           <div className="flex flex-col items-center gap-1.5">
                             <button
                               onClick={() => handleLikeToggle(item.id)}
@@ -881,32 +881,7 @@ export default function StudentEventsFeed() {
               );
             })()}
 
-            {/* Mobile Bottom Navigation Bar (Hidden on Desktop) */}
-            <div className="md:hidden fixed bottom-4 left-4 right-4 z-50 max-w-md mx-auto">
-              <nav className="flex items-center justify-around rounded-full bg-white/90 backdrop-blur-2xl border border-black/[0.04] px-2 py-2 shadow-[var(--shadow-premium-lg)]">
-                <Link href="/student/dashboard" className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl text-[#4B5563] hover:text-[#191919]">
-                  <Home className="h-5 w-5" />
-                  <span className="text-[9px] font-bold uppercase tracking-wider">Home</span>
-                </Link>
-                <Link href="/student/events" className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl text-[#3B5C00] font-extrabold">
-                  <Compass className="h-5 w-5 text-[#3B5C00]" />
-                  <span className="text-[9px] font-bold uppercase tracking-wider">Explore</span>
-                </Link>
-                <Link href="/student/create" className="-mt-4">
-                  <div className="h-11 w-11 rounded-full bg-[#BDFB04] flex items-center justify-center shadow-md shadow-[#BDFB04]/25 cursor-pointer hover:scale-105 transition-all">
-                    <Plus className="h-5 w-5 text-[#191919] stroke-[3]" />
-                  </div>
-                </Link>
-                <Link href="/student/saved" className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl text-[#4B5563] hover:text-[#191919]">
-                  <Bookmark className="h-5 w-5" />
-                  <span className="text-[9px] font-bold uppercase tracking-wider">Saved</span>
-                </Link>
-                <Link href="/student/profile" className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl text-[#4B5563] hover:text-[#191919]">
-                  <User className="h-5 w-5" />
-                  <span className="text-[9px] font-bold uppercase tracking-wider">Profile</span>
-                </Link>
-              </nav>
-            </div>
+            {/* Bottom nav is provided by the shared MobileBottomNav in the student layout */}
           </div>
         </div>
       ) : (
