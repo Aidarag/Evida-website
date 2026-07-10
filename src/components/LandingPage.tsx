@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   ArrowRight, 
   Calendar, 
@@ -8,10 +8,23 @@ import {
   Users, 
   Trophy,
   ChevronDown,
-  Sparkles
+  Sparkles,
+  Heart,
+  MessageCircle,
+  Bookmark,
+  Share2,
+  Search,
+  MapPin,
+  Clock,
+  Check,
+  Wifi,
+  Battery,
+  Signal,
+  ArrowLeft,
+  GraduationCap
 } from 'lucide-react';
 import { Event } from '@/lib/types';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import EvidaLogo from '@/components/ui/EvidaLogo';
 
 interface LandingPageProps {
@@ -29,6 +42,123 @@ export default function LandingPage({
 }: LandingPageProps) {
   // FAQ Accordion State
   const [faqOpenIndex, setFaqOpenIndex] = useState<number | null>(null);
+
+  // Smartphone Showcase States
+  const [phoneActive, setPhoneActive] = useState(false);
+  const [activeScreen, setActiveScreen] = useState(0);
+  const [feedRsvp, setFeedRsvp] = useState(false);
+  const [detailRsvp, setDetailRsvp] = useState(false);
+
+  // References for scroll animations
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Scale and Lift animations for the smartphone shell
+  const phoneScale = useTransform(scrollYProgress, [0, 0.4, 0.8], [0.9, 1.05, 1]);
+  const phoneY = useTransform(scrollYProgress, [0, 0.4, 0.8], [60, -10, 0]);
+
+  // Lock page scrolling when smartphone interactive mode is active
+  useEffect(() => {
+    if (phoneActive) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [phoneActive]);
+
+  // Handle scroll hijacking inside active smartphone demo
+  useEffect(() => {
+    if (!phoneActive) return;
+
+    let isTransitioning = false;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault(); // prevent landing page scrolling
+
+      if (isTransitioning) return;
+
+      if (e.deltaY > 30) {
+        // Scroll down inside demo
+        if (activeScreen < 2) {
+          isTransitioning = true;
+          setActiveScreen(prev => prev + 1);
+          setTimeout(() => { isTransitioning = false; }, 600);
+        } else {
+          // Reached end screen, release scroll control
+          setPhoneActive(false);
+        }
+      } else if (e.deltaY < -30) {
+        // Scroll up inside demo
+        if (activeScreen > 0) {
+          isTransitioning = true;
+          setActiveScreen(prev => prev - 1);
+          setTimeout(() => { isTransitioning = false; }, 600);
+        } else {
+          // Reached top screen, release scroll control
+          setPhoneActive(false);
+        }
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, [phoneActive, activeScreen]);
+
+  // Handle mobile swipe hijacking inside active smartphone demo
+  useEffect(() => {
+    if (!phoneActive) return;
+
+    let touchStartY = 0;
+    let isTransitioning = false;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault(); // prevent landing page swipe scrolling
+
+      if (isTransitioning) return;
+
+      const touchEndY = e.touches[0].clientY;
+      const diffY = touchStartY - touchEndY; // positive means swipe up (scroll down)
+
+      if (diffY > 55) {
+        // Scroll down
+        if (activeScreen < 2) {
+          isTransitioning = true;
+          setActiveScreen(prev => prev + 1);
+          setTimeout(() => { isTransitioning = false; }, 600);
+        } else {
+          setPhoneActive(false);
+        }
+      } else if (diffY < -55) {
+        // Scroll up
+        if (activeScreen > 0) {
+          isTransitioning = true;
+          setActiveScreen(prev => prev - 1);
+          setTimeout(() => { isTransitioning = false; }, 600);
+        } else {
+          setPhoneActive(false);
+        }
+      }
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [phoneActive, activeScreen]);
 
   const toggleFaq = (index: number) => {
     setFaqOpenIndex(faqOpenIndex === index ? null : index);
@@ -101,7 +231,7 @@ export default function LandingPage({
           transition={{ duration: 0.8 }}
           className="relative w-full rounded-[32px] md:rounded-[48px] overflow-hidden border border-black/5 shadow-2xl min-h-[520px] md:min-h-[600px] flex flex-col justify-between p-8 md:p-16 text-white"
         >
-          {/* Background image & gradient overlays */}
+          {/* Background image & overlays */}
           <div className="absolute inset-0 bg-[url('/pexels-amine-1285347-9371719.jpg')] bg-cover bg-center z-0" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-transparent z-10" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 z-10" />
@@ -155,6 +285,394 @@ export default function LandingPage({
             </div>
           </div>
         </motion.div>
+      </section>
+
+      {/* Interactive Evida Smartphone Experience */}
+      <section ref={sectionRef} className="py-24 bg-[#DFDED7]/25 border-y border-black/[0.06] overflow-hidden flex flex-col items-center">
+        <div className="max-w-3xl mx-auto px-6 text-center space-y-4 mb-12">
+          <span className="rounded-full bg-[#191919] text-[#BDFB04] px-3.5 py-1.5 text-[10px] font-black uppercase tracking-widest inline-block shadow-sm">
+            Interactive Preview
+          </span>
+          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter" style={{ fontFamily: 'var(--font-display)' }}>
+            Experience Evida
+          </h2>
+          <p className="text-xs text-[#4B5563] font-semibold max-w-md mx-auto leading-relaxed">
+            Click the phone below to unlock interactive scroll controls and browse a live demo of the app interface.
+          </p>
+        </div>
+
+        {/* Smartphone Container */}
+        <div className="relative w-full max-w-[900px] flex flex-col md:flex-row items-center justify-center gap-12 px-6">
+          
+          {/* Left Side: Demo Progress Indicators (Visible in interactive mode) */}
+          <div className="hidden md:flex flex-col gap-4 text-left min-w-[160px]">
+            <div className="space-y-1.5">
+              <span className="block text-[8px] font-black uppercase tracking-wider text-[#4B5563]">Preview Progress</span>
+              <div className="h-1 bg-black/10 rounded-full w-28 overflow-hidden">
+                <motion.div 
+                  className="h-full bg-[#191919]"
+                  animate={{ width: `${(activeScreen + 1) * 33.3}%` }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-4 pt-2">
+              <div className="flex items-center gap-3 transition-all duration-300">
+                <div className={`h-6 w-6 rounded-full border flex items-center justify-center text-[10px] font-black transition-all ${
+                  activeScreen === 0 
+                    ? 'bg-[#191919] border-[#191919] text-[#BDFB04] scale-110 shadow-md' 
+                    : 'bg-white border-black/10 text-gray-400'
+                }`}>1</div>
+                <span className={`text-[10px] font-black uppercase tracking-wider ${activeScreen === 0 ? 'text-[#191919]' : 'text-gray-400'}`}>Home Feed</span>
+              </div>
+
+              <div className="flex items-center gap-3 transition-all duration-300">
+                <div className={`h-6 w-6 rounded-full border flex items-center justify-center text-[10px] font-black transition-all ${
+                  activeScreen === 1 
+                    ? 'bg-[#191919] border-[#191919] text-[#BDFB04] scale-110 shadow-md' 
+                    : 'bg-white border-black/10 text-gray-400'
+                }`}>2</div>
+                <span className={`text-[10px] font-black uppercase tracking-wider ${activeScreen === 1 ? 'text-[#191919]' : 'text-gray-400'}`}>Explore Events</span>
+              </div>
+
+              <div className="flex items-center gap-3 transition-all duration-300">
+                <div className={`h-6 w-6 rounded-full border flex items-center justify-center text-[10px] font-black transition-all ${
+                  activeScreen === 2 
+                    ? 'bg-[#191919] border-[#191919] text-[#BDFB04] scale-110 shadow-md' 
+                    : 'bg-white border-black/10 text-gray-400'
+                }`}>3</div>
+                <span className={`text-[10px] font-black uppercase tracking-wider ${activeScreen === 2 ? 'text-[#191919]' : 'text-gray-400'}`}>Event Details</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Center: Smartphone Shell */}
+          <motion.div
+            style={{ scale: phoneScale, y: phoneY }}
+            onClick={handlePhoneClick}
+            className={`relative max-w-[310px] w-full aspect-[9/19.5] rounded-[44px] border-[10px] border-neutral-950 shadow-2xl bg-neutral-900 z-20 cursor-pointer overflow-hidden ${
+              phoneActive ? 'ring-4 ring-[#BDFB04]/30' : 'hover:scale-[1.02] transition-transform duration-300'
+            }`}
+          >
+            {/* Gloss reflection overlay */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 z-40 pointer-events-none" />
+
+            {/* Dynamic Island / Notch */}
+            <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-full z-50 flex items-center justify-center shadow-inner">
+              <div className="h-1.5 w-1.5 bg-neutral-900 rounded-full ml-auto mr-3 border border-neutral-800" />
+            </div>
+
+            {/* Internal Phone Status Bar */}
+            <div className="absolute top-1.5 inset-x-6 z-50 flex items-center justify-between text-[8px] text-white font-bold select-none px-2 pointer-events-none">
+              <span>9:41</span>
+              <div className="flex items-center gap-1">
+                <Signal className="h-2 w-2" />
+                <Wifi className="h-2 w-2" />
+                <Battery className="h-2 w-3" />
+              </div>
+            </div>
+
+            {/* Internal Phone Home Indicator */}
+            <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-24 h-1 bg-white/40 rounded-full z-50 pointer-events-none" />
+
+            {/* Locked screen guide overlay */}
+            {!phoneActive && (
+              <div className="absolute inset-0 bg-black/40 backdrop-blur-xs z-30 flex flex-col items-center justify-center text-center p-6 text-white space-y-4">
+                <div className="h-12 w-12 rounded-full bg-[#BDFB04] text-[#191919] flex items-center justify-center shadow-lg animate-bounce">
+                  <Sparkles className="h-5 w-5" />
+                </div>
+                <div className="space-y-1">
+                  <span className="block text-[10px] font-black uppercase tracking-widest text-[#BDFB04]">Interactive Demo</span>
+                  <span className="block text-[11px] font-bold text-gray-200">Tap to unlock screen</span>
+                </div>
+              </div>
+            )}
+
+            {/* Vertical screens wrapper */}
+            <div 
+              className="w-full h-full flex flex-col transition-transform duration-500 ease-out z-10"
+              style={{ transform: `translateY(-${activeScreen * 100}%)` }}
+            >
+              
+              {/* Screen 1: Home Feed */}
+              <div className="w-full h-full shrink-0 relative bg-black pt-8 pb-4 flex flex-col justify-between overflow-hidden text-left">
+                {/* App Bar */}
+                <div className="px-4 py-2 border-b border-white/5 flex items-center justify-between text-white">
+                  <span className="text-[10px] font-black tracking-widest text-[#BDFB04]">EVIDA</span>
+                  <div className="flex gap-2">
+                    <span className="text-[8px] font-black uppercase text-[#BDFB04] border-b border-[#BDFB04] pb-0.5">For You</span>
+                    <span className="text-[8px] font-bold uppercase text-gray-400">Campus</span>
+                  </div>
+                </div>
+
+                {/* Feed Card */}
+                <div className="flex-1 relative m-2 rounded-2xl overflow-hidden border border-white/10 flex flex-col justify-end p-4">
+                  <div className="absolute inset-0 bg-[url('/pexels-amine-1285347-9371719.jpg')] bg-cover bg-center" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+
+                  {/* Sidebar stats overlay */}
+                  <div className="absolute right-3 bottom-16 flex flex-col gap-3.5 z-20 text-white items-center">
+                    <div className="flex flex-col items-center">
+                      <button className="h-8 w-8 rounded-full bg-black/40 border border-white/10 flex items-center justify-center text-rose-500 shadow-md">
+                        <Heart className="h-4 w-4 fill-rose-500" />
+                      </button>
+                      <span className="text-[7px] font-bold mt-0.5">1.2K</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <button className="h-8 w-8 rounded-full bg-black/40 border border-white/10 flex items-center justify-center text-white shadow-md">
+                        <MessageCircle className="h-4 w-4" />
+                      </button>
+                      <span className="text-[7px] font-bold mt-0.5">48</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <button className="h-8 w-8 rounded-full bg-black/40 border border-white/10 flex items-center justify-center text-white shadow-md">
+                        <Bookmark className="h-4 w-4" />
+                      </button>
+                      <span className="text-[7px] font-bold mt-0.5">180</span>
+                    </div>
+                  </div>
+
+                  {/* Details */}
+                  <div className="relative z-10 text-white space-y-2 max-w-[80%]">
+                    <span className="rounded bg-[#BDFB04] text-[#191919] font-black px-1.5 py-0.5 text-[7px] tracking-wider uppercase">
+                      Campus Board
+                    </span>
+                    <h3 className="text-[12px] font-black uppercase tracking-tight leading-none text-white">
+                      Welcome Back Neon Rave
+                    </h3>
+                    <p className="text-[8px] text-gray-300 leading-tight line-clamp-2">
+                      Light up the night! Join us for a high-energy neon rave with laser shows, electronic music, and food trucks.
+                    </p>
+                  </div>
+                </div>
+
+                {/* RSVP Bottom Bar */}
+                <div className="px-4 pt-1 pb-2 flex gap-2">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFeedRsvp(!feedRsvp);
+                    }}
+                    className={`flex-1 py-2 rounded-xl text-[8px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1 cursor-pointer ${
+                      feedRsvp 
+                        ? 'bg-[#BDFB04]/20 border border-[#BDFB04]/30 text-[#BDFB04]' 
+                        : 'bg-[#BDFB04] text-[#191919] hover:bg-[#d1fa3c]'
+                    }`}
+                  >
+                    {feedRsvp ? (
+                      <>
+                        <Check className="h-3 w-3" />
+                        <span>Going!</span>
+                      </>
+                    ) : (
+                      <span>I'm In</span>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Screen 2: Explore Events */}
+              <div className="w-full h-full shrink-0 relative bg-[#121212] pt-8 pb-4 flex flex-col justify-start overflow-hidden px-3 text-left">
+                {/* Search Bar */}
+                <div className="relative mt-2">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-500" />
+                  <input
+                    type="text"
+                    disabled
+                    placeholder="Search events, groups..."
+                    className="w-full bg-neutral-900 border border-white/5 rounded-xl py-2 pl-9 pr-3 text-[9px] text-white focus:outline-none"
+                  />
+                </div>
+
+                {/* Category Chips */}
+                <div className="flex gap-1.5 overflow-x-auto py-3 scrollbar-none">
+                  <span className="shrink-0 px-2.5 py-1 bg-[#BDFB04] text-[#191919] text-[7px] font-black rounded-full uppercase tracking-wider">All</span>
+                  <span className="shrink-0 px-2.5 py-1 bg-white/5 border border-white/10 text-gray-400 text-[7px] font-bold rounded-full uppercase tracking-wider">Parties</span>
+                  <span className="shrink-0 px-2.5 py-1 bg-white/5 border border-white/10 text-gray-400 text-[7px] font-bold rounded-full uppercase tracking-wider">Sports</span>
+                  <span className="shrink-0 px-2.5 py-1 bg-white/5 border border-white/10 text-gray-400 text-[7px] font-bold rounded-full uppercase tracking-wider">Academic</span>
+                </div>
+
+                {/* Grid items */}
+                <span className="block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-2">Popular Events</span>
+                <div className="grid grid-cols-2 gap-2 flex-1 overflow-y-auto scrollbar-none pb-4">
+                  
+                  {/* Grid Item 1 - Link to detail screen */}
+                  <div 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveScreen(2);
+                    }}
+                    className="bg-neutral-900 border border-white/5 rounded-xl overflow-hidden p-1.5 space-y-1.5 cursor-pointer hover:border-[#BDFB04]/30 transition-all"
+                  >
+                    <div className="aspect-[4/3] bg-[url('/pexels-amine-1285347-9371719.jpg')] bg-cover bg-center rounded-lg" />
+                    <div>
+                      <h4 className="text-[8px] font-black text-white uppercase tracking-tight truncate">Neon Rave 2026</h4>
+                      <p className="text-[6px] text-gray-400 truncate">Campus Board</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-neutral-900 border border-white/5 rounded-xl overflow-hidden p-1.5 space-y-1.5">
+                    <div className="aspect-[4/3] bg-[url('/pexels-yaroslav-shuraev-8513385.jpg')] bg-cover bg-center rounded-lg" />
+                    <div>
+                      <h4 className="text-[8px] font-black text-white uppercase tracking-tight truncate">Autumn Concert</h4>
+                      <p className="text-[6px] text-gray-400 truncate">Student Union</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-neutral-900 border border-white/5 rounded-xl overflow-hidden p-1.5 space-y-1.5">
+                    <div className="aspect-[4/3] bg-[url('/pexels-cottonbro-5989925.jpg')] bg-cover bg-center rounded-lg" />
+                    <div>
+                      <h4 className="text-[8px] font-black text-white uppercase tracking-tight truncate">Greek Tailgate</h4>
+                      <p className="text-[6px] text-gray-400 truncate">Greek Council</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-neutral-900 border border-white/5 rounded-xl overflow-hidden p-1.5 space-y-1.5">
+                    <div className="aspect-[4/3] bg-[url('/pexels-rdne-7648057.jpg')] bg-cover bg-center rounded-lg" />
+                    <div>
+                      <h4 className="text-[8px] font-black text-white uppercase tracking-tight truncate">Art Showcase</h4>
+                      <p className="text-[6px] text-gray-400 truncate">Fine Arts Club</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Screen 3: Event Details */}
+              <div className="w-full h-full shrink-0 relative bg-[#121212] pt-8 pb-4 flex flex-col justify-between overflow-hidden text-left text-white">
+                
+                {/* Header Back Button */}
+                <div className="absolute top-8 left-3 z-30">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveScreen(1);
+                    }}
+                    className="h-6 w-6 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white"
+                  >
+                    <ArrowLeft className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+
+                {/* Scrollable details wrapper */}
+                <div className="flex-1 overflow-y-auto scrollbar-none">
+                  <div className="h-44 w-full bg-[url('/pexels-amine-1285347-9371719.jpg')] bg-cover bg-center relative">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-black/40" />
+                  </div>
+
+                  <div className="p-4 space-y-4">
+                    <div className="space-y-1.5">
+                      <span className="rounded bg-[#BDFB04] text-[#191919] font-black px-1.5 py-0.5 text-[6px] tracking-wider uppercase w-fit block">
+                        Verified Org
+                      </span>
+                      <h3 className="text-[14px] font-black uppercase tracking-tight leading-tight">
+                        Welcome Back Neon Rave
+                      </h3>
+                      <p className="text-[7px] text-gray-400">HOSTED BY CAMPUS ACTIVITIES BOARD</p>
+                    </div>
+
+                    <div className="space-y-2 border-y border-white/5 py-3">
+                      <div className="flex items-center gap-2 text-gray-300">
+                        <Clock className="h-3 w-3 text-[#BDFB04]" />
+                        <span className="text-[7px] font-semibold">FRIDAY, OCT 5 • 9:00 PM - 1:00 AM</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-gray-300">
+                        <MapPin className="h-3 w-3 text-[#BDFB04]" />
+                        <span className="text-[7px] font-semibold">STUDENT PLAZA (OUTDOOR)</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-gray-300">
+                        <Trophy className="h-3 w-3 text-[#BDFB04]" />
+                        <span className="text-[7px] font-semibold">FREE ENTRY (RSVP REQUIRED)</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="block text-[8px] font-black text-gray-400 uppercase tracking-widest">Description</span>
+                      <p className="text-[8px] text-gray-300 leading-relaxed font-light">
+                        Join us for the legendary Welcome Back Rave. High-powered lasers, glow-in-the-dark paint, and campus DJs. Free food vouchers for the first 300 students. Register now to claim your entry ticket.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* RSVP Bottom Bar */}
+                <div className="px-4 pt-1 pb-2 border-t border-white/5 bg-[#121212] z-20">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDetailRsvp(!detailRsvp);
+                    }}
+                    className={`w-full py-2.5 rounded-xl text-[8px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1 cursor-pointer ${
+                      detailRsvp 
+                        ? 'bg-emerald-500/20 border border-emerald-500/30 text-emerald-400' 
+                        : 'bg-[#BDFB04] text-[#191919] hover:bg-[#d1fa3c]'
+                    }`}
+                  >
+                    {detailRsvp ? (
+                      <>
+                        <Check className="h-3 w-3" />
+                        <span>Ticket Claimed!</span>
+                      </>
+                    ) : (
+                      <span>Claim Free Ticket</span>
+                    )}
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+          </motion.div>
+
+          {/* Right Side: Tooltip & Swiping instructions */}
+          <div className="relative flex flex-col gap-3 text-center md:text-left max-w-[200px]">
+            <AnimatePresence mode="wait">
+              {!phoneActive ? (
+                <motion.div
+                  key="inactive-tooltip"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-black text-[#BDFB04] border border-white/10 px-4 py-3 rounded-2xl shadow-xl flex items-center justify-center gap-2 pointer-events-none"
+                >
+                  <span className="text-[10px] font-black uppercase tracking-wider animate-pulse">
+                    👆 Click the phone to explore Evida
+                  </span>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="active-tooltip"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-[#191919] text-white border border-white/10 px-4 py-3 rounded-2xl shadow-xl space-y-2 pointer-events-none"
+                >
+                  <span className="block text-[8px] font-black uppercase tracking-widest text-[#BDFB04] animate-pulse">
+                    Interactive Mode
+                  </span>
+                  <p className="text-[9px] text-gray-300 leading-snug">
+                    Use your mouse scroll wheel or swipe up/down on your phone to navigate pages.
+                  </p>
+                  <span className="block text-[8px] text-gray-500 font-bold uppercase pt-1">
+                    {activeScreen === 2 ? 'Scroll down to exit →' : 'Scroll down to continue'}
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Quick exit fallback button */}
+            {phoneActive && (
+              <button 
+                onClick={() => setPhoneActive(false)}
+                className="mt-3 w-full px-4 py-2.5 bg-white/5 hover:bg-white/10 text-[9px] font-black uppercase tracking-wider rounded-xl border border-white/10 text-white transition-all backdrop-blur-md cursor-pointer text-center"
+              >
+                Exit Preview
+              </button>
+            )}
+          </div>
+
+        </div>
       </section>
 
       {/* About Section */}
