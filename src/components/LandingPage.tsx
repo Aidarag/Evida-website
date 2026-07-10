@@ -204,6 +204,9 @@ export default function LandingPage({
 
           {/* Centered navigation links */}
           <nav className="hidden md:flex items-center gap-8">
+            <a href="#why-evida" className="text-[10px] font-black text-[#4B5563] hover:text-[#191919] uppercase tracking-widest transition-all">
+              Why Evida
+            </a>
             <a href="#about" className="text-[10px] font-black text-[#4B5563] hover:text-[#191919] uppercase tracking-widest transition-all">
               About
             </a>
@@ -683,8 +686,19 @@ export default function LandingPage({
       </section>
 
       {/* Problem Statistics Section */}
-      <section className="bg-white border-b border-black/[0.06] py-20 md:py-28 w-full relative z-10">
-        <div className="mx-auto max-w-7xl px-6">
+      <section id="why-evida" className="bg-white border-b border-black/[0.06] py-20 md:py-28 w-full relative z-10">
+        <div className="mx-auto max-w-7xl px-6 space-y-16">
+          
+          <div className="text-center space-y-3 max-w-xl mx-auto">
+            <span className="text-[10px] font-black tracking-widest text-[#4B5563] uppercase">Why Evida</span>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-[#191919] leading-[0.95]" style={{ fontFamily: 'var(--font-display)' }}>
+              ONE CAMPUS. ONE PLATFORM. EVERY OPPORTUNITY.
+            </h2>
+            <p className="text-xs text-[#4B5563] font-medium leading-relaxed max-w-lg mx-auto">
+              Campus life is scattered across emails, group chats, flyers, and social media. Evida brings events, organizations, promotions, and your campus calendar together in one place.
+            </p>
+          </div>
+
           <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 text-left">
             
             {/* Card 1 */}
