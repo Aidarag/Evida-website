@@ -209,6 +209,9 @@ export default function LandingPage({
             <a href="#how-it-works" className="text-[10px] font-black text-[#4B5563] hover:text-[#191919] uppercase tracking-widest transition-all">
               How It Works
             </a>
+            <a href="#features" className="text-[10px] font-black text-[#4B5563] hover:text-[#191919] uppercase tracking-widest transition-all">
+              Features
+            </a>
             <a href="#faq" className="text-[10px] font-black text-[#4B5563] hover:text-[#191919] uppercase tracking-widest transition-all">
               FAQ
             </a>
@@ -895,6 +898,138 @@ export default function LandingPage({
         </div>
       </section>
 
+      {/* Core Features Section */}
+      <section id="features" className="bg-[#DFDED7]/35 border-t border-black/[0.06] py-20">
+        <div className="mx-auto max-w-7xl px-6 space-y-12">
+          
+          <div className="text-center space-y-3 max-w-lg mx-auto">
+            <span className="text-[10px] font-black tracking-widest text-[#4B5563] uppercase">Core Features</span>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-[#191919]" style={{ fontFamily: 'var(--font-display)' }}>
+              Everything you need for Campus life
+            </h2>
+            <p className="text-xs text-[#4B5563]">A modular, streetwear-inspired hub connecting your entire university community.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 border border-black/[0.06] rounded-[32px] overflow-hidden bg-white shadow-sm">
+            
+            {/* Card 1 */}
+            <div className="p-8 space-y-4 text-left border-b md:border-r border-black/[0.06]">
+              <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 01</span>
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
+                (^_~)
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
+                  Personalized Discovery
+                </h3>
+                <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  Find what matters to you.
+                </h4>
+              </div>
+              <p className="text-xs text-[#4B5563] leading-relaxed font-medium">
+                Your feed adapts to your interests, organizations, and campus activity so you never miss opportunities that fit you.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="p-8 space-y-4 text-left border-b md:border-r border-black/[0.06]">
+              <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 02</span>
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
+                [o_o]
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
+                  Campus Events
+                </h3>
+                <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  Discover everything happening on campus.
+                </h4>
+              </div>
+              <p className="text-xs text-[#4B5563] leading-relaxed font-medium">
+                Browse school events, organization activities, workshops, sports, cultural events, and more in one place.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="p-8 space-y-4 text-left border-b border-black/[0.06]">
+              <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 03</span>
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
+                (^o^)
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
+                  Student Organizations
+                </h3>
+                <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  Join communities that match your interests.
+                </h4>
+              </div>
+              <p className="text-xs text-[#4B5563] leading-relaxed font-medium">
+                Explore organizations, view their events, discover members, and become part of campus life.
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div className="p-8 space-y-4 text-left border-b md:border-b-0 md:border-r border-black/[0.06]">
+              <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 04</span>
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
+                (:-D)
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
+                  Campus Calendar
+                </h3>
+                <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  Keep your semester organized.
+                </h4>
+              </div>
+              <p className="text-xs text-[#4B5563] leading-relaxed font-medium">
+                See upcoming events in one unified calendar and easily keep track of your schedule.
+              </p>
+            </div>
+
+            {/* Card 5 */}
+            <div className="p-8 space-y-4 text-left border-b md:border-b-0 md:border-r border-black/[0.06]">
+              <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 05</span>
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
+                (::)
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
+                  Event Creation
+                </h3>
+                <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  Create events in minutes.
+                </h4>
+              </div>
+              <p className="text-xs text-[#4B5563] leading-relaxed font-medium">
+                Whether you’re a student, organization, or school administrator, you can create and share events with the entire campus.
+              </p>
+            </div>
+
+            {/* Card 6 */}
+            <div className="p-8 space-y-4 text-left">
+              <span className="text-[8px] font-black uppercase tracking-widest text-gray-400 block">Feature 06</span>
+              <div className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-[#191919] border border-black/5 shadow-inner select-none font-mono text-xs font-bold">
+                (*_*)
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-extrabold text-[#191919] leading-snug">
+                  Promotions
+                </h3>
+                <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  Promote what you do.
+                </h4>
+              </div>
+              <p className="text-xs text-[#4B5563] leading-relaxed font-medium">
+                Share tutoring services, photography, food sales, small businesses, student services, campus initiatives, and other opportunities with the campus community.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section id="faq" className="bg-[#DFDED7]/35 border-t border-black/[0.06] py-20">
         <div className="mx-auto max-w-4xl px-6 space-y-12">
@@ -1042,7 +1177,7 @@ export default function LandingPage({
                   <a href="#about" className="hover:text-[#191919] transition-colors">About</a>
                 </li>
                 <li>
-                  <button onClick={onLogin} className="hover:text-[#191919] transition-colors cursor-pointer text-left">Vision</button>
+                  <a href="#features" className="hover:text-[#191919] transition-colors">Features</a>
                 </li>
                 <li>
                   <a href="#faq" className="hover:text-[#191919] transition-colors">FAQ</a>
