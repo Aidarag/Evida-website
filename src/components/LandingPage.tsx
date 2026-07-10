@@ -682,6 +682,67 @@ export default function LandingPage({
         </div>
       </section>
 
+      {/* Problem Statistics Section */}
+      <section className="bg-white border-b border-black/[0.06] py-20 md:py-28 w-full relative z-10">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 text-left">
+            
+            {/* Card 1 */}
+            <div className="space-y-3">
+              <span className="text-4xl md:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+                89%
+              </span>
+              <h3 className="text-[10px] font-black uppercase tracking-widest text-[#191919]">
+                Miss important opportunities
+              </h3>
+              <p className="text-xs text-[#4B5563] leading-relaxed font-medium">
+                Students have missed important campus events, deadlines, and opportunities because information is scattered across multiple communication channels.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="space-y-3">
+              <span className="text-4xl md:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+                36%
+              </span>
+              <h3 className="text-[10px] font-black uppercase tracking-widest text-[#191919]">
+                Never participate
+              </h3>
+              <p className="text-xs text-[#4B5563] leading-relaxed font-medium">
+                More than one-third of students don’t participate in a single extracurricular or co-curricular activity during the academic year.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="space-y-3">
+              <span className="text-4xl md:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+                31%
+              </span>
+              <h3 className="text-[10px] font-black uppercase tracking-widest text-[#191919]">
+                Don’t know what’s happening
+              </h3>
+              <p className="text-xs text-[#4B5563] leading-relaxed font-medium">
+                Many students say they miss campus activities simply because they never hear about them or discover them too late.
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div className="space-y-3">
+              <span className="text-4xl md:text-5xl font-black text-[#191919] tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+                26%
+              </span>
+              <h3 className="text-[10px] font-black uppercase tracking-widest text-[#191919]">
+                Check campus email daily
+              </h3>
+              <p className="text-xs text-[#4B5563] leading-relaxed font-medium">
+                Only about one in four students regularly check their university email, making email alone an unreliable way to keep students informed.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* About Section */}
       <section id="about" className="bg-[#DFDED7]/35 border-y border-black/[0.06] py-20">
         <div className="mx-auto max-w-7xl px-6 space-y-12">
