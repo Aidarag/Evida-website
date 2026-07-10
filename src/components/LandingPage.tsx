@@ -980,9 +980,107 @@ export default function LandingPage({
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-black/[0.06] py-10 bg-[#191919] text-center space-y-3">
-        <p className="text-xs font-bold text-white uppercase tracking-wider">EVIDA CAMPUS PLATFORM</p>
-        <p className="text-[10px] text-[#4B5563]">© 2026 Evida Inc. Premium Campus Experience.</p>
+      <footer className="bg-[#DFDED7]/15 border-t border-black/[0.06] py-16 md:py-24 text-[#191919] relative z-10">
+        <div className="mx-auto max-w-7xl px-6 space-y-16">
+          
+          {/* Top row: Column Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 text-left">
+            
+            {/* Left Description Column */}
+            <div className="md:col-span-5 space-y-4">
+              <EvidaLogo size={36} lightMode={true} text="EVIDA" />
+              <p className="text-xs text-[#4B5563] leading-relaxed max-w-xs font-medium">
+                Bringing students, organizations, and schools together through one connected campus experience.
+              </p>
+              
+              {/* Connect icons */}
+              <div className="flex items-center gap-3.5 pt-2">
+                <a href="mailto:info@myevida.app" className="text-gray-400 hover:text-[#191919] transition-colors" title="Email Us">
+                  <Mail className="h-4.5 w-4.5" />
+                </a>
+                <a href="https://instagram.com/myevida" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#191919] transition-colors" title="Instagram">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Product Column */}
+            <div className="md:col-span-2 space-y-4">
+              <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 block">Product</span>
+              <ul className="flex flex-col gap-2.5 text-xs text-[#4B5563] font-semibold">
+                <li>
+                  <button onClick={onLogin} className="hover:text-[#191919] transition-colors cursor-pointer text-left">Explore</button>
+                </li>
+                <li>
+                  <button onClick={onLogin} className="hover:text-[#191919] transition-colors cursor-pointer text-left">Events</button>
+                </li>
+                <li>
+                  <button onClick={onLogin} className="hover:text-[#191919] transition-colors cursor-pointer text-left">Organizations</button>
+                </li>
+                <li>
+                  <button onClick={onLogin} className="hover:text-[#191919] transition-colors cursor-pointer text-left">Calendar</button>
+                </li>
+                <li>
+                  <button onClick={onLogin} className="hover:text-[#191919] transition-colors cursor-pointer text-left">Create</button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Company Column */}
+            <div className="md:col-span-2 space-y-4">
+              <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 block">Company</span>
+              <ul className="flex flex-col gap-2.5 text-xs text-[#4B5563] font-semibold">
+                <li>
+                  <a href="#about" className="hover:text-[#191919] transition-colors">About</a>
+                </li>
+                <li>
+                  <button onClick={onLogin} className="hover:text-[#191919] transition-colors cursor-pointer text-left">Vision</button>
+                </li>
+                <li>
+                  <a href="#faq" className="hover:text-[#191919] transition-colors">FAQ</a>
+                </li>
+                <li>
+                  <a href="mailto:info@myevida.app" className="hover:text-[#191919] transition-colors">Contact</a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Legal Column */}
+            <div className="md:col-span-3 space-y-4">
+              <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 block">Legal</span>
+              <ul className="flex flex-col gap-2.5 text-xs text-[#4B5563] font-semibold">
+                <li>
+                  <a href="#" className="hover:text-[#191919] transition-colors">Privacy Policy</a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-[#191919] transition-colors">Terms of Service</a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="border-t border-black/[0.06] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400 font-medium text-center md:text-left">
+            <span>© 2026 Evida. Built for campus life.</span>
+            <span>
+              Questions? Contact us at{' '}
+              <a href="mailto:info@myevida.app" className="text-[#4B5563] hover:text-[#191919] font-bold transition-colors">
+                info@myevida.app
+              </a>{' '}
+              or follow us on{' '}
+              <a href="https://instagram.com/myevida" target="_blank" rel="noopener noreferrer" className="text-[#4B5563] hover:text-[#191919] font-bold transition-colors">
+                Instagram
+              </a>
+              .
+            </span>
+          </div>
+
+        </div>
       </footer>
     </div>
   );
