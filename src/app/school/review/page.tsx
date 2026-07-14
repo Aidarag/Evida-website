@@ -26,9 +26,9 @@ export default function ReviewQueuePage() {
   };
 
   const getComplexityColor = (type: string) => {
-    if (type === 'quick') return 'bg-[#eb5e28]/10 text-[#191919] border-[#eb5e28]/20';
-    if (type === 'standard') return 'bg-[#BDFB04]/15 text-[#191919] border-[#BDFB04]/25';
-    return 'bg-[#EE3D5A]/10 text-[#191919] border-[#EE3D5A]/20';
+    if (type === 'quick') return 'bg-[#eb5e28]/10 text-[#2A2621] border-[#eb5e28]/20';
+    if (type === 'standard') return 'bg-[#FD5C05]/15 text-[#2A2621] border-[#FD5C05]/25';
+    return 'bg-[#EE3D5A]/10 text-[#2A2621] border-[#EE3D5A]/20';
   };
 
   return (
@@ -36,8 +36,8 @@ export default function ReviewQueuePage() {
       {/* Header */}
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight">Review Queue</h1>
-          <p className="text-sm text-[#374151] mt-1">Review and approve pending student activities.</p>
+          <h1 className="text-3xl font-extrabold text-[#2A2621] tracking-tight">Review Queue</h1>
+          <p className="text-sm text-[#5A554E] mt-1">Review and approve pending student activities.</p>
         </div>
 
         {/* Tabs */}
@@ -65,32 +65,32 @@ export default function ReviewQueuePage() {
                 <div className="flex-1 space-y-4">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-lg font-bold text-[#191919]">{event.title}</h3>
-                      <p className="text-sm text-[#374151] mt-1 line-clamp-2">{event.description}</p>
+                      <h3 className="text-lg font-bold text-[#2A2621]">{event.title}</h3>
+                      <p className="text-sm text-[#5A554E] mt-1 line-clamp-2">{event.description}</p>
                     </div>
                     <span className={`px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider ${getComplexityColor(event.complexityType)}`}>
                       {event.complexityType}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 text-xs font-medium text-[#374151]">
+                  <div className="grid grid-cols-2 gap-4 text-xs font-medium text-[#5A554E]">
                     <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-[#191919]/70" />
+                      <Calendar className="h-4 w-4 text-[#2A2621]/70" />
                       {new Date(event.date).toLocaleDateString()} at {event.time}
                     </div>
                     <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-[#191919]/70" />
+                      <MapPin className="h-4 w-4 text-[#2A2621]/70" />
                       {event.location}
                     </div>
-                    <div className="flex items-center gap-2 col-span-2 border-t border-black/[0.06] pt-3 mt-1">
-                      <Users className="h-4 w-4 text-[#191919]" />
-                      Hosted by: <span className="text-[#191919]">{event.organizationName || event.organizer}</span>
+                    <div className="flex items-center gap-2 col-span-2 border-t border-[#D8D2BC]/30 pt-3 mt-1">
+                      <Users className="h-4 w-4 text-[#2A2621]" />
+                      Hosted by: <span className="text-[#2A2621]">{event.organizationName || event.organizer}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Actions */}
-                <div className="flex md:flex-col justify-end gap-3 md:w-32 md:border-l md:border-black/[0.06] md:pl-6">
+                <div className="flex md:flex-col justify-end gap-3 md:w-32 md:border-l md:border-[#D8D2BC]/30 md:pl-6">
                   <Button 
                     variant="neon" 
                     size="sm" 
@@ -104,7 +104,7 @@ export default function ReviewQueuePage() {
                     variant="ghost" 
                     size="sm" 
                     fullWidth 
-                    className="hover:bg-[#EE3D5A]/10 hover:text-[#191919] hover:border-[#EE3D5A]/30"
+                    className="hover:bg-[#EE3D5A]/10 hover:text-[#2A2621] hover:border-[#EE3D5A]/30"
                     icon={<X className="h-4 w-4" />}
                     onClick={() => handleReview(event.id, 'rejected')}
                   >
@@ -115,7 +115,7 @@ export default function ReviewQueuePage() {
             </motion.div>
           )) : (
             <EmptyState
-              icon={<ClipboardList className="h-8 w-8 text-[#374151]" />}
+              icon={<ClipboardList className="h-8 w-8 text-[#5A554E]" />}
               title="Queue is empty"
               description="There are no pending events requiring review at this time."
             />

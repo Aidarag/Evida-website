@@ -54,7 +54,7 @@ export default function Modal({ isOpen, onClose, children, title, size = 'md' }:
             transition={{ type: 'spring', stiffness: 450, damping: 35 }}
             className={`
               relative w-full ${sizeClasses[size]}
-              bg-[#DFDED7] border border-black/5
+              bg-[#D8D2BC] border border-[#D8D2BC]/40
               rounded-[24px] max-sm:rounded-t-[28px] max-sm:rounded-b-none
               shadow-[var(--shadow-premium-xl)]
               overflow-y-auto max-h-[85vh] max-sm:max-h-[92vh]
@@ -63,12 +63,12 @@ export default function Modal({ isOpen, onClose, children, title, size = 'md' }:
             {/* Header */}
             {title && (
               <div className="flex items-center justify-between px-6 py-5 border-b border-black/[0.04]">
-                <h2 className="text-lg font-bold text-[#191919] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>{title}</h2>
+                <h2 className="text-lg font-bold text-[#2A2621] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>{title}</h2>
                 <button
                   onClick={onClose}
-                  className="h-10 w-10 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center transition-colors cursor-pointer"
+                  className="h-10 w-10 rounded-full bg-[#D8D2BC]/30 hover:bg-black/10 flex items-center justify-center transition-colors cursor-pointer"
                 >
-                  <X className="h-4 w-4 text-[#374151]" />
+                  <X className="h-4 w-4 text-[#5A554E]" />
                 </button>
               </div>
             )}

@@ -40,21 +40,21 @@ export default function AppShowcase() {
           name: 'Student-Owned Event',
           desc: 'Created by an individual student.',
           examples: ['Study group', 'Networking meetup', 'Cultural gathering'],
-          color: '#BDFB04',
+          color: '#FD5C05',
           icon: GraduationCap
         },
         {
           name: 'Organization-Owned Event',
           desc: 'Created by verified members of clubs.',
           examples: ['Tennis Team Event', 'STEM Club Workshop', 'Student Gov Meeting'],
-          color: '#191919',
+          color: '#2A2621',
           icon: Users
         },
         {
           name: 'School-Owned Event',
           desc: 'Created by official school accounts.',
           examples: ['Orientation', 'Homecoming', 'Career Fair'],
-          color: '#BDFB04',
+          color: '#FD5C05',
           icon: Shield
         }
       ]
@@ -69,14 +69,14 @@ export default function AppShowcase() {
           name: 'Event',
           desc: 'An activity with Date, Time, Location, and Attendees.',
           examples: ['Club meeting', 'Workshop', 'Cultural event'],
-          color: '#BDFB04',
+          color: '#FD5C05',
           icon: Calendar
         },
         {
           name: 'Promotion',
           desc: 'Something a student wants to advertise (moderated separately).',
           examples: ['Tutoring services', 'Photography business', 'Food sales', 'Student initiatives'],
-          color: '#191919',
+          color: '#2A2621',
           icon: Megaphone
         }
       ]
@@ -91,14 +91,14 @@ export default function AppShowcase() {
           name: 'Auto-Categorization',
           desc: 'The platform automatically analyzes request parameters and routes them to the correct admin review queues.',
           examples: ['Fast Track (Instant)', 'Standard Review', 'Complex Case Audit'],
-          color: '#BDFB04',
+          color: '#FD5C05',
           icon: Brain
         },
         {
           name: 'Dynamic Checkpoints',
           desc: 'Flags potential conflicts, location double-bookings, and policy violations before submitting.',
           examples: ['Automated scheduling guard', 'Safety & policy advisor'],
-          color: '#191919',
+          color: '#2A2621',
           icon: Layers
         }
       ]
@@ -156,14 +156,14 @@ export default function AppShowcase() {
   const activeEvent = simulatorEvents[ownershipCat];
 
   return (
-    <section className="w-full py-24 bg-[#DFDED7] border-t border-black/[0.04] font-sans overflow-hidden" id="app-showcase">
+    <section className="w-full py-24 bg-[#D8D2BC] border-t border-black/[0.04] font-sans overflow-hidden" id="app-showcase">
       <div className="max-w-6xl mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-16 items-center">
         
         {/* Left Side: Copy & Tab controls */}
         <div className="w-full lg:w-1/2 space-y-10">
           
           <div className="space-y-4">
-            <span className="text-[#BDFB04] font-bold uppercase text-xs tracking-[0.2em]">
+            <span className="text-[#FD5C05] font-bold uppercase text-xs tracking-[0.2em]">
               Product Tour
             </span>
             
@@ -175,8 +175,8 @@ export default function AppShowcase() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                     activeTab === tab.id 
-                      ? 'bg-white text-[#191919] shadow-sm'
-                      : 'text-[#374151] hover:text-[#191919]'
+                      ? 'bg-white text-[#2A2621] shadow-sm'
+                      : 'text-[#5A554E] hover:text-[#2A2621]'
                   }`}
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
@@ -185,10 +185,10 @@ export default function AppShowcase() {
               ))}
             </div>
 
-            <h2 className="text-[#191919] font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-[#2A2621] font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
               {currentTab.title}
             </h2>
-            <p className="text-[#374151] text-sm md:text-base font-light">
+            <p className="text-[#5A554E] text-sm md:text-base font-light">
               {currentTab.subtitle}
             </p>
           </div>
@@ -215,10 +215,10 @@ export default function AppShowcase() {
                         <IconComp className="h-5 w-5 stroke-[2]" />
                       </div>
                       <div className="space-y-1.5">
-                        <h4 className="text-sm font-bold text-[#191919] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
+                        <h4 className="text-sm font-bold text-[#2A2621] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
                           {pt.name}
                         </h4>
-                        <p className="text-[#374151] text-xs sm:text-sm font-light leading-relaxed">
+                        <p className="text-[#5A554E] text-xs sm:text-sm font-light leading-relaxed">
                           {pt.desc}
                         </p>
                         
@@ -247,10 +247,10 @@ export default function AppShowcase() {
         <div className="w-full lg:w-1/2 flex justify-center relative max-sm:-mx-4">
           
           {/* Subtle Ambient Radial Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#BDFB04]/5 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#FD5C05]/5 rounded-full blur-[100px] pointer-events-none" />
 
           {/* iPhone body - responsive size */}
-          <div className="relative w-[280px] h-[570px] min-w-[280px] sm:w-[300px] sm:h-[610px] rounded-[42px] sm:rounded-[50px] border-[8px] sm:border-[9px] border-[#27272A] bg-[#191919] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col select-none ring-1 ring-white/10">
+          <div className="relative w-[280px] h-[570px] min-w-[280px] sm:w-[300px] sm:h-[610px] rounded-[42px] sm:rounded-[50px] border-[8px] sm:border-[9px] border-[#27272A] bg-[#2A2621] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col select-none ring-1 ring-white/10">
             
             {/* Dynamic Island Notch */}
             <div className="absolute top-3.5 left-1/2 -translate-x-1/2 w-28 h-6 bg-black rounded-full z-40 flex items-center justify-between px-3 text-[9px] text-white/40 font-bold tracking-tight">
@@ -373,7 +373,7 @@ export default function AppShowcase() {
                     {/* Floating Bottom Tab Bar matching screenshot */}
                     <div className="mt-4 bg-white/[0.07] backdrop-blur-xl border border-white/10 rounded-full py-2 px-3 flex items-center justify-between shadow-2xl z-30">
                       <div className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center cursor-pointer text-white">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#BDFB04]"></span>
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05]"></span>
                       </div>
                       <Users className="h-4 w-4 text-white/40 cursor-pointer" />
                       {/* Big White Circular Add Button */}
@@ -401,7 +401,7 @@ export default function AppShowcase() {
                   >
                     {/* Header */}
                     <div>
-                      <span className="text-[#BDFB04] text-[9px] font-bold uppercase tracking-[0.2em] block mb-1">
+                      <span className="text-[#FD5C05] text-[9px] font-bold uppercase tracking-[0.2em] block mb-1">
                         Evida Wizard
                       </span>
                       <h3 className="text-xl font-bold uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -426,11 +426,11 @@ export default function AppShowcase() {
                             onClick={() => setActiveTab('approval')}
                             className={`p-3 rounded-2xl border flex flex-col items-center justify-center text-center gap-2 h-20 transition-all cursor-pointer ${
                               cell.active 
-                                ? 'bg-white/15 border-[#BDFB04] shadow-[0_4px_12px_rgba(255,90,31,0.1)]' 
+                                ? 'bg-white/15 border-[#FD5C05] shadow-[0_4px_12px_rgba(255,90,31,0.1)]' 
                                 : 'bg-white/[0.04] border-white/5 hover:border-white/15'
                             }`}
                           >
-                            <Icon className={`h-4.5 w-4.5 ${cell.active ? 'text-[#BDFB04]' : 'text-white/60'}`} />
+                            <Icon className={`h-4.5 w-4.5 ${cell.active ? 'text-[#FD5C05]' : 'text-white/60'}`} />
                             <span className="text-[9px] font-bold uppercase tracking-wider">{cell.label}</span>
                           </div>
                         );
@@ -440,7 +440,7 @@ export default function AppShowcase() {
                     {/* Get Started Button */}
                     <button
                       onClick={() => setActiveTab('approval')}
-                      className="w-full py-3 bg-white text-[#191919] rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-white/5 hover:scale-[1.02] transition-transform active:scale-[0.98] cursor-pointer text-center"
+                      className="w-full py-3 bg-white text-[#2A2621] rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-white/5 hover:scale-[1.02] transition-transform active:scale-[0.98] cursor-pointer text-center"
                       style={{ fontFamily: 'var(--font-display)' }}
                     >
                       Get Started
@@ -459,7 +459,7 @@ export default function AppShowcase() {
                     className="flex-1 flex flex-col justify-between h-full py-4"
                   >
                     <div>
-                      <span className="text-[#BDFB04] text-[9px] font-bold uppercase tracking-[0.2em] block mb-1">
+                      <span className="text-[#FD5C05] text-[9px] font-bold uppercase tracking-[0.2em] block mb-1">
                         Smart Engine
                       </span>
                       <h3 className="text-xl font-bold uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -480,14 +480,14 @@ export default function AppShowcase() {
                             step.status === 'done'
                               ? 'bg-white/10 border-white/10'
                               : step.status === 'pulse'
-                              ? 'bg-[#BDFB04]/10 border-[#BDFB04]/30 animate-pulse'
+                              ? 'bg-[#FD5C05]/10 border-[#FD5C05]/30 animate-pulse'
                               : 'bg-white/[0.02] border-white/5 opacity-55'
                           }`}
                         >
                           {step.status === 'done' ? (
                             <CheckCircle className="h-5 w-5 text-white shrink-0" />
                           ) : step.status === 'pulse' ? (
-                            <Brain className="h-5 w-5 text-[#BDFB04] shrink-0" />
+                            <Brain className="h-5 w-5 text-[#FD5C05] shrink-0" />
                           ) : (
                             <div className="h-5 w-5 rounded-full border border-white/20 shrink-0" />
                           )}
@@ -505,7 +505,7 @@ export default function AppShowcase() {
                         setActiveTab('ownership');
                         setOwnershipCat('student');
                       }}
-                      className="w-full py-3 bg-[#BDFB04] hover:bg-[#BDFB04]/90 text-[#191919] rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-orange-500/10 hover:scale-[1.02] transition-transform active:scale-[0.98] cursor-pointer text-center"
+                      className="w-full py-3 bg-[#FD5C05] hover:bg-[#FD5C05]/90 text-[#2A2621] rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-orange-500/10 hover:scale-[1.02] transition-transform active:scale-[0.98] cursor-pointer text-center"
                       style={{ fontFamily: 'var(--font-display)' }}
                     >
                       Reset Simulator
@@ -520,8 +520,8 @@ export default function AppShowcase() {
           </div>
 
           {/* Mobile floating tip icon */}
-          <div className="absolute -bottom-6 flex items-center gap-1.5 text-[9px] font-bold text-[#4B5563] uppercase tracking-widest pointer-events-none select-none">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#BDFB04] animate-ping"></span>
+          <div className="absolute -bottom-6 flex items-center gap-1.5 text-[9px] font-bold text-[#5A554E] uppercase tracking-widest pointer-events-none select-none">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] animate-ping"></span>
             Click elements inside phone to interact
           </div>
 

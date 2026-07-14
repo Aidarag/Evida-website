@@ -165,10 +165,10 @@ export default function CreateListingPage() {
             className="space-y-8"
           >
             <div className="text-center space-y-2 max-w-xl mx-auto">
-              <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight animate-fade-in" style={{ fontFamily: 'var(--font-display)' }}>
+              <h1 className="text-3xl font-extrabold text-[#2A2621] tracking-tight animate-fade-in" style={{ fontFamily: 'var(--font-display)' }}>
                 What would you like to create?
               </h1>
-              <p className="text-xs font-semibold text-[#374151] leading-relaxed">
+              <p className="text-xs font-semibold text-[#5A554E] leading-relaxed">
                 Events are activities people attend. Promotions help students discover your services, business, or initiative.
               </p>
             </div>
@@ -176,36 +176,36 @@ export default function CreateListingPage() {
             <div className="grid md:grid-cols-2 gap-6">
               <Card 
                 onClick={() => { setCreateType('event'); handleNext(); }}
-                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[#BDFB04]/50 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 rounded-[28px] bg-white border border-black/[0.04]"
+                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[#FD5C05]/50 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 rounded-[28px] bg-white border border-black/[0.04]"
               >
                 {/* Custom Badge Indicator */}
-                <div className="absolute top-4 left-4 bg-[#191919] text-white text-[9px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-white/10 shadow-sm flex items-center gap-1 select-none">
+                <div className="absolute top-4 left-4 bg-[#2A2621] text-white text-[9px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-white/10 shadow-sm flex items-center gap-1 select-none">
                   <span>🗓️</span> People attend
                 </div>
 
-                <div className="h-16 w-16 rounded-2xl bg-[#BDFB04]/10 text-[#BDFB04] flex items-center justify-center group-hover:scale-105 transition-transform mt-6">
+                <div className="h-16 w-16 rounded-2xl bg-[#FD5C05]/10 text-[#FD5C05] flex items-center justify-center group-hover:scale-105 transition-transform mt-6">
                   <Calendar className="h-8 w-8" />
                 </div>
                 <div className="w-full text-center space-y-4">
-                  <h3 className="text-xl font-black text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>Event</h3>
-                  <p className="text-xs text-[#374151] leading-relaxed font-semibold">
+                  <h3 className="text-xl font-black text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>Event</h3>
+                  <p className="text-xs text-[#5A554E] leading-relaxed font-semibold">
                     Create an event students can attend.
                   </p>
-                  <ul className="text-xs text-left max-w-[160px] mx-auto space-y-2 text-[#374151] font-medium border-t border-black/[0.04] pt-4">
+                  <ul className="text-xs text-left max-w-[160px] mx-auto space-y-2 text-[#5A554E] font-medium border-t border-black/[0.04] pt-4">
                     <li className="flex items-center gap-2">
-                      <span className="text-[#BDFB04] text-sm">•</span> Club meeting
+                      <span className="text-[#FD5C05] text-sm">•</span> Club meeting
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#BDFB04] text-sm">•</span> Workshop
+                      <span className="text-[#FD5C05] text-sm">•</span> Workshop
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#BDFB04] text-sm">•</span> Party
+                      <span className="text-[#FD5C05] text-sm">•</span> Party
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#BDFB04] text-sm">•</span> Sports game
+                      <span className="text-[#FD5C05] text-sm">•</span> Sports game
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#BDFB04] text-sm">•</span> Career fair
+                      <span className="text-[#FD5C05] text-sm">•</span> Career fair
                     </li>
                   </ul>
                 </div>
@@ -213,36 +213,36 @@ export default function CreateListingPage() {
 
               <Card 
                 onClick={() => { setCreateType('promotion'); setStep(4); }} // Go straight to Promo Form
-                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[#BDFB04]/50 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 rounded-[28px] bg-white border border-black/[0.04]"
+                className="p-8 flex flex-col items-center text-center gap-5 hover:border-[#FD5C05]/50 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 rounded-[28px] bg-white border border-black/[0.04]"
               >
                 {/* Custom Badge Indicator */}
-                <div className="absolute top-4 left-4 bg-[#191919] text-white text-[9px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-white/10 shadow-sm flex items-center gap-1 select-none">
+                <div className="absolute top-4 left-4 bg-[#2A2621] text-white text-[9px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-white/10 shadow-sm flex items-center gap-1 select-none">
                   <span>📢</span> People discover
                 </div>
 
-                <div className="h-16 w-16 rounded-2xl bg-[#BDFB04]/10 text-[#BDFB04] flex items-center justify-center group-hover:scale-105 transition-transform mt-6">
+                <div className="h-16 w-16 rounded-2xl bg-[#FD5C05]/10 text-[#FD5C05] flex items-center justify-center group-hover:scale-105 transition-transform mt-6">
                   <Tag className="h-8 w-8" />
                 </div>
                 <div className="w-full text-center space-y-4">
-                  <h3 className="text-xl font-black text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>Promote</h3>
-                  <p className="text-xs text-[#374151] leading-relaxed font-semibold">
+                  <h3 className="text-xl font-black text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>Promote</h3>
+                  <p className="text-xs text-[#5A554E] leading-relaxed font-semibold">
                     Share a service, business, or initiative with the campus community.
                   </p>
-                  <ul className="text-xs text-left max-w-[160px] mx-auto space-y-2 text-[#374151] font-medium border-t border-black/[0.04] pt-4">
+                  <ul className="text-xs text-left max-w-[160px] mx-auto space-y-2 text-[#5A554E] font-medium border-t border-black/[0.04] pt-4">
                     <li className="flex items-center gap-2">
-                      <span className="text-[#BDFB04] text-sm">•</span> Tutoring
+                      <span className="text-[#FD5C05] text-sm">•</span> Tutoring
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#BDFB04] text-sm">•</span> Student business
+                      <span className="text-[#FD5C05] text-sm">•</span> Student business
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#BDFB04] text-sm">•</span> Food sale
+                      <span className="text-[#FD5C05] text-sm">•</span> Food sale
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#BDFB04] text-sm">•</span> Photography
+                      <span className="text-[#FD5C05] text-sm">•</span> Photography
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#BDFB04] text-sm">•</span> Student initiative
+                      <span className="text-[#FD5C05] text-sm">•</span> Student initiative
                     </li>
                   </ul>
                 </div>
@@ -261,26 +261,26 @@ export default function CreateListingPage() {
             className="space-y-8 max-w-2xl mx-auto w-full"
           >
             <div className="text-center space-y-2">
-              <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+              <h1 className="text-3xl font-extrabold text-[#2A2621] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
                 Who is organizing this event?
               </h1>
-              <p className="text-sm text-[#374151]">Choose who owns and hosts this event on campus.</p>
+              <p className="text-sm text-[#5A554E]">Choose who owns and hosts this event on campus.</p>
             </div>
 
             <div className="space-y-4">
               {/* Option 1: Me */}
               <button
                 onClick={() => { setCreatorEntity('student'); handleNext(); }}
-                className="w-full text-left p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#191919]/30 transition-all flex items-center gap-4 group cursor-pointer"
+                className="w-full text-left p-5 rounded-2xl border-2 border-[#D8D2BC]/30 bg-white hover:bg-black/[0.01] hover:border-[#2A2621]/30 transition-all flex items-center gap-4 group cursor-pointer"
               >
                 <div className="h-12 w-12 rounded-xl bg-[var(--color-evida-blue)]/10 text-[var(--color-evida-blue)] flex items-center justify-center group-hover:scale-105 transition-transform shrink-0">
                   <User className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="text-md font-bold text-[#191919] uppercase tracking-wider">My Events</h3>
-                  <p className="text-xs text-[#374151] mt-0.5">Create personal student events — share instantly or request school facilities.</p>
+                  <h3 className="text-md font-bold text-[#2A2621] uppercase tracking-wider">My Events</h3>
+                  <p className="text-xs text-[#5A554E] mt-0.5">Create personal student events — share instantly or request school facilities.</p>
                 </div>
-                <ArrowRight className="h-5 w-5 text-[#374151] ml-auto group-hover:text-[#191919] group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="h-5 w-5 text-[#5A554E] ml-auto group-hover:text-[#2A2621] group-hover:translate-x-1 transition-all" />
               </button>
 
               {/* Option 2: My Organization */}
@@ -293,16 +293,16 @@ export default function CreateListingPage() {
                   }
                   setStep(4); // Go straight to form
                 }}
-                className="w-full text-left p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#191919]/30 transition-all flex items-center gap-4 group cursor-pointer"
+                className="w-full text-left p-5 rounded-2xl border-2 border-[#D8D2BC]/30 bg-white hover:bg-black/[0.01] hover:border-[#2A2621]/30 transition-all flex items-center gap-4 group cursor-pointer"
               >
                 <div className="h-12 w-12 rounded-xl bg-[var(--color-evida-lime)]/10 text-[var(--color-evida-lime)] flex items-center justify-center group-hover:scale-105 transition-transform shrink-0">
                   <Users className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="text-md font-bold text-[#191919] uppercase tracking-wider">My Organization</h3>
-                  <p className="text-xs text-[#374151] mt-0.5">Organization-Owned Event. For verified clubs, teams, and Greek life.</p>
+                  <h3 className="text-md font-bold text-[#2A2621] uppercase tracking-wider">My Organization</h3>
+                  <p className="text-xs text-[#5A554E] mt-0.5">Organization-Owned Event. For verified clubs, teams, and Greek life.</p>
                 </div>
-                <ArrowRight className="h-5 w-5 text-[#374151] ml-auto group-hover:text-[#191919] group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="h-5 w-5 text-[#5A554E] ml-auto group-hover:text-[#2A2621] group-hover:translate-x-1 transition-all" />
               </button>
             </div>
 
@@ -324,10 +324,10 @@ export default function CreateListingPage() {
             className="space-y-8 max-w-2xl mx-auto w-full"
           >
             <div className="text-center space-y-2">
-              <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+              <h1 className="text-3xl font-extrabold text-[#2A2621] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
                 Select Event Type
               </h1>
-              <p className="text-sm text-[#374151]">Choose the format that best fits your student activity.</p>
+              <p className="text-sm text-[#5A554E]">Choose the format that best fits your student activity.</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -340,8 +340,8 @@ export default function CreateListingPage() {
                   <Sparkles className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-[#191919] uppercase tracking-wide">Without School Facilities</h3>
-                  <p className="text-xs text-[#374151] mt-2 leading-relaxed">
+                  <h3 className="text-lg font-bold text-[#2A2621] uppercase tracking-wide">Without School Facilities</h3>
+                  <p className="text-xs text-[#5A554E] mt-2 leading-relaxed">
                     Not using any school spaces or resources. Your event will be shared with the campus community immediately.
                   </p>
                   <span className="inline-block mt-3 text-[9px] font-extrabold uppercase tracking-widest text-emerald-700 bg-emerald-100 border border-emerald-200 rounded-full px-3 py-0.5">Instant Share</span>
@@ -357,8 +357,8 @@ export default function CreateListingPage() {
                   <Shield className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-[#191919] uppercase tracking-wide">Using School Facilities</h3>
-                  <p className="text-xs text-[#374151] mt-2 leading-relaxed">
+                  <h3 className="text-lg font-bold text-[#2A2621] uppercase tracking-wide">Using School Facilities</h3>
+                  <p className="text-xs text-[#5A554E] mt-2 leading-relaxed">
                     Requesting campus rooms, fields, or school resources. Your event will be submitted for school review before publishing.
                   </p>
                   <span className="inline-block mt-3 text-[9px] font-extrabold uppercase tracking-widest text-amber-700 bg-amber-100 border border-amber-200 rounded-full px-3 py-0.5">Requires Review</span>
@@ -384,7 +384,7 @@ export default function CreateListingPage() {
             className="w-full max-w-2xl mx-auto"
           >
             <div className="mb-6 flex items-center gap-4">
-              <button onClick={handleBack} className="h-10 w-10 rounded-full bg-[#FFFDE1]/[0.06] flex items-center justify-center text-[#374151] hover:text-white hover:bg-[#FFFDE1]/[0.1] transition-colors cursor-pointer">
+              <button onClick={handleBack} className="h-10 w-10 rounded-full bg-[#FFFDE1]/[0.06] flex items-center justify-center text-[#5A554E] hover:text-white hover:bg-[#FFFDE1]/[0.1] transition-colors cursor-pointer">
                 <ArrowLeft className="h-5 w-5" />
               </button>
               <div>
@@ -393,13 +393,13 @@ export default function CreateListingPage() {
                     ? 'Promotion Campaign' 
                     : `${creatorEntity === 'student' ? 'My Event' : 'Organization Event'} — ${eventSubtype === 'quick' ? 'No Facilities' : 'Using School Facilities'}`}
                 </span>
-                <h1 className="text-2xl font-extrabold text-[#191919] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
+                <h1 className="text-2xl font-extrabold text-[#2A2621] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
                   {createType === 'promotion' ? 'Create Promotion' : 'Event Details'}
                 </h1>
               </div>
             </div>
 
-            <Card className="p-8 max-sm:p-5 max-sm:rounded-[28px] border-2 border-black/[0.04] bg-white text-[#191919]">
+            <Card className="p-8 max-sm:p-5 max-sm:rounded-[28px] border-2 border-black/[0.04] bg-white text-[#2A2621]">
               {createType === 'event' ? (
                 // ─────────────────────────────────────────────
                 // EVENT FORM
@@ -409,10 +409,10 @@ export default function CreateListingPage() {
                   {/* Organization Selector (Visible only for Organization events) */}
                   {creatorEntity === 'organization' && (
                     <div className="space-y-1.5">
-                      <label className="block text-[10px] font-bold text-[#374151] uppercase tracking-widest">Select Club / Organization</label>
+                      <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">Select Club / Organization</label>
                       {myOrgs.length > 0 ? (
                         <select 
-                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] font-medium cursor-pointer"
+                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#2A2621] focus:outline-none focus:border-[#FD5C05] font-medium cursor-pointer"
                           value={eventForm.selectedOrgId}
                           onChange={e => setEventForm({...eventForm, selectedOrgId: e.target.value})}
                           required
@@ -455,9 +455,9 @@ export default function CreateListingPage() {
                     />
                     
                     <div className="space-y-1.5">
-                      <label className="block text-[10px] font-bold text-[#374151] uppercase tracking-widest">Description</label>
+                      <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">Description</label>
                       <textarea 
-                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04] min-h-[120px] resize-none font-medium leading-relaxed"
+                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05] min-h-[120px] resize-none font-medium leading-relaxed"
                         placeholder="What should campus know about this event?"
                         value={eventForm.description}
                         onChange={e => setEventForm({...eventForm, description: e.target.value})}
@@ -494,9 +494,9 @@ export default function CreateListingPage() {
                       {/* Hide Category/Capacity on Quick Student events (Simplified form) */}
                       {eventSubtype !== 'quick' && (
                         <div className="space-y-1.5">
-                          <label className="block text-[10px] font-bold text-[#374151] uppercase tracking-widest">Category</label>
+                          <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">Category</label>
                           <select 
-                            className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] font-medium cursor-pointer"
+                            className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#2A2621] focus:outline-none focus:border-[#FD5C05] font-medium cursor-pointer"
                             value={eventForm.category}
                             onChange={e => setEventForm({...eventForm, category: e.target.value})}
                           >
@@ -526,7 +526,7 @@ export default function CreateListingPage() {
                         {/* School admin can set Featured status */}
                         {creatorEntity === 'school' && (
                           <div className="space-y-1.5 flex flex-col justify-center">
-                            <label className="block text-[10px] font-bold text-[#374151] uppercase tracking-widest mb-1.5">Featured Event</label>
+                            <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest mb-1.5">Featured Event</label>
                             <label className="relative inline-flex items-center cursor-pointer">
                               <input 
                                 type="checkbox" 
@@ -534,8 +534,8 @@ export default function CreateListingPage() {
                                 onChange={e => setEventForm({...eventForm, isFeatured: e.target.checked})}
                                 className="sr-only peer" 
                               />
-                              <div className="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#BDFB04]"></div>
-                              <span className="ml-3 text-xs font-semibold text-[#191919]">Feature on Landing Page</span>
+                              <div className="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FD5C05]"></div>
+                              <span className="ml-3 text-xs font-semibold text-[#2A2621]">Feature on Landing Page</span>
                             </label>
                           </div>
                         )}
@@ -545,19 +545,19 @@ export default function CreateListingPage() {
                     {/* Visual Image Uploader Mock (Hidden for Quick Student Events) */}
                     {eventSubtype !== 'quick' && (
                       <div className="space-y-1.5 pt-2">
-                        <label className="block text-[10px] font-bold text-[#374151] uppercase tracking-widest">Cover Image / Flyer</label>
+                        <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">Cover Image / Flyer</label>
                         <div className="w-full rounded-2xl border-2 border-dashed border-black/[0.08] bg-black/[0.01] p-6 flex flex-col items-center justify-center gap-2 hover:bg-black/[0.03] transition-colors cursor-pointer">
-                          <ImageIcon className="h-6 w-6 text-[#374151]/60" />
+                          <ImageIcon className="h-6 w-6 text-[#5A554E]/60" />
                           <div className="text-center">
-                            <p className="text-xs font-bold text-[#191919]">Click to upload flyer image</p>
-                            <p className="text-[10px] text-[#374151]">PNG or JPG up to 5MB (Default gradient applied otherwise)</p>
+                            <p className="text-xs font-bold text-[#2A2621]">Click to upload flyer image</p>
+                            <p className="text-[10px] text-[#5A554E]">PNG or JPG up to 5MB (Default gradient applied otherwise)</p>
                           </div>
                         </div>
                       </div>
                     )}
                   </div>
 
-                  <div className="pt-6 border-t border-black/[0.06] flex justify-end">
+                  <div className="pt-6 border-t border-[#D8D2BC]/30 flex justify-end">
                     <Button 
                       type="submit" 
                       disabled={isSubmitting || (creatorEntity === 'organization' && myOrgs.length === 0)} 
@@ -583,9 +583,9 @@ export default function CreateListingPage() {
                     />
 
                     <div className="space-y-1.5">
-                      <label className="block text-[10px] font-bold text-[#374151] uppercase tracking-widest">Service Description</label>
+                      <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">Service Description</label>
                       <textarea 
-                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04] min-h-[120px] resize-none font-medium leading-relaxed"
+                        className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05] min-h-[120px] resize-none font-medium leading-relaxed"
                         placeholder="Explain your service, rates, timings, or initiative details..."
                         value={promoForm.description}
                         onChange={e => setPromoForm({...promoForm, description: e.target.value})}
@@ -595,9 +595,9 @@ export default function CreateListingPage() {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <label className="block text-[10px] font-bold text-[#374151] uppercase tracking-widest">Promotion Category</label>
+                        <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">Promotion Category</label>
                         <select 
-                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] font-medium cursor-pointer"
+                          className="w-full rounded-xl bg-white border-2 border-black/[0.08] px-4 py-3 text-xs text-[#2A2621] focus:outline-none focus:border-[#FD5C05] font-medium cursor-pointer"
                           value={promoForm.category}
                           onChange={e => setPromoForm({...promoForm, category: e.target.value})}
                         >
@@ -632,7 +632,7 @@ export default function CreateListingPage() {
                     />
                   </div>
 
-                  <div className="pt-6 border-t border-black/[0.06] flex justify-end">
+                  <div className="pt-6 border-t border-[#D8D2BC]/30 flex justify-end">
                     <Button type="submit" disabled={isSubmitting} variant="neon" icon={<Check className="h-4 w-4" />}>
                       {isSubmitting ? 'Submitting...' : 'Submit Promotion'}
                     </Button>

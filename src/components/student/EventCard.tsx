@@ -26,7 +26,7 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
     : event.coverImage;
 
   const isGradient = coverImage ? coverImage.includes('from-') : false;
-  const bgClass = isGradient ? coverImage : (coverImage ? '' : 'bg-[#DFDED7]');
+  const bgClass = isGradient ? coverImage : (coverImage ? '' : 'bg-[#D8D2BC]');
   const bgStyle = (!isGradient && coverImage) ? { backgroundImage: `url(${coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
 
   // Parse the date to match the uppercase invite format (e.g. SUN, OCT 11)
@@ -42,18 +42,18 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
   const goingCount = 32 + (event.title.length * 2);
 
   const getCategoryStyles = (cat?: string) => {
-    if (isPromo) return 'bg-[#BDFB04]/15 text-[#191919] border-[#BDFB04]/25';
+    if (isPromo) return 'bg-[#FD5C05]/15 text-[#2A2621] border-[#FD5C05]/25';
     const c = cat?.toLowerCase() || '';
     if (c.includes('sport') || c.includes('athlet') || c.includes('trophy')) {
-      return 'bg-[#BDFB04]/15 text-[#191919] border-[#BDFB04]/25';
+      return 'bg-[#FD5C05]/15 text-[#2A2621] border-[#FD5C05]/25';
     }
     if (c.includes('music') || c.includes('concert') || c.includes('party') || c.includes('show') || c.includes('art') || c.includes('greek')) {
-      return 'bg-black/5 text-[#191919] border-black/10';
+      return 'bg-[#D8D2BC]/30 text-[#2A2621] border-black/10';
     }
     if (c.includes('career') || c.includes('fair') || c.includes('workshop') || c.includes('hackathon') || c.includes('academic')) {
-      return 'bg-[#BDFB04]/15 text-[#191919] border-[#BDFB04]/25';
+      return 'bg-[#FD5C05]/15 text-[#2A2621] border-[#FD5C05]/25';
     }
-    return 'bg-[#BDFB04]/15 text-[#191919] border-[#BDFB04]/25';
+    return 'bg-[#FD5C05]/15 text-[#2A2621] border-[#FD5C05]/25';
   };
 
   const { organizations } = useEvents();
@@ -98,11 +98,11 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
             setIsSavedLocal(!isSavedLocal);
           }
         }}
-        className="absolute top-4 right-4 z-20 h-8 w-8 rounded-full bg-white/85 backdrop-blur-md border border-black/[0.05] flex items-center justify-center text-[#4B5563] hover:text-rose-500 hover:scale-110 active:scale-95 transition-all shadow-sm cursor-pointer"
+        className="absolute top-4 right-4 z-20 h-8 w-8 rounded-full bg-white/85 backdrop-blur-md border border-black/[0.05] flex items-center justify-center text-[#5A554E] hover:text-rose-500 hover:scale-110 active:scale-95 transition-all shadow-sm cursor-pointer"
       >
         <Heart 
           className={`h-4 w-4 transition-colors ${
-            activeSaved ? 'fill-rose-500 text-rose-500' : 'text-[#4B5563]'
+            activeSaved ? 'fill-rose-500 text-rose-500' : 'text-[#5A554E]'
           }`} 
         />
       </button>
@@ -111,31 +111,31 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
       <div className="p-6 flex flex-col flex-1 justify-between gap-4 text-left">
         <div className="space-y-2 cursor-pointer" onClick={onClick}>
           {/* Date & Time Invite Style (Dark Green, Uppercase) */}
-          <div className="text-[#191919]/85 text-[10px] font-bold uppercase tracking-widest">
+          <div className="text-[#2A2621]/85 text-[10px] font-bold uppercase tracking-widest">
             {formattedDate} • {timeStr}
           </div>
 
           {/* Organization Name with rosette badge */}
           {!isPromo && (event as Event).organizationName && (
-            <div className="flex items-center gap-1 text-[10px] text-[#374151] font-bold uppercase tracking-wider">
+            <div className="flex items-center gap-1 text-[10px] text-[#5A554E] font-bold uppercase tracking-wider">
               <span>{(event as Event).organizationName}</span>
               {isOrgVerified && <VerifiedBadge className="h-3.5 w-3.5" />}
             </div>
           )}
 
           {/* Event Title */}
-          <h3 className="text-[#191919] font-bold text-lg line-clamp-2 leading-tight tracking-tight hover:text-[#191919]/80 transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
+          <h3 className="text-[#2A2621] font-bold text-lg line-clamp-2 leading-tight tracking-tight hover:text-[#2A2621]/80 transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
             {event.title}
           </h3>
           
           {/* Location Row */}
-          <div className="flex items-center gap-1.5 text-[#4B5563] text-xs font-semibold">
-            <MapPin className="h-3.5 w-3.5 shrink-0 text-[#4B5563]" />
+          <div className="flex items-center gap-1.5 text-[#5A554E] text-xs font-semibold">
+            <MapPin className="h-3.5 w-3.5 shrink-0 text-[#5A554E]" />
             <span className="truncate">{isPromo ? (event as Promotion).organizer : (event as Event).location}</span>
           </div>
 
           {/* Description */}
-          <p className="text-[#374151] text-xs leading-relaxed font-light line-clamp-2 pt-1">
+          <p className="text-[#5A554E] text-xs leading-relaxed font-light line-clamp-2 pt-1">
             {event.description || `Join us for the ${event.title}, happening soon.`}
           </p>
         </div>
@@ -146,9 +146,9 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
           <div className="flex items-center gap-2">
             <div className="flex -space-x-2">
               {[
-                { initials: 'MC', bg: '#BDFB04', color: '#191919' },
-                { initials: 'SJ', bg: '#191919', color: '#fff' },
-                { initials: 'AR', bg: '#374151', color: '#fff' },
+                { initials: 'MC', bg: '#FD5C05', color: '#2A2621' },
+                { initials: 'SJ', bg: '#2A2621', color: '#fff' },
+                { initials: 'AR', bg: '#5A554E', color: '#fff' },
               ].map((av) => (
                 <div
                   key={av.initials}
@@ -159,7 +159,7 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
                 </div>
               ))}
             </div>
-            <span className="text-[#4B5563] text-[10px] font-bold whitespace-nowrap">
+            <span className="text-[#5A554E] text-[10px] font-bold whitespace-nowrap">
               +{goingCount} going
             </span>
           </div>
@@ -170,7 +170,7 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
               e.stopPropagation();
               onClick();
             }}
-            className="inline-flex items-center gap-1.5 bg-white border border-black/10 hover:border-transparent hover:bg-[#BDFB04] hover:text-[#191919] text-[#191919] font-bold text-[10px] uppercase tracking-wider py-1.5 px-3.5 rounded-full transition-all duration-300 shadow-sm cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 bg-white border border-black/10 hover:border-transparent hover:bg-[#FD5C05] hover:text-[#2A2621] text-[#2A2621] font-bold text-[10px] uppercase tracking-wider py-1.5 px-3.5 rounded-full transition-all duration-300 shadow-sm cursor-pointer whitespace-nowrap"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             <Calendar className="h-3.5 w-3.5" />

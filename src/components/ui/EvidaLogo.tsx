@@ -6,7 +6,7 @@ interface EvidaLogoProps {
   className?: string;
   size?: number; // Height of the logo in pixels (default: 40)
   showText?: boolean; // Whether to show the "Evida" text (default: true)
-  lightMode?: boolean; // If true, text is dark (#191919) instead of brand color (default: false)
+  lightMode?: boolean; // If true, text is dark (#2A2621) instead of brand color (default: false)
   text?: string; // Custom text to display next to the logo (default: "Evida")
 }
 
@@ -30,25 +30,37 @@ export default function EvidaLogo({
       height={size}
       className={`select-none ${className}`}
     >
-      <g id="evida-logo-mark">
-        {/* Left Ribbon (Vibrant Lime) */}
+      <defs>
+        <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FB1C07" />
+          <stop offset="35%" stopColor="#FD4002" />
+          <stop offset="70%" stopColor="#FD5C05" />
+          <stop offset="100%" stopColor="#FC7C0B" />
+        </linearGradient>
+        <filter id="logo-glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#FB1C07" floodOpacity="0.25" />
+        </filter>
+      </defs>
+      
+      <g id="evida-logo-mark" filter="url(#logo-glow)">
+        {/* Left Ribbon (Tangelo Gradient) */}
         <path
           d="M 6 42 L 6 22 L 24 6 L 24 15 L 15 24 L 15 42 Z"
-          fill="#BDFB04"
+          fill="url(#logo-grad)"
           opacity="0.95"
         />
         
-        {/* Right Ribbon (Vibrant Lime) */}
+        {/* Right Ribbon (Tangelo Gradient) */}
         <path
           d="M 42 42 L 42 22 L 24 6 L 24 15 L 33 24 L 33 42 Z"
-          fill="#BDFB04"
+          fill="url(#logo-grad)"
           opacity="0.95"
         />
         
         {/* Center Ribbon (Small Diamond - Premium Dark) */}
         <path
           d="M 24 10 L 36 22 L 24 34 L 12 22 Z M 24 16 L 30 22 L 24 28 L 18 22 Z"
-          fill="#191919"
+          fill="#2A2621"
           opacity="0.95"
         />
       </g>
@@ -57,7 +69,8 @@ export default function EvidaLogo({
         <text
           x="56"
           y="33"
-          fill={lightMode ? '#191919' : '#BDFB04'}
+          fill={lightMode ? '#2A2621' : 'url(#logo-grad)'}
+          filter={lightMode ? undefined : 'url(#logo-glow)'}
           fontFamily="var(--font-display), Syne, sans-serif"
           fontWeight="800"
           fontSize="26"

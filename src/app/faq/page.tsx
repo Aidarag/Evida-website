@@ -41,19 +41,19 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#DFDED7] text-[#191919] flex flex-col font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#D8D2BC] text-[#2A2621] flex flex-col font-sans overflow-x-hidden">
       <DesktopNav variant="public" />
 
       <main className="flex-1 max-w-3xl mx-auto w-full px-6 py-28 md:py-36 space-y-12">
         {/* Header */}
         <div className="text-center space-y-4">
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#191919] text-[#BDFB04] text-[10px] font-extrabold uppercase tracking-widest">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#2A2621] text-[#FD5C05] text-[10px] font-extrabold uppercase tracking-widest">
             <HelpCircle className="h-3.5 w-3.5" /> Frequently Asked Questions
           </span>
-          <h1 className="text-4xl md:text-5xl font-extrabold uppercase tracking-tighter text-[#191919]" style={{ fontFamily: 'var(--font-display)' }}>
+          <h1 className="text-4xl md:text-5xl font-extrabold uppercase tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
             Got Questions?<br />We got answers.
           </h1>
-          <p className="text-sm text-[#374151] max-w-lg mx-auto font-light leading-relaxed">
+          <p className="text-sm text-[#5A554E] max-w-lg mx-auto font-light leading-relaxed">
             Everything you need to know about Evida event scheduling, promotions, and verification guidelines.
           </p>
         </div>
@@ -71,14 +71,14 @@ export default function FAQPage() {
                   onClick={() => toggleFAQ(index)}
                   className="w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none select-none"
                 >
-                  <span className="text-sm font-extrabold text-[#191919] uppercase tracking-wide">
+                  <span className="text-sm font-extrabold text-[#2A2621] uppercase tracking-wide">
                     {item.question}
                   </span>
                   <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                     className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
-                      isOpen ? 'bg-[#BDFB04] text-[#191919]' : 'bg-black/5 text-[#374151]'
+                      isOpen ? 'bg-[#FD5C05] text-[#2A2621]' : 'bg-[#D8D2BC]/30 text-[#5A554E]'
                     }`}
                   >
                     <ChevronDown className="h-4 w-4" />
@@ -93,7 +93,7 @@ export default function FAQPage() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.25, ease: 'easeInOut' }}
                     >
-                      <div className="px-6 pb-6 pt-1 text-xs text-[#374151] leading-relaxed font-light border-t border-black/[0.03]">
+                      <div className="px-6 pb-6 pt-1 text-xs text-[#5A554E] leading-relaxed font-light border-t border-black/[0.03]">
                         {item.answer}
                       </div>
                     </motion.div>
@@ -106,8 +106,8 @@ export default function FAQPage() {
 
         {/* Footer Accent */}
         <div className="pt-8 text-center">
-          <p className="text-[10px] font-bold text-[#374151] uppercase tracking-wider flex items-center justify-center gap-1.5">
-            <Sparkles className="h-3.5 w-3.5 text-[#BDFB04]" />
+          <p className="text-[10px] font-bold text-[#5A554E] uppercase tracking-wider flex items-center justify-center gap-1.5">
+            <Sparkles className="h-3.5 w-3.5 text-[#FD5C05]" />
             Still confused? Contact hello@evida.app
           </p>
         </div>

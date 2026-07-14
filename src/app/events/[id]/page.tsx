@@ -60,7 +60,7 @@ export default function EventDetailsPage() {
         </div>
 
         <div className="absolute bottom-10 left-6 right-6 z-20 max-w-5xl mx-auto">
-          <Badge variant="accent" className="mb-4 bg-black/50 backdrop-blur-md">{event.category}</Badge>
+          <Badge variant="accent" className="mb-4 bg-[#D8D2BC]/300 backdrop-blur-md">{event.category}</Badge>
           <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-4 line-clamp-3">
             {event.title}
           </h1>

@@ -35,7 +35,7 @@ export default function SignupPage() {
   // Avatar Selection State
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
-  const [selectedColor, setSelectedColor] = useState('#BDFB04');
+  const [selectedColor, setSelectedColor] = useState('#FD5C05');
   const [avatarType, setAvatarType] = useState<'initials' | 'upload'>('initials');
 
   // School Onboarding State
@@ -305,7 +305,7 @@ export default function SignupPage() {
           >
             {/* Back to Home */}
             {step === 'role-selection' && (
-              <Link href="/" className="absolute top-[-44px] left-2 text-[#374151] hover:text-[#191919] flex items-center gap-2 transition-colors font-bold text-xs uppercase tracking-wider">
+              <Link href="/" className="absolute top-[-44px] left-2 text-[#5A554E] hover:text-[#2A2621] flex items-center gap-2 transition-colors font-bold text-xs uppercase tracking-wider">
                 <ArrowLeft className="h-4 w-4" /> Back to Home
               </Link>
             )}
@@ -324,17 +324,17 @@ export default function SignupPage() {
                         else if (step === 'profile-onboarding') navigateTo('data-privacy', 'backward');
                         else if (step === 'school-onboarding') navigateTo('data-privacy', 'backward');
                       }}
-                      className="flex items-center gap-1.5 text-[10px] font-bold text-[#374151] hover:text-[#191919] transition-colors uppercase tracking-widest cursor-pointer"
+                      className="flex items-center gap-1.5 text-[10px] font-bold text-[#5A554E] hover:text-[#2A2621] transition-colors uppercase tracking-widest cursor-pointer"
                     >
                       <ArrowLeft className="h-3 w-3" /> Back
                     </button>
-                    <span className="text-[10px] font-black text-[#BDFB04] bg-[#191919] px-2 py-0.5 rounded-md uppercase tracking-wider">
+                    <span className="text-[10px] font-black text-[#FD5C05] bg-[#2A2621] px-2 py-0.5 rounded-md uppercase tracking-wider">
                       Step {currentStepIdx} of {totalSteps - 2}
                     </span>
                   </div>
                   <div className="h-1 bg-black/[0.06] rounded-full overflow-hidden">
                     <div 
-                      className="h-full bg-[#BDFB04] transition-all duration-300"
+                      className="h-full bg-[#FD5C05] transition-all duration-300"
                       style={{ width: `${(currentStepIdx / (totalSteps - 2)) * 100}%` }}
                     />
                   </div>
@@ -361,10 +361,10 @@ export default function SignupPage() {
                           <EvidaLogo size={36} showText={false} />
                         </div>
                         <div>
-                          <h1 className="text-xl font-extrabold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                          <h1 className="text-xl font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                             Join Evida
                           </h1>
-                          <p className="text-xs text-[#374151] mt-1.5">
+                          <p className="text-xs text-[#5A554E] mt-1.5">
                             Select your account type to set up your profile
                           </p>
                         </div>
@@ -375,42 +375,42 @@ export default function SignupPage() {
                           {/* Student Option */}
                           <button
                             onClick={() => handleRoleSelect('student')}
-                            className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#BDFB04] transition-all duration-300 cursor-pointer text-left group"
+                            className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-[#D8D2BC]/30 bg-white hover:bg-black/[0.01] hover:border-[#FD5C05] transition-all duration-300 cursor-pointer text-left group"
                           >
                             <div className="flex items-center gap-4">
-                              <div className="h-12 w-12 rounded-xl bg-[#BDFB04]/10 text-[#BDFB04] flex items-center justify-center group-hover:scale-105 transition-transform">
+                              <div className="h-12 w-12 rounded-xl bg-[#FD5C05]/10 text-[#FD5C05] flex items-center justify-center group-hover:scale-105 transition-transform">
                                 <GraduationCap className="h-6 w-6" />
                               </div>
                               <div>
-                                <p className="text-sm font-bold text-[#191919] uppercase tracking-wide">Student Account</p>
-                                <p className="text-xs text-[#374151] mt-0.5 max-w-[220px]">Discover events, join student groups, and host activities.</p>
+                                <p className="text-sm font-bold text-[#2A2621] uppercase tracking-wide">Student Account</p>
+                                <p className="text-xs text-[#5A554E] mt-0.5 max-w-[220px]">Discover events, join student groups, and host activities.</p>
                               </div>
                             </div>
-                            <ArrowRight className="h-5 w-5 text-[#374151] group-hover:text-[#BDFB04] group-hover:translate-x-1 transition-all" />
+                            <ArrowRight className="h-5 w-5 text-[#5A554E] group-hover:text-[#FD5C05] group-hover:translate-x-1 transition-all" />
                           </button>
 
                           {/* School Option */}
                           <button
                             onClick={() => handleRoleSelect('school')}
-                            className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-black/[0.06] bg-white hover:bg-black/[0.01] hover:border-[#191919]/30 transition-all duration-300 cursor-pointer text-left group"
+                            className="w-full flex items-center justify-between p-5 rounded-2xl border-2 border-[#D8D2BC]/30 bg-white hover:bg-black/[0.01] hover:border-[#2A2621]/30 transition-all duration-300 cursor-pointer text-left group"
                           >
                             <div className="flex items-center gap-4">
-                              <div className="h-12 w-12 rounded-xl bg-[#191919]/10 text-[#191919] flex items-center justify-center group-hover:scale-105 transition-transform">
+                              <div className="h-12 w-12 rounded-xl bg-[#2A2621]/10 text-[#2A2621] flex items-center justify-center group-hover:scale-105 transition-transform">
                                 <Shield className="h-6 w-6" />
                               </div>
                               <div>
-                                <p className="text-sm font-bold text-[#191919] uppercase tracking-wide">School Administration</p>
-                                <p className="text-xs text-[#374151] mt-0.5 max-w-[220px]">Verify student groups, approve events, and manage campus alerts.</p>
+                                <p className="text-sm font-bold text-[#2A2621] uppercase tracking-wide">School Administration</p>
+                                <p className="text-xs text-[#5A554E] mt-0.5 max-w-[220px]">Verify student groups, approve events, and manage campus alerts.</p>
                               </div>
                             </div>
-                            <ArrowRight className="h-5 w-5 text-[#374151] group-hover:text-[#191919] group-hover:translate-x-1 transition-all" />
+                            <ArrowRight className="h-5 w-5 text-[#5A554E] group-hover:text-[#2A2621] group-hover:translate-x-1 transition-all" />
                           </button>
                         </div>
 
-                        <div className="pt-4 border-t border-black/[0.06] text-center">
-                          <p className="text-xs text-[#374151]">
+                        <div className="pt-4 border-t border-[#D8D2BC]/30 text-center">
+                          <p className="text-xs text-[#5A554E]">
                             Already have an account?{' '}
-                            <Link href="/login" className="text-[#191919] font-bold underline decoration-2 decoration-[#BDFB04] hover:text-[#191919]/80 transition-all">
+                            <Link href="/login" className="text-[#2A2621] font-bold underline decoration-2 decoration-[#FD5C05] hover:text-[#2A2621]/80 transition-all">
                               Sign in here
                             </Link>
                           </p>
@@ -423,10 +423,10 @@ export default function SignupPage() {
                   {step === 'auth-options' && (
                     <div className="space-y-5">
                       <div className="text-center space-y-2">
-                        <h2 className="text-lg font-extrabold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                        <h2 className="text-lg font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                           Create Credentials
                         </h2>
-                        <p className="text-xs text-[#374151]">
+                        <p className="text-xs text-[#5A554E]">
                           Enter your school email or use Google to fast track setup
                         </p>
                       </div>
@@ -435,7 +435,7 @@ export default function SignupPage() {
                       <button 
                         onClick={handleGoogleSignup}
                         disabled={isLoading}
-                        className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border-2 border-black/[0.08] hover:border-black/20 bg-white hover:bg-neutral-50 font-bold text-xs text-[#191919] uppercase tracking-wider transition-all cursor-pointer disabled:opacity-50"
+                        className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border-2 border-black/[0.08] hover:border-black/20 bg-white hover:bg-neutral-50 font-bold text-xs text-[#2A2621] uppercase tracking-wider transition-all cursor-pointer disabled:opacity-50"
                       >
                         <svg className="h-4 w-4" viewBox="0 0 24 24">
                           <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -448,23 +448,23 @@ export default function SignupPage() {
 
                       <div className="flex items-center justify-between text-neutral-300">
                         <div className="h-px bg-black/[0.08] flex-1" />
-                        <span className="text-[9px] font-black uppercase px-3 tracking-widest text-[#4B5563]">or use email</span>
+                        <span className="text-[9px] font-black uppercase px-3 tracking-widest text-[#5A554E]">or use email</span>
                         <div className="h-px bg-black/[0.08] flex-1" />
                       </div>
 
                       {/* Email Form */}
                       <form onSubmit={handleEmailAuthSubmit} className="space-y-4">
                         <div className="space-y-1.5">
-                          <label className="text-[10px] font-bold text-[#374151] uppercase tracking-widest block">University Email Address</label>
+                          <label className="text-[10px] font-bold text-[#5A554E] uppercase tracking-widest block">University Email Address</label>
                           <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#4B5563]"><Mail className="h-4 w-4" /></div>
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#5A554E]"><Mail className="h-4 w-4" /></div>
                             <input 
                               type="email" 
                               required 
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
                               placeholder="e.g. yourname@university.edu"
-                              className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium"
+                              className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05] focus:ring-1 focus:ring-[#FD5C05] transition-all font-medium"
                             />
                           </div>
                         </div>
@@ -479,7 +479,7 @@ export default function SignupPage() {
                         <button
                           type="submit"
                           disabled={isLoading}
-                          className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+                          className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#FD5C05] hover:bg-[#FD5C05]/90 active:bg-[#2A2621] py-3.5 text-xs font-bold text-[#2A2621] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
                         >
                           {isLoading ? 'Generating Code...' : 'Get Verification Code'}
                         </button>
@@ -491,18 +491,18 @@ export default function SignupPage() {
                   {step === 'verify-email' && (
                     <form onSubmit={handleVerifySubmit} className="space-y-5">
                       <div className="text-center space-y-2">
-                        <h2 className="text-lg font-extrabold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                        <h2 className="text-lg font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                           Verify School Email
                         </h2>
-                        <p className="text-xs text-[#374151]">
-                          We sent a 6-digit access code to <span className="font-bold text-[#191919]">{email}</span>
+                        <p className="text-xs text-[#5A554E]">
+                          We sent a 6-digit access code to <span className="font-bold text-[#2A2621]">{email}</span>
                         </p>
                       </div>
 
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-bold text-[#374151] uppercase tracking-widest block">6-Digit Verification Code</label>
+                        <label className="text-[10px] font-bold text-[#5A554E] uppercase tracking-widest block">6-Digit Verification Code</label>
                         <div className="relative">
-                          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#4B5563]"><KeyRound className="h-4 w-4" /></div>
+                          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#5A554E]"><KeyRound className="h-4 w-4" /></div>
                           <input 
                             type="text" 
                             maxLength={6}
@@ -510,13 +510,13 @@ export default function SignupPage() {
                             value={verificationCode}
                             onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
                             placeholder="Enter 6-digit code"
-                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium text-center tracking-[0.3em] font-mono text-base"
+                            className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05] focus:ring-1 focus:ring-[#FD5C05] transition-all font-medium text-center tracking-[0.3em] font-mono text-base"
                           />
                         </div>
                         {generatedCode && (
-                          <div className="bg-[#BDFB04]/10 border border-[#BDFB04]/20 rounded-lg p-2.5 text-[10px] text-[#4B5563] text-left">
-                            <span className="font-bold text-[#191919] block uppercase tracking-wider mb-0.5">Mock Notification Inbox:</span>
-                            Your verification code is: <span className="font-black text-[#191919] text-xs">{generatedCode}</span>
+                          <div className="bg-[#FD5C05]/10 border border-[#FD5C05]/20 rounded-lg p-2.5 text-[10px] text-[#5A554E] text-left">
+                            <span className="font-bold text-[#2A2621] block uppercase tracking-wider mb-0.5">Mock Notification Inbox:</span>
+                            Your verification code is: <span className="font-black text-[#2A2621] text-xs">{generatedCode}</span>
                           </div>
                         )}
                       </div>
@@ -531,7 +531,7 @@ export default function SignupPage() {
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#FD5C05] hover:bg-[#FD5C05]/90 active:bg-[#2A2621] py-3.5 text-xs font-bold text-[#2A2621] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
                       >
                         {isLoading ? 'Verifying Code...' : 'Confirm Verification Code'}
                       </button>
@@ -542,32 +542,32 @@ export default function SignupPage() {
                   {step === 'data-privacy' && (
                     <form onSubmit={handleConsentSubmit} className="space-y-5">
                       <div className="text-center space-y-2">
-                        <h2 className="text-lg font-extrabold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                        <h2 className="text-lg font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                           Consent & Privacy
                         </h2>
-                        <p className="text-xs text-[#374151]">
+                        <p className="text-xs text-[#5A554E]">
                           Evida takes safety seriously. Review and check all required consents.
                         </p>
                       </div>
 
                       <div className="space-y-3.5">
                         <label className="flex items-start gap-3 cursor-pointer group select-none">
-                          <input type="checkbox" checked={consentTerms} onChange={() => setConsentTerms(!consentTerms)} className="mt-1 h-3.5 w-3.5 rounded border-gray-300 text-[#BDFB04] focus:ring-[#BDFB04]" />
-                          <span className="text-[11px] text-[#374151] leading-snug">
-                            I agree to the <Link href="/terms" target="_blank" className="font-bold underline text-[#191919]">Terms of Service</Link> and the campus safety policies.
+                          <input type="checkbox" checked={consentTerms} onChange={() => setConsentTerms(!consentTerms)} className="mt-1 h-3.5 w-3.5 rounded border-gray-300 text-[#FD5C05] focus:ring-[#FD5C05]" />
+                          <span className="text-[11px] text-[#5A554E] leading-snug">
+                            I agree to the <Link href="/terms" target="_blank" className="font-bold underline text-[#2A2621]">Terms of Service</Link> and the campus safety policies.
                           </span>
                         </label>
 
                         <label className="flex items-start gap-3 cursor-pointer group select-none">
-                          <input type="checkbox" checked={consentData} onChange={() => setConsentData(!consentData)} className="mt-1 h-3.5 w-3.5 rounded border-gray-300 text-[#BDFB04] focus:ring-[#BDFB04]" />
-                          <span className="text-[11px] text-[#374151] leading-snug">
+                          <input type="checkbox" checked={consentData} onChange={() => setConsentData(!consentData)} className="mt-1 h-3.5 w-3.5 rounded border-gray-300 text-[#FD5C05] focus:ring-[#FD5C05]" />
+                          <span className="text-[11px] text-[#5A554E] leading-snug">
                             I consent to the collection and use of my registration details for school verification purposes.
                           </span>
                         </label>
 
                         <label className="flex items-start gap-3 cursor-pointer group select-none">
-                          <input type="checkbox" checked={consentAge} onChange={() => setConsentAge(!consentAge)} className="mt-1 h-3.5 w-3.5 rounded border-gray-300 text-[#BDFB04] focus:ring-[#BDFB04]" />
-                          <span className="text-[11px] text-[#374151] leading-snug">
+                          <input type="checkbox" checked={consentAge} onChange={() => setConsentAge(!consentAge)} className="mt-1 h-3.5 w-3.5 rounded border-gray-300 text-[#FD5C05] focus:ring-[#FD5C05]" />
+                          <span className="text-[11px] text-[#5A554E] leading-snug">
                             I confirm that I am at least 16 years of age and currently enrolled at this university.
                           </span>
                         </label>
@@ -583,7 +583,7 @@ export default function SignupPage() {
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#FD5C05] hover:bg-[#FD5C05]/90 active:bg-[#2A2621] py-3.5 text-xs font-bold text-[#2A2621] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
                       >
                         Accept Terms & Continue
                       </button>
@@ -595,7 +595,7 @@ export default function SignupPage() {
                     <form onSubmit={handleStudentProfileSubmit} className="space-y-4 pt-1">
                       {/* Avatar Picker */}
                       <div className="flex flex-col items-center gap-3">
-                        <span className="text-[9px] font-extrabold text-[#374151] uppercase tracking-wider block">
+                        <span className="text-[9px] font-extrabold text-[#5A554E] uppercase tracking-wider block">
                           Profile Picture
                         </span>
                         <div className="relative">
@@ -603,7 +603,7 @@ export default function SignupPage() {
                             <div className="h-16 w-16 rounded-full border-2 border-black/10 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${uploadedImage})` }} />
                           ) : (
                             <div 
-                              className="h-16 w-16 rounded-full border-2 border-black/5 text-white flex items-center justify-center font-extrabold text-lg shadow-sm transition-colors duration-300"
+                              className="h-16 w-16 rounded-full border-2 border-[#D8D2BC]/40 text-white flex items-center justify-center font-extrabold text-lg shadow-sm transition-colors duration-300"
                               style={{ backgroundColor: selectedColor }}
                             >
                               {getInitials()}
@@ -612,19 +612,19 @@ export default function SignupPage() {
                           <button
                             type="button"
                             onClick={() => fileInputRef.current?.click()}
-                            className="absolute bottom-0 right-0 h-6 w-6 rounded-full bg-[#191919] text-white flex items-center justify-center hover:scale-105 transition-transform border border-white cursor-pointer shadow"
+                            className="absolute bottom-0 right-0 h-6 w-6 rounded-full bg-[#2A2621] text-white flex items-center justify-center hover:scale-105 transition-transform border border-white cursor-pointer shadow"
                           >
                             <Camera className="h-3.5 w-3.5" />
                           </button>
                         </div>
                         <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" className="hidden" />
                         <div className="flex gap-2.5 items-center justify-center">
-                          {['#BDFB04', '#FF7A1A', '#9C27B0', '#2196F3', '#FF5722'].map((c) => (
+                          {['#FD5C05', '#FF7A1A', '#9C27B0', '#2196F3', '#FF5722'].map((c) => (
                             <button
                               key={c}
                               type="button"
                               onClick={() => { setSelectedColor(c); setAvatarType('initials'); }}
-                              className={`h-5 w-5 rounded-full border border-black/10 transition-all hover:scale-110 cursor-pointer ${selectedColor === c && avatarType === 'initials' ? 'ring-2 ring-[#191919] ring-offset-2 scale-105' : ''}`}
+                              className={`h-5 w-5 rounded-full border border-black/10 transition-all hover:scale-110 cursor-pointer ${selectedColor === c && avatarType === 'initials' ? 'ring-2 ring-[#2A2621] ring-offset-2 scale-105' : ''}`}
                               style={{ backgroundColor: c }}
                             />
                           ))}
@@ -635,51 +635,51 @@ export default function SignupPage() {
                         {/* First & Last Name */}
                         <div className="grid grid-cols-2 gap-3.5">
                           <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-[#374151] uppercase tracking-widest block">First Name</label>
+                            <label className="text-[10px] font-bold text-[#5A554E] uppercase tracking-widest block">First Name</label>
                             <div className="relative">
-                              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#4B5563]"><User className="h-3.5 w-3.5" /></div>
+                              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#5A554E]"><User className="h-3.5 w-3.5" /></div>
                               <input type="text" required value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="e.g. Alex"
-                                className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
+                                className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05] focus:ring-1 focus:ring-[#FD5C05] transition-all font-medium" />
                             </div>
                           </div>
                           <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-[#374151] uppercase tracking-widest block">Last Name</label>
+                            <label className="text-[10px] font-bold text-[#5A554E] uppercase tracking-widest block">Last Name</label>
                             <div className="relative">
-                              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#4B5563]"><User className="h-3.5 w-3.5" /></div>
+                              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#5A554E]"><User className="h-3.5 w-3.5" /></div>
                               <input type="text" required value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="e.g. Carter"
-                                className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
+                                className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05] focus:ring-1 focus:ring-[#FD5C05] transition-all font-medium" />
                             </div>
                           </div>
                         </div>
 
                         {/* Major Field */}
                         <div className="space-y-1.5">
-                          <label className="text-[10px] font-bold text-[#374151] uppercase tracking-widest block">Academic Major</label>
+                          <label className="text-[10px] font-bold text-[#5A554E] uppercase tracking-widest block">Academic Major</label>
                           <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#4B5563]"><BookOpen className="h-4 w-4" /></div>
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#5A554E]"><BookOpen className="h-4 w-4" /></div>
                             <input type="text" required value={major} onChange={(e) => setMajor(e.target.value)} placeholder="e.g. Computer Science"
-                              className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
+                              className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05] focus:ring-1 focus:ring-[#FD5C05] transition-all font-medium" />
                           </div>
                         </div>
 
                         {/* Graduation Year */}
                         <div className="grid grid-cols-2 gap-3.5">
                           <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-[#374151] uppercase tracking-widest block">Graduation Year</label>
+                            <label className="text-[10px] font-bold text-[#5A554E] uppercase tracking-widest block">Graduation Year</label>
                             <div className="relative">
-                              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#4B5563]"><Calendar className="h-4 w-4" /></div>
+                              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#5A554E]"><Calendar className="h-4 w-4" /></div>
                               <select value={gradYear} onChange={(e) => setGradYear(e.target.value)}
-                                className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#191919] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-semibold">
+                                className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#2A2621] focus:outline-none focus:border-[#FD5C05] focus:ring-1 focus:ring-[#FD5C05] transition-all font-semibold">
                                 {['2026', '2027', '2028', '2029', '2030'].map((y) => <option key={y} value={y}>{y}</option>)}
                               </select>
                             </div>
                           </div>
                           <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-[#374151] uppercase tracking-widest block">Phone Number</label>
+                            <label className="text-[10px] font-bold text-[#5A554E] uppercase tracking-widest block">Phone Number</label>
                             <div className="relative">
-                              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#4B5563]"><Phone className="h-3.5 w-3.5" /></div>
+                              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#5A554E]"><Phone className="h-3.5 w-3.5" /></div>
                               <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="(123) 456-7890"
-                                className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
+                                className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-9 pr-3 text-xs text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05] focus:ring-1 focus:ring-[#FD5C05] transition-all font-medium" />
                             </div>
                           </div>
                         </div>
@@ -695,7 +695,7 @@ export default function SignupPage() {
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#FD5C05] hover:bg-[#FD5C05]/90 active:bg-[#2A2621] py-3.5 text-xs font-bold text-[#2A2621] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
                       >
                         {isLoading ? 'Creating Student Profile...' : 'Complete Profile Setup'}
                       </button>
@@ -707,19 +707,19 @@ export default function SignupPage() {
                     <form onSubmit={handleSchoolOnboardingSubmit} className="space-y-4 pt-1">
                       <div className="space-y-3">
                         <div className="space-y-1.5">
-                          <label className="text-[10px] font-bold text-[#374151] uppercase tracking-widest block">Administration Department</label>
+                          <label className="text-[10px] font-bold text-[#5A554E] uppercase tracking-widest block">Administration Department</label>
                           <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#4B5563]"><User className="h-4 w-4" /></div>
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#5A554E]"><User className="h-4 w-4" /></div>
                             <input type="text" required value={department} onChange={(e) => setDepartment(e.target.value)} placeholder="e.g. Student Affairs Board"
-                              className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
+                              className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05] focus:ring-1 focus:ring-[#FD5C05] transition-all font-medium" />
                           </div>
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-[10px] font-bold text-[#374151] uppercase tracking-widest block">Institution Name</label>
+                          <label className="text-[10px] font-bold text-[#5A554E] uppercase tracking-widest block">Institution Name</label>
                           <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#4B5563]"><Building className="h-4 w-4" /></div>
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#5A554E]"><Building className="h-4 w-4" /></div>
                             <input type="text" required value={customSchoolName} onChange={(e) => setCustomSchoolName(e.target.value)} placeholder="e.g. State University"
-                              className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04] focus:ring-1 focus:ring-[#BDFB04] transition-all font-medium" />
+                              className="w-full rounded-xl border-2 border-black/[0.08] bg-white py-2.5 pl-11 pr-4 text-xs text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05] focus:ring-1 focus:ring-[#FD5C05] transition-all font-medium" />
                           </div>
                         </div>
                       </div>
@@ -734,7 +734,7 @@ export default function SignupPage() {
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#BDFB04] hover:bg-[#BDFB04]/90 active:bg-[#191919] py-3.5 text-xs font-bold text-[#191919] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#FD5C05] hover:bg-[#FD5C05]/90 active:bg-[#2A2621] py-3.5 text-xs font-bold text-[#2A2621] uppercase tracking-widest transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
                       >
                         {isLoading ? 'Saving Institution Profile...' : 'Complete Administration Setup'}
                       </button>
@@ -754,16 +754,16 @@ export default function SignupPage() {
                       </motion.div>
 
                       <div className="space-y-2">
-                        <h2 className="text-xl font-extrabold text-[#191919] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                        <h2 className="text-xl font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                           Account Activated
                         </h2>
-                        <p className="text-xs text-[#374151]">
+                        <p className="text-xs text-[#5A554E]">
                           Welcome to Evida! Initializing your custom {role === 'student' ? 'Student' : 'Administration'} workspace...
                         </p>
                       </div>
 
                       <div className="flex justify-center pt-2">
-                        <div className="w-6 h-6 border-2 border-[#BDFB04] border-t-transparent rounded-full animate-spin" />
+                        <div className="w-6 h-6 border-2 border-[#FD5C05] border-t-transparent rounded-full animate-spin" />
                       </div>
                     </div>
                   )}
@@ -777,9 +777,9 @@ export default function SignupPage() {
       {/* Dynamic Background Glowing Blobs (only when splash is gone) */}
       {!showSplash && (
         <>
-          <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#BDFB04]/5 blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#BDFB04]/4 blur-[100px] pointer-events-none" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#BDFB04]/3 blur-[140px] pointer-events-none" />
+          <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#FD5C05]/5 blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#FD5C05]/4 blur-[100px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#FD5C05]/3 blur-[140px] pointer-events-none" />
         </>
       )}
     </div>

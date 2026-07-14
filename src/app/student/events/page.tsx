@@ -344,17 +344,17 @@ export default function StudentEventsFeed() {
     <div className={`mx-auto ${
       feedMode === 'tiktok' 
         ? 'w-full max-w-none h-screen overflow-hidden p-0 relative bg-black md:bg-[#0F0F0F]' 
-        : 'max-w-7xl p-6 md:p-10 space-y-8 bg-[#DFDED7]'
+        : 'max-w-7xl p-6 md:p-10 space-y-8 bg-[#D8D2BC]'
     }`}>
       {/* Grid Navigation Header */}
       {feedMode === 'grid' && (
-        <div className="z-50 flex flex-col gap-4 border-b bg-[#DFDED7]/80 backdrop-blur-md text-[#191919] border-black/[0.04] sticky top-0 px-6 py-4 -mx-6 md:mx-0 md:px-0">
+        <div className="z-50 flex flex-col gap-4 border-b bg-[#D8D2BC]/80 backdrop-blur-md text-[#2A2621] border-black/[0.04] sticky top-0 px-6 py-4 -mx-6 md:mx-0 md:px-0">
           <div className="flex items-center justify-between w-full">
             {/* Left Corner: Single switch button (Feed <-> Grid in one) */}
             <button
               type="button"
               onClick={() => setFeedMode('tiktok')}
-              className="h-10 w-10 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-sm border bg-white border-black/10 text-[#191919] hover:bg-black/5"
+              className="h-10 w-10 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-sm border bg-white border-black/10 text-[#2A2621] hover:bg-[#D8D2BC]/30"
               title="Switch to Feed view"
             >
               <LayoutGrid className="h-5 w-5" />
@@ -370,8 +370,8 @@ export default function StudentEventsFeed() {
                 }}
                 className={`px-5 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
                   selectedTab === 'campus' 
-                    ? 'bg-[#BDFB04] text-[#191919] font-black' 
-                    : 'text-[#374151] hover:text-[#191919]'
+                    ? 'bg-[#FD5C05] text-[#2A2621] font-black' 
+                    : 'text-[#5A554E] hover:text-[#2A2621]'
                 }`}
               >
                 Events
@@ -384,8 +384,8 @@ export default function StudentEventsFeed() {
                 }}
                 className={`px-5 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
                   selectedTab === 'promotions' 
-                    ? 'bg-[#BDFB04] text-[#191919] font-black' 
-                    : 'text-[#374151] hover:text-[#191919]'
+                    ? 'bg-[#FD5C05] text-[#2A2621] font-black' 
+                    : 'text-[#5A554E] hover:text-[#2A2621]'
                 }`}
               >
                 Promotions
@@ -403,8 +403,8 @@ export default function StudentEventsFeed() {
               }}
               className={`h-10 w-10 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-sm border transition-colors ${
                 searchOpen
-                  ? 'bg-[#BDFB04] border-[#BDFB04]/30 text-[#191919] hover:bg-[#d1fa3c]'
-                  : 'bg-white border-black/10 text-[#191919] hover:bg-black/5'
+                  ? 'bg-[#FD5C05] border-[#FD5C05]/30 text-[#2A2621] hover:bg-[#CC3D00]'
+                  : 'bg-white border-black/10 text-[#2A2621] hover:bg-[#D8D2BC]/30'
               }`}
               title={searchOpen ? "Close Search" : "Search Events"}
             >
@@ -424,7 +424,7 @@ export default function StudentEventsFeed() {
                   className="w-full md:w-96 overflow-hidden pb-1"
                 >
                   <div className="relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#4B5563]" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#5A554E]" />
                     <Input
                       placeholder="Search events, organizers, or keywords..."
                       className="pl-12 rounded-full w-full"
@@ -440,26 +440,26 @@ export default function StudentEventsFeed() {
             {/* Matched Organizations */}
             {matchedOrgs.length > 0 && (
               <div className="space-y-2 mt-2 max-w-md">
-                <h2 className="text-[10px] font-extrabold text-[#191919] uppercase tracking-widest">Matched Organizations</h2>
+                <h2 className="text-[10px] font-extrabold text-[#2A2621] uppercase tracking-widest">Matched Organizations</h2>
                 {matchedOrgs.map(org => (
                   <div 
                     key={org.id} 
                     onClick={() => router.push(`/student/organizations/${org.id}`)}
-                    className="bg-white rounded-2xl p-3 flex items-center justify-between border border-black/[0.04] shadow-sm hover:border-[#BDFB04] transition-all cursor-pointer group"
+                    className="bg-white rounded-2xl p-3 flex items-center justify-between border border-black/[0.04] shadow-sm hover:border-[#FD5C05] transition-all cursor-pointer group"
                   >
                     <div className="flex items-center gap-2">
-                      <div className="h-8 w-8 rounded-lg bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex items-center justify-center text-[#191919] font-extrabold uppercase text-xs shadow-sm">
+                      <div className="h-8 w-8 rounded-lg bg-[#FD5C05]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[#2A2621] font-extrabold uppercase text-xs shadow-sm">
                         {org.name.charAt(0)}
                       </div>
                       <div>
-                        <h4 className="text-[11px] font-bold text-[#191919] uppercase tracking-tight flex items-center group-hover:text-[#BDFB04] transition-colors">
+                        <h4 className="text-[11px] font-bold text-[#2A2621] uppercase tracking-tight flex items-center group-hover:text-[#FD5C05] transition-colors">
                           {org.name}
                           {org.verified && <VerifiedBadge className="h-3 w-3 ml-1" />}
                         </h4>
-                        <p className="text-[9px] text-[#374151]">{org.members.length} members • Campus Group</p>
+                        <p className="text-[9px] text-[#5A554E]">{org.members.length} members • Campus Group</p>
                       </div>
                     </div>
-                    <span className="text-[9px] font-bold text-[#4B5563] group-hover:text-[#191919] transition-colors uppercase">View →</span>
+                    <span className="text-[9px] font-bold text-[#5A554E] group-hover:text-[#2A2621] transition-colors uppercase">View →</span>
                   </div>
                 ))}
               </div>
@@ -467,7 +467,7 @@ export default function StudentEventsFeed() {
 
             {/* Category Filters */}
             <div className="space-y-3 pt-1">
-              <h2 className="text-[10px] font-extrabold text-[#191919] uppercase tracking-widest">Category</h2>
+              <h2 className="text-[10px] font-extrabold text-[#2A2621] uppercase tracking-widest">Category</h2>
               <div className="flex gap-2.5 overflow-x-auto pb-3 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
                 {categories.map((cat) => {
                   const isActive = selectedCategory === cat;
@@ -480,14 +480,14 @@ export default function StudentEventsFeed() {
                       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                       className={`relative shrink-0 px-5.5 py-2.5 h-9.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider cursor-pointer select-none transition-colors duration-200 ${
                         isActive
-                          ? 'text-[#191919]'
-                          : 'bg-black/[0.02] border border-black/[0.06] text-[#374151] hover:bg-black/[0.04] hover:text-[#191919]'
+                          ? 'text-[#2A2621]'
+                          : 'bg-black/[0.02] border border-[#D8D2BC]/30 text-[#5A554E] hover:bg-black/[0.04] hover:text-[#2A2621]'
                       }`}
                     >
                       {isActive && (
                         <motion.div
                           layoutId="activeCategoryBg"
-                          className="absolute inset-0 bg-[#BDFB04] rounded-full z-0"
+                          className="absolute inset-0 bg-[#FD5C05] rounded-full z-0"
                           transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                         />
                       )}
@@ -545,19 +545,19 @@ export default function StudentEventsFeed() {
             
             {/* The Left Navigation Sidebar (Desktop/Tablet only) */}
             <div className="hidden md:flex fixed left-10 top-1/2 -translate-y-1/2 flex-col gap-8 items-center px-4 py-8 bg-[#161616]/90 backdrop-blur-md rounded-[28px] border border-white/5 shadow-2xl w-18 z-50">
-              <Link href="/student/dashboard" className="text-white/60 hover:text-[#BDFB04] transition-all hover:scale-110">
+              <Link href="/student/dashboard" className="text-white/60 hover:text-[#FD5C05] transition-all hover:scale-110">
                 <Home className="h-6 w-6" />
               </Link>
-              <Link href="/student/events" className="text-[#BDFB04] hover:scale-110 transition-all">
+              <Link href="/student/events" className="text-[#FD5C05] hover:scale-110 transition-all">
                 <Compass className="h-6 w-6" />
               </Link>
-              <Link href="/student/create" className="text-white/60 hover:text-[#BDFB04] transition-all hover:scale-110">
+              <Link href="/student/create" className="text-white/60 hover:text-[#FD5C05] transition-all hover:scale-110">
                 <Plus className="h-6 w-6" />
               </Link>
-              <Link href="/student/saved" className="text-white/60 hover:text-[#BDFB04] transition-all hover:scale-110">
+              <Link href="/student/saved" className="text-white/60 hover:text-[#FD5C05] transition-all hover:scale-110">
                 <Bookmark className="h-6 w-6" />
               </Link>
-              <Link href="/student/profile" className="text-white/60 hover:text-[#BDFB04] transition-all hover:scale-110">
+              <Link href="/student/profile" className="text-white/60 hover:text-[#FD5C05] transition-all hover:scale-110">
                 <User className="h-6 w-6" />
               </Link>
             </div>
@@ -590,7 +590,7 @@ export default function StudentEventsFeed() {
                       }}
                       className={`px-4 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
                         selectedTab === 'campus' 
-                          ? 'bg-[#BDFB04] text-[#191919] font-black' 
+                          ? 'bg-[#FD5C05] text-[#2A2621] font-black' 
                           : 'text-white/80 hover:text-white'
                       }`}
                     >
@@ -604,7 +604,7 @@ export default function StudentEventsFeed() {
                       }}
                       className={`px-4 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
                         selectedTab === 'promotions' 
-                          ? 'bg-[#BDFB04] text-[#191919] font-black' 
+                          ? 'bg-[#FD5C05] text-[#2A2621] font-black' 
                           : 'text-white/80 hover:text-white'
                       }`}
                     >
@@ -674,9 +674,9 @@ export default function StudentEventsFeed() {
 
                         {/* Bottom-Left Details Inside Player Frame */}
                         <div className="absolute bottom-16 left-4 z-20 max-w-[85%] text-white text-left space-y-3 select-none">
-                          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#BDFB04]">
+                          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#FD5C05]">
                             <span>@{orgName.toLowerCase().replace(/\s+/g, '')}</span>
-                            {isOrgVerified && <VerifiedBadge className="h-4 w-4 fill-[#BDFB04] text-black" />}
+                            {isOrgVerified && <VerifiedBadge className="h-4 w-4 fill-[#FD5C05] text-black" />}
                           </div>
 
                           <h2 
@@ -698,7 +698,7 @@ export default function StudentEventsFeed() {
                               <button
                                 type="button"
                                 onClick={() => setExpandedDescItem(expandedDescItem === item.id ? null : item.id)}
-                                className="text-[9px] font-bold text-[#BDFB04] uppercase tracking-wider hover:underline cursor-pointer block mt-0.5"
+                                className="text-[9px] font-bold text-[#FD5C05] uppercase tracking-wider hover:underline cursor-pointer block mt-0.5"
                               >
                                 {expandedDescItem === item.id ? 'Read Less' : 'Read More'}
                               </button>
@@ -710,7 +710,7 @@ export default function StudentEventsFeed() {
                             <span className="px-2.5 py-1 text-[8px] font-black uppercase tracking-wider rounded-md bg-white/10 border border-white/10">
                               {isPromo ? 'Promotion' : item.category}
                             </span>
-                            <span className="px-2.5 py-1 text-[8px] font-black uppercase tracking-wider rounded-md bg-[#BDFB04] text-[#191919] shadow-sm">
+                            <span className="px-2.5 py-1 text-[8px] font-black uppercase tracking-wider rounded-md bg-[#FD5C05] text-[#2A2621] shadow-sm">
                               {isPromo ? 'FREE' : (item.free ? 'FREE' : 'TICKETED')}
                             </span>
                             {!isPromo && !item.free && (item as Event).price && (
@@ -723,18 +723,18 @@ export default function StudentEventsFeed() {
                           {/* Date and Location section spacing & alignment */}
                           <div className="space-y-2 pt-2 text-[10px] font-bold text-white/90 uppercase">
                             <div className="flex items-center gap-2.5">
-                              <Calendar className="h-4 w-4 text-[#BDFB04] shrink-0" />
+                              <Calendar className="h-4 w-4 text-[#FD5C05] shrink-0" />
                               <span>{formattedDate} • {timeStr}</span>
                             </div>
                             <div className="flex items-center gap-2.5 truncate">
-                              <MapPin className="h-4 w-4 text-[#BDFB04] shrink-0" />
+                              <MapPin className="h-4 w-4 text-[#FD5C05] shrink-0" />
                               <span className="truncate">{isPromo ? (item as Promotion).organizer : (item as Event).location}</span>
                             </div>
                           </div>
 
                           <button
                             onClick={() => handleCardClick(item)}
-                            className="mt-3 bg-[#BDFB04] text-[#191919] hover:bg-[#c5ff0a] px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
+                            className="mt-3 bg-[#FD5C05] text-[#2A2621] hover:bg-[#c5ff0a] px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
                           >
                             {isPromo ? 'Contact Organizer' : "I'm In"}
                           </button>
@@ -742,14 +742,14 @@ export default function StudentEventsFeed() {
                           {/* Inline comments drawer (Mobile only/Fallback) */}
                           {isCommentOpen && (
                             <div className="pt-2 bg-black/60 border border-white/10 rounded-2xl p-3 space-y-2 mt-2 backdrop-blur-sm max-w-sm">
-                              <span className="text-[8px] font-extrabold text-[#BDFB04] uppercase tracking-wider block">Comments ({itemComments.length})</span>
+                              <span className="text-[8px] font-extrabold text-[#FD5C05] uppercase tracking-wider block">Comments ({itemComments.length})</span>
                               <div className="max-h-24 overflow-y-auto space-y-1.5 pr-1 text-[10px] text-white">
                                 {itemComments.length === 0 ? (
                                   <p className="text-[9px] text-white/40 italic">No comments yet.</p>
                                 ) : (
                                   itemComments.map((c, i) => (
                                     <div key={i} className="leading-tight">
-                                      <span className="font-extrabold text-[#BDFB04]">{c.user}:</span>{' '}
+                                      <span className="font-extrabold text-[#FD5C05]">{c.user}:</span>{' '}
                                       <span className="text-white/90 font-light">{c.text}</span>
                                     </div>
                                   ))
@@ -765,11 +765,11 @@ export default function StudentEventsFeed() {
                                     }
                                   }}
                                   placeholder="Add comment..."
-                                  className="flex-1 bg-white/10 border border-white/10 rounded-xl px-2.5 py-1 text-[9px] text-white placeholder-white/40 focus:outline-none focus:border-[#BDFB04]"
+                                  className="flex-1 bg-white/10 border border-white/10 rounded-xl px-2.5 py-1 text-[9px] text-white placeholder-white/40 focus:outline-none focus:border-[#FD5C05]"
                                 />
                                 <button
                                   onClick={() => handleAddComment(item.id)}
-                                  className="px-2 py-1 bg-[#BDFB04] text-[#191919] text-[9px] font-bold rounded-lg uppercase tracking-wider hover:bg-[#c5ff0a] transition-all"
+                                  className="px-2 py-1 bg-[#FD5C05] text-[#2A2621] text-[9px] font-bold rounded-lg uppercase tracking-wider hover:bg-[#c5ff0a] transition-all"
                                 >
                                   Post
                                 </button>
@@ -795,7 +795,7 @@ export default function StudentEventsFeed() {
                             <button
                               onClick={() => setCommentsOpenItem(isCommentOpen ? null : item)}
                               className={`h-11 w-11 rounded-full flex items-center justify-center backdrop-blur-md border transition-all cursor-pointer shadow-lg ${
-                                isCommentOpen ? 'bg-[#BDFB04] border-[#c5ff0a] text-[#191919]' : 'bg-black/40 border-white/10 text-white'
+                                isCommentOpen ? 'bg-[#FD5C05] border-[#c5ff0a] text-[#2A2621]' : 'bg-black/40 border-white/10 text-white'
                               }`}
                             >
                               <MessageCircle className="h-5 w-5" />
@@ -806,10 +806,10 @@ export default function StudentEventsFeed() {
                             <button
                               onClick={() => saveToggle(item.id)}
                               className={`h-11 w-11 rounded-full flex items-center justify-center backdrop-blur-md border transition-all cursor-pointer shadow-lg ${
-                                isSaved ? 'bg-[#BDFB04] border-[#c5ff0a] text-[#191919]' : 'bg-black/40 border-white/10 text-white'
+                                isSaved ? 'bg-[#FD5C05] border-[#c5ff0a] text-[#2A2621]' : 'bg-black/40 border-white/10 text-white'
                               }`}
                             >
-                              <Bookmark className={`h-5 w-5 ${isSaved ? 'fill-[#191919]' : ''}`} />
+                              <Bookmark className={`h-5 w-5 ${isSaved ? 'fill-[#2A2621]' : ''}`} />
                             </button>
                             <span className="text-[10px] font-black text-white drop-shadow-md">Save</span>
                           </div>
@@ -852,7 +852,7 @@ export default function StudentEventsFeed() {
                     <button
                       onClick={() => setCommentsOpenItem(commentsOpenItem?.id === activeItem.id ? null : activeItem)}
                       className={`h-12 w-12 rounded-full flex items-center justify-center border transition-all cursor-pointer shadow-lg bg-[#2c2c2c]/85 border-white/10 text-white hover:scale-105 active:scale-95 ${
-                        commentsOpenItem?.id === activeItem.id ? 'bg-[#BDFB04] border-[#c5ff0a] text-[#191919]' : ''
+                        commentsOpenItem?.id === activeItem.id ? 'bg-[#FD5C05] border-[#c5ff0a] text-[#2A2621]' : ''
                       }`}
                     >
                       <MessageCircle className="h-5.5 w-5.5" />
@@ -865,10 +865,10 @@ export default function StudentEventsFeed() {
                     <button
                       onClick={() => 'ownershipType' in activeItem ? saveToggle(activeItem.id) : undefined}
                       className={`h-12 w-12 rounded-full flex items-center justify-center border transition-all cursor-pointer shadow-lg bg-[#2c2c2c]/85 border-white/10 text-white hover:scale-105 active:scale-95 ${
-                        activeIsSaved ? 'bg-[#BDFB04] border-[#c5ff0a] text-[#191919]' : ''
+                        activeIsSaved ? 'bg-[#FD5C05] border-[#c5ff0a] text-[#2A2621]' : ''
                       }`}
                     >
-                      <Bookmark className={`h-5.5 w-5.5 ${activeIsSaved ? 'fill-[#191919]' : ''}`} />
+                      <Bookmark className={`h-5.5 w-5.5 ${activeIsSaved ? 'fill-[#2A2621]' : ''}`} />
                     </button>
                     <span className="text-xs font-bold text-white/80">Save</span>
                   </div>
@@ -896,7 +896,7 @@ export default function StudentEventsFeed() {
 
                   {/* Spinning Vinyl Record decoration */}
                   <div className="h-12 w-12 rounded-full bg-black border border-white/10 flex items-center justify-center shadow-2xl animate-spin [animation-duration:6s] mt-2">
-                    <div className="h-5 w-5 rounded-full bg-[#BDFB04] border border-black flex items-center justify-center">
+                    <div className="h-5 w-5 rounded-full bg-[#FD5C05] border border-black flex items-center justify-center">
                       <Compass className="h-2.5 w-2.5 text-black" />
                     </div>
                   </div>
@@ -909,7 +909,7 @@ export default function StudentEventsFeed() {
         </div>
       ) : (
         <EmptyState
-          icon={<Compass className="h-8 w-8 text-[#4B5563]" />}
+          icon={<Compass className="h-8 w-8 text-[#5A554E]" />}
           title="No events found"
           description="Try adjusting your search or category filters to discover campus activities."
         />
@@ -943,7 +943,7 @@ export default function StudentEventsFeed() {
           </div>
         ) : (
           <EmptyState
-            icon={<Compass className="h-8 w-8 text-[#4B5563]" />}
+            icon={<Compass className="h-8 w-8 text-[#5A554E]" />}
             title="No events found"
             description="Try adjusting your search or category filters to discover campus activities."
           />
@@ -968,7 +968,7 @@ export default function StudentEventsFeed() {
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="bg-white border border-black/[0.06] rounded-[28px] max-w-lg w-full overflow-hidden shadow-2xl relative z-10"
+              className="bg-white border border-[#D8D2BC]/30 rounded-[28px] max-w-lg w-full overflow-hidden shadow-2xl relative z-10"
             >
               {/* Header Decorative Image Cover */}
               <div className="h-40 bg-gradient-to-tr from-purple-900 via-slate-900 to-violet-950 relative flex items-end p-6">
@@ -994,12 +994,12 @@ export default function StudentEventsFeed() {
               <div className="p-6 space-y-6">
                 <div className="space-y-4">
                   {/* Category & Date */}
-                  <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-[#374151]">
-                    <span className="bg-black/5 px-2.5 py-1 rounded-full text-[#191919] capitalize">
+                  <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-[#5A554E]">
+                    <span className="bg-[#D8D2BC]/30 px-2.5 py-1 rounded-full text-[#2A2621] capitalize">
                       Category: {selectedPromo.category}
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <Calendar className="h-3.5 w-3.5 text-[#BDFB04]" />
+                      <Calendar className="h-3.5 w-3.5 text-[#FD5C05]" />
                       Posted: {new Date(selectedPromo.date).toLocaleDateString()}
                     </span>
                   </div>
@@ -1007,21 +1007,21 @@ export default function StudentEventsFeed() {
                   {/* Description */}
                   <div className="space-y-2">
                     <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest">About this Promotion</h3>
-                    <p className="text-sm text-[#374151] leading-relaxed whitespace-pre-wrap">
+                    <p className="text-sm text-[#5A554E] leading-relaxed whitespace-pre-wrap">
                       {selectedPromo.description}
                     </p>
                   </div>
 
                   {/* Organizer Contact Info */}
-                  <div className="bg-black/5 border border-black/[0.04] p-4 rounded-2xl space-y-3">
+                  <div className="bg-[#D8D2BC]/30 border border-black/[0.04] p-4 rounded-2xl space-y-3">
                     <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest">Organizer Information</h3>
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-xs text-[#191919]">
-                        <span className="text-[#4B5563]">Name:</span>
+                      <div className="flex items-center gap-2 text-xs text-[#2A2621]">
+                        <span className="text-[#5A554E]">Name:</span>
                         <span className="font-bold">{selectedPromo.organizer}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-[#374151]">
-                        <Mail className="h-3.5 w-3.5 text-[#BDFB04] shrink-0" />
+                      <div className="flex items-center gap-2 text-xs text-[#5A554E]">
+                        <Mail className="h-3.5 w-3.5 text-[#FD5C05] shrink-0" />
                         <span className="break-all">{selectedPromo.contactInfo}</span>
                       </div>
                     </div>
@@ -1038,7 +1038,7 @@ export default function StudentEventsFeed() {
                   </Button>
                   <a 
                     href={`mailto:${selectedPromo.contactInfo}?subject=Inquiry about: ${selectedPromo.title}`}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#BDFB04] hover:bg-[#BDFB04]/90 text-[#191919] rounded-xl text-xs font-bold transition-all shadow-lg shadow-orange-500/10"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#FD5C05] hover:bg-[#FD5C05]/90 text-[#2A2621] rounded-xl text-xs font-bold transition-all shadow-lg shadow-orange-500/10"
                   >
                     <Mail className="h-4 w-4" />
                     Contact Organizer
@@ -1094,7 +1094,7 @@ export default function StudentEventsFeed() {
                 ) : (
                   (commentsMap[commentsOpenItem.id] || []).map((comment, idx) => (
                     <div key={idx} className="flex gap-3 items-start animate-fadeIn">
-                      <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-white/10 to-white/5 border border-white/10 flex items-center justify-center font-bold text-xs uppercase text-[#BDFB04] shrink-0">
+                      <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-white/10 to-white/5 border border-white/10 flex items-center justify-center font-bold text-xs uppercase text-[#FD5C05] shrink-0">
                         {comment.user.charAt(0)}
                       </div>
                       <div className="flex-1 space-y-0.5 min-w-0">
@@ -1111,14 +1111,14 @@ export default function StudentEventsFeed() {
 
               {/* Comment Input Footer */}
               <div className="pt-4 border-t border-white/5 flex items-center gap-3">
-                <div className="h-8 w-8 rounded-full bg-[#BDFB04] text-[#191919] flex items-center justify-center font-bold text-xs">
+                <div className="h-8 w-8 rounded-full bg-[#FD5C05] text-[#2A2621] flex items-center justify-center font-bold text-xs">
                   {currentUser?.name?.charAt(0) || 'U'}
                 </div>
                 <div className="flex-1 relative">
                   <input
                     type="text"
                     placeholder="Add comment..."
-                    className="w-full bg-white/5 border border-white/10 text-white pl-4 pr-12 py-2.5 rounded-full text-xs focus:outline-none focus:ring-1 focus:ring-[#BDFB04]"
+                    className="w-full bg-white/5 border border-white/10 text-white pl-4 pr-12 py-2.5 rounded-full text-xs focus:outline-none focus:ring-1 focus:ring-[#FD5C05]"
                     value={newCommentText}
                     onChange={(e) => setNewCommentText(e.target.value)}
                     onKeyDown={(e) => {
@@ -1128,7 +1128,7 @@ export default function StudentEventsFeed() {
                   <button
                     onClick={() => handleAddComment(commentsOpenItem.id)}
                     disabled={!newCommentText.trim()}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-[#BDFB04] disabled:text-white/20 hover:scale-105 transition-all cursor-pointer"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-[#FD5C05] disabled:text-white/20 hover:scale-105 transition-all cursor-pointer"
                   >
                     <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />

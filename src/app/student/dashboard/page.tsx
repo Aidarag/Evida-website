@@ -159,10 +159,10 @@ export default function StudentDashboardPage() {
       {/* ── Header ── */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-black/[0.04] pb-5">
         <div>
-          <h1 className="text-3xl font-black text-[#191919] uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+          <h1 className="text-3xl font-black text-[#2A2621] uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
             My campus life
           </h1>
-          <p className="text-xs text-[#374151] font-semibold tracking-wide uppercase mt-1">
+          <p className="text-xs text-[#5A554E] font-semibold tracking-wide uppercase mt-1">
             Hello, {currentUser.name.split(' ')[0]} • Official School & Organization Events
           </p>
         </div>
@@ -171,21 +171,21 @@ export default function StudentDashboardPage() {
         <div className="flex flex-wrap items-center gap-3">
           {/* Stats Badges */}
           <div className="bg-white/80 border border-black/[0.04] rounded-2xl px-4 py-2 flex flex-col min-w-[90px] shadow-sm">
-            <span className="text-[9px] font-bold text-[#4B5563] uppercase tracking-wider">My RSVPs</span>
-            <span className="text-xs font-black text-[#191919] mt-0.5">{rsvpEventsList.length} Going</span>
+            <span className="text-[9px] font-bold text-[#5A554E] uppercase tracking-wider">My RSVPs</span>
+            <span className="text-xs font-black text-[#2A2621] mt-0.5">{rsvpEventsList.length} Going</span>
           </div>
           <div className="bg-white/80 border border-black/[0.04] rounded-2xl px-4 py-2 flex flex-col min-w-[90px] shadow-sm">
-            <span className="text-[9px] font-bold text-[#4B5563] uppercase tracking-wider">My Saved</span>
-            <span className="text-xs font-black text-[#191919] mt-0.5">{savedEventsList.length} Saved</span>
+            <span className="text-[9px] font-bold text-[#5A554E] uppercase tracking-wider">My Saved</span>
+            <span className="text-xs font-black text-[#2A2621] mt-0.5">{savedEventsList.length} Saved</span>
           </div>
 
-          <Link href="/student/saved" className="h-10 w-10 rounded-xl bg-white border border-black/[0.04] flex items-center justify-center text-[#374151] hover:text-[#191919] transition-colors shadow-sm">
+          <Link href="/student/saved" className="h-10 w-10 rounded-xl bg-white border border-black/[0.04] flex items-center justify-center text-[#5A554E] hover:text-[#2A2621] transition-colors shadow-sm">
             <Bookmark className="h-4.5 w-4.5" />
           </Link>
-          <Link href="/student/my-events" className="h-10 w-10 rounded-xl bg-white border border-black/[0.04] flex items-center justify-center text-[#374151] hover:text-[#191919] transition-colors shadow-sm relative">
+          <Link href="/student/my-events" className="h-10 w-10 rounded-xl bg-white border border-black/[0.04] flex items-center justify-center text-[#5A554E] hover:text-[#2A2621] transition-colors shadow-sm relative">
             <Bell className="h-4.5 w-4.5" />
             {unreadNotifs.length > 0 && (
-              <span className="absolute top-1 right-1 h-2.5 w-2.5 rounded-full bg-[#BDFB04] border-2 border-white" />
+              <span className="absolute top-1 right-1 h-2.5 w-2.5 rounded-full bg-[#FD5C05] border-2 border-white" />
             )}
           </Link>
         </div>
@@ -195,16 +195,16 @@ export default function StudentDashboardPage() {
       <div className="bg-white/40 border border-black/[0.03] rounded-3xl p-4 space-y-3 shadow-sm">
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#4B5563]" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5A554E]" />
             <input
               type="text"
               placeholder="Search title, venue, host or keywords..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-black/[0.06] text-[#191919] placeholder-[#4B5563] rounded-full pl-10 pr-4 py-2.5 text-xs focus:outline-none focus:border-[#BDFB04] transition-all shadow-inner"
+              className="w-full bg-white border border-[#D8D2BC]/30 text-[#2A2621] placeholder-[#5A554E] rounded-full pl-10 pr-4 py-2.5 text-xs focus:outline-none focus:border-[#FD5C05] transition-all shadow-inner"
             />
           </div>
-          <Link href="/student/events" className="h-10 w-10 rounded-xl bg-white border border-black/[0.06] flex items-center justify-center text-[#374151] hover:text-[#BDFB04] transition-colors shrink-0 shadow-sm">
+          <Link href="/student/events" className="h-10 w-10 rounded-xl bg-white border border-[#D8D2BC]/30 flex items-center justify-center text-[#5A554E] hover:text-[#FD5C05] transition-colors shrink-0 shadow-sm">
             <SlidersHorizontal className="h-4 w-4" />
           </Link>
         </div>
@@ -218,8 +218,8 @@ export default function StudentDashboardPage() {
                 key={cat.name}
                 onClick={() => setSelectedCategory(cat.name)}
                 className={`flex items-center gap-1.5 shrink-0 px-3.5 py-1.5 rounded-full text-[9px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${isActive
-                  ? 'bg-[#BDFB04] text-[#191919] shadow-sm'
-                  : 'bg-white border border-black/[0.04] text-[#374151] hover:bg-white hover:text-[#191919]'
+                  ? 'bg-[#FD5C05] text-[#2A2621] shadow-sm'
+                  : 'bg-white border border-black/[0.04] text-[#5A554E] hover:bg-white hover:text-[#2A2621]'
                   }`}
               >
                 <cat.icon className="h-3 w-3" />
@@ -236,8 +236,8 @@ export default function StudentDashboardPage() {
         {/* Main Events Feed Column */}
         <div className="lg:col-span-2 space-y-5">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-black tracking-widest text-[#191919] uppercase">Upcoming Experiences</h2>
-            <span className="text-[10px] font-bold text-[#374151]">Showing {sortedFilteredEvents.length} events</span>
+            <h2 className="text-xs font-black tracking-widest text-[#2A2621] uppercase">Upcoming Experiences</h2>
+            <span className="text-[10px] font-bold text-[#5A554E]">Showing {sortedFilteredEvents.length} events</span>
           </div>
 
           {sortedFilteredEvents.length > 0 ? (
@@ -263,7 +263,7 @@ export default function StudentDashboardPage() {
                   >
                     {/* Event Image Banner */}
                     <div
-                      className="relative h-44 w-full bg-[#191919] overflow-hidden cursor-pointer"
+                      className="relative h-44 w-full bg-[#2A2621] overflow-hidden cursor-pointer"
                       onClick={() => router.push(`/events/${event.id}`)}
                     >
                       <img
@@ -276,14 +276,14 @@ export default function StudentDashboardPage() {
 
                       {/* Left Badge: Category */}
                       <div className="absolute top-4 left-4 z-10">
-                        <span className="rounded-full bg-white/90 border border-black/5 px-2.5 py-1 text-[8px] font-extrabold uppercase text-[#191919] shadow-sm">
+                        <span className="rounded-full bg-white/90 border border-[#D8D2BC]/40 px-2.5 py-1 text-[8px] font-extrabold uppercase text-[#2A2621] shadow-sm">
                           {event.category}
                         </span>
                       </div>
 
                       {/* Right Badge: Cost */}
                       <div className="absolute top-4 right-4 z-10">
-                        <span className="rounded-full bg-[#BDFB04] text-[#191919] px-2.5 py-1 text-[8px] font-extrabold uppercase shadow-sm">
+                        <span className="rounded-full bg-[#FD5C05] text-[#2A2621] px-2.5 py-1 text-[8px] font-extrabold uppercase shadow-sm">
                           {event.free ? 'FREE' : 'TICKETED'}
                         </span>
                       </div>
@@ -303,7 +303,7 @@ export default function StudentDashboardPage() {
                         <div className="flex items-center gap-1.5">
                           <p
                             onClick={() => event.organizationId && router.push(`/student/organizations/${event.organizationId}`)}
-                            className={`text-[10px] font-extrabold text-[#374151] uppercase tracking-wider flex items-center leading-none ${event.organizationId ? 'cursor-pointer hover:underline' : ''}`}
+                            className={`text-[10px] font-extrabold text-[#5A554E] uppercase tracking-wider flex items-center leading-none ${event.organizationId ? 'cursor-pointer hover:underline' : ''}`}
                           >
                             {event.organizationName || event.organizer}
                             {event.organizationId && organizations.find(o => o.id === event.organizationId)?.verified && (
@@ -315,26 +315,26 @@ export default function StudentDashboardPage() {
                         {/* Event Title */}
                         <h3
                           onClick={() => router.push(`/events/${event.id}`)}
-                          className="text-base font-bold text-[#191919] tracking-tight leading-snug line-clamp-1 hover:text-[#BDFB04] transition-colors cursor-pointer uppercase"
+                          className="text-base font-bold text-[#2A2621] tracking-tight leading-snug line-clamp-1 hover:text-[#FD5C05] transition-colors cursor-pointer uppercase"
                           style={{ fontFamily: 'var(--font-display)' }}
                         >
                           {event.title}
                         </h3>
 
                         {/* Description */}
-                        <p className="text-xs text-[#374151] leading-relaxed line-clamp-2">
+                        <p className="text-xs text-[#5A554E] leading-relaxed line-clamp-2">
                           {event.description}
                         </p>
                       </div>
 
                       {/* Event Details: Date & Time, Location */}
                       <div className="space-y-2 pt-3 border-t border-black/[0.04]">
-                        <div className="flex items-center gap-2 text-[10px] font-extrabold text-[#191919]/80 uppercase">
-                          <Calendar className="h-3.5 w-3.5 text-[#191919]" />
+                        <div className="flex items-center gap-2 text-[10px] font-extrabold text-[#2A2621]/80 uppercase">
+                          <Calendar className="h-3.5 w-3.5 text-[#2A2621]" />
                           <span>{monthName} {day} • {event.time}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-[10px] font-bold text-[#4B5563] uppercase truncate">
-                          <MapPin className="h-3.5 w-3.5 text-[#4B5563]" />
+                        <div className="flex items-center gap-2 text-[10px] font-bold text-[#5A554E] uppercase truncate">
+                          <MapPin className="h-3.5 w-3.5 text-[#5A554E]" />
                           <span className="truncate">{event.location}</span>
                         </div>
                       </div>
@@ -352,7 +352,7 @@ export default function StudentDashboardPage() {
                               </div>
                             ))}
                           </div>
-                          <span className="text-[10px] text-[#4B5563] font-semibold">
+                          <span className="text-[10px] text-[#5A554E] font-semibold">
                             {event.attendees.length} attending
                           </span>
                         </div>
@@ -362,7 +362,7 @@ export default function StudentDashboardPage() {
                       {eventComments.length > 0 && (
                         <button
                           onClick={() => setCommentOpen(isCommentOpen ? null : event.id)}
-                          className="text-[10px] font-bold text-[#4B5563] hover:text-[#191919] text-left underline flex items-center gap-1 cursor-pointer"
+                          className="text-[10px] font-bold text-[#5A554E] hover:text-[#2A2621] text-left underline flex items-center gap-1 cursor-pointer"
                         >
                           Show comments ({eventComments.length})
                         </button>
@@ -380,8 +380,8 @@ export default function StudentDashboardPage() {
                             <div className="space-y-1.5 max-h-24 overflow-y-auto">
                               {eventComments.map((c, i) => (
                                 <div key={i} className="text-[10px] leading-tight">
-                                  <span className="font-extrabold text-[#191919]">{c.user}:</span>{' '}
-                                  <span className="text-[#374151]">{c.text}</span>
+                                  <span className="font-extrabold text-[#2A2621]">{c.user}:</span>{' '}
+                                  <span className="text-[#5A554E]">{c.text}</span>
                                 </div>
                               ))}
                             </div>
@@ -395,8 +395,8 @@ export default function StudentDashboardPage() {
                         <button
                           onClick={() => handleImIn(event.id)}
                           className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${isAttending
-                            ? 'bg-[#BDFB04]/20 border border-[#BDFB04]/30 text-[#191919] shadow-sm'
-                            : 'bg-[#191919] text-white hover:bg-[#2a2a2a]'
+                            ? 'bg-[#FD5C05]/20 border border-[#FD5C05]/30 text-[#2A2621] shadow-sm'
+                            : 'bg-[#2A2621] text-white hover:bg-[#2a2a2a]'
                             }`}
                         >
                           {isAttending ? (
@@ -415,8 +415,8 @@ export default function StudentDashboardPage() {
                         <button
                           onClick={() => saveToggle(event.id)}
                           className={`h-9 w-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${isSaved
-                            ? 'bg-white border-[#BDFB04] text-rose-500 shadow-sm'
-                            : 'bg-white border-black/10 text-[#4B5563] hover:text-rose-500'
+                            ? 'bg-white border-[#FD5C05] text-rose-500 shadow-sm'
+                            : 'bg-white border-black/10 text-[#5A554E] hover:text-rose-500'
                             }`}
                           title={isSaved ? "Saved" : "Save Event"}
                         >
@@ -426,7 +426,7 @@ export default function StudentDashboardPage() {
                         {/* Write Comment Icon trigger */}
                         <button
                           onClick={() => setCommentOpen(isCommentOpen ? null : event.id)}
-                          className={`h-9 w-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${isCommentOpen ? 'bg-black/5 border-black/20 text-[#191919]' : 'bg-white border-black/10 text-[#374151] hover:text-[#191919]'
+                          className={`h-9 w-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${isCommentOpen ? 'bg-[#D8D2BC]/30 border-black/20 text-[#2A2621]' : 'bg-white border-black/10 text-[#5A554E] hover:text-[#2A2621]'
                             }`}
                           title="Add comment"
                         >
@@ -442,12 +442,12 @@ export default function StudentDashboardPage() {
                             onChange={(e) => setCommentText(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleComment(event.id)}
                             placeholder="Add comment..."
-                            className="flex-1 bg-black/[0.03] border border-black/[0.04] rounded-xl px-3 py-1.5 text-[11px] text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04]"
+                            className="flex-1 bg-black/[0.03] border border-black/[0.04] rounded-xl px-3 py-1.5 text-[11px] text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05]"
                           />
                           <button
                             onClick={() => handleComment(event.id)}
                             disabled={!commentText.trim()}
-                            className="bg-[#BDFB04] text-[#191919] hover:bg-[#d1fa3c] px-3 py-1 rounded-xl text-[10px] font-bold uppercase tracking-wider disabled:opacity-30 transition-opacity cursor-pointer"
+                            className="bg-[#FD5C05] text-[#2A2621] hover:bg-[#CC3D00] px-3 py-1 rounded-xl text-[10px] font-bold uppercase tracking-wider disabled:opacity-30 transition-opacity cursor-pointer"
                           >
                             Post
                           </button>
@@ -460,7 +460,7 @@ export default function StudentDashboardPage() {
               })}
             </div>
           ) : (
-            <div className="w-full text-center py-20 bg-white rounded-3xl border border-black/[0.04] text-sm text-[#4B5563] font-light shadow-sm">
+            <div className="w-full text-center py-20 bg-white rounded-3xl border border-black/[0.04] text-sm text-[#5A554E] font-light shadow-sm">
               No official school or organization events discovered matching filters.
             </div>
           )}
@@ -472,7 +472,7 @@ export default function StudentDashboardPage() {
           {/* Matched Organizations Widget */}
           {matchedOrgs.length > 0 && (
             <div className="bg-white border border-black/[0.04] rounded-3xl p-5 shadow-sm space-y-4">
-              <h3 className="text-xs font-black tracking-widest text-[#191919] uppercase">Matched Groups</h3>
+              <h3 className="text-xs font-black tracking-widest text-[#2A2621] uppercase">Matched Groups</h3>
               <div className="space-y-2">
                 {matchedOrgs.map((org) => (
                   <div
@@ -481,18 +481,18 @@ export default function StudentDashboardPage() {
                     className="p-3 bg-slate-50 hover:bg-slate-100/50 rounded-2xl flex items-center justify-between border border-black/[0.03] transition-all cursor-pointer group"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="h-8 w-8 rounded-xl bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex items-center justify-center text-[#191919] font-black text-xs shrink-0 shadow-sm">
+                      <div className="h-8 w-8 rounded-xl bg-[#FD5C05]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[#2A2621] font-black text-xs shrink-0 shadow-sm">
                         {org.name.charAt(0)}
                       </div>
                       <div className="min-w-0">
-                        <h4 className="text-xs font-bold text-[#191919] uppercase tracking-tight flex items-center group-hover:text-[#BDFB04] transition-colors truncate">
+                        <h4 className="text-xs font-bold text-[#2A2621] uppercase tracking-tight flex items-center group-hover:text-[#FD5C05] transition-colors truncate">
                           {org.name}
                           {org.verified && <VerifiedBadge className="h-3.5 w-3.5 ml-1 shrink-0" />}
                         </h4>
-                        <p className="text-[9px] text-[#4B5563]">{org.members.length} members</p>
+                        <p className="text-[9px] text-[#5A554E]">{org.members.length} members</p>
                       </div>
                     </div>
-                    <span className="text-[10px] font-bold text-[#4B5563] shrink-0">→</span>
+                    <span className="text-[10px] font-bold text-[#5A554E] shrink-0">→</span>
                   </div>
                 ))}
               </div>
@@ -502,8 +502,8 @@ export default function StudentDashboardPage() {
           {/* My Schedule Widget */}
           <div className="bg-white border border-black/[0.04] rounded-3xl p-5 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-black tracking-widest text-[#191919] uppercase">My Schedule</h3>
-              <span className="text-[9px] font-extrabold text-[#BDFB04] bg-[#BDFB04]/10 px-2 py-0.5 rounded-full">
+              <h3 className="text-xs font-black tracking-widest text-[#2A2621] uppercase">My Schedule</h3>
+              <span className="text-[9px] font-extrabold text-[#FD5C05] bg-[#FD5C05]/10 px-2 py-0.5 rounded-full">
                 {rsvpEventsList.length} going
               </span>
             </div>
@@ -524,16 +524,16 @@ export default function StudentDashboardPage() {
                     >
                       {/* Date Badge */}
                       <div className="h-11 w-11 rounded-xl bg-white border border-black/[0.04] shadow-sm flex flex-col items-center justify-center shrink-0">
-                        <span className="text-[9px] font-extrabold uppercase text-[#4B5563] leading-none">{monthName}</span>
-                        <span className="text-sm font-black text-[#191919] mt-0.5 leading-none">{day}</span>
+                        <span className="text-[9px] font-extrabold uppercase text-[#5A554E] leading-none">{monthName}</span>
+                        <span className="text-sm font-black text-[#2A2621] mt-0.5 leading-none">{day}</span>
                       </div>
 
                       {/* Event Details */}
                       <div className="min-w-0 flex-1">
-                        <h4 className="text-xs font-bold text-[#191919] truncate uppercase group-hover:text-[#BDFB04] transition-colors leading-snug">
+                        <h4 className="text-xs font-bold text-[#2A2621] truncate uppercase group-hover:text-[#FD5C05] transition-colors leading-snug">
                           {event.title}
                         </h4>
-                        <p className="text-[9px] text-[#4B5563] mt-0.5 truncate uppercase">
+                        <p className="text-[9px] text-[#5A554E] mt-0.5 truncate uppercase">
                           {event.time} • {event.location}
                         </p>
                       </div>
@@ -542,7 +542,7 @@ export default function StudentDashboardPage() {
                 })}
               </div>
             ) : (
-              <p className="text-[11px] text-[#4B5563] italic text-center py-4 bg-slate-50/50 rounded-2xl">
+              <p className="text-[11px] text-[#5A554E] italic text-center py-4 bg-slate-50/50 rounded-2xl">
                 You haven't RSVP'd to any events yet.
               </p>
             )}
@@ -550,7 +550,7 @@ export default function StudentDashboardPage() {
 
           {/* Campus Groups Widget */}
           <div className="bg-white border border-black/[0.04] rounded-3xl p-5 shadow-sm space-y-4">
-            <h3 className="text-xs font-black tracking-widest text-[#191919] uppercase">Verified Campus Groups</h3>
+            <h3 className="text-xs font-black tracking-widest text-[#2A2621] uppercase">Verified Campus Groups</h3>
             <div className="space-y-2.5">
               {organizations.slice(0, 5).map((org) => (
                 <div
@@ -561,19 +561,19 @@ export default function StudentDashboardPage() {
                   <div className="flex items-center gap-2.5 min-w-0">
                     <div
                       className="h-8 w-8 rounded-xl flex items-center justify-center font-bold text-[10px] text-white shrink-0 shadow-sm"
-                      style={{ backgroundColor: org.logoColor || '#191919' }}
+                      style={{ backgroundColor: org.logoColor || '#2A2621' }}
                     >
                       {org.name.substring(0, 2).toUpperCase()}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-bold text-[#191919] flex items-center gap-1 group-hover:text-[#BDFB04] transition-colors truncate">
+                      <p className="text-xs font-bold text-[#2A2621] flex items-center gap-1 group-hover:text-[#FD5C05] transition-colors truncate">
                         {org.name}
                         {org.verified && <VerifiedBadge className="h-3.5 w-3.5 shrink-0" />}
                       </p>
-                      <p className="text-[9px] text-[#4B5563]">{org.members.length} members</p>
+                      <p className="text-[9px] text-[#5A554E]">{org.members.length} members</p>
                     </div>
                   </div>
-                  <span className="text-[10px] text-[#4B5563] group-hover:text-[#191919] shrink-0 font-bold">→</span>
+                  <span className="text-[10px] text-[#5A554E] group-hover:text-[#2A2621] shrink-0 font-bold">→</span>
                 </div>
               ))}
             </div>
@@ -603,7 +603,7 @@ export default function StudentDashboardPage() {
             initial={{ y: 60, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 60, opacity: 0 }}
-            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-[#191919] text-white text-[11px] font-bold uppercase tracking-wider px-5 py-2.5 rounded-full shadow-xl"
+            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-[#2A2621] text-white text-[11px] font-bold uppercase tracking-wider px-5 py-2.5 rounded-full shadow-xl"
           >
             Link copied! 🔗
           </motion.div>

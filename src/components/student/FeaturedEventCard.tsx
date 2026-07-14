@@ -21,7 +21,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
   const formattedDate = `${weekday}, ${month} ${day}`;
 
   const isGradient = event.coverImage ? event.coverImage.includes('from-') : false;
-  const bgClass = isGradient ? event.coverImage : (event.coverImage ? '' : 'bg-[#DFDED7]');
+  const bgClass = isGradient ? event.coverImage : (event.coverImage ? '' : 'bg-[#D8D2BC]');
   const bgStyle = (!isGradient && event.coverImage) 
     ? { backgroundImage: `url(${event.coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } 
     : {};
@@ -32,15 +32,15 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
   const getCategoryStyles = (cat?: string) => {
     const c = cat?.toLowerCase() || '';
     if (c.includes('sport') || c.includes('athlet') || c.includes('trophy')) {
-      return 'bg-[#BDFB04]/10 text-[#BDFB04] border-[#BDFB04]/15';
+      return 'bg-[#FD5C05]/10 text-[#FD5C05] border-[#FD5C05]/15';
     }
     if (c.includes('music') || c.includes('concert') || c.includes('party') || c.includes('show') || c.includes('art') || c.includes('greek')) {
-      return 'bg-black/5 text-[#191919] border-black/10';
+      return 'bg-[#D8D2BC]/30 text-[#2A2621] border-black/10';
     }
     if (c.includes('career') || c.includes('fair') || c.includes('workshop') || c.includes('hackathon') || c.includes('workshop') || c.includes('academic')) {
-      return 'bg-[#BDFB04]/10 text-[#BDFB04] border-[#BDFB04]/15';
+      return 'bg-[#FD5C05]/10 text-[#FD5C05] border-[#FD5C05]/15';
     }
-    return 'bg-[#BDFB04]/10 text-[#BDFB04] border-[#BDFB04]/15';
+    return 'bg-[#FD5C05]/10 text-[#FD5C05] border-[#FD5C05]/15';
   };
 
   return (
@@ -74,11 +74,11 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
           e.stopPropagation();
           setIsSaved(!isSaved);
         }}
-        className="absolute top-4 right-4 z-20 h-8 w-8 rounded-full bg-white/85 backdrop-blur-md border border-black/[0.05] flex items-center justify-center text-[#4B5563] hover:text-rose-500 hover:scale-110 active:scale-95 transition-all shadow-sm cursor-pointer"
+        className="absolute top-4 right-4 z-20 h-8 w-8 rounded-full bg-white/85 backdrop-blur-md border border-black/[0.05] flex items-center justify-center text-[#5A554E] hover:text-rose-500 hover:scale-110 active:scale-95 transition-all shadow-sm cursor-pointer"
       >
         <Heart 
           className={`h-4 w-4 transition-colors ${
-            isSaved ? 'fill-rose-500 text-rose-500' : 'text-[#4B5563]'
+            isSaved ? 'fill-rose-500 text-rose-500' : 'text-[#5A554E]'
           }`} 
         />
       </button>
@@ -87,23 +87,23 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
       <div className="p-6 flex flex-col flex-1 justify-between gap-4 text-left">
         <div className="space-y-2 cursor-pointer" onClick={onClick}>
           {/* Date & Time Invite Style (Orange, Uppercase) */}
-          <div className="text-[#BDFB04] text-[10px] font-bold uppercase tracking-widest">
+          <div className="text-[#FD5C05] text-[10px] font-bold uppercase tracking-widest">
             {formattedDate} • {event.time}
           </div>
 
           {/* Event Title */}
-          <h3 className="text-[#191919] font-bold text-lg line-clamp-2 leading-tight tracking-tight hover:text-[#BDFB04] transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
+          <h3 className="text-[#2A2621] font-bold text-lg line-clamp-2 leading-tight tracking-tight hover:text-[#FD5C05] transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
             {event.title}
           </h3>
           
           {/* Location Row */}
-          <div className="flex items-center gap-1.5 text-[#4B5563] text-xs font-semibold">
-            <MapPin className="h-3.5 w-3.5 shrink-0 text-[#4B5563]" />
+          <div className="flex items-center gap-1.5 text-[#5A554E] text-xs font-semibold">
+            <MapPin className="h-3.5 w-3.5 shrink-0 text-[#5A554E]" />
             <span className="truncate">{event.location}</span>
           </div>
 
           {/* Description */}
-          <p className="text-[#374151] text-xs leading-relaxed font-light line-clamp-2 pt-1">
+          <p className="text-[#5A554E] text-xs leading-relaxed font-light line-clamp-2 pt-1">
             {event.description || `Join us for the ${event.title}, happening at ${event.location}.`}
           </p>
         </div>
@@ -129,7 +129,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
                 className="h-6 w-6 rounded-full border-2 border-white object-cover"
               />
             </div>
-            <span className="text-[#4B5563] text-[10px] font-bold whitespace-nowrap">
+            <span className="text-[#5A554E] text-[10px] font-bold whitespace-nowrap">
               +{goingCount} going
             </span>
           </div>
@@ -140,7 +140,7 @@ export default function FeaturedEventCard({ event, onClick }: FeaturedEventCardP
               e.stopPropagation();
               onClick();
             }}
-            className="inline-flex items-center gap-1.5 bg-white border border-black/10 hover:border-transparent hover:bg-[#BDFB04] hover:text-[#191919] text-[#191919] font-bold text-[10px] uppercase tracking-wider py-1.5 px-3.5 rounded-full transition-all duration-300 shadow-sm cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 bg-white border border-black/10 hover:border-transparent hover:bg-[#FD5C05] hover:text-[#2A2621] text-[#2A2621] font-bold text-[10px] uppercase tracking-wider py-1.5 px-3.5 rounded-full transition-all duration-300 shadow-sm cursor-pointer whitespace-nowrap"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             <Calendar className="h-3.5 w-3.5" />

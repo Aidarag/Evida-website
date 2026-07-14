@@ -41,7 +41,7 @@ export default function LoginSplash({ onStart }: LoginSplashProps) {
   };
 
   return (
-    <div className="fixed inset-0 min-h-[100svh] w-full bg-white text-[#191919] flex flex-col justify-between overflow-hidden z-50 select-none">
+    <div className="fixed inset-0 min-h-[100svh] w-full bg-white text-[#2A2621] flex flex-col justify-between overflow-hidden z-50 select-none">
       
       {/* Background Neon Glowing Blobs */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -55,7 +55,7 @@ export default function LoginSplash({ onStart }: LoginSplashProps) {
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className="absolute top-[-10%] left-[10%] w-[350px] md:w-[500px] h-[350px] md:h-[500px] rounded-full bg-[#BDFB04] opacity-[0.35] blur-[90px] md:blur-[130px] will-change-transform"
+          className="absolute top-[-10%] left-[10%] w-[350px] md:w-[500px] h-[350px] md:h-[500px] rounded-full bg-[#FD5C05] opacity-[0.35] blur-[90px] md:blur-[130px] will-change-transform"
         />
 
         {/* Blob 2: Silver Feather */}
@@ -67,7 +67,7 @@ export default function LoginSplash({ onStart }: LoginSplashProps) {
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className="absolute top-[-15%] right-[15%] w-[320px] md:w-[450px] h-[320px] md:h-[450px] rounded-full bg-[#DFDED7] opacity-[0.45] blur-[90px] md:blur-[130px] will-change-transform"
+          className="absolute top-[-15%] right-[15%] w-[320px] md:w-[450px] h-[320px] md:h-[450px] rounded-full bg-[#D8D2BC] opacity-[0.45] blur-[90px] md:blur-[130px] will-change-transform"
         />
 
         {/* Blob 3: Light Lime Yellow Wash */}
@@ -107,7 +107,7 @@ export default function LoginSplash({ onStart }: LoginSplashProps) {
           <div className="flex items-center -ml-1">
             <EvidaLogo size={60} showText={true} lightMode={true} />
           </div>
-          <p className="text-2xl md:text-3xl font-extrabold text-[#191919] leading-tight pl-0.5 tracking-tight">
+          <p className="text-2xl md:text-3xl font-extrabold text-[#2A2621] leading-tight pl-0.5 tracking-tight">
             Campus life,<br />
             finally in one place.
           </p>
@@ -120,7 +120,7 @@ export default function LoginSplash({ onStart }: LoginSplashProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="text-[10px] font-black uppercase tracking-widest text-[#191919]/60"
+          className="text-[10px] font-black uppercase tracking-widest text-[#2A2621]/60"
         >
           Get Started
         </motion.span>
@@ -146,9 +146,9 @@ export default function LoginSplash({ onStart }: LoginSplashProps) {
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           onClick={onStart}
-          className="h-14 w-14 rounded-full bg-[#BDFB04] text-[#191919] flex items-center justify-center shadow-[0_4px_16px_rgba(189,251,4,0.25)] cursor-pointer transition-colors hover:bg-[#d1fa3c] border border-black/5"
+          className="h-14 w-14 rounded-full bg-[#FD5C05] text-white flex items-center justify-center shadow-[0_4px_16px_rgba(235,70,0,0.25)] cursor-pointer transition-colors hover:bg-[#CC3D00] border border-[#D8D2BC]/40"
         >
-          <ArrowUpRight className="h-6 w-6 text-[#191919] stroke-[2.5]" />
+          <ArrowUpRight className="h-6 w-6 text-white stroke-[2.5]" />
         </motion.button>
       </div>
 

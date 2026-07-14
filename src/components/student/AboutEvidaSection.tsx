@@ -23,14 +23,14 @@ export default function AboutEvidaSection() {
   const handleMouseLeave = () => setTilt({ x: 0, y: 0 });
 
   return (
-    <section id="about-evida" className="relative w-full bg-[#DFDED7] py-24 overflow-hidden border-b border-black/[0.04] font-sans">
+    <section id="about-evida" className="relative w-full bg-[#D8D2BC] py-24 overflow-hidden border-b border-black/[0.04] font-sans">
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
 
         {/* 1. Header Row */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-12">
           <div>
-            <span className="text-[#4B5563] text-xs font-bold tracking-[0.25em] uppercase block mb-3">ABOUT US</span>
-            <h2 className="text-[#191919] font-extrabold text-5xl md:text-7xl uppercase tracking-tighter leading-[0.9]" style={{ fontFamily: 'var(--font-display)' }}>
+            <span className="text-[#5A554E] text-xs font-bold tracking-[0.25em] uppercase block mb-3">ABOUT US</span>
+            <h2 className="text-[#2A2621] font-extrabold text-5xl md:text-7xl uppercase tracking-tighter leading-[0.9]" style={{ fontFamily: 'var(--font-display)' }}>
               CAMPUS LIFE<br />BUILDERS
             </h2>
           </div>
@@ -45,7 +45,7 @@ export default function AboutEvidaSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative w-full aspect-[16/7] md:aspect-[24/9] rounded-[24px] overflow-hidden shadow-[var(--shadow-premium-md)] mb-16 border border-black/5"
+          className="relative w-full aspect-[16/7] md:aspect-[24/9] rounded-[24px] overflow-hidden shadow-[var(--shadow-premium-md)] mb-16 border border-[#D8D2BC]/40"
         >
           <Image
             src="/pexels-hanna-elesha-abraham-1587801282-27498756.jpg"
@@ -59,14 +59,14 @@ export default function AboutEvidaSection() {
         {/* 3. "Why Evida Exists?" — Two-Column Text */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-20 items-start text-left">
           <div className="md:col-span-3">
-            <span className="text-[#4B5563] text-xs font-bold tracking-[0.25em] uppercase block pt-2">
+            <span className="text-[#5A554E] text-xs font-bold tracking-[0.25em] uppercase block pt-2">
               WHY EVIDA EXISTS?
             </span>
           </div>
           <div className="md:col-span-9">
-            <p className="text-[#191919] font-extrabold text-xl md:text-3xl lg:text-4xl leading-tight tracking-tight uppercase" style={{ fontFamily: 'var(--font-display)' }}>
+            <p className="text-[#2A2621] font-extrabold text-xl md:text-3xl lg:text-4xl leading-tight tracking-tight uppercase" style={{ fontFamily: 'var(--font-display)' }}>
               Evida is the digital home of campus life.{' '}
-              <span className="text-[#374151] font-normal lowercase normal-case">
+              <span className="text-[#5A554E] font-normal lowercase normal-case">
                 Discover events, organizations, and opportunities in one place. Built for students and institutions, Evida makes it easier to explore, connect, and create unforgettable experiences.
               </span>
             </p>
@@ -82,7 +82,7 @@ export default function AboutEvidaSection() {
           className="flex flex-col items-center"
         >
           {/* Caption above phone */}
-          <p className="text-[#4B5563] text-xs font-bold tracking-[0.25em] uppercase mb-8 text-center">
+          <p className="text-[#5A554E] text-xs font-bold tracking-[0.25em] uppercase mb-8 text-center">
             SEE THE EXPERIENCE
           </p>
 
@@ -149,7 +149,7 @@ export default function AboutEvidaSection() {
           </div>
 
           {/* Tagline below phone */}
-          <p className="mt-10 text-[#191919] text-sm md:text-base font-medium text-center max-w-md">
+          <p className="mt-10 text-[#2A2621] text-sm md:text-base font-medium text-center max-w-md">
             See what&apos;s happening on campus and who&apos;s going — all in one scroll.
           </p>
         </motion.div>

@@ -3,7 +3,7 @@ from PIL import Image
 from collections import Counter
 
 # Find the latest media file in the artifacts directory
-art_dir = '/Users/im/.gemini/antigravity-ide/brain/be6c94db-a792-4f39-8d35-56b6b9da4d55'
+art_dir = '/Users/im/.gemini/antigravity-ide/brain/285e4c8a-4f3f-4afc-8c82-2f5ecf5194e9'
 media_files = [f for f in os.listdir(art_dir) if f.startswith('media__')]
 media_files.sort(key=lambda x: os.path.getmtime(os.path.join(art_dir, x)), reverse=True)
 

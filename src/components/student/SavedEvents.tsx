@@ -54,21 +54,21 @@ export default function SavedEvents({
     <div className="space-y-6">
       
       {/* Sub-tab picker */}
-      <div className="flex space-x-2 border-b border-black/[0.06] pb-4 text-xs font-bold text-[#4B5563]">
+      <div className="flex space-x-2 border-b border-[#D8D2BC]/30 pb-4 text-xs font-bold text-[#5A554E]">
         <button
           onClick={() => setSubTab('saved')}
           className={`pb-3 border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
-            subTab === 'saved' ? 'border-[#BDFB04] text-[#191919] font-extrabold' : 'border-transparent hover:text-[#191919]'
+            subTab === 'saved' ? 'border-[#FD5C05] text-[#2A2621] font-extrabold' : 'border-transparent hover:text-[#2A2621]'
           }`}
         >
-          <Bookmark className="h-3.5 w-3.5 text-[#191919]" />
+          <Bookmark className="h-3.5 w-3.5 text-[#2A2621]" />
           Bookmarks ({savedEventsList.length})
         </button>
 
         <button
           onClick={() => setSubTab('rsvp')}
           className={`pb-3 border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
-            subTab === 'rsvp' ? 'border-[#BDFB04] text-[#191919] font-extrabold' : 'border-transparent hover:text-[#191919]'
+            subTab === 'rsvp' ? 'border-[#FD5C05] text-[#2A2621] font-extrabold' : 'border-transparent hover:text-[#2A2621]'
           }`}
         >
           <CheckCircle className="h-3.5 w-3.5 text-emerald-600" />
@@ -78,7 +78,7 @@ export default function SavedEvents({
         <button
           onClick={() => setSubTab('created')}
           className={`pb-3 border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
-            subTab === 'created' ? 'border-[#BDFB04] text-[#191919] font-extrabold' : 'border-transparent hover:text-[#191919]'
+            subTab === 'created' ? 'border-[#FD5C05] text-[#2A2621] font-extrabold' : 'border-transparent hover:text-[#2A2621]'
           }`}
         >
           <PlusCircle className="h-3.5 w-3.5 text-indigo-600" />
@@ -89,9 +89,9 @@ export default function SavedEvents({
       {/* Grid List */}
       {activeList.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-black/10 bg-slate-50 py-16 text-center max-w-sm mx-auto shadow-sm">
-          <Sparkles className="h-10 w-10 text-[#4B5563] mb-3" />
-          <p className="text-xs font-bold text-[#191919] uppercase">{copy.title}</p>
-          <p className="mt-1 text-[11px] text-[#374151] px-4 leading-relaxed">
+          <Sparkles className="h-10 w-10 text-[#5A554E] mb-3" />
+          <p className="text-xs font-bold text-[#2A2621] uppercase">{copy.title}</p>
+          <p className="mt-1 text-[11px] text-[#5A554E] px-4 leading-relaxed">
             {copy.message}
           </p>
         </div>
@@ -101,7 +101,7 @@ export default function SavedEvents({
             <div
               key={event.id}
               onClick={() => onOpenDetails(event)}
-              className="group rounded-[24px] overflow-hidden border border-black/[0.06] bg-white hover:border-[#BDFB04] hover:shadow-md transition-all flex flex-col justify-between cursor-pointer"
+              className="group rounded-[24px] overflow-hidden border border-[#D8D2BC]/30 bg-white hover:border-[#FD5C05] hover:shadow-md transition-all flex flex-col justify-between cursor-pointer"
             >
               <div className="relative aspect-[16/10] w-full overflow-hidden">
                 <div className={`absolute inset-0 bg-gradient-to-tr ${event.coverImage} opacity-30 group-hover:scale-105 transition-transform duration-500`} />
@@ -123,21 +123,21 @@ export default function SavedEvents({
 
               <div className="p-5 space-y-3">
                 <div>
-                  <span className="text-[9px] font-bold text-[#4B5563] uppercase tracking-wide block">
+                  <span className="text-[9px] font-bold text-[#5A554E] uppercase tracking-wide block">
                     {event.organizationName || event.organizer}
                   </span>
-                  <h4 className="text-sm font-bold text-[#191919] leading-snug group-hover:text-[#191919] transition-colors mt-1 line-clamp-1 uppercase">
+                  <h4 className="text-sm font-bold text-[#2A2621] leading-snug group-hover:text-[#2A2621] transition-colors mt-1 line-clamp-1 uppercase">
                     {event.title}
                   </h4>
                 </div>
 
-                <div className="flex flex-col gap-1 text-[10px] font-bold text-[#374151] pt-3 border-t border-black/[0.06] uppercase">
+                <div className="flex flex-col gap-1 text-[10px] font-bold text-[#5A554E] pt-3 border-t border-[#D8D2BC]/30 uppercase">
                   <span className="flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5 text-[#191919]" />
+                    <Calendar className="h-3.5 w-3.5 text-[#2A2621]" />
                     {event.date} • {event.time}
                   </span>
                   <span className="flex items-center gap-1.5 truncate">
-                    <MapPin className="h-3.5 w-3.5 text-[#191919]" />
+                    <MapPin className="h-3.5 w-3.5 text-[#2A2621]" />
                     {event.location}
                   </span>
                 </div>

@@ -25,8 +25,8 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#DFDED7] text-[#191919] flex items-center justify-center p-6 relative overflow-hidden">
-      <div className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-[#BDFB04]/30 blur-[120px] pointer-events-none"></div>
+    <div className="min-h-screen bg-[#D8D2BC] text-[#2A2621] flex items-center justify-center p-6 relative overflow-hidden">
+      <div className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-[#FD5C05]/30 blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-white/50 blur-[120px] pointer-events-none"></div>
 
       {/* Container */}
@@ -36,7 +36,7 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
         {method !== 'options' && (
           <button
             onClick={() => setMethod(method === 'verification' ? 'email' : 'options')}
-            className="flex items-center gap-1 text-[11px] font-bold text-[#374151] hover:text-[#191919] transition-colors uppercase cursor-pointer"
+            className="flex items-center gap-1 text-[11px] font-bold text-[#5A554E] hover:text-[#2A2621] transition-colors uppercase cursor-pointer"
           >
             <ArrowLeft className="h-3.5 w-3.5" /> Back
           </button>
@@ -44,11 +44,11 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
 
         {/* Title */}
         <div className="text-center space-y-2">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#BDFB04] shadow-md shadow-[#BDFB04]/25">
-            <Sparkles className="h-6 w-6 text-[#191919]" />
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FD5C05] shadow-md shadow-[#FD5C05]/25">
+            <Sparkles className="h-6 w-6 text-[#2A2621]" />
           </div>
-          <h2 className="text-xl font-bold uppercase tracking-tight text-[#191919] mt-4">JOIN CAMPUS EVIDA</h2>
-          <p className="text-[11px] text-[#374151]">Access exclusive student experiences and coordinate organizations</p>
+          <h2 className="text-xl font-bold uppercase tracking-tight text-[#2A2621] mt-4">JOIN CAMPUS EVIDA</h2>
+          <p className="text-[11px] text-[#5A554E]">Access exclusive student experiences and coordinate organizations</p>
         </div>
 
         {method === 'options' && (
@@ -56,11 +56,11 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
             
             {/* Persona picker for test ease */}
             <div className="space-y-1 bg-black/[0.03] p-3 rounded-2xl border border-black/[0.04]">
-              <label className="text-[9px] font-bold text-[#4B5563] uppercase tracking-wider block">Demo Role Trigger Selection</label>
+              <label className="text-[9px] font-bold text-[#5A554E] uppercase tracking-wider block">Demo Role Trigger Selection</label>
               <select
                 value={roleSelection}
                 onChange={(e) => setRoleSelection(e.target.value as any)}
-                className="w-full bg-transparent text-xs font-semibold text-[#191919] focus:outline-none cursor-pointer pr-1"
+                className="w-full bg-transparent text-xs font-semibold text-[#2A2621] focus:outline-none cursor-pointer pr-1"
               >
                 <option value="student" className="bg-white">Michael Chen (Student)</option>
                 <option value="student_leader" className="bg-white">Sarah Jenkins (Student Leader)</option>
@@ -71,7 +71,7 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
             {/* Google sign-in */}
             <button
               onClick={handleVerificationComplete}
-              className="w-full flex items-center justify-center gap-2.5 rounded-full bg-[#DFDED7] hover:bg-black/5 py-3.5 text-xs font-bold text-[#191919] transition-all hover:scale-[1.01] cursor-pointer"
+              className="w-full flex items-center justify-center gap-2.5 rounded-full bg-[#D8D2BC] hover:bg-[#D8D2BC]/30 py-3.5 text-xs font-bold text-[#2A2621] transition-all hover:scale-[1.01] cursor-pointer"
             >
               Continue with Google
             </button>
@@ -79,15 +79,15 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
             {/* Email login option */}
             <button
               onClick={() => setMethod('email')}
-              className="w-full flex items-center justify-center gap-2.5 rounded-full border border-black/10 hover:border-black/20 bg-white py-3.5 text-xs font-bold text-[#191919] transition-all hover:scale-[1.01] cursor-pointer"
+              className="w-full flex items-center justify-center gap-2.5 rounded-full border border-black/10 hover:border-black/20 bg-white py-3.5 text-xs font-bold text-[#2A2621] transition-all hover:scale-[1.01] cursor-pointer"
             >
-              <Mail className="h-4 w-4 text-[#191919]" />
+              <Mail className="h-4 w-4 text-[#2A2621]" />
               Use School Email
             </button>
 
             <button
               onClick={onBack}
-              className="w-full text-center text-[10px] font-bold text-[#4B5563] hover:text-[#191919] transition-colors uppercase pt-2 cursor-pointer"
+              className="w-full text-center text-[10px] font-bold text-[#5A554E] hover:text-[#2A2621] transition-colors uppercase pt-2 cursor-pointer"
             >
               Cancel & Back to Home
             </button>
@@ -97,20 +97,20 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
         {method === 'email' && (
           <form onSubmit={handleEmailSubmit} className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-[#374151] uppercase tracking-wide">University Email Address</label>
+              <label className="text-[10px] font-bold text-[#5A554E] uppercase tracking-wide">University Email Address</label>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="e.g. name@university.edu"
-                className="w-full rounded-xl border border-black/10 bg-black/[0.01] py-2.5 px-3 text-xs text-[#191919] placeholder-[#4B5563] focus:outline-none focus:border-[#BDFB04]"
+                className="w-full rounded-xl border border-black/10 bg-black/[0.01] py-2.5 px-3 text-xs text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05]"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 rounded-full bg-[#BDFB04] py-3.5 text-xs font-bold text-[#191919] transition-all hover:scale-[1.01] cursor-pointer shadow-lg shadow-[#BDFB04]/30 hover:bg-[#d1fa3c]"
+              className="w-full flex items-center justify-center gap-2 rounded-full bg-[#FD5C05] py-3.5 text-xs font-bold text-[#2A2621] transition-all hover:scale-[1.01] cursor-pointer shadow-lg shadow-[#FD5C05]/30 hover:bg-[#CC3D00]"
             >
               Send Verification Code
               <ArrowRight className="h-4 w-4" />
@@ -125,17 +125,17 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
             </div>
 
             <div className="space-y-1.5">
-              <h4 className="text-xs font-bold text-[#191919]">VERIFICATION MAIL SENT</h4>
-              <p className="text-[11px] text-[#374151] leading-relaxed px-4">
+              <h4 className="text-xs font-bold text-[#2A2621]">VERIFICATION MAIL SENT</h4>
+              <p className="text-[11px] text-[#5A554E] leading-relaxed px-4">
                 We sent a temporary verification link to <strong>{email}</strong>. Check your inbox and click the activation link.
               </p>
             </div>
 
             <div className="bg-black/[0.03] p-3 rounded-2xl border border-black/[0.04] space-y-1 text-left">
-              <span className="text-[9px] font-bold text-[#4B5563] uppercase tracking-wider block text-center">Simulation Helper</span>
+              <span className="text-[9px] font-bold text-[#5A554E] uppercase tracking-wider block text-center">Simulation Helper</span>
               <button
                 onClick={handleVerificationComplete}
-                className="w-full rounded-xl bg-[#BDFB04] text-[#191919] text-xs font-bold py-2 hover:bg-[#d1fa3c] transition-colors cursor-pointer"
+                className="w-full rounded-xl bg-[#FD5C05] text-[#2A2621] text-xs font-bold py-2 hover:bg-[#CC3D00] transition-colors cursor-pointer"
               >
                 Confirm Verification (Demo Bypass)
               </button>

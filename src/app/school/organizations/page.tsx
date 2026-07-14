@@ -28,12 +28,12 @@ export default function OrganizationsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row gap-6 justify-between md:items-end">
         <div className="space-y-2">
-          <h1 className="text-3xl font-extrabold text-[#191919] tracking-tight">Organizations</h1>
-          <p className="text-sm text-[#374151]">Manage and verify campus student groups.</p>
+          <h1 className="text-3xl font-extrabold text-[#2A2621] tracking-tight">Organizations</h1>
+          <p className="text-sm text-[#5A554E]">Manage and verify campus student groups.</p>
         </div>
         <div className="w-full md:w-80">
            <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#374151]/50" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#5A554E]/50" />
             <Input
               placeholder="Search organizations..."
               className="pl-12 rounded-full"
@@ -52,19 +52,19 @@ export default function OrganizationsPage() {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-4">
                   <div className={`h-14 w-14 rounded-2xl bg-gradient-to-br flex items-center justify-center from-${org.logoColor}-500 to-${org.logoColor}-700 shrink-0`}>
-                    <span className="font-bold text-[#191919] text-xl">{org.name.charAt(0)}</span>
+                    <span className="font-bold text-[#2A2621] text-xl">{org.name.charAt(0)}</span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-[#191919] leading-snug">{org.name}</h3>
+                    <h3 className="text-lg font-bold text-[#2A2621] leading-snug">{org.name}</h3>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs text-[#374151]">{org.members.length} members</span>
-                      <span className="h-1 w-1 rounded-full bg-[#191919]/25" />
+                      <span className="text-xs text-[#5A554E]">{org.members.length} members</span>
+                      <span className="h-1 w-1 rounded-full bg-[#2A2621]/25" />
                       {org.verified ? (
-                        <span className="flex items-center gap-1 text-[10px] font-bold text-[#191919] uppercase">
+                        <span className="flex items-center gap-1 text-[10px] font-bold text-[#2A2621] uppercase">
                           <CheckCircle2 className="h-3 w-3" /> Verified
                         </span>
                       ) : (
-                        <span className="flex items-center gap-1 text-[10px] font-bold text-[#374151] uppercase">
+                        <span className="flex items-center gap-1 text-[10px] font-bold text-[#5A554E] uppercase">
                           <XCircle className="h-3 w-3" /> Unverified
                         </span>
                       )}
@@ -73,11 +73,11 @@ export default function OrganizationsPage() {
                 </div>
               </div>
 
-              <p className="text-sm text-[#374151] mt-4 flex-1">
+              <p className="text-sm text-[#5A554E] mt-4 flex-1">
                 {org.description}
               </p>
 
-              <div className="pt-5 mt-5 border-t border-black/[0.06] flex justify-end">
+              <div className="pt-5 mt-5 border-t border-[#D8D2BC]/30 flex justify-end">
                 <Button
                   variant={org.verified ? "ghost" : "neon"}
                   size="sm"
@@ -91,7 +91,7 @@ export default function OrganizationsPage() {
         </div>
       ) : (
         <EmptyState
-          icon={<Building2 className="h-8 w-8 text-[#374151]" />}
+          icon={<Building2 className="h-8 w-8 text-[#5A554E]" />}
           title="No organizations found"
         />
       )}

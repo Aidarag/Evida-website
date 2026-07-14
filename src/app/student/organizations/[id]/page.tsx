@@ -115,13 +115,13 @@ export default function OrganizationProfilePage() {
 
   if (!org) {
     return (
-      <div className="min-h-screen bg-[#DFDED7] flex flex-col items-center justify-center p-6 text-center">
-        <Building className="h-16 w-16 text-[#4B5563] mb-4" />
-        <h2 className="text-xl font-extrabold text-[#191919] uppercase tracking-tight">Organization Not Found</h2>
-        <p className="text-xs text-[#374151] mt-2 max-w-sm">The organization page you are looking for does not exist or may have been deleted.</p>
+      <div className="min-h-screen bg-[#D8D2BC] flex flex-col items-center justify-center p-6 text-center">
+        <Building className="h-16 w-16 text-[#5A554E] mb-4" />
+        <h2 className="text-xl font-extrabold text-[#2A2621] uppercase tracking-tight">Organization Not Found</h2>
+        <p className="text-xs text-[#5A554E] mt-2 max-w-sm">The organization page you are looking for does not exist or may have been deleted.</p>
         <button 
           onClick={() => router.push('/student/dashboard')}
-          className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 bg-[#BDFB04] text-[#191919] font-bold text-xs uppercase tracking-wider rounded-full shadow-md shadow-[#BDFB04]/25 hover:bg-[#d1fa3c]"
+          className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 bg-[#FD5C05] text-[#2A2621] font-bold text-xs uppercase tracking-wider rounded-full shadow-md shadow-[#FD5C05]/25 hover:bg-[#CC3D00]"
         >
           <ArrowLeft className="h-4 w-4" /> Back to Dashboard
         </button>
@@ -145,19 +145,19 @@ export default function OrganizationProfilePage() {
   const bannerPhoto = ORG_BANNERS[bannerIdx];
 
   return (
-    <div className="min-h-screen bg-[#DFDED7] text-[#191919] pb-16 font-sans">
+    <div className="min-h-screen bg-[#D8D2BC] text-[#2A2621] pb-16 font-sans">
       
       {/* ── Top Header Navigation ── */}
-      <div className="sticky top-0 z-30 h-16 w-full border-b border-black/[0.06] bg-white/80 backdrop-blur-md px-6 flex items-center gap-4">
+      <div className="sticky top-0 z-30 h-16 w-full border-b border-[#D8D2BC]/30 bg-white/80 backdrop-blur-md px-6 flex items-center gap-4">
         <button 
           onClick={() => router.back()}
-          className="h-9 w-9 rounded-full bg-white border border-black/10 hover:bg-slate-50 flex items-center justify-center text-[#191919] shadow-sm transition-all"
+          className="h-9 w-9 rounded-full bg-white border border-black/10 hover:bg-slate-50 flex items-center justify-center text-[#2A2621] shadow-sm transition-all"
         >
           <ArrowLeft className="h-4.5 w-4.5" />
         </button>
         <div className="truncate">
-          <span className="text-[9px] font-bold text-[#4B5563] uppercase tracking-widest block">CAMPUS DIRECTORY</span>
-          <h1 className="text-sm font-extrabold text-[#191919] uppercase tracking-tight truncate flex items-center">
+          <span className="text-[9px] font-bold text-[#5A554E] uppercase tracking-widest block">CAMPUS DIRECTORY</span>
+          <h1 className="text-sm font-extrabold text-[#2A2621] uppercase tracking-tight truncate flex items-center">
             {org.name}
             {org.verified && <VerifiedBadge className="h-3.5 w-3.5" />}
           </h1>
@@ -167,7 +167,7 @@ export default function OrganizationProfilePage() {
       <div className="max-w-4xl mx-auto p-4 md:p-6 space-y-6">
         
         {/* ── Banner & Logo Header (LinkedIn-style Profile Card) ── */}
-        <div className="bg-white rounded-[28px] border border-black/[0.06] overflow-hidden shadow-sm flex flex-col relative">
+        <div className="bg-white rounded-[28px] border border-[#D8D2BC]/30 overflow-hidden shadow-sm flex flex-col relative">
           
           {/* Banner cover */}
           <div 
@@ -181,30 +181,30 @@ export default function OrganizationProfilePage() {
           <div className="px-6 md:px-8 pb-6 relative flex flex-col md:flex-row gap-6 md:items-end">
             
             {/* Logo Avatar (overlapping banner) */}
-            <div className="h-20 w-20 md:h-28 md:w-28 rounded-2xl bg-[#BDFB04] text-[#191919] font-extrabold text-3xl md:text-4xl flex items-center justify-center border-4 border-white shadow-md shrink-0 -mt-10 md:-mt-14 z-10">
+            <div className="h-20 w-20 md:h-28 md:w-28 rounded-2xl bg-[#FD5C05] text-[#2A2621] font-extrabold text-3xl md:text-4xl flex items-center justify-center border-4 border-white shadow-md shrink-0 -mt-10 md:-mt-14 z-10">
               {org.name.charAt(0).toUpperCase()}
             </div>
 
             {/* Title & Stats */}
             <div className="flex-1 space-y-2 pt-2 md:pt-4">
               <div className="flex flex-wrap items-center gap-2">
-                <h2 className="text-xl md:text-2xl font-black text-[#191919] uppercase tracking-tight flex items-center leading-none" style={{ fontFamily: 'var(--font-display)' }}>
+                <h2 className="text-xl md:text-2xl font-black text-[#2A2621] uppercase tracking-tight flex items-center leading-none" style={{ fontFamily: 'var(--font-display)' }}>
                   {org.name}
                   {org.verified && <VerifiedBadge className="h-5 w-5" />}
                 </h2>
               </div>
-              <p className="text-xs text-[#374151] leading-relaxed max-w-xl">
+              <p className="text-xs text-[#5A554E] leading-relaxed max-w-xl">
                 {org.description || 'Welcome to our official campus organization page. Follow us to stay updated with our upcoming student experiences.'}
               </p>
               
-              <div className="flex flex-wrap items-center gap-4 text-[10px] font-bold text-[#4B5563] pt-1 uppercase">
+              <div className="flex flex-wrap items-center gap-4 text-[10px] font-bold text-[#5A554E] pt-1 uppercase">
                 <span className="flex items-center gap-1">
-                  <Users className="h-3.5 w-3.5 text-[#191919]" />
+                  <Users className="h-3.5 w-3.5 text-[#2A2621]" />
                   {org.members.length} members
                 </span>
                 <span className="h-1.5 w-1.5 rounded-full bg-slate-300" />
                 <span className="flex items-center gap-1">
-                  <Calendar className="h-3.5 w-3.5 text-[#191919]" />
+                  <Calendar className="h-3.5 w-3.5 text-[#2A2621]" />
                   {orgEvents.length} events hosted
                 </span>
                 {org.verified && (
@@ -220,7 +220,7 @@ export default function OrganizationProfilePage() {
           </div>
 
           {/* Tab Selector */}
-          <div className="flex px-6 border-t border-black/[0.06] text-xs font-bold text-[#4B5563] bg-slate-50/50">
+          <div className="flex px-6 border-t border-[#D8D2BC]/30 text-xs font-bold text-[#5A554E] bg-slate-50/50">
             {[
               { id: 'home' as const, label: 'Home' },
               { id: 'events' as const, label: `Events (${orgEvents.length})` },
@@ -232,8 +232,8 @@ export default function OrganizationProfilePage() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`py-3.5 px-4 border-b-2 transition-all cursor-pointer ${
                   activeTab === tab.id 
-                    ? 'border-[#BDFB04] text-[#191919] font-extrabold bg-white' 
-                    : 'border-transparent hover:text-[#191919]'
+                    ? 'border-[#FD5C05] text-[#2A2621] font-extrabold bg-white' 
+                    : 'border-transparent hover:text-[#2A2621]'
                 }`}
               >
                 {tab.label}
@@ -254,38 +254,38 @@ export default function OrganizationProfilePage() {
               <div className="md:col-span-2 space-y-6">
                 
                 {/* Highlights / About */}
-                <div className="bg-white rounded-[24px] border border-black/[0.06] p-6 space-y-4 shadow-sm text-left">
-                  <h3 className="text-xs font-extrabold tracking-widest text-[#191919] uppercase">About Us</h3>
-                  <p className="text-xs text-[#374151] leading-relaxed">
+                <div className="bg-white rounded-[24px] border border-[#D8D2BC]/30 p-6 space-y-4 shadow-sm text-left">
+                  <h3 className="text-xs font-extrabold tracking-widest text-[#2A2621] uppercase">About Us</h3>
+                  <p className="text-xs text-[#5A554E] leading-relaxed">
                     {org.description || 'No description provided by this campus organization.'}
                   </p>
                   
                   <div className="pt-4 border-t border-black/[0.04] grid gap-3 sm:grid-cols-2 text-xs">
-                    <div className="flex items-center gap-2 text-[#374151]">
-                      <Globe className="h-4 w-4 text-[#191919]" />
+                    <div className="flex items-center gap-2 text-[#5A554E]">
+                      <Globe className="h-4 w-4 text-[#2A2621]" />
                       <span>{org.name.toLowerCase().replace(/\s+/g, '')}.university.edu</span>
                     </div>
-                    <div className="flex items-center gap-2 text-[#374151]">
-                      <Mail className="h-4 w-4 text-[#191919]" />
+                    <div className="flex items-center gap-2 text-[#5A554E]">
+                      <Mail className="h-4 w-4 text-[#2A2621]" />
                       <span>contact@{org.name.toLowerCase().replace(/\s+/g, '')}.com</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Team Roster */}
-                <div className="bg-white rounded-[24px] border border-black/[0.06] p-6 space-y-4 shadow-sm text-left">
-                  <h3 className="text-xs font-extrabold tracking-widest text-[#4B5563] uppercase">
+                <div className="bg-white rounded-[24px] border border-[#D8D2BC]/30 p-6 space-y-4 shadow-sm text-left">
+                  <h3 className="text-xs font-extrabold tracking-widest text-[#5A554E] uppercase">
                     // Team Roster ({org.members.length})
                   </h3>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {org.members.map((member, idx) => (
                       <div key={member} className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-black/[0.04]">
-                        <div className="h-7 w-7 rounded-lg bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex items-center justify-center text-[10px] font-extrabold text-[#191919]">
+                        <div className="h-7 w-7 rounded-lg bg-[#FD5C05]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[10px] font-extrabold text-[#2A2621]">
                           {member.substring(0, 2).toUpperCase()}
                         </div>
                         <div>
-                          <p className="text-xs font-bold text-[#191919] uppercase">{member}</p>
-                          <p className="text-[9px] text-[#4B5563] font-semibold tracking-wider">
+                          <p className="text-xs font-bold text-[#2A2621] uppercase">{member}</p>
+                          <p className="text-[9px] text-[#5A554E] font-semibold tracking-wider">
                             {idx === 0 ? 'President' : idx === 1 ? 'Vice President' : 'Team Member'}
                           </p>
                         </div>
@@ -298,28 +298,28 @@ export default function OrganizationProfilePage() {
 
               {/* Right Panel: Upcoming Event Highlights list */}
               <div className="md:col-span-1 space-y-6 text-left">
-                <div className="bg-white rounded-[24px] border border-black/[0.06] p-6 space-y-4 shadow-sm">
-                  <h3 className="text-xs font-extrabold tracking-widest text-[#191919] uppercase">Next Highlight</h3>
+                <div className="bg-white rounded-[24px] border border-[#D8D2BC]/30 p-6 space-y-4 shadow-sm">
+                  <h3 className="text-xs font-extrabold tracking-widest text-[#2A2621] uppercase">Next Highlight</h3>
                   {orgEvents.length > 0 ? (
                     <div 
                       onClick={() => router.push(`/events/${orgEvents[0].id}`)}
                       className="group block space-y-3 cursor-pointer"
                     >
-                      <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-black/5">
+                      <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#D8D2BC]/40">
                         <div className={`absolute inset-0 bg-gradient-to-tr ${orgEvents[0].coverImage} opacity-30 group-hover:scale-105 transition-transform duration-500`} />
                         <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10" />
                       </div>
                       <div>
-                        <span className="text-[9px] font-bold text-[#4B5563] uppercase tracking-wide block">
+                        <span className="text-[9px] font-bold text-[#5A554E] uppercase tracking-wide block">
                           {orgEvents[0].date}
                         </span>
-                        <h4 className="text-sm font-bold text-[#191919] group-hover:underline uppercase mt-1 leading-snug line-clamp-1">
+                        <h4 className="text-sm font-bold text-[#2A2621] group-hover:underline uppercase mt-1 leading-snug line-clamp-1">
                           {orgEvents[0].title}
                         </h4>
                       </div>
                     </div>
                   ) : (
-                    <div className="py-6 text-center text-xs text-[#4B5563] italic">
+                    <div className="py-6 text-center text-xs text-[#5A554E] italic">
                       No upcoming experiences listed.
                     </div>
                   )}
@@ -332,12 +332,12 @@ export default function OrganizationProfilePage() {
           {/* EVENTS TAB */}
           {activeTab === 'events' && (
             <div className="space-y-4 text-left">
-              <h3 className="text-xs font-extrabold tracking-widest text-[#191919] uppercase">Experiences Hosted by Members</h3>
+              <h3 className="text-xs font-extrabold tracking-widest text-[#2A2621] uppercase">Experiences Hosted by Members</h3>
               {orgEvents.length === 0 ? (
-                <div className="bg-white rounded-[24px] border border-black/[0.06] p-12 text-center shadow-sm">
-                  <Calendar className="h-10 w-10 text-[#4B5563] mx-auto mb-3" />
-                  <p className="text-xs font-bold text-[#191919] uppercase">No events discovered</p>
-                  <p className="text-[11px] text-[#374151] mt-1">Check back later for updates on upcoming group hosts.</p>
+                <div className="bg-white rounded-[24px] border border-[#D8D2BC]/30 p-12 text-center shadow-sm">
+                  <Calendar className="h-10 w-10 text-[#5A554E] mx-auto mb-3" />
+                  <p className="text-xs font-bold text-[#2A2621] uppercase">No events discovered</p>
+                  <p className="text-[11px] text-[#5A554E] mt-1">Check back later for updates on upcoming group hosts.</p>
                 </div>
               ) : (
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -360,21 +360,21 @@ export default function OrganizationProfilePage() {
 
           {/* ABOUT TAB */}
           {activeTab === 'about' && (
-            <div className="bg-white rounded-[28px] border border-black/[0.06] p-6 space-y-6 shadow-sm text-left">
+            <div className="bg-white rounded-[28px] border border-[#D8D2BC]/30 p-6 space-y-6 shadow-sm text-left">
               <div className="space-y-2">
-                <h3 className="text-xs font-extrabold tracking-widest text-[#191919] uppercase">Organization Profile Overview</h3>
-                <p className="text-xs text-[#374151] leading-relaxed leading-relaxed">
+                <h3 className="text-xs font-extrabold tracking-widest text-[#2A2621] uppercase">Organization Profile Overview</h3>
+                <p className="text-xs text-[#5A554E] leading-relaxed leading-relaxed">
                   Welcome to the LinkedIn-inspired profile directory page for the {org.name}. Here, you can search and access comprehensive listings of all active campus events and checkouts created by our verified team leaders and member roster.
                 </p>
               </div>
 
-              <div className="grid gap-4 border-t border-black/[0.06] pt-6 sm:grid-cols-2 text-xs">
+              <div className="grid gap-4 border-t border-[#D8D2BC]/30 pt-6 sm:grid-cols-2 text-xs">
                 <div className="space-y-1">
-                  <p className="text-[10px] font-bold text-[#4B5563] uppercase tracking-wide">Official Name</p>
-                  <p className="font-extrabold text-[#191919] uppercase">{org.name}</p>
+                  <p className="text-[10px] font-bold text-[#5A554E] uppercase tracking-wide">Official Name</p>
+                  <p className="font-extrabold text-[#2A2621] uppercase">{org.name}</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-[10px] font-bold text-[#4B5563] uppercase tracking-wide">Verification Badge</p>
+                  <p className="text-[10px] font-bold text-[#5A554E] uppercase tracking-wide">Verification Badge</p>
                   <p className="font-extrabold text-emerald-600 uppercase flex items-center">
                     {org.verified ? 'Verified Member checkmark' : 'Campus Registered'}
                     {org.verified && <VerifiedBadge className="h-4.5 w-4.5" />}
@@ -389,20 +389,20 @@ export default function OrganizationProfilePage() {
             <div className="space-y-6 text-left">
               
               {/* Member Roster & Role Manager */}
-              <div className="bg-white rounded-[24px] border border-black/[0.06] p-6 space-y-4 shadow-sm">
-                <h3 className="text-xs font-extrabold tracking-widest text-[#191919] uppercase">Manage Member Roles</h3>
+              <div className="bg-white rounded-[24px] border border-[#D8D2BC]/30 p-6 space-y-4 shadow-sm">
+                <h3 className="text-xs font-extrabold tracking-widest text-[#2A2621] uppercase">Manage Member Roles</h3>
                 <div className="space-y-3">
                   {org.members.map((member) => {
                     const currentRole = org.memberRoles?.[member] || (org.members[0] === member ? 'President' : 'Member');
                     return (
                       <div key={member} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-50 border border-black/[0.04]">
                         <div className="flex items-center gap-3">
-                          <div className="h-8 w-8 rounded-lg bg-[#BDFB04]/10 border border-[#BDFB04]/20 flex items-center justify-center text-[10px] font-extrabold text-[#191919]">
+                          <div className="h-8 w-8 rounded-lg bg-[#FD5C05]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[10px] font-extrabold text-[#2A2621]">
                             {member.substring(0, 2).toUpperCase()}
                           </div>
                           <div>
-                            <p className="text-xs font-bold text-[#191919] uppercase">{member}</p>
-                            <p className="text-[9px] text-[#4B5563]">Current Role: {currentRole}</p>
+                            <p className="text-xs font-bold text-[#2A2621] uppercase">{member}</p>
+                            <p className="text-[9px] text-[#5A554E]">Current Role: {currentRole}</p>
                           </div>
                         </div>
                         
@@ -410,7 +410,7 @@ export default function OrganizationProfilePage() {
                           <select
                             value={currentRole}
                             onChange={(e) => handleUpdateRole(member, e.target.value)}
-                            className="bg-white border border-black/[0.08] rounded-xl px-2.5 py-1.5 text-xs text-[#191919] focus:outline-none"
+                            className="bg-white border border-black/[0.08] rounded-xl px-2.5 py-1.5 text-xs text-[#2A2621] focus:outline-none"
                           >
                             <option value="President">President</option>
                             <option value="Vice President">Vice President</option>
@@ -433,16 +433,16 @@ export default function OrganizationProfilePage() {
               </div>
 
               {/* Pending Membership Requests */}
-              <div className="bg-white rounded-[24px] border border-black/[0.06] p-6 space-y-4 shadow-sm">
-                <h3 className="text-xs font-extrabold tracking-widest text-[#191919] uppercase">Pending Membership Applications</h3>
+              <div className="bg-white rounded-[24px] border border-[#D8D2BC]/30 p-6 space-y-4 shadow-sm">
+                <h3 className="text-xs font-extrabold tracking-widest text-[#2A2621] uppercase">Pending Membership Applications</h3>
                 {membershipRequests.filter(r => r.orgId === org.id && r.status === 'pending').length > 0 ? (
                   <div className="grid gap-3 sm:grid-cols-2">
                     {membershipRequests.filter(r => r.orgId === org.id && r.status === 'pending').map((req) => (
                       <div key={req.id} className="bg-slate-50 rounded-2xl p-4 border border-black/[0.04] flex flex-col justify-between gap-4">
                         <div>
-                          <span className="text-[9px] font-bold text-[#191919] uppercase tracking-widest block">Application</span>
-                          <h4 className="text-xs font-extrabold text-[#191919] uppercase tracking-tight mt-1">{req.studentName}</h4>
-                          <p className="text-[9px] text-[#4B5563]">Wants to join this organization</p>
+                          <span className="text-[9px] font-bold text-[#2A2621] uppercase tracking-widest block">Application</span>
+                          <h4 className="text-xs font-extrabold text-[#2A2621] uppercase tracking-tight mt-1">{req.studentName}</h4>
+                          <p className="text-[9px] text-[#5A554E]">Wants to join this organization</p>
                         </div>
                         <div className="flex gap-2 w-full">
                           <button
@@ -462,7 +462,7 @@ export default function OrganizationProfilePage() {
                     ))}
                   </div>
                 ) : (
-                  <div className="py-6 text-center text-xs text-[#4B5563] italic">
+                  <div className="py-6 text-center text-xs text-[#5A554E] italic">
                     No pending membership applications.
                   </div>
                 )}

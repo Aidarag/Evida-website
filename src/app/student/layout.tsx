@@ -8,10 +8,10 @@ export default function StudentLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#DFDED7] text-gray-900 flex flex-col md:flex-row font-sans">
+    <div className="min-h-screen bg-[#D8D2BC] text-gray-900 flex flex-col md:flex-row font-sans">
       {/* Mobile Top Nav (visible only on small screens) */}
-      <div className="md:hidden sticky top-0 z-40 w-full py-2.5 px-4 border-b border-black/[0.04] bg-[#DFDED7]/95 backdrop-blur-xl flex items-center justify-center">
-        <span className="text-lg font-bold tracking-tight text-[#191919] flex items-center gap-2">
+      <div className="md:hidden sticky top-0 z-40 w-full py-2.5 px-4 border-b border-black/[0.04] bg-[#D8D2BC]/95 backdrop-blur-xl flex items-center justify-center">
+        <span className="text-lg font-bold tracking-tight text-[#2A2621] flex items-center gap-2">
           <EvidaLogo size={30} showText={true} />
         </span>
       </div>

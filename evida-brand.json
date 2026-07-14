@@ -1,38 +1,39 @@
 {
   "brand": "Evida",
   "version": "2026",
-
+  
   "colorPalette": {
     "backgrounds": {
-      "primary":   "#FFFFFF",
-      "secondary": "#DFDED7",
+      "primary":   "#EAE4CF",
+      "secondary": "#D8D2BC",
       "surface":   "#FFFFFF",
-      "warm":      "#DFDED7"
+      "warm":      "#EAE4CF"
     },
     "text": {
-      "primary":   "#191919",
-      "secondary": "#4F5666",
-      "tertiary":  "#7B8290"
+      "primary":   "#2A2621",
+      "secondary": "#5A554E",
+      "tertiary":  "#5A554E"
     },
     "brandAccents": {
-      "lime":    "#BDFB04",
-      "success": "#22C55E",
-      "dark":    "#191919"
+      "red":      "#FB1C07",
+      "orange":   "#FD5C05",
+      "success":  "#22C55E",
+      "dark":     "#2A2621"
     },
     "softBackgrounds": {
-      "limeLight":    "rgba(189, 251, 4, 0.12)",
+      "orangeLight":  "rgba(253, 92, 5, 0.10)",
       "successLight": "rgba(34, 197, 94, 0.08)"
     },
     "buttons": {
-      "primaryBg":       "#BDFB04",
-      "primaryText":     "#191919",
-      "primaryHover":    "#D1FA3C",
-      "outlineText":     "#191919",
-      "outlineBorder":   "#191919",
-      "outlineHoverBg":  "#191919",
-      "outlineHoverText": "#DFDED7",
-      "ghostText":       "#4F5666",
-      "ghostHoverText":  "#191919"
+      "primaryBg":       "linear-gradient(135deg, #FB1C07 0%, #FD4002 35%, #FD5C05 70%, #FC7C0B 100%)",
+      "primaryText":     "#FFFFFF",
+      "primaryHover":    "brightness(1.08)",
+      "outlineText":     "#FD5C05",
+      "outlineBorder":   "#FD5C05",
+      "outlineHoverBg":  "#FD5C05",
+      "outlineHoverText": "#FFFFFF",
+      "ghostText":       "#5A554E",
+      "ghostHoverText":  "#2A2621"
     }
   },
 
@@ -41,11 +42,11 @@
       "svg": "evida-logo-2026.svg",
       "png": "evida-logo-2026.png"
     },
-    "svgInline": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 48\" width=\"100%\" height=\"100%\"><g id=\"evida-logo-mark\"><path d=\"M 6 42 L 6 22 L 24 6 L 24 15 L 15 24 L 15 42 Z\" fill=\"#BDFB04\" opacity=\"0.95\" /><path d=\"M 42 42 L 42 22 L 24 6 L 24 15 L 33 24 L 33 42 Z\" fill=\"#BDFB04\" opacity=\"0.95\" /><path d=\"M 24 10 L 36 22 L 24 34 L 12 22 Z M 24 16 L 30 22 L 24 28 L 18 22 Z\" fill=\"#191919\" opacity=\"0.95\" /></g><text x=\"56\" y=\"33\" fill=\"#BDFB04\" font-family=\"var(--font-display), Syne, sans-serif\" font-weight=\"800\" font-size=\"26\" letter-spacing=\"0.03em\">Evida</text></svg>",
+    "svgInline": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 48\" width=\"100%\" height=\"100%\"><defs><linearGradient id=\"logo-grad\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\"><stop offset=\"0%\" stop-color=\"#FB1C07\"/><stop offset=\"35%\" stop-color=\"#FD4002\"/><stop offset=\"70%\" stop-color=\"#FD5C05\"/><stop offset=\"100%\" stop-color=\"#FC7C0B\"/></linearGradient><filter id=\"logo-glow\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"120%\"><feDropShadow dx=\"0\" dy=\"2\" stdDeviation=\"4\" flood-color=\"#FB1C07\" flood-opacity=\"0.25\"/></filter></defs><g id=\"evida-logo-mark\" filter=\"url(#logo-glow)\"><path d=\"M 6 42 L 6 22 L 24 6 L 24 15 L 15 24 L 15 42 Z\" fill=\"url(#logo-grad)\" opacity=\"0.95\" /><path d=\"M 42 42 L 42 22 L 24 6 L 24 15 L 33 24 L 33 42 Z\" fill=\"url(#logo-grad)\" opacity=\"0.95\" /><path d=\"M 24 10 L 36 22 L 24 34 L 12 22 Z M 24 16 L 30 22 L 24 28 L 18 22 Z\" fill=\"#2A2621\" opacity=\"0.95\" /></g><text x=\"56\" y=\"33\" fill=\"url(#logo-grad)\" font-family=\"var(--font-display), Syne, sans-serif\" font-weight=\"800\" font-size=\"26\" letter-spacing=\"0.03em\" filter=\"url(#logo-glow)\">Evida</text></svg>",
     "logoColors": {
-      "ribbons":      "#BDFB04",
-      "centerDiamond": "#191919",
-      "wordmark":     "#BDFB04"
+      "ribbons":      "url(#logo-grad)",
+      "centerDiamond": "#2A2621",
+      "wordmark":     "url(#logo-grad)"
     }
   },
 
@@ -63,9 +64,9 @@
   },
 
   "shadows": {
-    "sm": "0 2px 8px rgba(18,18,18,0.02), 0 1px 2px rgba(18,18,18,0.02)",
-    "md": "0 12px 34px rgba(18,18,18,0.04), 0 4px 12px rgba(18,18,18,0.02)",
-    "lg": "0 24px 48px rgba(18,18,18,0.08), 0 8px 24px rgba(18,18,18,0.04)",
-    "xl": "0 32px 64px rgba(18,18,18,0.12), 0 16px 32px rgba(18,18,18,0.06)"
+    "sm": "0 2px 8px rgba(42,38,33,0.02), 0 1px 2px rgba(42,38,33,0.02)",
+    "md": "0 12px 34px rgba(42,38,33,0.04), 0 4px 12px rgba(42,38,33,0.02)",
+    "lg": "0 24px 48px rgba(42,38,33,0.08), 0 8px 24px rgba(42,38,33,0.04)",
+    "xl": "0 32px 64px rgba(42,38,33,0.12), 0 16px 32px rgba(42,38,33,0.06)"
   }
 }
