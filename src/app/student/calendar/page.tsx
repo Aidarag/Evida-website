@@ -197,7 +197,7 @@ export default function StudentCalendarPage() {
       {/* ── Header ── */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-black/[0.04] pb-5">
         <div>
-          <h1 className="text-3xl font-black text-[#2A2621] uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+          <h1 className="font-black text-[#2A2621] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
             Campus Calendar
           </h1>
           <p className="text-sm text-[#5A554E] font-semibold mt-2.5 leading-relaxed">
@@ -222,7 +222,7 @@ export default function StudentCalendarPage() {
         <div className="lg:col-span-8 bg-white border border-black/[0.04] rounded-[24px] p-4 sm:p-6 shadow-sm">
           {/* Calendar Header */}
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-[#2A2621] font-bold text-xl uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-[#2A2621] font-bold tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
               {calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
             </h2>
             <div className="flex gap-2">

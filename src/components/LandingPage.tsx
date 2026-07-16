@@ -337,7 +337,7 @@ export default function LandingPage({
           <span className="rounded-full bg-[#2A2621] text-[#FD5C05] px-3.5 py-1.5 text-[10px] font-black uppercase tracking-widest inline-block shadow-sm">
             Take a tour
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tighter" style={{ fontFamily: 'var(--font-display)' }}>
+          <h2 className="font-black tracking-tighter" style={{ fontFamily: 'var(--font-display)' }}>
             Experience Evida
           </h2>
           <p className="text-xs text-[#5A554E] font-semibold max-w-md mx-auto leading-relaxed">
@@ -854,8 +854,8 @@ export default function LandingPage({
           
           <div className="text-center space-y-3 max-w-xl mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Why Evida</span>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tighter text-[#2A2621] leading-[0.95]" style={{ fontFamily: 'var(--font-display)' }}>
-              ONE CAMPUS. ONE PLATFORM. EVERY OPPORTUNITY.
+            <h2 className="font-black tracking-tighter text-[#2A2621] leading-[0.95]" style={{ fontFamily: 'var(--font-display)' }}>
+              One Campus. One Platform. Every Opportunity.
             </h2>
             <p className="text-xs text-[#5A554E] font-medium leading-relaxed max-w-lg mx-auto">
               Campus life is scattered across emails, group chats, flyers, and social media. Evida brings events, organizations, promotions, and your campus calendar together in one place.
@@ -925,8 +925,8 @@ export default function LandingPage({
         <div className="mx-auto max-w-7xl px-6 space-y-12">
           <div className="text-center space-y-3 max-w-xl mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Built for Everyone</span>
-            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
-              One platform. Two ways to connect.
+            <h2 className="font-black tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
+              One Platform. Two Ways to Connect.
             </h2>
           </div>
 
@@ -1004,8 +1004,8 @@ export default function LandingPage({
           
           <div className="text-center space-y-3 max-w-lg mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">How It Works</span>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
-              Four steps. One outcome: being connected.
+            <h2 className="font-black tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
+              Four Steps. One Outcome: Being Connected.
             </h2>
             <p className="text-xs text-[#5A554E]">We simplify communication and activities for everyone on campus.</p>
           </div>
@@ -1078,8 +1078,8 @@ export default function LandingPage({
           
           <div className="text-center space-y-3 max-w-lg mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Core Features</span>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
-              Everything you need for Campus life
+            <h2 className="font-black tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
+              Everything You Need for Campus Life
             </h2>
             <p className="text-xs text-[#5A554E]">A modular, streetwear-inspired hub connecting your entire university community.</p>
           </div>
@@ -1179,7 +1179,7 @@ export default function LandingPage({
         <div className="mx-auto max-w-4xl px-6 space-y-12">
           <div className="text-center space-y-3 max-w-lg mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Questions</span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-[#2A2621] uppercase">Frequently Asked Questions</h2>
+            <h2 className="font-extrabold tracking-tight text-[#2A2621]">Frequently Asked Questions</h2>
           </div>
 
           <div className="space-y-4">
@@ -1240,7 +1240,7 @@ export default function LandingPage({
             <span className="inline-block text-[10px] font-black uppercase tracking-[0.2em] text-[#FC7C0B]">
               Ready to Join
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight md:tracking-tighter uppercase leading-[1.05] md:leading-[0.95] text-white">
+            <h2 className="font-extrabold tracking-tight md:tracking-tighter leading-[1.05] md:leading-[0.95] text-white">
               Ready to Experience <br />
               <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent inline-block">Campus Differently?</span>
             </h2>

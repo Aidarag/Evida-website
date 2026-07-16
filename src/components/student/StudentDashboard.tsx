@@ -270,7 +270,7 @@ export default function StudentDashboard({
                       <span className="text-xs font-bold text-white bg-[#FD5C05] px-2 py-0.5 rounded w-fit uppercase tracking-wider">
                         {featuredEvent.organizationName || 'OFFICIAL EVENT'}
                       </span>
-                      <h2 className="text-2xl sm:text-3xl font-extrabold text-[#2A2621] uppercase tracking-tighter leading-none bg-white/95 px-3 py-1.5 rounded-2xl w-fit shadow-sm border border-[#D8D2BC]/40">
+                      <h2 className="text-2xl sm:text-3xl font-extrabold text-[#2A2621] tracking-tighter leading-none bg-white/95 px-3 py-1.5 rounded-2xl w-fit shadow-sm border border-[#D8D2BC]/40">
                         {featuredEvent.title}
                       </h2>
                       <p className="text-xs text-[#2A2621] font-medium bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl w-fit line-clamp-2 leading-relaxed shadow-sm border border-[#D8D2BC]/40">

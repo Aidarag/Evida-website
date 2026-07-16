@@ -91,7 +91,7 @@ export default function OurVisionSection() {
           <span className="text-[#FD5C05] font-bold uppercase text-xs tracking-[0.2em]">
             Why Choose Evida?
           </span>
-          <h2 className="text-[#2A2621] font-extrabold text-3xl md:text-5xl uppercase tracking-tight max-w-5xl mx-auto leading-[1.08]" style={{ fontFamily: 'var(--font-display)' }}>
+          <h2 className="text-[#2A2621] font-extrabold tracking-tight max-w-5xl mx-auto leading-[1.08]" style={{ fontFamily: 'var(--font-display)' }}>
             <span className="block sm:whitespace-nowrap">More Than a Platform,</span>
             <span className="block sm:whitespace-nowrap">The Future of Campus Life</span>
             <span className="block sm:whitespace-nowrap text-[#FD5C05]">Is Here</span>

@@ -30,8 +30,8 @@ export default function AboutEvidaSection() {
         <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-12">
           <div>
             <span className="text-[#5A554E] text-xs font-bold tracking-[0.25em] uppercase block mb-3">ABOUT US</span>
-            <h2 className="text-[#2A2621] font-extrabold text-5xl md:text-7xl uppercase tracking-tighter leading-[0.9]" style={{ fontFamily: 'var(--font-display)' }}>
-              CAMPUS LIFE<br />BUILDERS
+            <h2 className="text-[#2A2621] font-extrabold tracking-tighter leading-[0.9]" style={{ fontFamily: 'var(--font-display)' }}>
+              Campus Life<br />Builders
             </h2>
           </div>
           <div className="flex items-center">

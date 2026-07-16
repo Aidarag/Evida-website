@@ -20,7 +20,7 @@ export default function OurMissionPage() {
           <span className="rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white/90 backdrop-blur-md">
             OUR PURPOSE
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
+          <h1 className="font-extrabold text-white tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
             Our <span className="text-[#FD5C05]">Mission</span>
           </h1>
           <p className="text-white/70 text-sm md:text-base max-w-xl mx-auto font-light leading-relaxed">

@@ -47,7 +47,7 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FD5C05] shadow-md shadow-[#FD5C05]/25">
             <Sparkles className="h-6 w-6 text-[#2A2621]" />
           </div>
-          <h2 className="text-xl font-bold uppercase tracking-tight text-[#2A2621] mt-4">JOIN CAMPUS EVIDA</h2>
+          <h2 className="text-xl font-bold tracking-tight text-[#2A2621] mt-4">Join Campus Evida</h2>
           <p className="text-[11px] text-[#5A554E]">Access exclusive student experiences and coordinate organizations</p>
         </div>
 

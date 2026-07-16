@@ -265,8 +265,8 @@ export default function StudentDashboardPage() {
       {/* ── Header ── */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-black/[0.04] pb-5">
         <div>
-          <h1 className="text-3xl font-black text-[#2A2621] uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-            My campus life
+          <h1 className="font-black text-[#2A2621] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            My Campus Life
           </h1>
           <p className="text-sm text-[#5A554E] font-semibold mt-2.5 leading-relaxed">
             Yo {currentUser.name.split(' ')[0]}! Evida is your gateway to campus experiences, bridging official student organizations with student-led activities.
@@ -348,7 +348,7 @@ export default function StudentDashboardPage() {
       {/* ── Main Dashboard Layout ── */}
       <div className="max-w-5xl mx-auto space-y-5">
           <div className="text-left space-y-1">
-            <h2 className="text-xl font-black tracking-tight text-[#2A2621] uppercase flex items-center gap-1.5" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="font-black tracking-tight text-[#2A2621] flex items-center gap-1.5" style={{ fontFamily: 'var(--font-display)' }}>
               {activeFeed === 'official' ? 'Livingstone College' : 'For You'}
             </h2>
             <p className="text-xs font-bold text-[#5A554E] uppercase tracking-wider">

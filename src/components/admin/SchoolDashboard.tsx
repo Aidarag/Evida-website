@@ -192,7 +192,7 @@ export default function SchoolDashboard({
       {/* Administrative Header Banner */}
       <div className="rounded-[28px] border border-[#D8D2BC]/30 bg-[#D8D2BC]/35 p-6 flex items-center justify-between shadow-sm">
         <div className="space-y-1">
-          <h2 className="text-lg font-bold text-[#2A2621] uppercase tracking-tight flex items-center gap-2">
+          <h2 className="font-bold text-[#2A2621] tracking-tight flex items-center gap-2">
             <Shield className="h-5 w-5 text-[#2A2621]" />
             School Administration Dashboard
           </h2>

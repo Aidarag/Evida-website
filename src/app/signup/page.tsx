@@ -361,7 +361,7 @@ export default function SignupPage() {
                           <EvidaLogo size={36} showText={false} />
                         </div>
                         <div>
-                          <h1 className="text-xl font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                          <h1 className="text-xl font-extrabold text-[#2A2621] tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                             Join Evida
                           </h1>
                           <p className="text-xs text-[#5A554E] mt-1.5">
@@ -423,7 +423,7 @@ export default function SignupPage() {
                   {step === 'auth-options' && (
                     <div className="space-y-5">
                       <div className="text-center space-y-2">
-                        <h2 className="text-lg font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                        <h2 className="text-lg font-extrabold text-[#2A2621] tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                           Create Credentials
                         </h2>
                         <p className="text-xs text-[#5A554E]">
@@ -491,7 +491,7 @@ export default function SignupPage() {
                   {step === 'verify-email' && (
                     <form onSubmit={handleVerifySubmit} className="space-y-5">
                       <div className="text-center space-y-2">
-                        <h2 className="text-lg font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                        <h2 className="text-lg font-extrabold text-[#2A2621] tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                           Verify School Email
                         </h2>
                         <p className="text-xs text-[#5A554E]">
@@ -542,7 +542,7 @@ export default function SignupPage() {
                   {step === 'data-privacy' && (
                     <form onSubmit={handleConsentSubmit} className="space-y-5">
                       <div className="text-center space-y-2">
-                        <h2 className="text-lg font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                        <h2 className="text-lg font-extrabold text-[#2A2621] tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                           Consent & Privacy
                         </h2>
                         <p className="text-xs text-[#5A554E]">
@@ -754,7 +754,7 @@ export default function SignupPage() {
                       </motion.div>
 
                       <div className="space-y-2">
-                        <h2 className="text-xl font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                        <h2 className="text-xl font-extrabold text-[#2A2621] tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                           Account Activated
                         </h2>
                         <p className="text-xs text-[#5A554E]">

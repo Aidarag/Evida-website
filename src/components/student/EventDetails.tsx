@@ -79,7 +79,7 @@ export default function EventDetails({
             <span className="rounded-full bg-[#FD5C05] text-[#2A2621] text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 w-fit border border-[#FD5C05]/30 shadow-sm">
               {event.free ? 'FREE ACCESS' : 'TICKETED'}
             </span>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-[#2A2621] uppercase tracking-tight leading-none mt-2 line-clamp-3 bg-white/95 px-3 py-1.5 rounded-2xl w-fit shadow-sm border border-[#D8D2BC]/40">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#2A2621] tracking-tight leading-none mt-2 line-clamp-3 bg-white/95 px-3 py-1.5 rounded-2xl w-fit shadow-sm border border-[#D8D2BC]/40">
               {event.title}
             </h2>
             {event.organizationName && (

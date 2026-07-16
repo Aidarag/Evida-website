@@ -62,11 +62,11 @@ module.exports = {
         sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"]
       },
       fontSize: {
-        'hero': ['48px', { lineHeight: '1.05', letterSpacing: '-0.05em' }],
-        'page-title': ['40px', { lineHeight: '1.1', letterSpacing: '-0.04em' }],
-        'section-heading': ['32px', { lineHeight: '1.15', letterSpacing: '-0.03em' }],
+        'hero': ['52px', { lineHeight: '0.95', letterSpacing: '-0.05em' }],
+        'page-title': ['52px', { lineHeight: '0.95', letterSpacing: '-0.04em' }],
+        'section-heading': ['38px', { lineHeight: '1.15', letterSpacing: '-0.03em' }],
         'card-title': ['24px', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
-        'subtitle': ['20px', { lineHeight: '1.4', letterSpacing: '-0.01em' }],
+        'subtitle': ['19px', { lineHeight: '1.4', letterSpacing: '-0.01em' }],
         'body-text': ['16px', { lineHeight: '1.5' }],
         'caption': ['14px', { lineHeight: '1.4' }],
         'small-label': ['12px', { lineHeight: '1.3' }],

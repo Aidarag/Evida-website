@@ -177,7 +177,7 @@ export default function CreateEventWizard({
               <span className="rounded-full bg-[#FD5C05]/15 border border-[#FD5C05]/25 px-3 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#2A2621]">
                 SUBMIT EXPERIENCE
               </span>
-              <h2 className="text-xl font-extrabold text-[#2A2621] uppercase tracking-tight mt-1.5 flex items-center gap-2">
+              <h2 className="font-extrabold text-[#2A2621] tracking-tight mt-1.5 flex items-center gap-2">
                 Create Campus Event
               </h2>
             </div>

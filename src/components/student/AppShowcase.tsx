@@ -185,7 +185,7 @@ export default function AppShowcase() {
               ))}
             </div>
 
-            <h2 className="text-[#2A2621] font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-[#2A2621] font-extrabold tracking-tight leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
               {currentTab.title}
             </h2>
             <p className="text-[#5A554E] text-sm md:text-base font-light">

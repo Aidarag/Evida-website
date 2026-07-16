@@ -18,7 +18,7 @@ export default function AboutPage() {
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 space-y-4">
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
+          <h1 className="font-extrabold text-white tracking-tight leading-none" style={{ fontFamily: 'var(--font-display)' }}>
             About <span className="text-[#FD5C05]">Evida</span>
           </h1>
           <p className="text-white/70 text-sm md:text-base max-w-xl mx-auto font-light leading-relaxed">

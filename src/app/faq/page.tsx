@@ -50,8 +50,8 @@ export default function FAQPage() {
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#2A2621] text-[#FD5C05] text-[10px] font-extrabold uppercase tracking-widest">
             <HelpCircle className="h-3.5 w-3.5" /> Frequently Asked Questions
           </span>
-          <h1 className="text-4xl md:text-5xl font-extrabold uppercase tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
-            Got Questions?<br />We got answers.
+          <h1 className="font-extrabold tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
+            Got Questions? We Got Answers.
           </h1>
           <p className="text-sm text-[#5A554E] max-w-lg mx-auto font-light leading-relaxed">
             Everything you need to know about Evida event scheduling, promotions, and verification guidelines.

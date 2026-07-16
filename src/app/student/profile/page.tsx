@@ -390,7 +390,7 @@ export default function StudentProfilePage() {
 
           {/* Centered Name & Username & Edit Button */}
           <div className="space-y-2">
-            <h2 className="text-2xl font-black uppercase tracking-tight text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="font-black tracking-tight text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
               {currentUser.name}
             </h2>
             <p className="text-xs text-[#5A554E] font-extrabold tracking-wider uppercase">@{currentUser.username}</p>

@@ -136,9 +136,11 @@ export default function ExplorePage() {
   // Render a standard section header
   const renderSectionHeader = (title: string, sectionKey: string, icon: React.ReactNode) => (
     <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        {icon}
-        <h2 className="text-lg font-black uppercase tracking-tight text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
+      <div className="flex items-center gap-2.5">
+        <div className="[&>svg]:h-7 [&>svg]:w-7 shrink-0 flex items-center justify-center">
+          {icon}
+        </div>
+        <h2 className="font-black tracking-tight text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
           {title}
         </h2>
       </div>
@@ -157,8 +159,8 @@ export default function ExplorePage() {
       {/* ── Title Area ── */}
       <div className="border-b border-black/[0.04] pb-4 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-black uppercase tracking-tight flex items-center gap-2" style={{ fontFamily: 'var(--font-display)' }}>
-            <Compass className="h-8 w-8 text-[#FD5C05]" />
+          <h1 className="font-black tracking-tight flex items-center gap-2.5 text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
+            <Compass className="h-10 w-10 text-[#FD5C05] shrink-0" />
             Discovery Hub
           </h1>
           <p className="text-xs font-semibold text-[#5A554E] uppercase tracking-wider mt-1">

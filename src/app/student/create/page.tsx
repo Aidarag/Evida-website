@@ -460,7 +460,7 @@ export default function CreateListingPage() {
                     ? 'Promotion Campaign' 
                     : `${creatorEntity === 'student' ? 'My Event' : 'Organization Event'} — ${eventSubtype === 'quick' ? 'No Facilities' : 'Using School Facilities'}`}
                 </span>
-                <h1 className="text-2xl font-extrabold text-[#2A2621] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
+                <h1 className="font-extrabold text-[#2A2621] tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
                   {createType === 'promotion' ? 'Create Promotion' : 'Event Details'}
                 </h1>
               </div>

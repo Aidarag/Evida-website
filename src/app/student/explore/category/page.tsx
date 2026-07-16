@@ -285,7 +285,7 @@ function CategoryDetailContent() {
           <ChevronLeft className="h-4 w-4" /> Back to Explore
         </button>
         <div>
-          <h1 className="text-3xl font-black uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+          <h1 className="font-black tracking-tight text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
             {sectionMeta.title}
           </h1>
           <p className="text-sm font-semibold text-[#5A554E] mt-1.5 leading-relaxed">

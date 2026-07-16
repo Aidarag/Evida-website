@@ -106,7 +106,7 @@ export default function LoginPage() {
                           <EvidaLogo size={36} showText={false} />
                         </div>
                         <div>
-                          <h1 className="text-xl font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                          <h1 className="text-xl font-extrabold text-[#2A2621] tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                             Enter Evida
                           </h1>
                           <p className="text-xs text-[#5A554E] mt-1.5">
@@ -185,7 +185,7 @@ export default function LoginPage() {
                       </motion.div>
 
                       <div className="space-y-2">
-                        <h2 className="text-xl font-extrabold text-[#2A2621] uppercase tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
+                        <h2 className="text-xl font-extrabold text-[#2A2621] tracking-wider" style={{ fontFamily: 'var(--font-display)' }}>
                           Welcome to Evida
                         </h2>
                         <p className="text-xs text-[#5A554E]">
