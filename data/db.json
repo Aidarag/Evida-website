@@ -23,9 +23,9 @@
         "Michael Chen",
         "Alex Rivera"
       ],
-      "organizer": "Campus Activities Board",
-      "organizationId": "org-cab",
-      "organizationName": "Campus Activities Board",
+      "organizer": "Student Government Association",
+      "organizationId": "org-sg",
+      "organizationName": "Student Government Association",
       "featured": true,
       "views": 890,
       "estimatedAttendance": 600,
@@ -51,13 +51,13 @@
       "locationType": "indoor",
       "attendees": [
         "Sarah Jenkins",
-        "Alex Rivera",
+        "Alex Rivera"
+      ],
+      "interested": [
         "Michael Chen"
       ],
-      "interested": [],
       "savedBy": [
-        "Sarah Jenkins",
-        "Michael Chen"
+        "Sarah Jenkins"
       ],
       "organizer": "Career Development Center",
       "organizationId": "org-cdc",
@@ -96,8 +96,8 @@
         "Michael Chen"
       ],
       "organizer": "Michael Chen",
-      "organizationId": "org-isa",
-      "organizationName": "International Student Association",
+      "organizationId": "org-sg",
+      "organizationName": "Student Government Association",
       "featured": false,
       "views": 210,
       "estimatedAttendance": 100,
@@ -132,9 +132,9 @@
         "Michael Chen",
         "Sarah Jenkins"
       ],
-      "organizer": "Blue Bears Athletics",
-      "organizationId": "org-athletics",
-      "organizationName": "Blue Bears Athletics",
+      "organizer": "Black Student Union",
+      "organizationId": "org-bsu",
+      "organizationName": "Black Student Union",
       "featured": false,
       "views": 520,
       "estimatedAttendance": 800,
@@ -237,9 +237,7 @@
         "Michael Chen",
         "Sarah Jenkins"
       ],
-      "savedBy": [
-        "Michael Chen"
-      ],
+      "savedBy": [],
       "organizer": "Alex Rivera",
       "organizationId": "org-sg",
       "organizationName": "Student Government Association",
@@ -272,8 +270,7 @@
       ],
       "interested": [],
       "savedBy": [
-        "Sarah Jenkins",
-        "Michael Chen"
+        "Sarah Jenkins"
       ],
       "organizer": "Student Affairs",
       "featured": false,
@@ -337,8 +334,8 @@
       ],
       "savedBy": [],
       "organizer": "Michael Chen",
-      "organizationId": "org-cab",
-      "organizationName": "Campus Activities Board",
+      "organizationId": "org-sg",
+      "organizationName": "Student Government Association",
       "featured": false,
       "views": 32,
       "estimatedAttendance": 15,
@@ -955,7 +952,7 @@
       "id": "promo-1",
       "title": "CS 101 & Calculus Tutor",
       "description": "Providing comprehensive 1-on-1 tutoring sessions to nail coding labs and derivative theorems. $15/hr, student discount package available.",
-      "category": "tutoring",
+      "category": "academic",
       "status": "approved",
       "date": "2026-06-25",
       "organizer": "Sarah Jenkins",
@@ -965,7 +962,7 @@
       "id": "promo-2",
       "title": "Graduation & Event Photographer",
       "description": "Capture beautiful graduation frames and club social highlights. Professional lighting and 4K digital prints delivered in 3 days.",
-      "category": "photography",
+      "category": "creative",
       "status": "approved",
       "date": "2026-06-26",
       "organizer": "David Kim",
@@ -988,20 +985,6 @@
       "rsvps": 98
     },
     {
-      "id": "org-isa",
-      "name": "International Student Association",
-      "description": "Fostering a global community and organizing cultural exchange events on campus.",
-      "verified": true,
-      "members": [
-        "Michael Chen",
-        "Sarah Jenkins"
-      ],
-      "logoColor": "sky",
-      "views": 89,
-      "saves": 12,
-      "rsvps": 45
-    },
-    {
       "id": "org-stem",
       "name": "STEM Club",
       "description": "A coalition of science, math, and engineering students hosting build workshops and guest tech lectures.",
@@ -1014,33 +997,6 @@
       "views": 242,
       "saves": 78,
       "rsvps": 180
-    },
-    {
-      "id": "org-cab",
-      "name": "Campus Activities Board",
-      "description": "Planning homecoming, concerts, campus traditions, and Friday night events.",
-      "verified": true,
-      "members": [
-        "Michael Chen",
-        "David Kim"
-      ],
-      "logoColor": "violet",
-      "views": 452,
-      "saves": 110,
-      "rsvps": 340
-    },
-    {
-      "id": "org-athletics",
-      "name": "Blue Bears Athletics",
-      "description": "Supporting varsity sports, competitive athletics, and student fitness.",
-      "verified": true,
-      "members": [
-        "Michael Chen"
-      ],
-      "logoColor": "amber",
-      "views": 310,
-      "saves": 56,
-      "rsvps": 220
     },
     {
       "id": "org-bsu",
@@ -1092,9 +1048,7 @@
       "password": "demo123",
       "role": "student_leader",
       "organizations": [
-        "org-stem",
-        "org-isa",
-        "org-athletics"
+        "org-stem"
       ],
       "major": "Mechanical Engineering",
       "gradYear": "2027",
@@ -1140,6 +1094,15 @@
     }
   ],
   "notifications": [
+    {
+      "id": "notif-1",
+      "title": "RSVP Confirmed",
+      "message": "Your spot at the Homecoming Kickoff Rally is locked in! Doors open at 17:30.",
+      "type": "rsvp",
+      "timestamp": "2 hours ago",
+      "read": false,
+      "username": "michael_c"
+    },
     {
       "id": "notif-2",
       "title": "Event Approved",
