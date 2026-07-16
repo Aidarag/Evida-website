@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Compass, Plus, Bookmark, User, Settings, BarChart3, Shield, Star, ClipboardList, Building2, Menu, X, Calendar, ChevronDown, ArrowRight, Bell } from 'lucide-react';
+import { Home, Compass, Plus, Bookmark, User, Settings, BarChart3, Shield, Star, ClipboardList, Building2, Menu, X, Calendar, ChevronDown, ArrowRight, Bell, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '@/lib/context/UserContext';
 import { useEvents } from '@/lib/context/EventContext';
@@ -326,6 +326,7 @@ export function ProfileSwitcher() {
   const { organizations, createOrg } = useEvents();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [createModalOpen, setCreateModalOpen] = React.useState(false);
+  const [onboardingStep, setOnboardingStep] = React.useState<number>(1);
 
   // Form states for creating org
   const [orgName, setOrgName] = React.useState('');
@@ -378,6 +379,7 @@ export function ProfileSwitcher() {
           name: newOrg.name
         });
         setCreateModalOpen(false);
+        setOnboardingStep(1);
         setOrgName('');
         setOrgDesc('');
         setOrgColor('indigo');
@@ -502,6 +504,7 @@ export function ProfileSwitcher() {
               <button
                 onClick={() => {
                   setDropdownOpen(false);
+                  setOnboardingStep(1);
                   setCreateModalOpen(true);
                 }}
                 className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#EAE4CF]/20 text-[#2A2621] font-bold text-xs cursor-pointer transition-all"
@@ -514,93 +517,339 @@ export function ProfileSwitcher() {
         )}
       </AnimatePresence>
 
-      {/* Register Organization Modal Overlay */}
+      {/* Register Organization Modal Overlay / Onboarding Step-by-Step */}
       {createModalOpen && (
-        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in text-left">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-[#D8D2BC] border border-[#2A2621]/10 w-full max-w-md rounded-3xl p-6 shadow-xl space-y-5"
-          >
-            <div className="space-y-1">
-              <h3 className="text-lg font-black text-[#2A2621] uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-                Create Org Profile
-              </h3>
-              <p className="text-xs text-[#5A554E] font-medium leading-relaxed">
-                Establish a new organization identity to manage events, announcements, and officers.
-              </p>
-            </div>
-
-            <form onSubmit={handleCreateOrg} className="space-y-4">
-              <div className="space-y-1.5">
-                <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">
-                  Organization Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Blue Bears Coding Club"
-                  value={orgName}
-                  onChange={e => setOrgName(e.target.value)}
-                  className="w-full bg-white border border-black/[0.06] rounded-xl px-3.5 py-2.5 text-xs text-[#2A2621] focus:outline-none focus:border-[#FD5C05]"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">
-                  Description
-                </label>
-                <textarea
-                  required
-                  rows={3}
-                  placeholder="Describe your organization's mission, goals, and target audience..."
-                  value={orgDesc}
-                  onChange={e => setOrgDesc(e.target.value)}
-                  className="w-full bg-white border border-black/[0.06] rounded-xl px-3.5 py-2.5 text-xs text-[#2A2621] focus:outline-none focus:border-[#FD5C05] resize-none"
-                />
-              </div>
-
-              {/* Color selection */}
-              <div className="space-y-1.5">
-                <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">
-                  Branding Color Accent
-                </label>
-                <div className="flex gap-2.5">
-                  {['indigo', 'sky', 'emerald', 'violet', 'amber', 'rose', 'teal'].map(color => (
-                    <button
-                      key={color}
-                      type="button"
-                      onClick={() => setOrgColor(color)}
-                      className={`h-6 w-6 rounded-full cursor-pointer transition-all border-2 ${
-                        orgColor === color 
-                          ? 'border-[#2A2621] scale-110 shadow-sm' 
-                          : 'border-transparent hover:scale-105'
-                      }`}
-                      style={{ backgroundColor: getTailwindBgColor(color) }}
-                      title={color}
-                    />
-                  ))}
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-fade-in text-left">
+          <AnimatePresence mode="wait">
+            {onboardingStep === 1 && (
+              <motion.div
+                key="step1"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                onClick={() => setOnboardingStep(2)}
+                className="bg-[#08080C] border border-white/[0.08] w-full max-w-sm rounded-[32px] p-7 shadow-2xl relative text-white flex flex-col justify-between h-[490px] cursor-pointer select-none"
+              >
+                <div className="flex justify-end items-center">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCreateModalOpen(false);
+                      setOnboardingStep(1);
+                    }}
+                    className="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:text-white transition-colors cursor-pointer border-none"
+                    title="Close"
+                  >
+                    ✕
+                  </button>
                 </div>
-              </div>
 
-              <div className="pt-3 border-t border-black/[0.04] flex gap-3.5 justify-end">
-                <button
-                  type="button"
-                  onClick={() => setCreateModalOpen(false)}
-                  className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#5A554E] hover:text-[#2A2621]"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="bg-[#2A2621] text-white hover:bg-[#FD5C05] hover:text-[#2A2621] px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all disabled:opacity-55"
-                >
-                  {isSubmitting ? 'Creating...' : 'Create Profile'}
-                </button>
-              </div>
-            </form>
-          </motion.div>
+                <div className="space-y-4 my-auto">
+                  <span className="text-[#a855f7] text-[10px] font-black uppercase tracking-widest block">
+                    Exclusive Feature
+                  </span>
+                  <h3 className="text-2xl font-black tracking-tight leading-tight uppercase font-sans">
+                    Create Your Organization
+                  </h3>
+                  <p className="text-xs text-white/65 leading-relaxed font-semibold">
+                    Give your club, student organization, campus department, or student initiative an official home on Evida.
+                  </p>
+                  
+                  <div className="space-y-3 pt-4 border-t border-white/5">
+                    {[
+                      { emoji: '📅', text: 'Create official campus events' },
+                      { emoji: '📣', text: 'Share announcements and promotions' },
+                      { emoji: '👥', text: 'Recruit and manage members' },
+                      { emoji: '🌟', text: 'Build your campus presence' },
+                    ].map((item, idx) => (
+                      <div key={idx} className="flex items-center gap-3 text-xs">
+                        <span className="text-base">{item.emoji}</span>
+                        <span className="font-semibold text-white/85">{item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex gap-1.5 justify-center mb-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#a855f7]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-white/40 animate-pulse">
+                    Tap to continue
+                  </span>
+                </div>
+              </motion.div>
+            )}
+
+            {onboardingStep === 2 && (
+              <motion.div
+                key="step2"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                onClick={() => setOnboardingStep(3)}
+                className="bg-[#08080C] border border-white/[0.08] w-full max-w-sm rounded-[32px] p-7 shadow-2xl relative text-white flex flex-col justify-between h-[490px] cursor-pointer select-none"
+              >
+                <div className="flex justify-between items-center">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOnboardingStep(1);
+                    }}
+                    className="text-xs font-black uppercase text-white/40 hover:text-white transition-colors cursor-pointer border-none bg-transparent"
+                  >
+                    ← Back
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCreateModalOpen(false);
+                      setOnboardingStep(1);
+                    }}
+                    className="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:text-white transition-colors cursor-pointer border-none"
+                    title="Close"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="space-y-4 my-auto">
+                  <span className="text-[#a855f7] text-[10px] font-black uppercase tracking-widest block">
+                    Exclusive Feature
+                  </span>
+                  <h3 className="text-2xl font-black tracking-tight leading-tight uppercase font-sans">
+                    Officially Recognized
+                  </h3>
+                  <p className="text-xs text-white/65 leading-relaxed font-semibold">
+                    Organizations approved by your school receive an Official Organization badge on Evida.
+                  </p>
+
+                  <div className="relative py-3.5 px-4 bg-[#111116] border border-white/5 rounded-2xl flex flex-col gap-2.5 text-[10px] font-sans text-left mt-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="h-7 w-7 rounded-lg bg-[#a855f7] flex items-center justify-center text-[10px] font-black text-white shrink-0">
+                          6M
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-1">
+                            <span className="font-extrabold text-[10px] text-white">6th Man</span>
+                            <span className="h-3.5 w-3.5 bg-blue-500 text-white rounded-full flex items-center justify-center text-[7px] font-black shadow-sm" title="Verified Organization">✓</span>
+                          </div>
+                          <span className="text-[7.5px] text-white/50 font-semibold uppercase tracking-wider block">@cardinal6thman</span>
+                        </div>
+                      </div>
+                      <span className="text-[7.5px] text-white/40 font-bold uppercase tracking-wider bg-white/5 px-2 py-0.5 rounded border border-white/5 shrink-0">
+                        2wks
+                      </span>
+                    </div>
+                    <div className="border-t border-white/5 pt-2.5 space-y-1">
+                      <p className="font-bold text-[9px] text-white/95 leading-normal">duck hunting is permitted tonight between the hours of 8 and 10 😈</p>
+                      <p className="text-[9px] text-white/70 leading-normal">come watch the men's basketball team</p>
+                      <div className="h-16 w-full rounded-xl bg-[#1c1c26] flex flex-col items-center justify-center text-[8px] font-extrabold text-white/40 uppercase tracking-widest relative overflow-hidden mt-1.5 border border-white/5">
+                        <span className="relative z-15 text-white/90">Free Crewneck Sweaters</span>
+                        <span className="text-[6.5px] text-[#FD5C05] block mt-0.5 tracking-wider">Stanford vs Oregon</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex gap-1.5 justify-center mb-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#a855f7]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-white/40 animate-pulse">
+                    Tap to continue
+                  </span>
+                </div>
+              </motion.div>
+            )}
+
+            {onboardingStep === 3 && (
+              <motion.div
+                key="step3"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                className="bg-[#08080C] border border-white/[0.08] w-full max-w-sm rounded-[32px] p-7 shadow-2xl relative text-white flex flex-col justify-between h-[490px] select-none"
+              >
+                <div className="flex justify-between items-center">
+                  <button
+                    onClick={() => setOnboardingStep(2)}
+                    className="text-xs font-black uppercase text-white/40 hover:text-white transition-colors cursor-pointer border-none bg-transparent"
+                  >
+                    ← Back
+                  </button>
+                  <button
+                    onClick={() => {
+                      setCreateModalOpen(false);
+                      setOnboardingStep(1);
+                    }}
+                    className="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:text-white transition-colors cursor-pointer border-none"
+                    title="Close"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="space-y-4 my-auto text-left">
+                  <span className="text-[#a855f7] text-[10px] font-black uppercase tracking-widest block">
+                    Easy as 1, 2... That's it!
+                  </span>
+                  <h3 className="text-2xl font-black tracking-tight leading-tight uppercase font-sans">
+                    Ready to verify?
+                  </h3>
+                  
+                  <div className="space-y-3.5 pt-2 text-xs">
+                    <div className="flex gap-2.5">
+                      <span className="font-black text-[#a855f7]">1.</span>
+                      <p className="font-semibold text-white/80 leading-relaxed">Your organization must belong to your campus.</p>
+                    </div>
+                    <div className="flex gap-2.5">
+                      <span className="font-black text-[#a855f7]">2.</span>
+                      <p className="font-semibold text-white/80 leading-relaxed">A school administrator will review your request.</p>
+                    </div>
+                    <div className="flex gap-2.5">
+                      <span className="font-black text-[#a855f7]">3.</span>
+                      <p className="font-semibold text-white/80 leading-relaxed">Once approved, your organization will receive an Official Organization badge.</p>
+                    </div>
+                  </div>
+
+                  <p className="text-[10px] text-white/45 italic leading-relaxed pt-2">
+                    Your school—not Evida—verifies organizations to ensure students can trust the information they see.
+                  </p>
+                </div>
+
+                <div className="flex flex-col items-center gap-3 w-full">
+                  <div className="flex gap-1.5 justify-center mb-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#a855f7]" />
+                  </div>
+
+                  <button
+                    onClick={() => setOnboardingStep(4)}
+                    className="w-full py-3.5 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white text-xs font-black uppercase tracking-widest transition-all shadow-lg active:scale-95 duration-150 cursor-pointer border-none"
+                  >
+                    Create Organization
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
+            {onboardingStep === 4 && (
+              <motion.div
+                key="step4"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-[#D8D2BC] border border-[#2A2621]/10 w-full max-w-md rounded-3xl p-6 shadow-xl space-y-5"
+              >
+                <div className="flex justify-between items-center">
+                  <button
+                    onClick={() => setOnboardingStep(3)}
+                    className="text-xs font-black uppercase text-[#5A554E] hover:text-[#2A2621] transition-colors cursor-pointer border-none bg-transparent"
+                  >
+                    ← Back
+                  </button>
+                  <button
+                    onClick={() => {
+                      setCreateModalOpen(false);
+                      setOnboardingStep(1);
+                    }}
+                    className="h-8 w-8 rounded-full bg-[#EAE4CF] flex items-center justify-center text-[#2A2621]/60 hover:text-[#2A2621] transition-colors cursor-pointer border-none"
+                    title="Close"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="space-y-1">
+                  <h3 className="text-lg font-black text-[#2A2621] uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+                    Create Org Profile
+                  </h3>
+                  <p className="text-xs text-[#5A554E] font-medium leading-relaxed">
+                    Establish a new organization identity to manage events, announcements, and officers.
+                  </p>
+                </div>
+
+                <form onSubmit={handleCreateOrg} className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">
+                      Organization Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Blue Bears Coding Club"
+                      value={orgName}
+                      onChange={e => setOrgName(e.target.value)}
+                      className="w-full bg-white border border-black/[0.06] rounded-xl px-3.5 py-2.5 text-xs text-[#2A2621] focus:outline-none focus:border-[#FD5C05]"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">
+                      Description
+                    </label>
+                    <textarea
+                      required
+                      rows={3}
+                      placeholder="Describe your organization's mission, goals, and target audience..."
+                      value={orgDesc}
+                      onChange={e => setOrgDesc(e.target.value)}
+                      className="w-full bg-white border border-black/[0.06] rounded-xl px-3.5 py-2.5 text-xs text-[#2A2621] focus:outline-none focus:border-[#FD5C05] resize-none"
+                    />
+                  </div>
+
+                  {/* Color selection */}
+                  <div className="space-y-1.5">
+                    <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">
+                      Branding Color Accent
+                    </label>
+                    <div className="flex gap-2.5">
+                      {['indigo', 'sky', 'emerald', 'violet', 'amber', 'rose', 'teal'].map(color => (
+                        <button
+                          key={color}
+                          type="button"
+                          onClick={() => setOrgColor(color)}
+                          className={`h-6 w-6 rounded-full cursor-pointer transition-all border-2 ${
+                            orgColor === color 
+                              ? 'border-[#2A2621] scale-110 shadow-sm' 
+                              : 'border-transparent hover:scale-105'
+                          }`}
+                          style={{ backgroundColor: getTailwindBgColor(color) }}
+                          title={color}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-black/[0.04] flex gap-3.5 justify-end">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCreateModalOpen(false);
+                        setOnboardingStep(1);
+                      }}
+                      className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#5A554E] hover:text-[#2A2621] border-none bg-transparent"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="bg-[#2A2621] text-white hover:bg-[#FD5C05] hover:text-[#2A2621] px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all disabled:opacity-55 cursor-pointer border-none"
+                    >
+                      {isSubmitting ? 'Creating...' : 'Create Profile'}
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       )}
     </div>
