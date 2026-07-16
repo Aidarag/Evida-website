@@ -17,7 +17,7 @@ type EventSubtype = 'quick' | 'standard' | null;
 export default function CreateListingPage() {
   const router = useRouter();
   const { currentUser } = useUser();
-  const { organizations, createEvent } = useEvents();
+  const { events, organizations, createEvent } = useEvents();
 
   const [step, setStep] = useState(1);
   const [createType, setCreateType] = useState<CreateType>(null);
@@ -248,6 +248,52 @@ export default function CreateListingPage() {
                 </div>
               </Card>
             </div>
+
+            {/* Drafts Section */}
+            {(() => {
+              const draftEvents = events.filter(e => e.status === 'pending' && e.organizer === currentUser.name);
+              if (draftEvents.length === 0) return null;
+              return (
+                <div className="space-y-4 pt-8 border-t border-black/[0.04] text-left">
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-black uppercase tracking-wider text-[#2A2621]">Your unpublished drafts & pending reviews</h3>
+                    <p className="text-xs text-[#5A554E] font-medium">Select a draft below to resume editing its details before posting.</p>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {draftEvents.map(evt => (
+                      <div 
+                        key={evt.id}
+                        onClick={() => {
+                          setCreateType('event');
+                          setCreatorEntity(evt.ownershipType);
+                          setEventForm({
+                            title: evt.title,
+                            description: evt.description,
+                            date: evt.date,
+                            time: evt.time,
+                            location: evt.location,
+                            category: evt.category || 'Social',
+                            capacity: evt.capacity ? String(evt.capacity) : '',
+                            selectedOrgId: evt.organizationId || '',
+                            departmentName: evt.ownershipType === 'school' ? evt.organizer : '',
+                            isFeatured: evt.featured || false,
+                          });
+                          // Move directly to the edit details step
+                          setStep(4);
+                        }}
+                        className="bg-white p-4 border border-black/[0.04] rounded-2xl hover:border-[#FD5C05]/40 hover:scale-[1.01] transition-all cursor-pointer flex items-center justify-between shadow-sm group"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-bold text-[#2A2621] uppercase truncate group-hover:text-[#FD5C05] transition-colors">{evt.title}</p>
+                          <p className="text-[9px] text-[#5A554E] mt-0.5">{evt.date || 'No date set'} • {evt.location || 'No location'}</p>
+                        </div>
+                        <span className="text-[8px] font-black uppercase tracking-wider bg-[#FD5C05]/10 text-[#FD5C05] px-2.5 py-1 rounded-lg shrink-0">Resume</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
           </motion.div>
         )}
 

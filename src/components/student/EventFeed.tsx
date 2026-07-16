@@ -23,7 +23,7 @@ export default function EventFeed({
 }: EventFeedProps) {
   const [activeTab, setActiveTab] = useState<'events' | 'promos' | 'my-rsvps'>('events');
   const [searchQuery, setSearchQuery] = useState('');
-  const [ownershipFilter, setOwnershipFilter] = useState<'all' | 'student' | 'organization' | 'school'>('all');
+  const [ownershipFilter, setOwnershipFilter] = useState<'all' | 'student' | 'organization' | 'school' | 'promotion'>('all');
   const [complexityFilter, setComplexityFilter] = useState<'all' | 'quick' | 'standard' | 'complex'>('all');
 
   // Filter logic
@@ -155,7 +155,7 @@ export default function EventFeed({
         <div className="flex flex-wrap items-center justify-between gap-3 text-xs bg-slate-900/30 p-3 rounded-xl border border-white/5">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-slate-500 font-medium mr-1">Ownership:</span>
-            {['all', 'student', 'organization', 'school'].map((type) => (
+            {['all', 'student', 'organization', 'school', 'promotion'].map((type) => (
               <button
                 key={type}
                 onClick={() => setOwnershipFilter(type as any)}
@@ -190,7 +190,7 @@ export default function EventFeed({
       )}
 
       {/* Content Rendering */}
-      {activeTab !== 'promos' ? (
+      {activeTab !== 'promos' && ownershipFilter !== 'promotion' ? (
         filteredEvents.length === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 bg-slate-900/10 py-16 text-center">
             <Calendar className="h-10 w-10 text-slate-600 mb-3" />

@@ -8,7 +8,7 @@ import { Event } from '@/lib/types';
 export default function HomePage() {
   const router = useRouter();
 
-  const handleExplore = () => router.push('/student/events');
+  const handleExplore = () => router.push('/student/dashboard');
   const handleCreate = () => router.push('/student/create');
   const handleLogin = () => router.push('/login');
 

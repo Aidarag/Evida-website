@@ -11,6 +11,7 @@ export interface User {
   major?: string;
   gradYear?: string;
   graduationYear?: string;
+  classification?: string;
   school?: string;
   avatar?: string;
   banner?: string;

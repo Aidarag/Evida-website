@@ -123,16 +123,74 @@ export default function EventDetailsPage() {
               </div>
             </div>
 
-            <div className="pt-6 border-t border-white/[0.06]">
+            <div className="pt-6 border-t border-white/[0.06] space-y-4">
               {currentUser ? (
-                <Button 
-                  variant={isAttending ? 'secondary' : 'primary'} 
-                  size="lg" 
-                  fullWidth
-                  onClick={() => rsvpToggle(event.id, isAttending ? 'interested' : 'rsvp')}
-                >
-                  {isAttending ? "You're Going!" : "RSVP Now"}
-                </Button>
+                isAttending ? (
+                  <div className="space-y-4 text-center p-5 bg-[#161622] border border-white/10 rounded-[24px] shadow-2xl relative animate-scale-in">
+                    <div className="text-lg font-black text-white flex items-center justify-center gap-1.5">
+                      :-) You're In!
+                    </div>
+                    <p className="text-xs text-[#B8BBC8] leading-relaxed">
+                      You have successfully RSVP'd to this event. We have saved your spot!
+                    </p>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        className="flex-1 bg-[#FD5C05] text-white hover:bg-[#CC3D00] border-none font-bold"
+                        onClick={() => {
+                          // Generate and download .ics calendar file
+                          const cleanTitle = event.title.replace(/[^a-zA-Z0-9 ]/g, "");
+                          const cleanDesc = event.description.replace(/[^a-zA-Z0-9 ]/g, "");
+                          const cleanLoc = event.location.replace(/[^a-zA-Z0-9 ]/g, "");
+                          const dateStr = event.date.replace(/-/g, '');
+                          const startTime = `${dateStr}T190000`;
+                          const endTime = `${dateStr}T210000`;
+                          const icsContent = [
+                            'BEGIN:VCALENDAR',
+                            'VERSION:2.0',
+                            'PRODID:-//Evida//Calendar//EN',
+                            'BEGIN:VEVENT',
+                            `UID:${event.id}@evida.app`,
+                            `DTSTAMP:${startTime}`,
+                            `DTSTART:${startTime}`,
+                            `DTEND:${endTime}`,
+                            `SUMMARY:${cleanTitle}`,
+                            `DESCRIPTION:${cleanDesc}`,
+                            `LOCATION:${cleanLoc}`,
+                            'END:VEVENT',
+                            'END:VCALENDAR'
+                          ].join('\r\n');
+                          const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+                          const url = URL.createObjectURL(blob);
+                          const link = document.createElement('a');
+                          link.href = url;
+                          link.setAttribute('download', `${cleanTitle.replace(/\s+/g, '_')}.ics`);
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                        }}
+                      >
+                        Add to Calendar
+                      </Button>
+                      <button
+                        onClick={() => rsvpToggle(event.id, 'interested')}
+                        className="flex-1 py-2 px-3 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-wider text-[#B8BBC8] hover:text-white hover:bg-white/5 transition-all cursor-pointer"
+                      >
+                        Cancel RSVP
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <Button 
+                    variant="primary" 
+                    size="lg" 
+                    fullWidth
+                    onClick={() => rsvpToggle(event.id, 'rsvp')}
+                  >
+                    RSVP Now
+                  </Button>
+                )
               ) : (
                 <Button variant="primary" size="lg" fullWidth onClick={() => router.push('/login')}>
                   Sign in to RSVP

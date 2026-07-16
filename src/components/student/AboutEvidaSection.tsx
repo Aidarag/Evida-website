@@ -127,7 +127,7 @@ export default function AboutEvidaSection() {
               {/* Screen — iframe showing real Explore page */}
               <div className="absolute inset-[7px] rounded-[38px] overflow-hidden z-10 bg-white">
                 <iframe
-                  src="/student/events"
+                  src="/student/dashboard"
                   title="Evida Explore Page"
                   className="w-full h-full border-0 pointer-events-none"
                   style={{

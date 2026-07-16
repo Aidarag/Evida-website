@@ -51,11 +51,10 @@
       "locationType": "indoor",
       "attendees": [
         "Sarah Jenkins",
-        "Alex Rivera"
-      ],
-      "interested": [
+        "Alex Rivera",
         "Michael Chen"
       ],
+      "interested": [],
       "savedBy": [
         "Sarah Jenkins"
       ],
@@ -1159,5 +1158,6 @@
       "read": true,
       "username": "sarah_j"
     }
-  ]
+  ],
+  "membershipRequests": []
 }

@@ -129,7 +129,7 @@ export default function HowItWorksPage() {
             <h4 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4">Discover</h4>
             <ul className="space-y-3 text-xs font-semibold">
               <li><Link href="/about" className="hover:text-white transition-colors">About Evida</Link></li>
-              <li><Link href="/student/events" className="hover:text-white transition-colors">Featured Events</Link></li>
+              <li><Link href="/student/dashboard" className="hover:text-white transition-colors">Featured Events</Link></li>
               <li><Link href="/how-it-works" className="hover:text-white transition-colors">How It Works</Link></li>
             </ul>
           </div>
@@ -138,7 +138,7 @@ export default function HowItWorksPage() {
           <div className="md:col-span-2 space-y-4 text-left">
             <h4 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4">Platform</h4>
             <ul className="space-y-3 text-xs font-semibold">
-              <li><Link href="/student/events" className="hover:text-white transition-colors">Explore Events</Link></li>
+              <li><Link href="/student/dashboard" className="hover:text-white transition-colors">Explore Events</Link></li>
               <li><Link href="/student/create" className="hover:text-white transition-colors">Create Event</Link></li>
               <li><Link href="/student/create" className="hover:text-white transition-colors">Create Promotion</Link></li>
               <li><Link href="/student/dashboard" className="hover:text-white transition-colors">Student Dashboard</Link></li>

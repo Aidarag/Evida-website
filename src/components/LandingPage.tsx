@@ -49,27 +49,8 @@ export default function LandingPage({
   // Navigation hamburger menu state
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Waitlist submission states
-  const [waitlistName, setWaitlistName] = useState('');
-  const [waitlistEmail, setWaitlistEmail] = useState('');
-  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
-  const [waitlistLoading, setWaitlistLoading] = useState(false);
-
   // FAQ Accordion State
   const [faqOpenIndex, setFaqOpenIndex] = useState<number | null>(null);
-
-  // Scroll helpers for Hero CTAs
-  const handleJoinWaitlistClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const element = document.getElementById('waitlist');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setTimeout(() => {
-        const input = document.getElementById('waitlist-email') as HTMLInputElement | null;
-        if (input) input.focus();
-      }, 800);
-    }
-  };
 
   const handleSeeHowItWorksClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -77,17 +58,6 @@ export default function LandingPage({
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-  };
-
-  // Waitlist form handler
-  const handleWaitlistSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!waitlistEmail || !waitlistEmail.includes('@')) return;
-    setWaitlistLoading(true);
-    setTimeout(() => {
-      setWaitlistLoading(false);
-      setWaitlistSubmitted(true);
-    }, 1000);
   };
 
   // Smartphone Showcase States
@@ -288,16 +258,16 @@ export default function LandingPage({
                     </a>
                   </div>
 
-                  {/* Actions (Join Waitlist Button only) */}
+                  {/* Actions (Get Started Button) */}
                   <div className="pt-1">
                     <button
                       onClick={(e) => {
                         setMenuOpen(false);
-                        handleJoinWaitlistClick(e);
+                        onLogin();
                       }}
                       className="w-full rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-105 hover:-translate-y-0.5 text-white text-xs font-black py-3.5 transition-all duration-300 border border-white/10 cursor-pointer shadow-md shadow-[#FB1C07]/20 uppercase tracking-wider flex items-center justify-center gap-1.5"
                     >
-                      <span>Join Waitlist</span>
+                      <span>Get started</span>
                       <ArrowRight className="h-4 w-4 text-white" />
                     </button>
                   </div>
@@ -344,10 +314,10 @@ export default function LandingPage({
             </p>
             <div className="flex flex-col gap-3 w-full max-w-xs pt-2">
               <button
-                onClick={handleJoinWaitlistClick}
+                onClick={onLogin}
                 className="w-full rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(251,28,7,0.25)] hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] px-6 py-4 text-xs font-black text-white transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1.5"
               >
-                <span>Join the Waitlist</span>
+                <span>Get started</span>
                 <ArrowRight className="h-4 w-4 text-white" />
               </button>
               <button
@@ -1260,7 +1230,7 @@ export default function LandingPage({
       </section>
 
       {/* Get Started CTA Section */}
-      <section id="waitlist" className="mx-auto max-w-7xl px-4 md:px-6 py-16 w-full relative z-10">
+      <section id="get-started" className="mx-auto max-w-7xl px-4 md:px-6 py-16 w-full relative z-10">
         <div 
           className="relative w-full rounded-[32px] md:rounded-[48px] overflow-hidden border border-[#FD5C05]/20 shadow-2xl p-8 sm:p-12 md:p-16 text-white text-center flex flex-col justify-center items-center min-h-[420px]"
           style={{ background: 'radial-gradient(circle at 15% 15%, rgba(251, 28, 7, 0.16) 0%, transparent 55%), radial-gradient(circle at 85% 85%, rgba(252, 124, 11, 0.12) 0%, transparent 60%), linear-gradient(135deg, #2A2621 0%, #171512 100%)' }}
@@ -1268,76 +1238,25 @@ export default function LandingPage({
           {/* Content */}
           <div className="relative z-20 space-y-6 max-w-xl w-full">
             <span className="inline-block text-[10px] font-black uppercase tracking-[0.2em] text-[#FC7C0B]">
-              EARLY ACCESS — LIMITED SPOTS
+              Ready to Join
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight md:tracking-tighter uppercase leading-[1.05] md:leading-[0.95] text-white">
               Ready to Experience <br />
               <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent inline-block">Campus Differently?</span>
             </h2>
             <p className="text-[11px] sm:text-xs md:text-sm text-gray-300 leading-relaxed font-medium max-w-md mx-auto">
-              Join the Evida waitlist and be among the first students to discover a simpler way to explore events, organizations, promotions, and opportunities across campus.
+              Sign up or sign in to discover a simpler way to explore events, organizations, promotions, and opportunities across campus.
             </p>
             
-            <AnimatePresence mode="wait">
-              {!waitlistSubmitted ? (
-                <motion.form
-                  key="form"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  onSubmit={handleWaitlistSubmit}
-                  className="pt-4 flex flex-col gap-3.5 w-full max-w-xs mx-auto"
-                >
-                  <input
-                    type="text"
-                    value={waitlistName}
-                    onChange={(e) => setWaitlistName(e.target.value)}
-                    placeholder="Name (optional)"
-                    className="w-full rounded-full border border-white/10 bg-white/5 px-6 py-4 text-xs md:text-sm text-white placeholder-gray-400 focus:outline-none focus:border-[#FD5C05]/50 focus:ring-1 focus:ring-[#FD5C05]/30 backdrop-blur-md transition-all font-semibold text-center"
-                  />
-                  <input
-                    id="waitlist-email"
-                    type="email"
-                    required
-                    value={waitlistEmail}
-                    onChange={(e) => setWaitlistEmail(e.target.value)}
-                    placeholder="you@university.edu"
-                    className="w-full rounded-full border border-white/10 bg-white/5 px-6 py-4 text-xs md:text-sm text-white placeholder-gray-400 focus:outline-none focus:border-[#FD5C05]/50 focus:ring-1 focus:ring-[#FD5C05]/30 backdrop-blur-md transition-all font-semibold text-center"
-                  />
-                  <button
-                    type="submit"
-                    disabled={waitlistLoading}
-                    className="w-full rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 py-4 text-xs md:text-sm font-black text-white shadow-lg shadow-[#FB1C07]/25 hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2 disabled:opacity-50"
-                  >
-                    {waitlistLoading ? (
-                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <>
-                        <span>Join waitlist</span>
-                        <ArrowRight className="h-4 w-4 text-white" />
-                      </>
-                    )}
-                  </button>
-                </motion.form>
-              ) : (
-                <motion.div
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="pt-4 flex flex-col items-center gap-2"
-                >
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-[#FB1C07]/20 to-[#FC7C0B]/20 text-[#FD5C05] flex items-center justify-center border border-[#FD5C05]/30 shadow shadow-[#FD5C05]/10">
-                    <Check className="h-5 w-5" />
-                  </div>
-                  <p className="text-[#FD5C05] font-black text-sm uppercase tracking-wider">
-                    You're on the list!
-                  </p>
-                  <p className="text-gray-300 text-[11px] font-semibold">
-                    We've saved <span className="text-white font-bold">{waitlistEmail}</span>{waitlistName ? ` for ${waitlistName}` : ''}. Keep an eye on your inbox.
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div className="pt-4 flex flex-col gap-3.5 w-full max-w-xs mx-auto">
+              <button
+                onClick={onLogin}
+                className="w-full rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 py-4 text-xs md:text-sm font-black text-white shadow-lg shadow-[#FB1C07]/25 hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2"
+              >
+                <span>Get started</span>
+                <ArrowRight className="h-4 w-4 text-white" />
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -1391,7 +1310,7 @@ export default function LandingPage({
                   <a href="#faq" className="hover:text-[#FD5C05] transition-colors">FAQ</a>
                 </li>
                 <li>
-                  <a href="#waitlist" className="hover:text-[#FD5C05] transition-colors">Waitlist</a>
+                  <a href="#get-started" className="hover:text-[#FD5C05] transition-colors">Get Started</a>
                 </li>
               </ul>
             </div>

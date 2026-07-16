@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useUser } from '@/lib/context/UserContext';
 import { useEvents } from '@/lib/context/EventContext';
 import { useRouter } from 'next/navigation';
@@ -8,8 +8,6 @@ import {
   Calendar,
   Bell,
   MapPin,
-  Search,
-  SlidersHorizontal,
   Heart,
   Clock,
   Compass,
@@ -22,25 +20,51 @@ import {
   CheckCircle2,
   Bookmark,
   X,
-  ChevronDown
+  ChevronDown,
+  Briefcase,
+  GraduationCap,
+  Users,
+  Utensils,
+  Sparkles,
+  Mail,
+  Shield,
+  Camera,
+  Tag,
+  Home
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import VerifiedBadge from '@/components/ui/VerifiedBadge';
+import { Event, Promotion } from '@/lib/types';
 
 export default function StudentDashboardPage() {
   const { currentUser } = useUser();
   const { events, organizations, notifications, saveToggle, rsvpToggle } = useEvents();
   const router = useRouter();
 
+  const [activeFeed, setActiveFeed] = useState<'official' | 'student'>('official');
+  const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [likedEvents, setLikedEvents] = useState<Set<string>>(new Set());
-  const [commentOpen, setCommentOpen] = useState<string | null>(null);
-  const [commentText, setCommentText] = useState('');
-  const [comments, setComments] = useState<Record<string, { user: string; text: string; time: string }[]>>({});
   const [shareToast, setShareToast] = useState(false);
-  const [iminToast, setIminToast] = useState<string | null>(null);
+
+  // Fetch promotions
+  useEffect(() => {
+    const fetchPromotions = async () => {
+      try {
+        const res = await fetch('/api/promotions');
+        if (res.ok) {
+          const data = await res.json();
+          // Only show approved promotions
+          setPromotions(data.filter((p: Promotion) => p.status === 'approved') || []);
+        }
+      } catch (e) {
+        console.error('Failed to fetch promotions', e);
+      }
+    };
+    fetchPromotions();
+  }, []);
 
   const FALLBACK_PHOTOS = [
     '/pexels-hanna-elesha-abraham-1587801282-27498756.jpg',
@@ -65,36 +89,117 @@ export default function StudentDashboardPage() {
 
   if (!currentUser) return null;
 
-  const approvedEvents = events.filter(e => e.status === 'approved' && (e.ownershipType === 'school' || e.ownershipType === 'organization'));
+  const approvedEvents = events.filter(e => e.status === 'approved');
   const unreadNotifs = notifications.filter(n => !n.read);
-  const rsvpEventsList = approvedEvents.filter(e => e.attendees.includes(currentUser.name));
-  const savedEventsList = approvedEvents.filter(e => e.savedBy?.includes(currentUser.name));
+  
+  // Base list of rsvp and saved events for stats cards
+  const rsvpEventsList = approvedEvents.filter(e => e.attendees.includes(currentUser.name) && (e.ownershipType === 'school' || e.ownershipType === 'organization'));
+  const savedEventsList = approvedEvents.filter(e => e.savedBy?.includes(currentUser.name) && (e.ownershipType === 'school' || e.ownershipType === 'organization'));
 
-  const filteredEvents = approvedEvents.filter(event => {
-    const matchesSearch = event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (event.organizationName || '').toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' ||
-      event.category?.toLowerCase() === selectedCategory.toLowerCase();
-    return matchesSearch && matchesCategory;
+  // Determine matchesCategory
+  const matchesCategory = (item: Event | Promotion) => {
+    if (selectedCategory === 'All') return true;
+    const cat = item.category?.toLowerCase() || '';
+    const title = item.title.toLowerCase();
+    const sel = selectedCategory.toLowerCase();
+    const isPromo = !('ownershipType' in item);
+
+    if (activeFeed === 'official') {
+      if (sel === 'livingstone college') {
+        return !isPromo && item.ownershipType === 'school';
+      }
+      if (sel === 'clubs & organizations') {
+        return !isPromo && item.ownershipType === 'organization';
+      }
+      if (sel === 'athletics') {
+        return cat.includes('sport') || cat.includes('athlet') || cat.includes('gym');
+      }
+      if (sel === 'student government') {
+        return cat.includes('gov') || cat.includes('senate') || title.includes('senate') || title.includes('government');
+      }
+      if (sel === 'career center') {
+        return cat.includes('career') || cat.includes('job') || cat.includes('fair') || title.includes('career');
+      }
+      if (sel === 'workshops') {
+        return cat.includes('workshop') || cat.includes('class') || cat.includes('learn');
+      }
+      if (sel === 'official conferences') {
+        return cat.includes('conference') || cat.includes('summit') || cat.includes('academic') || title.includes('conference');
+      }
+      return true;
+    } else {
+      // Student Feed
+      if (sel === 'parties') {
+        return cat.includes('party') || cat.includes('social') || title.includes('party');
+      }
+      if (sel === 'room gatherings') {
+        return cat.includes('gather') || cat.includes('meet') || title.includes('room') || title.includes('gathering');
+      }
+      if (sel === 'bbqs') {
+        return cat.includes('food') || cat.includes('bbq') || title.includes('bbq') || title.includes('cookout');
+      }
+      if (sel === 'game nights') {
+        return cat.includes('game') || cat.includes('play') || title.includes('game') || title.includes('trivia');
+      }
+      if (sel === 'tutoring sessions') {
+        return cat.includes('tutor') || cat.includes('teach') || cat.includes('class') || title.includes('tutor');
+      }
+      if (sel === 'photography services') {
+        return cat.includes('photo') || cat.includes('camera') || title.includes('photo') || title.includes('shoot');
+      }
+      if (sel === 'food sales') {
+        return cat.includes('food') || cat.includes('bake') || cat.includes('sale') || title.includes('food') || title.includes('cookie');
+      }
+      if (sel === 'hair/braiding services') {
+        return cat.includes('beauty') || cat.includes('hair') || title.includes('hair') || title.includes('braid') || title.includes('style');
+      }
+      if (sel === 'clothing sales') {
+        return cat.includes('clothing') || cat.includes('sale') || cat.includes('market') || title.includes('cloth') || title.includes('shirt');
+      }
+      if (sel === 'personal meetups') {
+        return cat.includes('meet') || cat.includes('hang') || title.includes('meetup');
+      }
+      if (sel === 'small community events') {
+        return cat.includes('community') || cat.includes('initiative') || title.includes('community');
+      }
+      return true;
+    }
+  };
+
+  const feedItems: (Event | Promotion)[] = (() => {
+    if (activeFeed === 'official') {
+      return events.filter(e => 
+        e.status === 'approved' && 
+        (e.ownershipType === 'school' || e.ownershipType === 'organization')
+      );
+    } else {
+      // Combined student events and promotions
+      const studentEvents = events.filter(e => 
+        e.status === 'approved' && 
+        e.ownershipType === 'student'
+      );
+      return [...studentEvents, ...promotions];
+    }
+  })();
+
+  const filteredItems = feedItems.filter(item => {
+    // Basic search/filter match
+    const matchesSearch = 
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      ('location' in item ? item.location : '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.organizer || '').toLowerCase().includes(searchQuery.toLowerCase());
+
+    return matchesSearch && matchesCategory(item);
   });
 
-  const sortedFilteredEvents = [...filteredEvents].sort((a, b) => {
+  const sortedFilteredItems = [...filteredItems].sort((a, b) => {
     // 1. Featured pins at top
-    const aFeat = a.featured || a.isFeatured || false;
-    const bFeat = b.featured || b.isFeatured || false;
-    if (aFeat && !bFeat) return -1;
-    if (!aFeat && bFeat) return 1;
+    const aFeat = ('ownershipType' in a) && (a.featured || a.isFeatured) ? 1 : 0;
+    const bFeat = ('ownershipType' in b) && (b.featured || b.isFeatured) ? 1 : 0;
+    if (aFeat !== bFeat) return bFeat - aFeat;
 
-    // 2. School-scoped priority
-    if (a.ownershipType === 'school' && b.ownershipType !== 'school') return -1;
-    if (a.ownershipType !== 'school' && b.ownershipType === 'school') return 1;
-
-    // 3. Organization-scoped priority
-    if (a.ownershipType === 'organization' && b.ownershipType === 'student') return -1;
-    if (a.ownershipType === 'student' && b.ownershipType === 'organization') return 1;
-
-    // 4. Default sort by date
+    // 2. Default sort by date
     return new Date(a.date).getTime() - new Date(b.date).getTime();
   });
 
@@ -102,14 +207,33 @@ export default function StudentDashboardPage() {
     ? organizations.filter(org => org.name.toLowerCase().includes(searchQuery.toLowerCase()))
     : [];
 
-  const categories = [
+  const officialCategories = [
     { name: 'All', icon: Compass },
-    { name: 'Sports', icon: Trophy },
-    { name: 'Music', icon: Music },
-    { name: 'Parties', icon: Wine },
+    { name: 'Livingstone College', icon: GraduationCap },
+    { name: 'Clubs & Organizations', icon: Users },
+    { name: 'Athletics', icon: Trophy },
+    { name: 'Student Government', icon: Shield },
+    { name: 'Career Center', icon: Briefcase },
     { name: 'Workshops', icon: Cpu },
-    { name: 'Clubs', icon: GraduationCapIcon },
+    { name: 'Official Conferences', icon: Calendar },
   ];
+
+  const studentCategories = [
+    { name: 'All', icon: Compass },
+    { name: 'Parties', icon: Wine },
+    { name: 'Room Gatherings', icon: Home },
+    { name: 'BBQs', icon: Utensils },
+    { name: 'Game Nights', icon: Sparkles },
+    { name: 'Tutoring Sessions', icon: Briefcase },
+    { name: 'Photography Services', icon: Camera },
+    { name: 'Food Sales', icon: Utensils },
+    { name: 'Hair/Braiding Services', icon: Sparkles },
+    { name: 'Clothing Sales', icon: Tag },
+    { name: 'Personal Meetups', icon: Users },
+    { name: 'Small Community Events', icon: Trophy },
+  ];
+
+  const currentCategories = activeFeed === 'official' ? officialCategories : studentCategories;
 
   // ── Actions ──
   const handleLike = (eventId: string) => {
@@ -121,30 +245,12 @@ export default function StudentDashboardPage() {
     });
   };
 
-  const handleImIn = async (eventId: string) => {
-    await rsvpToggle(eventId, 'rsvp');
-    setIminToast(eventId);
-    setTimeout(() => setIminToast(null), 2200);
-  };
-
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({ title: 'Check this event on Evida!', url: window.location.href }).catch(() => { });
     }
     setShareToast(true);
     setTimeout(() => setShareToast(false), 2000);
-  };
-
-  const handleComment = (eventId: string) => {
-    if (!commentText.trim()) return;
-    setComments(prev => ({
-      ...prev,
-      [eventId]: [
-        ...(prev[eventId] || []),
-        { user: currentUser.name.split(' ')[0], text: commentText.trim(), time: 'now' }
-      ]
-    }));
-    setCommentText('');
   };
 
   // Generate a fake organizer initial from the event organizer name
@@ -162,56 +268,65 @@ export default function StudentDashboardPage() {
           <h1 className="text-3xl font-black text-[#2A2621] uppercase tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
             My campus life
           </h1>
-          <p className="text-xs text-[#5A554E] font-semibold tracking-wide uppercase mt-1">
-            Hello, {currentUser.name.split(' ')[0]} • Official School & Organization Events
+          <p className="text-sm text-[#5A554E] font-semibold mt-2.5 leading-relaxed">
+            Yo {currentUser.name.split(' ')[0]}! Evida is your gateway to campus experiences, bridging official student organizations with student-led activities.
           </p>
         </div>
-
-        {/* Top Header Actions (Notifications, Saved, Stats) */}
-        <div className="flex flex-wrap items-center gap-3">
-          {/* Stats Badges */}
-          <div className="bg-white/80 border border-black/[0.04] rounded-2xl px-4 py-2 flex flex-col min-w-[90px] shadow-sm">
-            <span className="text-[9px] font-bold text-[#5A554E] uppercase tracking-wider">My RSVPs</span>
-            <span className="text-xs font-black text-[#2A2621] mt-0.5">{rsvpEventsList.length} Going</span>
-          </div>
-          <div className="bg-white/80 border border-black/[0.04] rounded-2xl px-4 py-2 flex flex-col min-w-[90px] shadow-sm">
-            <span className="text-[9px] font-bold text-[#5A554E] uppercase tracking-wider">My Saved</span>
-            <span className="text-xs font-black text-[#2A2621] mt-0.5">{savedEventsList.length} Saved</span>
-          </div>
-
-          <Link href="/student/saved" className="h-10 w-10 rounded-xl bg-white border border-black/[0.04] flex items-center justify-center text-[#5A554E] hover:text-[#2A2621] transition-colors shadow-sm">
-            <Bookmark className="h-4.5 w-4.5" />
-          </Link>
-          <Link href="/student/my-events" className="h-10 w-10 rounded-xl bg-white border border-black/[0.04] flex items-center justify-center text-[#5A554E] hover:text-[#2A2621] transition-colors shadow-sm relative">
-            <Bell className="h-4.5 w-4.5" />
-            {unreadNotifs.length > 0 && (
-              <span className="absolute top-1 right-1 h-2.5 w-2.5 rounded-full bg-[#FD5C05] border-2 border-white" />
-            )}
-          </Link>
-        </div>
+        <Link 
+          href="/calendar" 
+          className="self-start md:self-center bg-[#2A2621] text-white hover:bg-[#FD5C05] hover:text-[#2A2621] px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm shrink-0 cursor-pointer"
+        >
+          <Calendar className="h-4 w-4" />
+          Campus Calendar
+        </Link>
       </div>
 
-      {/* ── Search & Filter Controls ── */}
-      <div className="bg-white/40 border border-black/[0.03] rounded-3xl p-4 space-y-3 shadow-sm">
-        <div className="flex gap-2">
-          <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5A554E]" />
-            <input
-              type="text"
-              placeholder="Search title, venue, host or keywords..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-[#D8D2BC]/30 text-[#2A2621] placeholder-[#5A554E] rounded-full pl-10 pr-4 py-2.5 text-xs focus:outline-none focus:border-[#FD5C05] transition-all shadow-inner"
-            />
-          </div>
-          <Link href="/student/events" className="h-10 w-10 rounded-xl bg-white border border-[#D8D2BC]/30 flex items-center justify-center text-[#5A554E] hover:text-[#FD5C05] transition-colors shrink-0 shadow-sm">
-            <SlidersHorizontal className="h-4 w-4" />
-          </Link>
+      {/* ── Segmented Feed Toggle & Filter Controls ── */}
+      <div className="bg-white/40 border border-black/[0.03] rounded-3xl p-4 space-y-3.5 shadow-sm">
+        <div className="relative w-full rounded-full border border-black/[0.05] bg-black/[0.03] p-1 flex shadow-inner">
+          <button
+            type="button"
+            onClick={() => {
+              setActiveFeed('official');
+              setSelectedCategory('All');
+            }}
+            className="relative flex-1 py-3 text-xs font-black uppercase tracking-wider transition-colors duration-300 cursor-pointer flex items-center justify-center"
+          >
+            {activeFeed === 'official' && (
+              <motion.div
+                layoutId="activeFeedBg"
+                className="absolute inset-0 bg-[#FD5C05] rounded-full z-0 border border-[#FD5C05]/30 shadow-sm"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
+            <span className={`relative z-10 transition-colors duration-300 ${activeFeed === 'official' ? 'text-[#2A2621]' : 'text-[#5A554E]'}`}>
+              Livingstone College
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setActiveFeed('student');
+              setSelectedCategory('All');
+            }}
+            className="relative flex-1 py-3 text-xs font-black uppercase tracking-wider transition-colors duration-300 cursor-pointer flex items-center justify-center"
+          >
+            {activeFeed === 'student' && (
+              <motion.div
+                layoutId="activeFeedBg"
+                className="absolute inset-0 bg-[#FD5C05] rounded-full z-0 border border-[#FD5C05]/30 shadow-sm"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
+            <span className={`relative z-10 transition-colors duration-300 ${activeFeed === 'student' ? 'text-[#2A2621]' : 'text-[#5A554E]'}`}>
+              For You
+            </span>
+          </button>
         </div>
 
         {/* Categories pill row */}
         <div className="flex gap-2 overflow-x-auto scrollbar-none pb-0.5">
-          {categories.map((cat) => {
+          {currentCategories.map((cat) => {
             const isActive = selectedCategory.toLowerCase() === cat.name.toLowerCase();
             return (
               <button
@@ -231,44 +346,60 @@ export default function StudentDashboardPage() {
       </div>
 
       {/* ── Main Dashboard Layout ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-        {/* Main Events Feed Column */}
-        <div className="lg:col-span-2 space-y-5">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xs font-black tracking-widest text-[#2A2621] uppercase">Upcoming Experiences</h2>
-            <span className="text-[10px] font-bold text-[#5A554E]">Showing {sortedFilteredEvents.length} events</span>
+      <div className="max-w-5xl mx-auto space-y-5">
+          <div className="text-left space-y-1">
+            <h2 className="text-xl font-black tracking-tight text-[#2A2621] uppercase flex items-center gap-1.5" style={{ fontFamily: 'var(--font-display)' }}>
+              {activeFeed === 'official' ? 'Livingstone College' : 'For You'}
+            </h2>
+            <p className="text-xs font-bold text-[#5A554E] uppercase tracking-wider">
+              {activeFeed === 'official' 
+                ? 'Official school and organization events.' 
+                : 'Student-created promotions and community activities.'
+              }
+            </p>
+            <span className="text-[10px] font-extrabold text-[#5A554E] block pt-1">
+              Showing {sortedFilteredItems.length} {activeFeed === 'official' ? 'events' : 'postings'}
+            </span>
           </div>
 
-          {sortedFilteredEvents.length > 0 ? (
+          {sortedFilteredItems.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {sortedFilteredEvents.map((event) => {
-                const isLiked = likedEvents.has(event.id);
-                const isSaved = event.savedBy?.includes(currentUser.name);
-                const isAttending = event.attendees.includes(currentUser.name);
-                const eventComments = comments[event.id] || [];
-                const isCommentOpen = commentOpen === event.id;
+              {sortedFilteredItems.map((item) => {
+                const isPromo = !('ownershipType' in item);
+                const event = isPromo ? null : (item as any);
+                const promo = isPromo ? (item as any) : null;
 
-                const day = event.date.split('-')[2] || '10';
-                const month = event.date.split('-')[1] || '10';
+                const isLiked = !isPromo && event ? likedEvents.has(event.id) : false;
+                const isSaved = !isPromo && event && event.savedBy ? event.savedBy.includes(currentUser.name) : false;
+
+                const day = item.date.split('-')[2] || '10';
+                const month = item.date.split('-')[1] || '10';
                 const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                 const monthName = monthNames[parseInt(month)] || 'Oct';
 
+                const coverImgUrl = isPromo ? (promo?.image || '') : (event?.coverImage || '');
+
                 return (
                   <motion.div
-                    key={event.id}
+                    key={item.id}
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="bg-white rounded-3xl border border-black/[0.04] shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group"
                   >
-                    {/* Event Image Banner */}
+                    {/* Event/Promo Image Banner */}
                     <div
                       className="relative h-44 w-full bg-[#2A2621] overflow-hidden cursor-pointer"
-                      onClick={() => router.push(`/events/${event.id}`)}
+                      onClick={() => {
+                        if (isPromo && promo) {
+                          window.location.href = `mailto:${promo.contactInfo}?subject=Inquiry regarding: ${promo.title}`;
+                        } else if (event) {
+                          router.push(`/events/${event.id}`);
+                        }
+                      }}
                     >
                       <img
-                        src={getEventImg(event.coverImage, event.id)}
-                        alt={event.title}
+                        src={getEventImg(coverImgUrl, item.id)}
+                        alt={item.title}
                         className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
                       />
                       {/* Dark overlay gradient */}
@@ -277,21 +408,21 @@ export default function StudentDashboardPage() {
                       {/* Left Badge: Category */}
                       <div className="absolute top-4 left-4 z-10">
                         <span className="rounded-full bg-white/90 border border-[#D8D2BC]/40 px-2.5 py-1 text-[8px] font-extrabold uppercase text-[#2A2621] shadow-sm">
-                          {event.category}
+                          {isPromo ? 'PROMOTION' : (event?.category || '')}
                         </span>
                       </div>
 
                       {/* Right Badge: Cost */}
                       <div className="absolute top-4 right-4 z-10">
                         <span className="rounded-full bg-[#FD5C05] text-[#2A2621] px-2.5 py-1 text-[8px] font-extrabold uppercase shadow-sm">
-                          {event.free ? 'FREE' : 'TICKETED'}
+                          {isPromo ? 'STUDENT SERVICE' : (event?.free ? 'FREE' : 'TICKETED')}
                         </span>
                       </div>
 
                       {/* Bottom Overlay: Title preview */}
                       <div className="absolute bottom-4 left-4 right-4 z-10">
                         <span className="text-[9px] font-bold text-white/80 uppercase tracking-wider block drop-shadow-sm">
-                          {event.organizationName || event.organizer}
+                          {isPromo ? item.organizer : (event?.organizationName || event?.organizer || '')}
                         </span>
                       </div>
                     </div>
@@ -302,11 +433,11 @@ export default function StudentDashboardPage() {
                         {/* Host details & verified green checkmark */}
                         <div className="flex items-center gap-1.5">
                           <p
-                            onClick={() => event.organizationId && router.push(`/student/organizations/${event.organizationId}`)}
-                            className={`text-[10px] font-extrabold text-[#5A554E] uppercase tracking-wider flex items-center leading-none ${event.organizationId ? 'cursor-pointer hover:underline' : ''}`}
+                            onClick={() => !isPromo && event?.organizationId && router.push(`/student/organizations/${event.organizationId}`)}
+                            className={`text-[10px] font-extrabold text-[#5A554E] uppercase tracking-wider flex items-center leading-none ${(!isPromo && event?.organizationId) ? 'cursor-pointer hover:underline' : ''}`}
                           >
-                            {event.organizationName || event.organizer}
-                            {event.organizationId && organizations.find(o => o.id === event.organizationId)?.verified && (
+                            {isPromo ? item.organizer : (event?.organizationName || event?.organizer || '')}
+                            {!isPromo && event?.organizationId && organizations.find(o => o.id === event.organizationId)?.verified && (
                               <VerifiedBadge className="h-3.5 w-3.5 ml-1" />
                             )}
                           </p>
@@ -314,36 +445,51 @@ export default function StudentDashboardPage() {
 
                         {/* Event Title */}
                         <h3
-                          onClick={() => router.push(`/events/${event.id}`)}
+                          onClick={() => {
+                            if (isPromo && promo) {
+                              window.location.href = `mailto:${promo.contactInfo}?subject=Inquiry regarding: ${promo.title}`;
+                            } else if (event) {
+                              router.push(`/events/${event.id}`);
+                            }
+                          }}
                           className="text-base font-bold text-[#2A2621] tracking-tight leading-snug line-clamp-1 hover:text-[#FD5C05] transition-colors cursor-pointer uppercase"
                           style={{ fontFamily: 'var(--font-display)' }}
                         >
-                          {event.title}
+                          {item.title}
                         </h3>
 
                         {/* Description */}
                         <p className="text-xs text-[#5A554E] leading-relaxed line-clamp-2">
-                          {event.description}
+                          {item.description}
                         </p>
                       </div>
 
-                      {/* Event Details: Date & Time, Location */}
+                      {/* Event/Promo Details: Date & Time, Location/Contact */}
                       <div className="space-y-2 pt-3 border-t border-black/[0.04]">
                         <div className="flex items-center gap-2 text-[10px] font-extrabold text-[#2A2621]/80 uppercase">
                           <Calendar className="h-3.5 w-3.5 text-[#2A2621]" />
-                          <span>{monthName} {day} • {event.time}</span>
+                          <span>{monthName} {day} {!isPromo && event && `• ${event.time}`}</span>
                         </div>
                         <div className="flex items-center gap-2 text-[10px] font-bold text-[#5A554E] uppercase truncate">
-                          <MapPin className="h-3.5 w-3.5 text-[#5A554E]" />
-                          <span className="truncate">{event.location}</span>
+                          {isPromo && promo ? (
+                            <>
+                              <Mail className="h-3.5 w-3.5 text-[#5A554E]" />
+                              <span className="truncate">{promo.contactInfo}</span>
+                            </>
+                          ) : (
+                            <>
+                              <MapPin className="h-3.5 w-3.5 text-[#5A554E]" />
+                              <span className="truncate">{event?.location || ''}</span>
+                            </>
+                          )}
                         </div>
                       </div>
 
                       {/* Attendees Avatars Preview */}
-                      {event.attendees.length > 0 && (
+                      {!isPromo && event && event.attendees && event.attendees.length > 0 && (
                         <div className="flex items-center gap-2 pt-1">
                           <div className="flex -space-x-1.5">
-                            {event.attendees.slice(0, 3).map((name, i) => (
+                            {event.attendees.slice(0, 3).map((name: string, i: number) => (
                               <div
                                 key={i}
                                 className="h-5 w-5 rounded-full border border-white bg-slate-200 flex items-center justify-center text-[7px] font-black text-gray-700"
@@ -358,102 +504,39 @@ export default function StudentDashboardPage() {
                         </div>
                       )}
 
-                      {/* Comments count indicator toggle */}
-                      {eventComments.length > 0 && (
-                        <button
-                          onClick={() => setCommentOpen(isCommentOpen ? null : event.id)}
-                          className="text-[10px] font-bold text-[#5A554E] hover:text-[#2A2621] text-left underline flex items-center gap-1 cursor-pointer"
-                        >
-                          Show comments ({eventComments.length})
-                        </button>
-                      )}
-
-                      {/* Comments panel (expanded inline) */}
-                      <AnimatePresence>
-                        {isCommentOpen && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            className="overflow-hidden border-t border-black/[0.04] pt-2 space-y-2"
-                          >
-                            <div className="space-y-1.5 max-h-24 overflow-y-auto">
-                              {eventComments.map((c, i) => (
-                                <div key={i} className="text-[10px] leading-tight">
-                                  <span className="font-extrabold text-[#2A2621]">{c.user}:</span>{' '}
-                                  <span className="text-[#5A554E]">{c.text}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-
                       {/* Footer Actions (Direct Interaction) */}
                       <div className="pt-3 border-t border-black/[0.04] flex items-center justify-between gap-2.5">
-                        {/* "I'm in" RSVP button */}
-                        <button
-                          onClick={() => handleImIn(event.id)}
-                          className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${isAttending
-                            ? 'bg-[#FD5C05]/20 border border-[#FD5C05]/30 text-[#2A2621] shadow-sm'
-                            : 'bg-[#2A2621] text-white hover:bg-[#2a2a2a]'
-                            }`}
-                        >
-                          {isAttending ? (
-                            <>
-                              <CheckCircle2 className="h-3.5 w-3.5 text-[#22C55E]" />
-                              I'm In
-                            </>
-                          ) : (
-                            <>
-                              I'm In
-                            </>
-                          )}
-                        </button>
+                        {isPromo && promo ? (
+                          <a
+                            href={`mailto:${promo.contactInfo}?subject=Inquiry regarding: ${promo.title}`}
+                            className="flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider bg-[#2A2621] text-white hover:bg-[#2a2a2a] transition-all flex items-center justify-center gap-1.5 cursor-pointer text-center animate-fade-in"
+                          >
+                            <Mail className="h-3.5 w-3.5" />
+                            Email Organizer
+                          </a>
+                        ) : (
+                          event && (
+                            <Link
+                              href={`/events/${event.id}`}
+                              className="flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider bg-[#2A2621] text-white hover:bg-[#2a2a2a] transition-all flex items-center justify-center gap-1.5 cursor-pointer text-center"
+                            >
+                              View Event
+                            </Link>
+                          )
+                        )}
 
                         {/* Save (Heart) button */}
                         <button
-                          onClick={() => saveToggle(event.id)}
+                          onClick={() => saveToggle(item.id)}
                           className={`h-9 w-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${isSaved
                             ? 'bg-white border-[#FD5C05] text-rose-500 shadow-sm'
                             : 'bg-white border-black/10 text-[#5A554E] hover:text-rose-500'
                             }`}
-                          title={isSaved ? "Saved" : "Save Event"}
+                          title={isSaved ? "Saved" : "Save Item"}
                         >
                           <Heart className={`h-4.5 w-4.5 ${isSaved ? 'fill-rose-500' : ''}`} />
                         </button>
-
-                        {/* Write Comment Icon trigger */}
-                        <button
-                          onClick={() => setCommentOpen(isCommentOpen ? null : event.id)}
-                          className={`h-9 w-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${isCommentOpen ? 'bg-[#D8D2BC]/30 border-black/20 text-[#2A2621]' : 'bg-white border-black/10 text-[#5A554E] hover:text-[#2A2621]'
-                            }`}
-                          title="Add comment"
-                        >
-                          <MessageCircle className="h-4.5 w-4.5" />
-                        </button>
                       </div>
-
-                      {/* Inline comment entry */}
-                      {isCommentOpen && (
-                        <div className="flex gap-2 pt-2 border-t border-black/[0.04]">
-                          <input
-                            value={commentText}
-                            onChange={(e) => setCommentText(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleComment(event.id)}
-                            placeholder="Add comment..."
-                            className="flex-1 bg-black/[0.03] border border-black/[0.04] rounded-xl px-3 py-1.5 text-[11px] text-[#2A2621] placeholder-[#5A554E] focus:outline-none focus:border-[#FD5C05]"
-                          />
-                          <button
-                            onClick={() => handleComment(event.id)}
-                            disabled={!commentText.trim()}
-                            className="bg-[#FD5C05] text-[#2A2621] hover:bg-[#CC3D00] px-3 py-1 rounded-xl text-[10px] font-bold uppercase tracking-wider disabled:opacity-30 transition-opacity cursor-pointer"
-                          >
-                            Post
-                          </button>
-                        </div>
-                      )}
-
                     </div>
                   </motion.div>
                 );
@@ -461,141 +544,13 @@ export default function StudentDashboardPage() {
             </div>
           ) : (
             <div className="w-full text-center py-20 bg-white rounded-3xl border border-black/[0.04] text-sm text-[#5A554E] font-light shadow-sm">
-              No official school or organization events discovered matching filters.
+              {activeFeed === 'official' 
+                ? 'No official school or organization events discovered matching filters.' 
+                : 'No student activities or services discovered matching filters.'
+              }
             </div>
           )}
-        </div>
-
-        {/* Sidebar Column */}
-        <div className="space-y-6">
-
-          {/* Matched Organizations Widget */}
-          {matchedOrgs.length > 0 && (
-            <div className="bg-white border border-black/[0.04] rounded-3xl p-5 shadow-sm space-y-4">
-              <h3 className="text-xs font-black tracking-widest text-[#2A2621] uppercase">Matched Groups</h3>
-              <div className="space-y-2">
-                {matchedOrgs.map((org) => (
-                  <div
-                    key={org.id}
-                    onClick={() => router.push(`/student/organizations/${org.id}`)}
-                    className="p-3 bg-slate-50 hover:bg-slate-100/50 rounded-2xl flex items-center justify-between border border-black/[0.03] transition-all cursor-pointer group"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="h-8 w-8 rounded-xl bg-[#FD5C05]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[#2A2621] font-black text-xs shrink-0 shadow-sm">
-                        {org.name.charAt(0)}
-                      </div>
-                      <div className="min-w-0">
-                        <h4 className="text-xs font-bold text-[#2A2621] uppercase tracking-tight flex items-center group-hover:text-[#FD5C05] transition-colors truncate">
-                          {org.name}
-                          {org.verified && <VerifiedBadge className="h-3.5 w-3.5 ml-1 shrink-0" />}
-                        </h4>
-                        <p className="text-[9px] text-[#5A554E]">{org.members.length} members</p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-bold text-[#5A554E] shrink-0">→</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* My Schedule Widget */}
-          <div className="bg-white border border-black/[0.04] rounded-3xl p-5 shadow-sm space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-black tracking-widest text-[#2A2621] uppercase">My Schedule</h3>
-              <span className="text-[9px] font-extrabold text-[#FD5C05] bg-[#FD5C05]/10 px-2 py-0.5 rounded-full">
-                {rsvpEventsList.length} going
-              </span>
-            </div>
-
-            {rsvpEventsList.length > 0 ? (
-              <div className="space-y-3">
-                {rsvpEventsList.map((event) => {
-                  const day = event.date.split('-')[2] || '10';
-                  const month = event.date.split('-')[1] || '10';
-                  const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                  const monthName = monthNames[parseInt(month)] || 'Oct';
-
-                  return (
-                    <div
-                      key={`schedule-${event.id}`}
-                      onClick={() => router.push(`/events/${event.id}`)}
-                      className="group flex gap-3 items-center p-2.5 rounded-2xl border border-black/[0.03] hover:border-black/10 bg-slate-50/50 hover:bg-slate-50 transition-all cursor-pointer text-left"
-                    >
-                      {/* Date Badge */}
-                      <div className="h-11 w-11 rounded-xl bg-white border border-black/[0.04] shadow-sm flex flex-col items-center justify-center shrink-0">
-                        <span className="text-[9px] font-extrabold uppercase text-[#5A554E] leading-none">{monthName}</span>
-                        <span className="text-sm font-black text-[#2A2621] mt-0.5 leading-none">{day}</span>
-                      </div>
-
-                      {/* Event Details */}
-                      <div className="min-w-0 flex-1">
-                        <h4 className="text-xs font-bold text-[#2A2621] truncate uppercase group-hover:text-[#FD5C05] transition-colors leading-snug">
-                          {event.title}
-                        </h4>
-                        <p className="text-[9px] text-[#5A554E] mt-0.5 truncate uppercase">
-                          {event.time} • {event.location}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <p className="text-[11px] text-[#5A554E] italic text-center py-4 bg-slate-50/50 rounded-2xl">
-                You haven't RSVP'd to any events yet.
-              </p>
-            )}
-          </div>
-
-          {/* Campus Groups Widget */}
-          <div className="bg-white border border-black/[0.04] rounded-3xl p-5 shadow-sm space-y-4">
-            <h3 className="text-xs font-black tracking-widest text-[#2A2621] uppercase">Verified Campus Groups</h3>
-            <div className="space-y-2.5">
-              {organizations.slice(0, 5).map((org) => (
-                <div
-                  key={org.id}
-                  onClick={() => router.push(`/student/organizations/${org.id}`)}
-                  className="group flex items-center justify-between p-2 rounded-2xl hover:bg-slate-50 transition-all cursor-pointer"
-                >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div
-                      className="h-8 w-8 rounded-xl flex items-center justify-center font-bold text-[10px] text-white shrink-0 shadow-sm"
-                      style={{ backgroundColor: org.logoColor || '#2A2621' }}
-                    >
-                      {org.name.substring(0, 2).toUpperCase()}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-xs font-bold text-[#2A2621] flex items-center gap-1 group-hover:text-[#FD5C05] transition-colors truncate">
-                        {org.name}
-                        {org.verified && <VerifiedBadge className="h-3.5 w-3.5 shrink-0" />}
-                      </p>
-                      <p className="text-[9px] text-[#5A554E]">{org.members.length} members</p>
-                    </div>
-                  </div>
-                  <span className="text-[10px] text-[#5A554E] group-hover:text-[#2A2621] shrink-0 font-bold">→</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-        </div>
-
       </div>
-
-      {/* ── Share/Success Toast ── */}
-      <AnimatePresence>
-        {iminToast && (
-          <motion.div
-            initial={{ y: 60, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 60, opacity: 0 }}
-            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-[#22C55E] text-white text-[11px] font-bold uppercase tracking-wider px-5 py-2.5 rounded-full shadow-xl"
-          >
-            You're RSVP'd! 🎉
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <AnimatePresence>
         {shareToast && (
@@ -616,5 +571,5 @@ export default function StudentDashboardPage() {
 
 // Fallback icon
 function GraduationCapIcon({ className }: { className?: string }) {
-  return <span className={`font-bold ${className}`}>🎓</span>;
+  return <span className={`font-bold ${className}`}>[Grad]</span>;
 }

@@ -109,7 +109,7 @@ export function DesktopNav({ variant = 'student' }: { variant?: 'student' | 'sch
             {/* School Logged In */}
             {variant === 'school' && (
               <>
-                <Link href="/student/events" className="text-xs font-bold text-[#2A2621] hover:text-[#2A2621] hover:bg-[#FD5C05]/25 px-3.5 py-1.5 rounded-full uppercase tracking-wider transition-colors cursor-pointer">
+                <Link href="/student/dashboard" className="text-xs font-bold text-[#2A2621] hover:text-[#2A2621] hover:bg-[#FD5C05]/25 px-3.5 py-1.5 rounded-full uppercase tracking-wider transition-colors cursor-pointer">
                   Student Portal
                 </Link>
                 <Link href="/school/dashboard" className="h-9 w-9 rounded-full bg-[#D8D2BC]/30 border border-black/10 flex items-center justify-center text-[#2A2621] text-xs font-bold hover:bg-black/10 transition-colors">
@@ -166,7 +166,6 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
 
   const studentTabs = [
     { href: '/student/dashboard', icon: Home, label: 'Home' },
-    { href: '/student/events', icon: Compass, label: 'Explore' },
     { href: '/student/create', icon: Plus, label: 'Create', isFab: true },
     { href: '/student/saved', icon: Bookmark, label: 'Saved' },
     { href: '/student/profile', icon: User, label: 'Profile' },
@@ -235,7 +234,6 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
 
   const studentLinks = [
     { href: '/student/dashboard', icon: Home, label: 'Dashboard' },
-    { href: '/student/events', icon: Compass, label: 'Explore Events' },
     { href: '/student/create', icon: Plus, label: 'Create' },
     { href: '/student/saved', icon: Bookmark, label: 'Saved Events' },
     { href: '/student/my-events', icon: Star, label: 'My Events' },
@@ -288,8 +286,8 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
               School Dashboard
             </Link>
           ) : (
-            <Link href="/student/events" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#5A554E] hover:text-[#2A2621] transition-colors cursor-pointer">
-              <Compass className="h-4 w-4" />
+            <Link href="/student/dashboard" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-[#5A554E] hover:text-[#2A2621] transition-colors cursor-pointer">
+              <Home className="h-4 w-4" />
               Student Portal
             </Link>
           )}

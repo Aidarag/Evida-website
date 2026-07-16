@@ -17,21 +17,40 @@ import {
   ChevronRight,
   CalendarDays,
   Clock,
-  MapPin
+  MapPin,
+  Calendar
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DesktopNav } from '@/components/Navbar';
 import EvidaLogo from '@/components/ui/EvidaLogo';
 import { useEvents } from '@/lib/context/EventContext';
+import { useUser } from '@/lib/context/UserContext';
 import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
 
 export default function CalendarPage() {
   const { events } = useEvents();
+  const { currentUser } = useUser();
   const [calendarDate, setCalendarDate] = useState<Date>(new Date(2026, 9, 1)); // Default to October 2026
+
+  const MOCK_CALENDAR_EVENTS = [
+    { id: 'mock-1', title: 'Graduation Cap Painting Workshop', date: '2026-10-03', time: '2:00 PM', location: 'Fine Arts Studio', coverImage: '/pexels-cottonbro-5989925.jpg', attendees: ['Michael'], description: 'Come paint your graduation cap with us! We supply all paint, glitter, and brushes.' },
+    { id: 'mock-2', title: 'Fall Acoustic Sessions', date: '2026-10-12', time: '6:30 PM', location: 'Campus Amphitheater', coverImage: '/pexels-amine-1285347-9371719.jpg', attendees: [], description: 'Enjoy live acoustic performances by talented student singer-songwriters.' },
+    { id: 'mock-3', title: 'Canvas & Mocktails Art Event', date: '2026-10-20', time: '4:00 PM', location: 'Student Union', coverImage: '/pexels-gu-ko-2150570603-31827067.jpg', attendees: ['Michael'], description: 'Unwind with custom mocktails while painting on canvas with our art mentors.' },
+    { id: 'mock-4', title: 'STEM Code Hackathon Kickoff', date: '2026-10-26', time: '9:00 AM', location: 'Tech Hall', coverImage: '/pexels-caleboquendo-34598092.jpg', attendees: [], description: 'Form teams, code awesome projects, and win prizes in this 24-hour hackathon.' },
+    { id: 'mock-5', title: 'Club Leadership Mixer', date: '2026-10-05', time: '5:00 PM', location: 'Student Center', coverImage: '/pexels-rdne-7648057.jpg', attendees: [], description: 'Meet leaders of all registered campus clubs and organizations to collaborate.' },
+    { id: 'mock-6', title: 'Varsity Soccer Tournament', date: '2026-10-15', time: '3:00 PM', location: 'Athletic Field', coverImage: '/pexels-tima-miroshnichenko-5439368.jpg', attendees: ['Michael'], description: 'Cheer for our varsity soccer team in the seasonal opener tournament!' },
+    { id: 'mock-7', title: 'Health & Wellness Seminar', date: '2026-10-22', time: '11:00 AM', location: 'Campus Gym', coverImage: '/pexels-ron-lach-8576102.jpg', attendees: [], description: 'Learn about nutritional planning, physical health, and mindfulness practices.' },
+    { id: 'mock-8', title: 'Resume Review & Interview Prep', date: '2026-10-08', time: '1:00 PM', location: 'Career Center', coverImage: '/pexels-marwen-larafa-2159807713-37714941.jpg', attendees: [], description: 'Get one-on-one expert feedback on your resume and practice mock interview panels.' },
+    { id: 'mock-9', title: 'Developer Tools Workshop', date: '2026-10-18', time: '6:00 PM', location: 'Computer Lab 3', coverImage: '/pexels-amine-1285347-9371719.jpg', attendees: [], description: 'Get hands-on experience with command line git, docker, and remote servers.' },
+    { id: 'mock-10', title: 'Classic Film Screening Night', date: '2026-10-29', time: '8:00 PM', location: 'Campus Theatre', coverImage: '/pexels-cottonbro-5989925.jpg', attendees: [], description: 'Join us for a cozy screening of classic cinema works. Free popcorn included.' }
+  ];
+
+  const allEvents = [...events, ...MOCK_CALENDAR_EVENTS];
 
   // State for inspecting a specific day's events
   const [selectedDayEvents, setSelectedDayEvents] = useState<Array<any>>([
-    { title: 'Graduation Cap Painting Workshop', time: '2:00 PM', location: 'Fine Arts Studio', type: 'mock' }
+    MOCK_CALENDAR_EVENTS[0]
   ]);
   const [selectedDateLabel, setSelectedDateLabel] = useState<string>('October 3, 2026');
 
@@ -75,38 +94,7 @@ export default function CalendarPage() {
     const m = String(date.getMonth() + 1).padStart(2, '0');
     const d = String(date.getDate()).padStart(2, '0');
     const dateString = `${y}-${m}-${d}`;
-    return events.filter(e => e.date === dateString && e.status === 'approved');
-  };
-
-  const getHighlightStyle = (day: number) => {
-    if (day === 3 || day === 12 || day === 20 || day === 26) {
-      const IconComp = day === 3 ? GraduationCap : day === 12 ? Music : day === 20 ? Palette : Sparkles;
-      return {
-        bgColor: 'bg-[#FD5C05]/15 hover:bg-[#FD5C05]/25',
-        borderColor: 'border-[#FD5C05]/40',
-        textColor: 'text-[#2A2621]',
-        icon: <IconComp className="h-4 w-4 text-[#2A2621] stroke-[2] max-md:h-3 max-md:w-3" />,
-      };
-    }
-    if (day === 5 || day === 15 || day === 22) {
-      const IconComp = day === 5 ? Users : day === 15 ? Trophy : Heart;
-      return {
-        bgColor: 'bg-[#D8D2BC]/30 hover:bg-black/8',
-        borderColor: 'border-black/20',
-        textColor: 'text-[#2A2621]',
-        icon: <IconComp className="h-4 w-4 text-[#2A2621] stroke-[2] max-md:h-3 max-md:w-3" />,
-      };
-    }
-    if (day === 8 || day === 18 || day === 29) {
-      const IconComp = day === 8 ? Briefcase : day === 18 ? Code : Film;
-      return {
-        bgColor: 'bg-[#FD5C05]/15 hover:bg-[#FD5C05]/25',
-        borderColor: 'border-[#FD5C05]/40',
-        textColor: 'text-[#2A2621]',
-        icon: <IconComp className="h-4 w-4 text-[#2A2621] stroke-[2] max-md:h-3 max-md:w-3" />,
-      };
-    }
-    return null;
+    return allEvents.filter(e => e.date === dateString);
   };
 
   const handleMonthNav = (direction: 'prev' | 'next') => {
@@ -121,28 +109,44 @@ export default function CalendarPage() {
 
   const handleDayClick = (date: Date) => {
     const dayEvents = getEventsForDate(date);
-    const mockEvents: Record<number, Array<any>> = {
-      3: [{ title: 'Graduation Cap Painting Workshop', time: '2:00 PM', location: 'Fine Arts Studio' }],
-      12: [{ title: 'Fall Acoustic Sessions', time: '6:30 PM', location: 'Campus Amphitheater' }],
-      20: [{ title: 'Canvas & Mocktails Art Event', time: '4:00 PM', location: 'Student Union' }],
-      26: [{ title: 'STEM Code Hackathon Kickoff', time: '9:00 AM', location: 'Tech Hall' }],
-      5: [{ title: 'Club Leadership Mixer', time: '5:00 PM', location: 'Student Center' }],
-      15: [{ title: 'Varsity Soccer Tournament', time: '3:00 PM', location: 'Athletic Field' }],
-      22: [{ title: 'Health & Wellness Seminar', time: '11:00 AM', location: 'Campus Gym' }],
-      8: [{ title: 'Resume Review & Interview Prep', time: '1:00 PM', location: 'Career Center' }],
-      18: [{ title: 'Developer Tools Workshop', time: '6:00 PM', location: 'Computer Lab 3' }],
-      29: [{ title: 'Classic Film Screening Night', time: '8:00 PM', location: 'Campus Theatre' }]
-    };
-
-    const dayNum = date.getDate();
-    const isCurrentMonth = date.getMonth() === month;
-    const items = [...dayEvents];
-    if (isCurrentMonth && mockEvents[dayNum]) {
-      items.push(...mockEvents[dayNum]);
-    }
-    
-    setSelectedDayEvents(items);
+    setSelectedDayEvents(dayEvents);
     setSelectedDateLabel(date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
+  };
+
+  const handleDownloadCalendar = (evt: any) => {
+    const cleanTitle = evt.title.replace(/[^a-zA-Z0-9 ]/g, "");
+    const cleanDesc = (evt.description || 'Campus Event').replace(/[^a-zA-Z0-9 ]/g, "");
+    const cleanLoc = (evt.location || 'Campus').replace(/[^a-zA-Z0-9 ]/g, "");
+    
+    // Format dates
+    const dateStr = (evt.date || '2026-10-03').replace(/-/g, '');
+    const startTime = `${dateStr}T190000`;
+    const endTime = `${dateStr}T210000`;
+
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Evida//Calendar//EN',
+      'BEGIN:VEVENT',
+      `UID:${evt.id || 'mock'}@evida.app`,
+      `DTSTAMP:${startTime}`,
+      `DTSTART:${startTime}`,
+      `DTEND:${endTime}`,
+      `SUMMARY:${cleanTitle}`,
+      `DESCRIPTION:${cleanDesc}`,
+      `LOCATION:${cleanLoc}`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `${cleanTitle.replace(/\s+/g, '_')}.ics`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -207,28 +211,49 @@ export default function CalendarPage() {
           {/* Calendar Days */}
           <div className="grid grid-cols-7 gap-1.5 sm:gap-3">
             {calendarDays.map((cell, idx) => {
-              const highlight = cell.isCurrentMonth ? getHighlightStyle(cell.day) : null;
+              const dayEvents = cell.isCurrentMonth ? getEventsForDate(cell.date) : [];
+              const isGoing = currentUser ? dayEvents.some(e => e.attendees?.includes(currentUser.name)) : false;
+
               return (
                 <div 
                   key={idx}
                   onClick={() => handleDayClick(cell.date)}
                   className={`
-                    relative aspect-square border rounded-xl sm:rounded-2xl p-1 sm:p-2.5 cursor-pointer flex flex-col justify-between transition-all duration-300
+                    relative aspect-square border rounded-xl sm:rounded-2xl p-1 sm:p-2.5 cursor-pointer flex flex-col justify-between transition-all duration-300 overflow-hidden
                     ${cell.isCurrentMonth 
-                      ? highlight 
-                        ? `${highlight.bgColor} ${highlight.borderColor}`
-                        : 'bg-white border-black/[0.04] hover:bg-black/[0.01] hover:border-black/15'
+                      ? 'bg-white border-black/[0.04] hover:bg-black/[0.01] hover:border-black/15 shadow-sm'
                       : 'bg-black/[0.01] border-transparent text-[#5A554E] opacity-40'
                     }
                   `}
                 >
-                  <span className={`text-xs font-bold ${highlight ? highlight.textColor : 'text-[#2A2621]'}`}>
+                  {/* Grid background inspired by image */}
+                  {cell.isCurrentMonth && dayEvents.length > 0 && (
+                    <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 gap-0.5 rounded-xl sm:rounded-2xl overflow-hidden z-0 bg-[#D8D2BC]/10">
+                      {dayEvents.slice(0, 4).map((e, index) => {
+                        const bgClass = e.coverImage.includes('from-') ? e.coverImage : '';
+                        const bgStyle = !bgClass ? { backgroundImage: `url(${e.coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
+                        return (
+                          <div 
+                            key={index} 
+                            className={`w-full h-full opacity-80 mix-blend-multiply bg-[#FD5C05]/10 ${bgClass}`} 
+                            style={bgStyle} 
+                          />
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  <span className={`relative z-10 text-[10px] font-black px-1.5 py-0.5 rounded-md leading-none w-fit ${
+                    cell.isCurrentMonth && dayEvents.length > 0 
+                      ? 'text-white bg-black/50 backdrop-blur-[2px]' 
+                      : 'text-[#2A2621]'
+                  }`}>
                     {cell.day}
                   </span>
-                  
-                  {cell.isCurrentMonth && highlight && (
-                    <div className="self-end mt-1">
-                      {highlight.icon}
+
+                  {cell.isCurrentMonth && isGoing && (
+                    <div className="absolute top-1.5 right-1.5 z-20 bg-white border border-[#FD5C05]/20 shadow-md h-6 w-6 rounded-full flex items-center justify-center animate-bounce">
+                      <MapPin className="h-3.5 w-3.5 text-[#FD5C05] fill-[#FD5C05]" />
                     </div>
                   )}
                 </div>
@@ -250,20 +275,50 @@ export default function CalendarPage() {
 
           <div className="space-y-4">
             {selectedDayEvents.length > 0 ? (
-              selectedDayEvents.map((evt, idx) => (
-                <div 
-                  key={idx}
-                  className="p-4 rounded-2xl bg-black/[0.02] border border-black/[0.03] space-y-2 hover:border-[#FD5C05]/20 hover:bg-[#FD5C05]/3 transition-all duration-300"
-                >
-                  <h4 className="font-bold text-xs sm:text-sm text-[#2A2621] uppercase tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>
-                    {evt.title}
-                  </h4>
-                  <div className="flex flex-col gap-1 text-[11px] text-[#5A554E] font-medium">
-                    <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> {evt.time || 'All Day'}</span>
-                    <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {evt.location || 'Campus'}</span>
+              selectedDayEvents.map((evt, idx) => {
+                const isUserGoing = currentUser ? evt.attendees?.includes(currentUser.name) : false;
+                return (
+                  <div 
+                    key={idx}
+                    className="p-4 rounded-2xl bg-black/[0.02] border border-black/[0.03] space-y-3 hover:border-[#FD5C05]/20 hover:bg-[#FD5C05]/3 transition-all duration-300"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <h4 className="font-bold text-xs sm:text-sm text-[#2A2621] uppercase tracking-wide leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+                        {evt.title}
+                      </h4>
+                      {isUserGoing && (
+                        <span className="text-[8px] font-black uppercase bg-[#FD5C05] text-white px-2 py-0.5 rounded-full tracking-wider shrink-0 flex items-center gap-0.5 animate-pulse">
+                          <MapPin className="h-2 w-2 fill-white text-white" />
+                          Going
+                        </span>
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-col gap-1 text-[11px] text-[#5A554E] font-medium">
+                      <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> {evt.time || 'All Day'}</span>
+                      <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {evt.location || 'Campus'}</span>
+                    </div>
+
+                    <div className="pt-2.5 border-t border-black/[0.04] flex items-center gap-2">
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        className="flex-1 bg-[#2A2621] text-white hover:bg-[#FD5C05] hover:text-[#2A2621] border-none font-bold text-[9px] py-1.5"
+                        onClick={() => handleDownloadCalendar(evt)}
+                      >
+                        <Calendar className="h-3.5 w-3.5 mr-1 inline-block align-text-bottom" />
+                        Add to Calendar
+                      </Button>
+                      <Link
+                        href={`/events/${evt.id}`}
+                        className="flex-1 py-1.5 px-2.5 text-center bg-black/[0.03] hover:bg-black/[0.08] text-[#2A2621] rounded-xl text-[9px] font-black uppercase tracking-wider transition-all"
+                      >
+                        Details
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             ) : (
               <div className="py-12 text-center text-xs sm:text-sm text-[#5A554E] font-light">
                 No events scheduled for this day. Click another date on the calendar grid to inspect.
@@ -300,7 +355,7 @@ export default function CalendarPage() {
             <h4 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4">Discover</h4>
             <ul className="space-y-3 text-xs font-semibold">
               <li><Link href="/about" className="hover:text-white transition-colors">About Evida</Link></li>
-              <li><Link href="/student/events" className="hover:text-white transition-colors">Featured Events</Link></li>
+              <li><Link href="/student/dashboard" className="hover:text-white transition-colors">Featured Events</Link></li>
               <li><Link href="/how-it-works" className="hover:text-white transition-colors">How It Works</Link></li>
             </ul>
           </div>
@@ -309,7 +364,7 @@ export default function CalendarPage() {
           <div className="md:col-span-2 space-y-4 text-left">
             <h4 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4">Platform</h4>
             <ul className="space-y-3 text-xs font-semibold">
-              <li><Link href="/student/events" className="hover:text-white transition-colors">Explore Events</Link></li>
+              <li><Link href="/student/dashboard" className="hover:text-white transition-colors">Explore Events</Link></li>
               <li><Link href="/student/create" className="hover:text-white transition-colors">Create Event</Link></li>
               <li><Link href="/student/create" className="hover:text-white transition-colors">Create Promotion</Link></li>
               <li><Link href="/student/dashboard" className="hover:text-white transition-colors">Student Dashboard</Link></li>
