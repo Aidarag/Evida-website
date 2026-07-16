@@ -273,7 +273,7 @@ export default function StudentDashboardPage() {
           </p>
         </div>
         <Link 
-          href="/calendar" 
+          href="/student/calendar" 
           className="self-start md:self-center bg-[#2A2621] text-white hover:bg-[#FD5C05] hover:text-[#2A2621] px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm shrink-0 cursor-pointer"
         >
           <Calendar className="h-4 w-4" />

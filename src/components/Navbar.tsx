@@ -167,7 +167,7 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
   const studentTabs = [
     { href: '/student/dashboard', icon: Home, label: 'Home' },
     { href: '/student/explore', icon: Compass, label: 'Explore' },
-    { href: '/calendar', icon: Calendar, label: 'Calendar' },
+    { href: '/student/calendar', icon: Calendar, label: 'Calendar' },
     { href: '/student/profile', icon: User, label: 'Profile' },
   ];
 
@@ -222,7 +222,7 @@ export function DesktopSidebar({ variant = 'student' }: { variant?: 'student' | 
   const studentLinks = [
     { href: '/student/dashboard', icon: Home, label: 'Home' },
     { href: '/student/explore', icon: Compass, label: 'Explore' },
-    { href: '/calendar', icon: Calendar, label: 'Calendar' },
+    { href: '/student/calendar', icon: Calendar, label: 'Calendar' },
     { href: '/student/profile', icon: User, label: 'Profile' },
     { href: '/student/create', icon: Plus, label: 'Create Event' },
   ];
