@@ -529,12 +529,12 @@ export default function StudentDashboardPage() {
                         <button
                           onClick={() => saveToggle(item.id)}
                           className={`h-9 w-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${isSaved
-                            ? 'bg-white border-[#FD5C05] text-rose-500 shadow-sm'
-                            : 'bg-white border-black/10 text-[#5A554E] hover:text-rose-500'
+                            ? 'bg-white border-[#EE3D5A]/25 text-[#EE3D5A] shadow-sm'
+                            : 'bg-white border-black/10 text-[#5A554E] hover:text-[#EE3D5A]'
                             }`}
                           title={isSaved ? "Saved" : "Save Item"}
                         >
-                          <Heart className={`h-4.5 w-4.5 ${isSaved ? 'fill-rose-500' : ''}`} />
+                          <Heart className={`h-4.5 w-4.5 ${isSaved ? 'fill-[#EE3D5A] text-[#EE3D5A]' : ''}`} />
                         </button>
                       </div>
                     </div>

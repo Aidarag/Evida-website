@@ -43,10 +43,26 @@ const PROFILE_BANNERS = [
 
 const PRESET_AVATARS = ['🎓', '💻', '🔬', '⚽️', '🎨', '🎵', '🌟', '📣', '🔥', '🦊', '🚀', '🧠', '💼'];
 
+// Mock Calendar Events for visual timeline render
+const MOCK_CALENDAR_EVENTS = [
+  { id: 'mock-1', title: 'Graduation Cap Painting Workshop', date: '2026-10-03', time: '2:00 PM', location: 'Fine Arts Studio', coverImage: '/pexels-cottonbro-5989925.jpg', attendees: ['Michael'], description: 'Come paint your graduation cap with us! We supply all paint, glitter, and brushes.' },
+  { id: 'mock-2', title: 'Fall Acoustic Sessions', date: '2026-10-12', time: '6:30 PM', location: 'Campus Amphitheater', coverImage: '/pexels-amine-1285347-9371719.jpg', attendees: [], description: 'Enjoy live acoustic performances by talented student singer-songwriters.' },
+  { id: 'mock-3', title: 'Canvas & Mocktails Art Event', date: '2026-10-20', time: '4:00 PM', location: 'Student Union', coverImage: '/pexels-gu-ko-2150570603-31827067.jpg', attendees: ['Michael'], description: 'Unwind with custom mocktails while painting on canvas with our art mentors.' },
+  { id: 'mock-4', title: 'STEM Code Hackathon Kickoff', date: '2026-10-26', time: '9:00 AM', location: 'Tech Hall', coverImage: '/pexels-caleboquendo-34598092.jpg', attendees: [], description: 'Form teams, code awesome projects, and win prizes in this 24-hour hackathon.' },
+  { id: 'mock-5', title: 'Club Leadership Mixer', date: '2026-10-05', time: '5:00 PM', location: 'Student Center', coverImage: '/pexels-rdne-7648057.jpg', attendees: [], description: 'Meet leaders of all registered campus clubs and organizations to collaborate.' },
+  { id: 'mock-6', title: 'Varsity Soccer Tournament', date: '2026-10-15', time: '3:00 PM', location: 'Athletic Field', coverImage: '/pexels-tima-miroshnichenko-5439368.jpg', attendees: ['Michael'], description: 'Cheer for our varsity soccer team in the seasonal opener tournament!' },
+  { id: 'mock-7', title: 'Health & Wellness Seminar', date: '2026-10-22', time: '11:00 AM', location: 'Campus Gym', coverImage: '/pexels-ron-lach-8576102.jpg', attendees: [], description: 'Learn about nutritional planning, physical health, and mindfulness practices.' },
+  { id: 'mock-8', title: 'Resume Review & Interview Prep', date: '2026-10-08', time: '1:00 PM', location: 'Career Center', coverImage: '/pexels-marwen-larafa-2159807713-37714941.jpg', attendees: [], description: 'Get one-on-one expert feedback on your resume and practice mock interview panels.' },
+  { id: 'mock-9', title: 'Developer Tools Workshop', date: '2026-10-18', time: '6:00 PM', location: 'Computer Lab 3', coverImage: '/pexels-amine-1285347-9371719.jpg', attendees: [], description: 'Get hands-on experience with command line git, docker, and remote servers.' },
+  { id: 'mock-10', title: 'Classic Film Screening Night', date: '2026-10-29', time: '8:00 PM', location: 'Campus Theatre', coverImage: '/pexels-cottonbro-5989925.jpg', attendees: [], description: 'Join us for a cozy screening of classic cinema works. Free popcorn included.' }
+];
+
 export default function StudentProfilePage() {
   const { currentUser, setCurrentUser, logout } = useUser();
   const { events, organizations, saveToggle, rsvpToggle } = useEvents();
   const router = useRouter();
+
+  const allEvents = [...events, ...MOCK_CALENDAR_EVENTS];
 
   // State variables for profile editor
   const [editOpen, setEditOpen] = useState(false);
@@ -198,7 +214,11 @@ export default function StudentProfilePage() {
     const m = String(date.getMonth() + 1).padStart(2, '0');
     const d = String(date.getDate()).padStart(2, '0');
     const dateString = `${y}-${m}-${d}`;
-    return allEvents.filter(e => e.date === dateString);
+    return allEvents.filter(e => e.date === dateString && currentUser && (
+      e.attendees?.includes(currentUser.name) ||
+      e.attendees?.includes(currentUser.username) ||
+      (currentUser.name.startsWith('Michael') && e.attendees?.includes('Michael'))
+    ));
   };
 
   const handleMonthNav = (direction: 'prev' | 'next') => {
@@ -304,27 +324,27 @@ export default function StudentProfilePage() {
     document.body.removeChild(link);
   };
 
-  // Mock Calendar Events for visual timeline render
-  const MOCK_CALENDAR_EVENTS = [
-    { id: 'mock-1', title: 'Graduation Cap Painting Workshop', date: '2026-10-03', time: '2:00 PM', location: 'Fine Arts Studio', coverImage: '/pexels-cottonbro-5989925.jpg', attendees: ['Michael'], description: 'Come paint your graduation cap with us! We supply all paint, glitter, and brushes.' },
-    { id: 'mock-2', title: 'Fall Acoustic Sessions', date: '2026-10-12', time: '6:30 PM', location: 'Campus Amphitheater', coverImage: '/pexels-amine-1285347-9371719.jpg', attendees: [], description: 'Enjoy live acoustic performances by talented student singer-songwriters.' },
-    { id: 'mock-3', title: 'Canvas & Mocktails Art Event', date: '2026-10-20', time: '4:00 PM', location: 'Student Union', coverImage: '/pexels-gu-ko-2150570603-31827067.jpg', attendees: ['Michael'], description: 'Unwind with custom mocktails while painting on canvas with our art mentors.' },
-    { id: 'mock-4', title: 'STEM Code Hackathon Kickoff', date: '2026-10-26', time: '9:00 AM', location: 'Tech Hall', coverImage: '/pexels-caleboquendo-34598092.jpg', attendees: [], description: 'Form teams, code awesome projects, and win prizes in this 24-hour hackathon.' },
-    { id: 'mock-5', title: 'Club Leadership Mixer', date: '2026-10-05', time: '5:00 PM', location: 'Student Center', coverImage: '/pexels-rdne-7648057.jpg', attendees: [], description: 'Meet leaders of all registered campus clubs and organizations to collaborate.' },
-    { id: 'mock-6', title: 'Varsity Soccer Tournament', date: '2026-10-15', time: '3:00 PM', location: 'Athletic Field', coverImage: '/pexels-tima-miroshnichenko-5439368.jpg', attendees: ['Michael'], description: 'Cheer for our varsity soccer team in the seasonal opener tournament!' },
-    { id: 'mock-7', title: 'Health & Wellness Seminar', date: '2026-10-22', time: '11:00 AM', location: 'Campus Gym', coverImage: '/pexels-ron-lach-8576102.jpg', attendees: [], description: 'Learn about nutritional planning, physical health, and mindfulness practices.' },
-    { id: 'mock-8', title: 'Resume Review & Interview Prep', date: '2026-10-08', time: '1:00 PM', location: 'Career Center', coverImage: '/pexels-marwen-larafa-2159807713-37714941.jpg', attendees: [], description: 'Get one-on-one expert feedback on your resume and practice mock interview panels.' },
-    { id: 'mock-9', title: 'Developer Tools Workshop', date: '2026-10-18', time: '6:00 PM', location: 'Computer Lab 3', coverImage: '/pexels-amine-1285347-9371719.jpg', attendees: [], description: 'Get hands-on experience with command line git, docker, and remote servers.' },
-    { id: 'mock-10', title: 'Classic Film Screening Night', date: '2026-10-29', time: '8:00 PM', location: 'Campus Theatre', coverImage: '/pexels-cottonbro-5989925.jpg', attendees: [], description: 'Join us for a cozy screening of classic cinema works. Free popcorn included.' }
-  ];
 
-  const allEvents = [...events, ...MOCK_CALENDAR_EVENTS];
 
   // Selected Day State
-  const [selectedDayEvents, setSelectedDayEvents] = useState<Array<any>>([
-    MOCK_CALENDAR_EVENTS[0]
-  ]);
-  const [selectedDateLabel, setSelectedDateLabel] = useState<string>('October 3, 2026');
+  const [selectedDayEvents, setSelectedDayEvents] = useState<Array<any>>([]);
+  const [selectedDateLabel, setSelectedDateLabel] = useState<string>('Select a day');
+
+  useEffect(() => {
+    const userGoingEvents = allEvents.filter(e => currentUser && (
+      e.attendees?.includes(currentUser.name) ||
+      e.attendees?.includes(currentUser.username) ||
+      (currentUser.name.startsWith('Michael') && e.attendees?.includes('Michael'))
+    ));
+    if (userGoingEvents.length > 0) {
+      const firstEvt = userGoingEvents[0];
+      const dateParts = firstEvt.date.split('-');
+      const evtDate = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
+      const sameDayEvents = userGoingEvents.filter(e => e.date === firstEvt.date);
+      setSelectedDayEvents(sameDayEvents);
+      setSelectedDateLabel(evtDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
+    }
+  }, [currentUser, events]);
 
   if (!currentUser) return null;
 
@@ -589,7 +609,6 @@ export default function StudentProfilePage() {
                         <div className="grid grid-cols-7 gap-1.5">
                           {calendarDays.map((cell, idx) => {
                             const dayEvents = cell.isCurrentMonth ? getEventsForDate(cell.date) : [];
-                            const isGoing = currentUser ? dayEvents.some(e => e.attendees?.includes(currentUser.name)) : false;
 
                             return (
                               <div 
@@ -601,41 +620,19 @@ export default function StudentProfilePage() {
                                   }
                                 }}
                                 className={`
-                                  relative aspect-square border rounded-xl p-1 cursor-pointer flex flex-col justify-between transition-all duration-200 overflow-hidden
+                                  relative aspect-square border rounded-xl p-1.5 cursor-pointer flex flex-col items-center justify-between transition-all duration-200
                                   ${cell.isCurrentMonth 
                                     ? 'bg-white border-black/[0.04] hover:bg-black/[0.01] hover:border-[#FD5C05]/30'
                                     : 'bg-black/[0.01] border-transparent text-[#5A554E] opacity-35'
                                   }
                                 `}
                               >
-                                {cell.isCurrentMonth && dayEvents.length > 0 && (
-                                  <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 gap-0.5 rounded-xl overflow-hidden z-0 bg-[#D8D2BC]/10">
-                                    {dayEvents.slice(0, 4).map((e, index) => {
-                                      const bgClass = e.coverImage.includes('from-') ? e.coverImage : '';
-                                      const bgStyle = !bgClass ? { backgroundImage: `url(${e.coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
-                                      return (
-                                        <div 
-                                          key={index} 
-                                          className={`w-full h-full opacity-85 mix-blend-multiply bg-[#FD5C05]/10 ${bgClass}`} 
-                                          style={bgStyle} 
-                                        />
-                                      );
-                                    })}
-                                  </div>
-                                )}
-
-                                <span className={`relative z-10 text-[9px] font-black px-1.5 py-0.5 rounded leading-none w-fit ${
-                                  cell.isCurrentMonth && dayEvents.length > 0 
-                                    ? 'text-white bg-black/60 backdrop-blur-[1px]' 
-                                    : 'text-[#2A2621]'
-                                }`}>
+                                <span className={`text-xs font-extrabold ${cell.isCurrentMonth ? 'text-[#2A2621]' : 'text-[#5A554E]'}`}>
                                   {cell.day}
                                 </span>
 
-                                {cell.isCurrentMonth && isGoing && (
-                                  <div className="absolute top-1 right-1 z-20 bg-white border border-[#FD5C05]/20 shadow-sm h-4 w-4 rounded-full flex items-center justify-center">
-                                    <MapPin className="h-2.5 w-2.5 text-[#FD5C05] fill-[#FD5C05]" />
-                                  </div>
+                                {cell.isCurrentMonth && dayEvents.length > 0 && (
+                                  <div className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mb-1 shrink-0" />
                                 )}
                               </div>
                             );

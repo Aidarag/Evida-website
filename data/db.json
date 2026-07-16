@@ -236,7 +236,9 @@
         "Michael Chen",
         "Sarah Jenkins"
       ],
-      "savedBy": [],
+      "savedBy": [
+        "Michael Chen"
+      ],
       "organizer": "Alex Rivera",
       "organizationId": "org-sg",
       "organizationName": "Student Government Association",

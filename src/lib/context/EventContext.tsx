@@ -61,15 +61,42 @@ export function EventProvider({ children }: { children: ReactNode }) {
 
   const saveToggle = useCallback(async (eventId: string) => {
     if (!currentUser) return;
+
+    // 1. Optimistic Update
+    setEvents(prevEvents =>
+      prevEvents.map(evt => {
+        if (evt.id === eventId) {
+          const savedBy = evt.savedBy || [];
+          const idx = savedBy.indexOf(currentUser.name);
+          const newSavedBy = idx > -1
+            ? savedBy.filter(name => name !== currentUser.name)
+            : [...savedBy, currentUser.name];
+          return { ...evt, savedBy: newSavedBy };
+        }
+        return evt;
+      })
+    );
+
     try {
       const res = await fetch('/api/events/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ eventId, name: currentUser.name }),
       });
-      if (res.ok) await fetchData();
+      if (res.ok) {
+        const data = await res.json();
+        // Sync with official backend response event state
+        setEvents(prevEvents =>
+          prevEvents.map(evt => (evt.id === eventId ? data.event : evt))
+        );
+      } else {
+        // Rollback
+        await fetchData();
+      }
     } catch (e) {
       console.error(e);
+      // Rollback
+      await fetchData();
     }
   }, [currentUser, fetchData]);
 

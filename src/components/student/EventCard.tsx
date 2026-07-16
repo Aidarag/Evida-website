@@ -98,11 +98,11 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
             setIsSavedLocal(!isSavedLocal);
           }
         }}
-        className="absolute top-4 right-4 z-20 h-8 w-8 rounded-full bg-white/85 backdrop-blur-md border border-black/[0.05] flex items-center justify-center text-[#5A554E] hover:text-rose-500 hover:scale-110 active:scale-95 transition-all shadow-sm cursor-pointer"
+        className="absolute top-4 right-4 z-20 h-8 w-8 rounded-full bg-white/85 backdrop-blur-md border border-black/[0.05] flex items-center justify-center text-[#5A554E] hover:text-[#EE3D5A] hover:scale-110 active:scale-95 transition-all shadow-sm cursor-pointer"
       >
         <Heart 
           className={`h-4 w-4 transition-colors ${
-            activeSaved ? 'fill-rose-500 text-rose-500' : 'text-[#5A554E]'
+            activeSaved ? 'fill-[#EE3D5A] text-[#EE3D5A]' : 'text-[#5A554E]'
           }`} 
         />
       </button>
