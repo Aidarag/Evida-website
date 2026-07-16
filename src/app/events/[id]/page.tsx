@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useEvents } from '@/lib/context/EventContext';
 import { useUser } from '@/lib/context/UserContext';
 import { useParams, useRouter } from 'next/navigation';
-import { Calendar, MapPin, Users, Heart, ArrowLeft, Share2, Compass } from 'lucide-react';
+import { Calendar, MapPin, Users, Heart, ArrowLeft, Share2, Compass, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 
@@ -13,6 +14,7 @@ export default function EventDetailsPage() {
   const router = useRouter();
   const { events, saveToggle, rsvpToggle } = useEvents();
   const { currentUser } = useUser();
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const event = events.find(e => e.id === params.id);
 
@@ -29,6 +31,43 @@ export default function EventDetailsPage() {
   
   const bgClass = event.coverImage.includes('from-') ? event.coverImage : '';
   const bgStyle = !bgClass ? { backgroundImage: `url(${event.coverImage})`, backgroundSize: 'cover' } : {};
+
+  const handleAddToCalendar = () => {
+    const cleanTitle = event.title.replace(/[^a-zA-Z0-9 ]/g, "");
+    const cleanDesc = event.description.replace(/[^a-zA-Z0-9 ]/g, "");
+    const cleanLoc = event.location.replace(/[^a-zA-Z0-9 ]/g, "");
+    const dateStr = event.date.replace(/-/g, '');
+    const startTime = `${dateStr}T190000`;
+    const endTime = `${dateStr}T210000`;
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Evida//Calendar//EN',
+      'BEGIN:VEVENT',
+      `UID:${event.id}@evida.app`,
+      `DTSTAMP:${startTime}`,
+      `DTSTART:${startTime}`,
+      `DTEND:${endTime}`,
+      `SUMMARY:${cleanTitle}`,
+      `DESCRIPTION:${cleanDesc}`,
+      `LOCATION:${cleanLoc}`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `${cleanTitle.replace(/\s+/g, '_')}.ics`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleCancelRSVP = async () => {
+    await rsvpToggle(event.id, 'interested');
+    setShowConfirmation(false);
+  };
 
   return (
     <div className="min-h-screen bg-[#08080B] text-white">
@@ -138,43 +177,12 @@ export default function EventDetailsPage() {
                         variant="primary"
                         size="sm"
                         className="flex-1 bg-[#FD5C05] text-white hover:bg-[#CC3D00] border-none font-bold"
-                        onClick={() => {
-                          // Generate and download .ics calendar file
-                          const cleanTitle = event.title.replace(/[^a-zA-Z0-9 ]/g, "");
-                          const cleanDesc = event.description.replace(/[^a-zA-Z0-9 ]/g, "");
-                          const cleanLoc = event.location.replace(/[^a-zA-Z0-9 ]/g, "");
-                          const dateStr = event.date.replace(/-/g, '');
-                          const startTime = `${dateStr}T190000`;
-                          const endTime = `${dateStr}T210000`;
-                          const icsContent = [
-                            'BEGIN:VCALENDAR',
-                            'VERSION:2.0',
-                            'PRODID:-//Evida//Calendar//EN',
-                            'BEGIN:VEVENT',
-                            `UID:${event.id}@evida.app`,
-                            `DTSTAMP:${startTime}`,
-                            `DTSTART:${startTime}`,
-                            `DTEND:${endTime}`,
-                            `SUMMARY:${cleanTitle}`,
-                            `DESCRIPTION:${cleanDesc}`,
-                            `LOCATION:${cleanLoc}`,
-                            'END:VEVENT',
-                            'END:VCALENDAR'
-                          ].join('\r\n');
-                          const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
-                          const url = URL.createObjectURL(blob);
-                          const link = document.createElement('a');
-                          link.href = url;
-                          link.setAttribute('download', `${cleanTitle.replace(/\s+/g, '_')}.ics`);
-                          document.body.appendChild(link);
-                          link.click();
-                          document.body.removeChild(link);
-                        }}
+                        onClick={handleAddToCalendar}
                       >
                         Add to Calendar
                       </Button>
                       <button
-                        onClick={() => rsvpToggle(event.id, 'interested')}
+                        onClick={handleCancelRSVP}
                         className="flex-1 py-2 px-3 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-wider text-[#B8BBC8] hover:text-white hover:bg-white/5 transition-all cursor-pointer"
                       >
                         Cancel RSVP
@@ -186,9 +194,12 @@ export default function EventDetailsPage() {
                     variant="primary" 
                     size="lg" 
                     fullWidth
-                    onClick={() => rsvpToggle(event.id, 'rsvp')}
+                    onClick={async () => {
+                      await rsvpToggle(event.id, 'rsvp');
+                      setShowConfirmation(true);
+                    }}
                   >
-                    RSVP Now
+                    I'm Going
                   </Button>
                 )
               ) : (
@@ -200,6 +211,63 @@ export default function EventDetailsPage() {
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {showConfirmation && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-[#111118] border border-white/[0.08] w-full max-w-sm rounded-[32px] p-6 shadow-2xl relative text-center space-y-6"
+            >
+              {/* Close Button X */}
+              <button
+                onClick={() => setShowConfirmation(false)}
+                className="absolute top-4 right-4 text-[#B8BBC8] hover:text-white transition-colors cursor-pointer"
+                title="Close"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              {/* Big Success Icon / Graphics */}
+              <div className="mx-auto h-16 w-16 rounded-full bg-[#FD5C05]/15 flex items-center justify-center text-[#FD5C05] text-3xl">
+                🎉
+              </div>
+
+              {/* Title & Body */}
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold text-white tracking-tight">
+                  You're going! 🎉
+                </h3>
+                <p className="text-xs text-[#B8BBC8] leading-relaxed">
+                  Your RSVP has been confirmed.
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="space-y-3 pt-2">
+                <Button
+                  variant="primary"
+                  fullWidth
+                  onClick={handleAddToCalendar}
+                  icon={<Calendar className="h-4 w-4" />}
+                  className="bg-[#FD5C05] text-white hover:bg-[#CC3D00] border-none font-bold uppercase tracking-wider text-xs py-3 rounded-xl cursor-pointer"
+                >
+                  Add to Calendar
+                </Button>
+
+                <button
+                  onClick={handleCancelRSVP}
+                  className="w-full text-center py-2.5 text-xs font-bold uppercase tracking-wider text-[#B8BBC8] hover:text-red-400 hover:underline transition-all cursor-pointer border-none bg-transparent"
+                >
+                  Cancel RSVP
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
