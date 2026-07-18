@@ -401,6 +401,7 @@ export default function StudentDashboardPage() {
                     key={item.id}
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
+                    data-tour="event-card"
                     className="bg-white rounded-3xl border border-black/[0.04] shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group"
                   >
                     {/* Event/Promo Image Banner */}

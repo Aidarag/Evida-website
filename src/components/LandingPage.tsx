@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   ArrowRight, 
   Calendar, 
@@ -16,7 +16,6 @@ import {
   Search,
   MapPin,
   Clock,
-  Check,
   Wifi,
   Battery,
   Signal,
@@ -27,10 +26,12 @@ import {
   Compass,
   Menu,
   X,
-  MousePointer2
+  ChevronLeft,
+  ChevronRight,
+  Check
 } from 'lucide-react';
 import { Event } from '@/lib/types';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import EvidaLogo from '@/components/ui/EvidaLogo';
 import Link from 'next/link';
 import { useEvents } from '@/lib/context/EventContext';
@@ -65,78 +66,79 @@ export default function LandingPage({
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  // Smartphone Showcase States
+  // ── Guided Tour State ──────────────────────────────────────────────
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [tourStep, setTourStep] = useState(0);        // 0..3
+  const [hasInteracted, setHasInteracted] = useState(false);
   const [currentPath, setCurrentPath] = useState('/student/dashboard');
-  const [iframeScrollProgress, setIframeScrollProgress] = useState(0);
-  const [isIframeScrollBottom, setIsIframeScrollBottom] = useState(false);
-  const [interacted, setInteracted] = useState(false);
+  const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
 
+  const TOUR_STEPS = [
+    {
+      label: 'Home Feed',
+      emoji: '🏠',
+      description: 'Your campus life starts here. Browse upcoming events from Livingstone College and your student community.',
+      hint: 'Scroll inside the phone to explore the feed.',
+    },
+    {
+      label: 'Select Event',
+      emoji: '🔍',
+      description: 'Discover events tailored to your interests. Tap any card to open full event details.',
+      hint: 'Tap an event card to continue.',
+    },
+    {
+      label: 'Event Details',
+      emoji: '📋',
+      description: 'Everything about the event — date, location, organizer, and who\'s attending.',
+      hint: 'Scroll down to see the RSVP option.',
+    },
+    {
+      label: "You're Going!",
+      emoji: '🎉',
+      description: 'One tap to RSVP. Your spot is confirmed instantly and saved to your profile.',
+      hint: 'Tour complete — you\'re in!',
+    },
+  ];
+
+  // Listen for route messages from the iframe
   useEffect(() => {
     const handleIframeMessage = (event: MessageEvent) => {
-      const { type, pathname, progress, isAtBottom } = event.data;
+      const { type, pathname } = event.data;
       if (type === 'EVIDA_PREVIEW_ROUTE') {
         setCurrentPath(pathname);
-      } else if (type === 'EVIDA_PREVIEW_SCROLL') {
-        setIframeScrollProgress(progress);
-        setIsIframeScrollBottom(isAtBottom);
       }
     };
-
     window.addEventListener('message', handleIframeMessage);
-    return () => {
-      window.removeEventListener('message', handleIframeMessage);
-    };
+    return () => window.removeEventListener('message', handleIframeMessage);
   }, []);
 
-  const activeStep = useMemo(() => {
-    if (currentPath === '/student/dashboard') {
-      if (iframeScrollProgress > 80) {
-        return 1; // Select Event
-      }
-      return 0; // Home Feed
-    } else if (currentPath.startsWith('/events/')) {
-      if (isIframeScrollBottom || iframeScrollProgress > 85) {
-        return 4; // Finish Tour
-      }
-      if (iframeScrollProgress > 30) {
-        return 3; // Read Info
-      }
-      return 2; // Event Details
+  // Send EVIDA_TOUR_GOTO command to iframe when step changes
+  const sendTourStep = (step: number) => {
+    if (iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage({ type: 'EVIDA_TOUR_GOTO', step }, '*');
     }
-    return 0;
-  }, [currentPath, iframeScrollProgress, isIframeScrollBottom]);
+  };
 
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"]
-  });
+  const goNext = () => {
+    const next = Math.min(tourStep + 1, TOUR_STEPS.length - 1);
+    setCompletedSteps(prev => new Set(prev).add(tourStep));
+    setTourStep(next);
+    sendTourStep(next);
+  };
 
-  // 3D scale and rotateX perspective animations for the smartphone shell
-  const phoneScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.94, 1.0, 1.03]);
-  const phoneRotateX = useTransform(scrollYProgress, [0, 0.5, 1], [4, 1, 0]);
-  const progressPercent = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  
-  // Virtual tap cursor transform mappings (tapping at progress 0.42 to 0.50)
-  const cursorOpacity = useTransform(scrollYProgress, [0.42, 0.44, 0.48, 0.50], [0, 1, 1, 0]);
-  const cursorScale = useTransform(scrollYProgress, [0.42, 0.45, 0.46, 0.48], [1, 1, 0.8, 1]);
-  const cursorY = useTransform(scrollYProgress, [0.42, 0.45], [80, 0]);
+  const goBack = () => {
+    const prev = Math.max(tourStep - 1, 0);
+    setTourStep(prev);
+    sendTourStep(prev);
+  };
 
-  // Synchronize landing-page scroll progress with the preview iframe and auto-dismiss hint
-  useEffect(() => {
-    return scrollYProgress.onChange((latest) => {
-      if (latest > 0.05) {
-        setInteracted(true);
-      }
-      if (iframeRef.current?.contentWindow) {
-        iframeRef.current.contentWindow.postMessage({
-          type: 'EVIDA_PREVIEW_SCROLL_TO',
-          progress: latest
-        }, '*');
-      }
-    });
-  }, [scrollYProgress]);
+  const handlePhoneClick = () => {
+    if (!hasInteracted) {
+      setHasInteracted(true);
+      sendTourStep(0);
+    }
+  };
+  // ─────────────────────────────────────────────────────────────────────
 
   const toggleFaq = (index: number) => {
     setFaqOpenIndex(faqOpenIndex === index ? null : index);
@@ -334,213 +336,253 @@ export default function LandingPage({
         </motion.div>
       </section>
 
-      {/* Interactive Evida Smartphone Experience */}
-      <section 
-        id="experience" 
-        ref={sectionRef} 
-        className="relative h-[250vh] bg-[#A2C2BE]/10 border-y border-[#D8D2BC]"
-      >
-        {/* Sticky wrapper for pinning the screen */}
-        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
-          
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center space-y-3 mb-6 pt-4 shrink-0">
-            <span className="rounded-full bg-[#2A2621] text-[#FD5C05] px-3.5 py-1.5 text-[10px] font-black uppercase tracking-widest inline-block shadow-sm">
-              Take a tour
+      {/* ── Interactive Evida Product Demo ─────────────────────────────── */}
+      <section id="experience" className="relative bg-[#1A1714] border-y border-white/[0.06] py-16 md:py-24 overflow-hidden">
+
+        {/* Ambient background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#FD5C05]/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
+
+          {/* Header */}
+          <div className="text-center mb-10">
+            <span className="rounded-full bg-[#FD5C05]/15 text-[#FD5C05] border border-[#FD5C05]/30 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest inline-block mb-4">
+              Interactive Demo
             </span>
-            <h2 className="font-black tracking-tighter" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="font-black tracking-tighter text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
               Experience Evida
             </h2>
-            <p className="text-xs text-[#5A554E] font-semibold max-w-md mx-auto leading-relaxed">
-              Scroll down to watch a live guided tour of the Evida app experience.
+            <p className="text-sm text-white/50 font-medium max-w-md mx-auto mt-2 leading-relaxed">
+              {hasInteracted
+                ? 'Use Back & Next to navigate through the tour, or scroll freely inside the phone.'
+                : 'Click inside the phone to begin the guided tour.'}
             </p>
           </div>
 
-          {/* Smartphone Container */}
-          <div className="relative w-full max-w-[900px] flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 px-4 sm:px-6 pb-6">
-            
-            {/* Left Side: Demo Progress Indicators (Visible in interactive mode) */}
-            <div className="hidden md:flex flex-col gap-4 text-left min-w-[160px]">
-              <div className="space-y-1.5">
-                <span className="block text-[8px] font-black uppercase tracking-wider text-[#5A554E]">Tour Progress</span>
-                <div className="h-1 bg-black/10 rounded-full w-28 overflow-hidden">
-                  <motion.div 
-                    className="h-full bg-[#2A2621]"
-                    style={{ width: progressPercent }}
+          {/* Main Layout: Progress | Phone | Context */}
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12">
+
+            {/* ── Left: Tour Progress ───────────────────────────────────── */}
+            <div className="hidden lg:flex flex-col gap-1 min-w-[200px]">
+              <p className="text-[9px] font-black uppercase tracking-[0.15em] text-white/30 mb-4">Tour Progress</p>
+              {TOUR_STEPS.map((step, idx) => {
+                const isActive    = tourStep === idx;
+                const isCompleted = completedSteps.has(idx) && !isActive;
+                const isUpcoming  = !isActive && !isCompleted;
+                return (
+                  <div key={idx} className="flex items-start gap-3 group">
+                    {/* Connector line above (except first) */}
+                    <div className="flex flex-col items-center">
+                      {idx > 0 && (
+                        <div className={`w-px h-4 mb-1 transition-colors duration-500 ${isCompleted || isActive ? 'bg-[#FD5C05]/60' : 'bg-white/10'}`} />
+                      )}
+                      <div className={`
+                        h-6 w-6 rounded-full flex items-center justify-center text-[9px] font-black shrink-0 transition-all duration-300 border
+                        ${isActive    ? 'bg-[#FD5C05] border-[#FD5C05] text-[#2A2621] scale-110 shadow-[0_0_12px_rgba(253,92,5,0.5)]' : ''}
+                        ${isCompleted ? 'bg-[#FD5C05]/20 border-[#FD5C05]/50 text-[#FD5C05]' : ''}
+                        ${isUpcoming  ? 'bg-white/5 border-white/10 text-white/30' : ''}
+                      `}>
+                        {isCompleted ? <Check className="h-3 w-3" /> : idx + 1}
+                      </div>
+                    </div>
+                    <div className="pt-0.5 pb-4">
+                      <p className={`text-[11px] font-black uppercase tracking-wider transition-colors duration-300 ${isActive ? 'text-white' : isCompleted ? 'text-[#FD5C05]/70' : 'text-white/25'}`}>
+                        {step.label}
+                      </p>
+                      {isActive && (
+                        <motion.p
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          className="text-[10px] text-white/40 mt-0.5 leading-relaxed max-w-[160px]"
+                        >
+                          {step.description}
+                        </motion.p>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* ── Center: Smartphone Shell ──────────────────────────────── */}
+            <div className="flex flex-col items-center gap-5">
+
+              {/* Phone Device */}
+              <div
+                onClick={handlePhoneClick}
+                className="relative cursor-pointer"
+                style={{ filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.6))' }}
+              >
+                {/* Apple-style Onboarding Overlay */}
+                <AnimatePresence>
+                  {!hasInteracted && (
+                    <motion.div
+                      key="onboarding"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0, transition: { duration: 0.3 } }}
+                      className="absolute inset-0 rounded-[40px] z-[60] flex flex-col items-center justify-center text-center p-6 overflow-hidden"
+                      style={{ background: 'rgba(10,8,5,0.75)', backdropFilter: 'blur(8px)' }}
+                    >
+                      {/* Animated finger emoji */}
+                      <motion.div
+                        animate={{
+                          y: [0, -8, 0],
+                          scale: [1, 1.05, 1],
+                        }}
+                        transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+                        className="text-5xl mb-4 select-none"
+                      >
+                        👆
+                      </motion.div>
+                      {/* Pulsing glow ring behind emoji */}
+                      <motion.div
+                        animate={{ scale: [0.8, 1.4, 0.8], opacity: [0.3, 0, 0.3] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-20 rounded-full bg-[#FD5C05]/30"
+                        style={{ zIndex: -1 }}
+                      />
+                      <p className="text-white font-black text-[11px] uppercase tracking-[0.12em] leading-relaxed max-w-[160px]">
+                        Click inside the phone to begin.
+                      </p>
+                      <p className="text-white/40 text-[9px] font-semibold mt-2 leading-relaxed max-w-[150px]">
+                        Scroll inside the phone to continue the guided tour.
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Phone Shell */}
+                <div className="relative w-[290px] h-[620px] rounded-[44px] border-[10px] border-[#0A0805] bg-[#D8D2BC] overflow-hidden select-none shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]">
+
+                  {/* Gloss overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent z-40 pointer-events-none rounded-[34px]" />
+
+                  {/* Dynamic Island */}
+                  <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[88px] h-[26px] bg-[#0A0805] rounded-full z-50 pointer-events-none shadow-inner" />
+
+                  {/* Status Bar */}
+                  <div className={`absolute top-2.5 inset-x-5 z-50 flex items-center justify-between text-[8px] font-bold select-none pointer-events-none transition-colors duration-500 ${currentPath.startsWith('/events/') ? 'text-white/80' : 'text-[#2A2621]/70'}`}>
+                    <span>9:41</span>
+                    <div className="flex items-center gap-1">
+                      <Signal className="h-2 w-2" />
+                      <Wifi className="h-2 w-2" />
+                      <Battery className="h-2 w-3" />
+                    </div>
+                  </div>
+
+                  {/* Home Indicator */}
+                  <div className={`absolute bottom-2 left-1/2 -translate-x-1/2 w-24 h-[3px] rounded-full z-50 pointer-events-none transition-colors duration-500 ${currentPath.startsWith('/events/') ? 'bg-white/30' : 'bg-[#2A2621]/20'}`} />
+
+                  {/* Live Iframe — the real Evida app */}
+                  <iframe
+                    ref={iframeRef}
+                    src="/student/dashboard?preview=true"
+                    className="absolute inset-0 w-full h-full border-none bg-[#D8D2BC]"
+                    style={{ borderRadius: '34px' }}
+                    title="Evida App Demo"
                   />
                 </div>
               </div>
 
-              <div className="space-y-3 pt-2">
-                <div className="flex items-center gap-3 transition-all duration-300">
-                  <div className={`h-5 w-5 rounded-full border flex items-center justify-center text-[9px] font-black transition-all ${
-                    activeStep === 0 
-                      ? 'bg-[#2A2621] border-[#2A2621] text-[#FD5C05] scale-110 shadow-md' 
-                      : 'bg-white border-black/10 text-[#5A554E]'
-                  }`}>1</div>
-                  <span className={`text-[9px] font-black uppercase tracking-wider ${activeStep === 0 ? 'text-[#2A2621]' : 'text-[#5A554E]'}`}>Home Feed</span>
+              {/* ── Back / Next Controls ───────────────────────────────── */}
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={goBack}
+                  disabled={tourStep === 0 || !hasInteracted}
+                  className="h-9 w-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer"
+                  aria-label="Previous step"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+
+                {/* Step dots */}
+                <div className="flex items-center gap-2">
+                  {TOUR_STEPS.map((_, idx) => (
+                    <div
+                      key={idx}
+                      className={`rounded-full transition-all duration-300 ${
+                        tourStep === idx
+                          ? 'w-5 h-2 bg-[#FD5C05]'
+                          : completedSteps.has(idx)
+                          ? 'w-2 h-2 bg-[#FD5C05]/40'
+                          : 'w-2 h-2 bg-white/15'
+                      }`}
+                    />
+                  ))}
                 </div>
 
-                <div className="flex items-center gap-3 transition-all duration-300">
-                  <div className={`h-5 w-5 rounded-full border flex items-center justify-center text-[9px] font-black transition-all ${
-                    activeStep === 1 
-                      ? 'bg-[#2A2621] border-[#2A2621] text-[#FD5C05] scale-110 shadow-md' 
-                      : 'bg-white border-black/10 text-[#5A554E]'
-                  }`}>2</div>
-                  <span className={`text-[9px] font-black uppercase tracking-wider ${activeStep === 1 ? 'text-[#2A2621]' : 'text-[#5A554E]'}`}>Select Event</span>
-                </div>
-
-                <div className="flex items-center gap-3 transition-all duration-300">
-                  <div className={`h-5 w-5 rounded-full border flex items-center justify-center text-[9px] font-black transition-all ${
-                    activeStep === 2 
-                      ? 'bg-[#2A2621] border-[#2A2621] text-[#FD5C05] scale-110 shadow-md' 
-                      : 'bg-white border-black/10 text-[#5A554E]'
-                  }`}>3</div>
-                  <span className={`text-[9px] font-black uppercase tracking-wider ${activeStep === 2 ? 'text-[#2A2621]' : 'text-[#5A554E]'}`}>Event Details</span>
-                </div>
-
-                <div className="flex items-center gap-3 transition-all duration-300">
-                  <div className={`h-5 w-5 rounded-full border flex items-center justify-center text-[9px] font-black transition-all ${
-                    activeStep === 3 
-                      ? 'bg-[#2A2621] border-[#2A2621] text-[#FD5C05] scale-110 shadow-md' 
-                      : 'bg-white border-black/10 text-[#5A554E]'
-                  }`}>4</div>
-                  <span className={`text-[9px] font-black uppercase tracking-wider ${activeStep === 3 ? 'text-[#2A2621]' : 'text-[#5A554E]'}`}>Read Info</span>
-                </div>
-
-                <div className="flex items-center gap-3 transition-all duration-300">
-                  <div className={`h-5 w-5 rounded-full border flex items-center justify-center text-[9px] font-black transition-all ${
-                    activeStep === 4 
-                      ? 'bg-[#2A2621] border-[#2A2621] text-[#FD5C05] scale-110 shadow-md' 
-                      : 'bg-white border-black/10 text-[#5A554E]'
-                  }`}>5</div>
-                  <span className={`text-[9px] font-black uppercase tracking-wider ${activeStep === 4 ? 'text-[#2A2621]' : 'text-[#5A554E]'}`}>Finish Tour</span>
-                </div>
+                <button
+                  onClick={goNext}
+                  disabled={tourStep === TOUR_STEPS.length - 1 || !hasInteracted}
+                  className="h-9 w-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer"
+                  aria-label="Next step"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
               </div>
+
+              {/* Mobile step label */}
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={tourStep}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.2 }}
+                  className="lg:hidden text-[10px] font-black uppercase tracking-wider text-white/40 text-center"
+                >
+                  {tourStep + 1} / {TOUR_STEPS.length} — {TOUR_STEPS[tourStep].label}
+                </motion.p>
+              </AnimatePresence>
             </div>
 
-            {/* Center: Smartphone Shell with 3D Perspective */}
-            <div 
-              onClick={() => setInteracted(true)}
-              className="relative cursor-pointer"
-              style={{ perspective: 1000, transformStyle: 'preserve-3d' }}
-            >
-              {/* Subtle animated hint overlay */}
-              {!interacted && (
-                <div className="absolute inset-0 bg-black/45 backdrop-blur-[2px] rounded-[44px] z-50 flex flex-col items-center justify-center p-6 text-center transition-opacity duration-500 pointer-events-auto cursor-pointer">
-                  <motion.div 
-                    animate={{ 
-                      scale: [1, 1.15, 1],
-                      opacity: [0.7, 1, 0.7]
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    className="h-14 w-14 rounded-full bg-[#FD5C05]/20 border border-[#FD5C05] flex items-center justify-center mb-3 shadow-[0_0_15px_rgba(253,92,5,0.4)]"
-                  >
-                    <MousePointer2 className="h-6 w-6 text-[#FD5C05] rotate-90" />
-                  </motion.div>
-                  <p className="text-white text-[10px] font-black uppercase tracking-wider leading-relaxed px-4">
-                    Click inside the phone, then scroll to start the guided tour.
-                  </p>
-                </div>
-              )}
-
-              <motion.div
-                style={{ 
-                  scale: phoneScale, 
-                  rotateX: phoneRotateX,
-                  transformStyle: 'preserve-3d'
-                }}
-                className="relative max-w-[310px] w-full aspect-[9/19.5] rounded-[44px] border-[10px] border-neutral-950 shadow-2xl bg-[#D8D2BC] z-20 overflow-hidden select-none"
-              >
-                {/* Pointer events overlay dynamically blocking/allowing interaction */}
-                <div className={`absolute inset-0 z-30 ${interacted ? 'pointer-events-none' : 'pointer-events-auto'}`} />
-
-                {/* Gloss reflection overlay */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 z-40 pointer-events-none" />
-
-                {/* Dynamic Island / Notch */}
-                <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-full z-50 flex items-center justify-center shadow-inner pointer-events-none">
-                  <div className="h-1.5 w-1.5 bg-neutral-900 rounded-full ml-auto mr-3 border border-neutral-800" />
-                </div>
-
-                {/* Internal Phone Status Bar - Dynamic styling based on path */}
-                <div className={`absolute top-1.5 inset-x-6 z-50 flex items-center justify-between text-[8px] font-bold select-none px-2 pointer-events-none transition-colors duration-300 ${
-                  currentPath.startsWith('/events/') ? 'text-white' : 'text-neutral-800'
-                }`}>
-                  <span>9:41</span>
-                  <div className="flex items-center gap-1">
-                    <Signal className="h-2 w-2" />
-                    <Wifi className="h-2 w-2" />
-                    <Battery className="h-2 w-3" />
-                  </div>
-                </div>
-
-                {/* Internal Phone Home Indicator - Dynamic styling based on path */}
-                <div className={`absolute bottom-1.5 left-1/2 -translate-x-1/2 w-24 h-1 rounded-full z-50 pointer-events-none transition-colors duration-300 ${
-                  currentPath.startsWith('/events/') ? 'bg-white/40' : 'bg-black/20'
-                }`} />
-
-                {/* Virtual Tap Cursor Indicator */}
-                <motion.div
-                  style={{
-                    opacity: cursorOpacity,
-                    scale: cursorScale,
-                    y: cursorY,
-                    position: 'absolute',
-                    top: '38%',
-                    left: '50%',
-                    x: '-50%',
-                    width: 24,
-                    height: 24,
-                    borderRadius: '50%',
-                    backgroundColor: 'rgba(253, 92, 5, 0.4)',
-                    border: '2px solid #FD5C05',
-                    boxShadow: '0 0 10px rgba(253, 92, 5, 0.5)',
-                    zIndex: 50,
-                    pointerEvents: 'none'
-                  }}
-                />
-
-                {/* The Live Mobile Preview Iframe */}
-                <iframe
-                  ref={iframeRef}
-                  src="/student/dashboard?preview=true"
-                  className="w-full h-full border-none select-none bg-[#D8D2BC]"
-                  style={{
-                    overflowX: 'hidden'
-                  }}
-                />
-              </motion.div>
-            </div>
-
-            {/* Right Side: Tooltip & Swiping instructions */}
-            <div className="relative flex flex-col gap-3 text-center md:text-left max-w-[200px]">
+            {/* ── Right: Contextual Step Info ───────────────────────────── */}
+            <div className="hidden lg:flex flex-col gap-3 max-w-[200px]">
               <AnimatePresence mode="wait">
                 <motion.div
-                  key="active-tooltip"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className="bg-[#2A2621] text-white border border-white/10 px-4 py-3 rounded-2xl shadow-xl space-y-2 pointer-events-none"
+                  key={tourStep}
+                  initial={{ opacity: 0, x: 16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -16 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                  className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-5 py-4 space-y-3"
                 >
-                  <span className="block text-[8px] font-black uppercase tracking-widest text-[#FD5C05] animate-pulse">
-                    Guided Tour
-                  </span>
-                  <p className="text-[9px] text-gray-300 leading-snug">
-                    {activeStep === 0 && "Scroll down the student home feed to find an event."}
-                    {activeStep === 1 && "Tap any event card in the feed to open details."}
-                    {activeStep === 2 && "Read through the event information."}
-                    {activeStep === 3 && "Scroll down to see the event organizer, location, and RSVP status."}
-                    {activeStep === 4 && "Scroll down once more to finish the tour and resume scrolling the landing page!"}
+                  <span className="text-3xl block">{TOUR_STEPS[tourStep].emoji}</span>
+                  <div>
+                    <p className="text-[9px] font-black uppercase tracking-[0.15em] text-[#FD5C05] mb-1">
+                      Step {tourStep + 1} of {TOUR_STEPS.length}
+                    </p>
+                    <h3 className="text-sm font-black text-white leading-snug">
+                      {TOUR_STEPS[tourStep].label}
+                    </h3>
+                  </div>
+                  <p className="text-[11px] text-white/40 leading-relaxed">
+                    {TOUR_STEPS[tourStep].description}
                   </p>
-                  <span className="block text-[8px] text-[#FD5C05] font-bold uppercase pt-1">
-                    {activeStep === 4 ? 'Scroll down to exit →' : 'Scroll to explore'}
-                  </span>
+                  <div className="pt-1 border-t border-white/[0.06]">
+                    <p className="text-[9px] font-bold text-[#FD5C05]/70 uppercase tracking-wider">
+                      {TOUR_STEPS[tourStep].hint}
+                    </p>
+                  </div>
                 </motion.div>
               </AnimatePresence>
+
+              {/* CTA after last step */}
+              {tourStep === TOUR_STEPS.length - 1 && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <Link
+                    href="/signup"
+                    className="block w-full text-center bg-[#FD5C05] hover:bg-[#e84e00] text-[#2A2621] font-black text-[10px] uppercase tracking-wider py-3 px-4 rounded-xl transition-all shadow-[0_0_20px_rgba(253,92,5,0.3)] hover:shadow-[0_0_30px_rgba(253,92,5,0.5)]"
+                  >
+                    Get Started Free →
+                  </Link>
+                </motion.div>
+              )}
             </div>
 
           </div>

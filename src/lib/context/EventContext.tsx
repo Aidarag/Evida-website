@@ -47,55 +47,62 @@ export function EventProvider({ children }: { children: ReactNode }) {
     }
   }, [pathname]);
 
-  // Handle scroll and route messages inside the preview iframe
+  // Handle EVIDA_TOUR_GOTO navigation commands from the parent landing page
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('preview') !== 'true') return;
 
       const handleMessage = (event: MessageEvent) => {
-        const { type, progress } = event.data;
-        if (type !== 'EVIDA_PREVIEW_SCROLL_TO') return;
+        const { type, step } = event.data;
+        if (type !== 'EVIDA_TOUR_GOTO') return;
 
-        // 1. Auto-Navigate between feeds and details based on progress boundaries
-        if (progress > 0.48 && pathname === '/student/dashboard') {
-          const approved = events.filter(e => e.status === 'approved');
-          const firstEvent = approved[0];
+        const approved = events.filter(e => e.status === 'approved');
+        const firstEvent = approved[0];
+
+        if (step === 0) {
+          // Home Feed — navigate to dashboard, scroll to top
+          if (pathname !== '/student/dashboard') {
+            router.push('/student/dashboard?preview=true');
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        } else if (step === 1) {
+          // Select Event — stay on dashboard, scroll down to show event cards
+          if (pathname !== '/student/dashboard') {
+            router.push('/student/dashboard?preview=true');
+            // Scroll will happen after navigation via the route effect
+          } else {
+            const target = document.querySelector('[data-tour="event-card"]') as HTMLElement;
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+              window.scrollTo({ top: 250, behavior: 'smooth' });
+            }
+          }
+        } else if (step === 2) {
+          // Event Details — navigate to first approved event
           if (firstEvent) {
             router.push(`/events/${firstEvent.id}?preview=true`);
           }
-        } else if (progress < 0.42 && pathname.startsWith('/events/')) {
-          router.push('/student/dashboard?preview=true');
+        } else if (step === 3) {
+          // Event Confirmation — scroll to RSVP / confirmation section
+          if (pathname.startsWith('/events/')) {
+            const target = document.querySelector('[data-tour="rsvp-section"]') as HTMLElement;
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+              window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+            }
+          } else if (firstEvent) {
+            router.push(`/events/${firstEvent.id}?preview=true`);
+          }
         }
 
-        // 2. Programmatically scroll to mapped position
-        let localProgress = 0;
-        if (pathname === '/student/dashboard') {
-          // Home feed scrolling phase (0.0 to 0.45 mapped to 0.0 to 1.0)
-          localProgress = Math.min(1, Math.max(0, progress / 0.45));
-        } else if (pathname.startsWith('/events/')) {
-          // Details page scrolling phase (0.55 to 0.90 mapped to 0.0 to 1.0)
-          localProgress = Math.min(1, Math.max(0, (progress - 0.55) / 0.35));
-        }
-
-        const scrollHeight = document.documentElement.scrollHeight;
-        const clientHeight = document.documentElement.clientHeight;
-        const scrollTop = localProgress * (scrollHeight - clientHeight);
-
-        window.scrollTo({
-          top: scrollTop,
-          behavior: 'auto'
-        });
-
-        // Report scroll progress to update tour steps
-        window.parent.postMessage({
-          type: 'EVIDA_PREVIEW_SCROLL',
-          scrollTop,
-          scrollHeight,
-          clientHeight,
-          isAtBottom: localProgress >= 0.99,
-          progress: localProgress * 100
-        }, '*');
+        // Notify parent of current path after navigation
+        setTimeout(() => {
+          window.parent.postMessage({ type: 'EVIDA_PREVIEW_ROUTE', pathname: window.location.pathname }, '*');
+        }, 300);
       };
 
       window.addEventListener('message', handleMessage);

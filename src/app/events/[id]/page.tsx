@@ -136,7 +136,7 @@ export default function EventDetailsPage() {
 
         {/* Sidebar Info Card */}
         <div className="md:col-span-1">
-          <div className="sticky top-24 rounded-[32px] bg-[#111118] border border-white/[0.06] p-6 space-y-6 shadow-2xl">
+          <div className="sticky top-24 rounded-[32px] bg-[#111118] border border-white/[0.06] p-6 space-y-6 shadow-2xl" data-tour="rsvp-section">
             <div className="space-y-4">
               <div className="flex items-start gap-4">
                 <div className="h-12 w-12 rounded-2xl bg-[#80B0EC]/10 flex items-center justify-center shrink-0">
