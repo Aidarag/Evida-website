@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import { useUser } from '@/lib/context/UserContext';
 import { useEvents } from '@/lib/context/EventContext';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import EventCard from '@/components/student/EventCard';
@@ -60,10 +60,17 @@ const MOCK_CALENDAR_EVENTS = [
   { id: 'mock-10', title: 'Classic Film Screening Night', date: '2026-10-29', time: '8:00 PM', location: 'Campus Theatre', coverImage: '/pexels-cottonbro-5989925.jpg', attendees: [], description: 'Join us for a cozy screening of classic cinema works. Free popcorn included.' }
 ];
 
-export default function StudentProfilePage() {
+function StudentProfilePageContent() {
   const { currentUser, setCurrentUser, logout } = useUser();
   const { events, organizations, saveToggle, rsvpToggle, deleteEvent } = useEvents();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const usernameParam = searchParams.get('username');
+
+  const [profileUser, setProfileUser] = useState<any>(null);
+  const [loadingProfile, setLoadingProfile] = useState(true);
+
+  const isOwner = !usernameParam || (currentUser && usernameParam === currentUser.username);
 
   const allEvents = events; // Only real events from context — no mock data
 
@@ -108,10 +115,6 @@ export default function StudentProfilePage() {
     }
   }, [toast]);
 
-
-
-
-
   // Calendar Date State
   const [calendarDate, setCalendarDate] = useState<Date>(new Date(2026, 9, 1)); // October 2026
 
@@ -142,6 +145,9 @@ export default function StudentProfilePage() {
       if (res.ok) {
         const data = await res.json();
         setCurrentUser(data);
+        if (isOwner) {
+          setProfileUser(data);
+        }
       }
     } catch (e) {
       console.error('Failed to sync profile:', e);
@@ -182,23 +188,98 @@ export default function StudentProfilePage() {
     };
     fetchPromotions();
     
-    if (currentUser) {
-      syncProfile();
+    if (currentUser && isOwner) {
       fetchMembershipRequests();
     }
-  }, []);
+  }, [currentUser, isOwner]);
+
+  // Load viewed user profile
+  useEffect(() => {
+    const loadProfile = async () => {
+      setLoadingProfile(true);
+      if (isOwner) {
+        if (currentUser) {
+          setProfileUser(currentUser);
+          await syncProfile();
+        }
+      } else if (usernameParam) {
+        try {
+          const res = await fetch(`/api/users/profile?username=${usernameParam}`);
+          if (res.ok) {
+            const data = await res.json();
+            setProfileUser(data);
+          } else {
+            setProfileUser(null);
+          }
+        } catch (e) {
+          console.error('Failed to load profile:', e);
+          setProfileUser(null);
+        }
+      }
+      setLoadingProfile(false);
+    };
+
+    if (currentUser || usernameParam) {
+      loadProfile();
+    }
+  }, [currentUser, usernameParam, isOwner]);
 
   // Filter events and promotions by association safely
-  const attendedEvents = currentUser ? events.filter(e => e.status === 'approved' && e.attendees.includes(currentUser.name)) : [];
-  const savedEvents = currentUser ? events.filter(e => e.status === 'approved' && e.savedBy?.includes(currentUser.name)) : [];
+  const attendedEvents = profileUser ? events.filter(e => e.status === 'approved' && e.attendees.includes(profileUser.name)) : [];
+  const savedEvents = profileUser ? events.filter(e => e.status === 'approved' && e.savedBy?.includes(profileUser.name)) : [];
 
   // Hosted (created)
-  const hostedEvents = currentUser ? events.filter(e => e.status === 'approved' && e.organizer === currentUser.name) : [];
-  const hostedPromos = currentUser ? promotions.filter(p => p.contactInfo?.toLowerCase().includes(currentUser.username.toLowerCase()) || p.contactInfo?.toLowerCase().includes(currentUser.name.split(' ')[0].toLowerCase())) : [];
+  const hostedEvents = profileUser ? events.filter(e => e.status === 'approved' && e.organizer === profileUser.name) : [];
+  const hostedPromos = profileUser ? promotions.filter(p => p.contactInfo?.toLowerCase().includes(profileUser.username.toLowerCase()) || p.contactInfo?.toLowerCase().includes(profileUser.name.split(' ')[0].toLowerCase())) : [];
   const hostedCount = hostedEvents.length + hostedPromos.length;
 
   // Organizations
-  const myOrgs = currentUser ? organizations.filter(org => currentUser.organizations.includes(org.id)) : [];
+  const myOrgs = profileUser ? organizations.filter(org => (profileUser.organizations || []).includes(org.id)) : [];
+
+  // Dynamic Visible Tabs Calculation based on Privacy & Activity
+  const privacySettings = useMemo(() => {
+    return {
+      going: profileUser?.privacy?.going || 'public',
+      saved: profileUser?.privacy?.saved || 'private',
+      hosted: profileUser?.privacy?.hosted || 'public',
+      organizations: profileUser?.privacy?.organizations || 'private',
+    };
+  }, [profileUser?.privacy]);
+
+  const visibleTabs = useMemo(() => {
+    if (!profileUser) return [];
+    const tabs = [];
+    
+    // Going
+    if (isOwner || privacySettings.going === 'public') {
+      tabs.push({ id: 'going' as const, label: 'Going' });
+    }
+    // Saved
+    if (isOwner || privacySettings.saved === 'public') {
+      tabs.push({ id: 'saved' as const, label: 'Saved' });
+    }
+    // Hosted (only if hostedCount > 0)
+    if (hostedCount > 0) {
+      if (isOwner || privacySettings.hosted === 'public') {
+        tabs.push({ id: 'hosted' as const, label: 'Hosted' });
+      }
+    }
+    // Organizations (only if myOrgs.length > 0)
+    if (myOrgs.length > 0) {
+      if (isOwner || privacySettings.organizations === 'public') {
+        tabs.push({ id: 'orgs' as const, label: 'Organizations' });
+      }
+    }
+    
+    return tabs;
+  }, [profileUser, isOwner, privacySettings.going, privacySettings.saved, privacySettings.hosted, privacySettings.organizations, hostedCount, myOrgs.length]);
+
+  // Adjust active tab if it's no longer visible
+  useEffect(() => {
+    if (visibleTabs.length > 0 && !visibleTabs.some(t => t.id === activeTab)) {
+      setActiveTab(visibleTabs[0].id);
+    }
+  }, [visibleTabs, activeTab]);
 
   // Calendar Calculation
   const year = calendarDate.getFullYear();
@@ -240,10 +321,10 @@ export default function StudentProfilePage() {
     const m = String(date.getMonth() + 1).padStart(2, '0');
     const d = String(date.getDate()).padStart(2, '0');
     const dateString = `${y}-${m}-${d}`;
-    return allEvents.filter(e => e.date === dateString && currentUser && (
-      e.attendees?.includes(currentUser.name) ||
-      e.attendees?.includes(currentUser.username) ||
-      (currentUser.name.startsWith('Michael') && e.attendees?.includes('Michael'))
+    return allEvents.filter(e => e.date === dateString && profileUser && (
+      e.attendees?.includes(profileUser.name) ||
+      e.attendees?.includes(profileUser.username) ||
+      (profileUser.name.startsWith('Michael') && e.attendees?.includes('Michael'))
     ));
   };
 
@@ -260,7 +341,7 @@ export default function StudentProfilePage() {
   const handleLogout = () => logout();
 
   const openEdit = () => {
-    if (!currentUser) return;
+    if (!currentUser || !isOwner) return;
     setEditName(currentUser.name);
     setEditMajor(currentUser.major || '');
     setEditYear(String(currentUser.graduationYear || ''));
@@ -276,7 +357,7 @@ export default function StudentProfilePage() {
   };
 
   const saveEdit = async () => {
-    if (!currentUser) return;
+    if (!currentUser || !isOwner) return;
     const interestsArray = editInterests
       .split(',')
       .map(i => i.trim())
@@ -350,17 +431,15 @@ export default function StudentProfilePage() {
     document.body.removeChild(link);
   };
 
-
-
   // Selected Day State
   const [selectedDayEvents, setSelectedDayEvents] = useState<Array<any>>([]);
   const [selectedDateLabel, setSelectedDateLabel] = useState<string>('Select a day');
 
   useEffect(() => {
-    const userGoingEvents = allEvents.filter(e => currentUser && (
-      e.attendees?.includes(currentUser.name) ||
-      e.attendees?.includes(currentUser.username) ||
-      (currentUser.name.startsWith('Michael') && e.attendees?.includes('Michael'))
+    const userGoingEvents = allEvents.filter(e => profileUser && (
+      e.attendees?.includes(profileUser.name) ||
+      e.attendees?.includes(profileUser.username) ||
+      (profileUser.name.startsWith('Michael') && e.attendees?.includes('Michael'))
     ));
     if (userGoingEvents.length > 0) {
       const firstEvt = userGoingEvents[0];
@@ -369,10 +448,33 @@ export default function StudentProfilePage() {
       const sameDayEvents = userGoingEvents.filter(e => e.date === firstEvt.date);
       setSelectedDayEvents(sameDayEvents);
       setSelectedDateLabel(evtDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
+    } else {
+      setSelectedDayEvents([]);
+      setSelectedDateLabel('Select a day');
     }
-  }, [currentUser, events]);
+  }, [profileUser, events]);
 
   if (!currentUser) return null;
+
+  if (loadingProfile) {
+    return (
+      <div className="min-h-screen bg-[#D8D2BC] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FD5C05]"></div>
+      </div>
+    );
+  }
+
+  if (!profileUser) {
+    return (
+      <div className="min-h-screen bg-[#D8D2BC] flex flex-col items-center justify-center p-4">
+        <h2 className="text-lg font-bold text-[#2A2621] uppercase">User Profile Not Found</h2>
+        <p className="text-xs text-[#5A554E] mt-1">The profile you are trying to view does not exist.</p>
+        <Link href="/student/dashboard" className="mt-4 text-xs font-bold text-[#FD5C05] hover:underline uppercase">
+          Back to Dashboard
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#D8D2BC] text-[#2A2621] font-sans pb-32">
@@ -382,82 +484,86 @@ export default function StudentProfilePage() {
         <div className="bg-white border border-black/[0.04] rounded-[28px] p-8 shadow-sm flex flex-col items-center text-center space-y-6">
           {/* Centered Avatar */}
           <div className="h-24 w-24 md:h-28 md:w-28 rounded-full bg-[#FD5C05] flex items-center justify-center shadow-lg overflow-hidden border-4 border-[#D8D2BC]/40 shrink-0">
-            {currentUser.avatar && (currentUser.avatar.startsWith('data:') || currentUser.avatar.startsWith('http') || currentUser.avatar.startsWith('/')) ? (
-              <img src={currentUser.avatar} className="h-full w-full object-cover" alt={currentUser.name} />
+            {profileUser.avatar && (profileUser.avatar.startsWith('data:') || profileUser.avatar.startsWith('http') || profileUser.avatar.startsWith('/')) ? (
+              <img src={profileUser.avatar} className="h-full w-full object-cover" alt={profileUser.name} />
             ) : (
-              <span className="text-4xl font-extrabold text-[#2A2621]">{currentUser.avatar || '🎓'}</span>
+              <span className="text-4xl font-extrabold text-[#2A2621]">{profileUser.avatar || '🎓'}</span>
             )}
           </div>
 
           {/* Centered Name & Username & Edit Button */}
           <div className="space-y-2">
             <h2 className="font-black tracking-tight text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
-              {currentUser.name}
+              {profileUser.name}
             </h2>
-            <p className="text-xs text-[#5A554E] font-extrabold tracking-wider uppercase">@{currentUser.username}</p>
+            <p className="text-xs text-[#5A554E] font-extrabold tracking-wider uppercase">@{profileUser.username}</p>
             
-            <div className="pt-2 flex justify-center gap-2">
-              <Button
-                variant="primary"
-                size="sm"
-                className="bg-[#2A2621] text-white hover:bg-[#FD5C05] hover:text-[#2A2621] border-none font-bold text-xs px-6 py-1.5"
-                onClick={openEdit}
-              >
-                Edit Profile
-              </Button>
-              {savedFeedback && (
-                <span className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/20 text-[9px] font-bold text-emerald-600 uppercase tracking-wider">
-                  <Check className="h-3 w-3" /> Saved
-                </span>
-              )}
-            </div>
+            {isOwner && (
+              <div className="pt-2 flex justify-center gap-2">
+                <Button
+                  variant="primary"
+                  size="sm"
+                  className="bg-[#2A2621] text-white hover:bg-[#FD5C05] hover:text-[#2A2621] border-none font-bold text-xs px-6 py-1.5"
+                  onClick={openEdit}
+                >
+                  Edit Profile
+                </Button>
+                {savedFeedback && (
+                  <span className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/20 text-[9px] font-bold text-emerald-600 uppercase tracking-wider">
+                    <Check className="h-3 w-3" /> Saved
+                  </span>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Three academic info columns (Replacing Following, Followers, Likes) */}
           <div className="w-full max-w-lg grid grid-cols-3 divide-x divide-black/[0.08] text-center pt-2">
             <div className="px-3">
               <p className="text-[10px] font-black uppercase text-[#5A554E] tracking-widest">Major</p>
-              <p className="text-xs font-bold text-[#2A2621] mt-1.5 truncate" title={currentUser.major || 'Computer Science'}>
-                {currentUser.major || 'Computer Science'}
+              <p className="text-xs font-bold text-[#2A2621] mt-1.5 truncate" title={profileUser.major || 'Computer Science'}>
+                {profileUser.major || 'Computer Science'}
               </p>
             </div>
             <div className="px-3">
               <p className="text-[10px] font-black uppercase text-[#5A554E] tracking-widest">Classification</p>
               <p className="text-xs font-bold text-[#2A2621] mt-1.5 capitalize">
-                {currentUser.classification || 'Senior'}
+                {profileUser.classification || 'Senior'}
               </p>
             </div>
             <div className="px-3">
               <p className="text-[10px] font-black uppercase text-[#5A554E] tracking-widest">Graduation</p>
               <p className="text-xs font-bold text-[#2A2621] mt-1.5">
-                {currentUser.graduationYear ? `May ${currentUser.graduationYear}` : 'May 2026'}
+                {profileUser.graduationYear ? `May ${profileUser.graduationYear}` : 'May 2026'}
               </p>
             </div>
           </div>
 
           {/* User Bio Plain Text */}
           <div className="w-full max-w-xl text-sm text-[#5A554E] leading-relaxed font-medium px-4">
-            {currentUser.bio || "Computer Science student at the School of Engineering. Passionate about building campus communities, design, and interactive software experiences."}
+            {profileUser.bio || "Computer Science student at the School of Engineering. Passionate about building campus communities, design, and interactive software experiences."}
           </div>
 
           {/* Add College / Connected College Action */}
           <div className="pt-2">
-            {currentUser.school ? (
+            {profileUser.school ? (
               <div className="flex items-center gap-2.5 bg-slate-50 border border-black/[0.04] rounded-2xl px-4 py-2 shadow-sm">
                 <span className="h-6 w-6 rounded-lg bg-[#FD5C05] text-white flex items-center justify-center text-[10px] font-black tracking-tighter select-none shadow-sm">
-                  {currentUser.school.substring(0, 2).toUpperCase()}
+                  {profileUser.school.substring(0, 2).toUpperCase()}
                 </span>
                 <span className="text-xs font-extrabold uppercase text-[#2A2621] tracking-wider">
-                  {currentUser.school}
+                  {profileUser.school}
                 </span>
               </div>
             ) : (
-              <button
-                onClick={openEdit}
-                className="bg-black/[0.03] hover:bg-black/[0.07] border border-black/[0.06] text-[#2A2621] px-5 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all cursor-pointer"
-              >
-                + Add College
-              </button>
+              isOwner && (
+                <button
+                  onClick={openEdit}
+                  className="bg-black/[0.03] hover:bg-black/[0.07] border border-black/[0.06] text-[#2A2621] px-5 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all cursor-pointer"
+                >
+                  + Add College
+                </button>
+              )
             )}
           </div>
         </div>
@@ -553,24 +659,13 @@ export default function StudentProfilePage() {
         {/* ── Segmented Profile Tabs ── */}
         <div className="border-b border-black/[0.08] flex justify-center w-full pt-4">
           <div className="flex gap-6 sm:gap-12 md:gap-16">
-            {[
-                          { id: 'going' as const, label: 'Going', count: attendedEvents.length, Icon: CalendarCheck },
-              { id: 'saved' as const, label: 'Saved', count: savedEvents.length, Icon: Bookmark },
-              { id: 'hosted' as const, label: 'Hosted', count: hostedCount, Icon: Star },
-              { id: 'orgs' as const, label: 'Organizations', count: myOrgs.length, Icon: Users },
-            ].map(tab => (
+            {visibleTabs.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className="pb-4 relative cursor-pointer group text-center flex flex-col items-center focus:outline-none"
+                className="pb-4 relative cursor-pointer group text-center focus:outline-none"
               >
-                <div className="flex items-center gap-1.5">
-                  <tab.Icon className={`h-4 w-4 transition-colors ${activeTab === tab.id ? 'text-[#FD5C05]' : 'text-[#2A2621]/40 group-hover:text-[#2A2621]'}`} />
-                  <span className={`text-base font-black tracking-tight transition-colors ${activeTab === tab.id ? 'text-[#FD5C05]' : 'text-[#2A2621]/40 group-hover:text-[#2A2621]'}`}>
-                    {tab.count}
-                  </span>
-                </div>
-                <span className={`text-[10px] font-black uppercase tracking-widest mt-1 transition-colors ${activeTab === tab.id ? 'text-[#2A2621]' : 'text-[#5A554E]/40 group-hover:text-[#5A554E]'}`}>
+                <span className={`text-xs font-black uppercase tracking-widest transition-colors ${activeTab === tab.id ? 'text-[#FD5C05]' : 'text-[#5A554E]/60 group-hover:text-[#2A2621]'}`}>
                   {tab.label}
                 </span>
                 {activeTab === tab.id && (
@@ -731,7 +826,9 @@ export default function StudentProfilePage() {
 
                   {/* List of Attended Events */}
                   <div className="space-y-4 text-left">
-                    <h3 className="text-sm font-black uppercase tracking-wider text-[#2A2621]">All Attended Events ({attendedEvents.length})</h3>
+                    <h3 className="text-sm font-black uppercase tracking-wider text-[#2A2621]">
+                      {isOwner ? "All Attended Events" : `${profileUser.name}'s Attended Events`} ({attendedEvents.length})
+                    </h3>
                     {attendedEvents.length > 0 ? (
                       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                         {attendedEvents.map(evt => (
@@ -779,16 +876,18 @@ export default function StudentProfilePage() {
                               <p className="text-[10px] text-[#5A554E] font-bold uppercase tracking-wider flex items-center gap-1">
                                 <MapPin className="h-3 w-3 text-[#FD5C05]" /> {evt.location}
                               </p>
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  rsvpToggle(evt.id, 'rsvp');
-                                  setToast({ message: 'RSVP cancelled', undoId: evt.id });
-                                }}
-                                className="w-full py-1.5 text-[9px] font-black uppercase tracking-wider text-red-500 hover:bg-red-50 rounded-xl border border-red-200 transition-all cursor-pointer"
-                              >
-                                Cancel RSVP
-                              </button>
+                              {isOwner && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    rsvpToggle(evt.id, 'rsvp');
+                                    setToast({ message: 'RSVP cancelled', undoId: evt.id });
+                                  }}
+                                  className="w-full py-1.5 text-[9px] font-black uppercase tracking-wider text-red-500 hover:bg-red-50 rounded-xl border border-red-200 transition-all cursor-pointer"
+                                >
+                                  Cancel RSVP
+                                </button>
+                              )}
                             </div>
                           </div>
                         ))}
@@ -796,7 +895,9 @@ export default function StudentProfilePage() {
                     ) : (
                       <div className="bg-white rounded-2xl p-8 border border-black/[0.04] text-center">
                         <CalendarCheck className="h-10 w-10 text-[#FD5C05]/20 mx-auto mb-2" />
-                        <p className="text-xs text-[#5A554E]">You haven't RSVP'd to any events yet.</p>
+                        <p className="text-xs text-[#5A554E]">
+                          {isOwner ? "You haven't RSVP'd to any events yet." : `${profileUser.name} hasn't RSVP'd to any events yet.`}
+                        </p>
                       </div>
                     )}
                   </div>
@@ -806,7 +907,9 @@ export default function StudentProfilePage() {
               {/* TAB 2: SAVED */}
               {activeTab === 'saved' && (
                 <div className="space-y-4 text-left">
-                  <h3 className="text-sm font-black uppercase tracking-wider text-[#2A2621]">Saved Events ({savedEvents.length})</h3>
+                  <h3 className="text-sm font-black uppercase tracking-wider text-[#2A2621]">
+                    {isOwner ? "Saved Events" : `${profileUser.name}'s Saved Events`} ({savedEvents.length})
+                  </h3>
                   {savedEvents.length > 0 ? (
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                       <AnimatePresence mode="popLayout">
@@ -835,7 +938,9 @@ export default function StudentProfilePage() {
                   ) : (
                     <div className="bg-white rounded-2xl p-8 border border-black/[0.04] text-center">
                       <Bookmark className="h-10 w-10 text-[#FD5C05]/20 mx-auto mb-2" />
-                      <p className="text-xs text-[#5A554E]">No saved events found.</p>
+                      <p className="text-xs text-[#5A554E]">
+                        {isOwner ? "No saved events found." : "No public saved events found."}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -846,7 +951,9 @@ export default function StudentProfilePage() {
                 <div className="space-y-8 text-left">
                   {/* Hosted Events */}
                   <div className="space-y-4">
-                    <h3 className="text-sm font-black uppercase tracking-wider text-[#2A2621]">Events Hosted By You ({hostedEvents.length})</h3>
+                    <h3 className="text-sm font-black uppercase tracking-wider text-[#2A2621]">
+                      {isOwner ? "Events Hosted By You" : `Events Hosted By ${profileUser.name}`} ({hostedEvents.length})
+                    </h3>
                     {hostedEvents.length > 0 ? (
                       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                         {hostedEvents.map(evt => (
@@ -873,26 +980,28 @@ export default function StudentProfilePage() {
                               <p className="text-[10px] text-[#5A554E] font-bold uppercase tracking-wider flex items-center gap-1">
                                 <MapPin className="h-3 w-3 text-[#FD5C05]" /> {evt.location}
                               </p>
-                              <div className="flex gap-2 pt-1">
-                                {evt.status === 'pending' && (
+                              {isOwner && (
+                                <div className="flex gap-2 pt-1">
+                                  {evt.status === 'pending' && (
+                                    <button
+                                      onClick={(e) => { e.stopPropagation(); router.push(`/student/create?editId=${evt.id}`); }}
+                                      className="flex-1 py-1.5 text-[9px] font-black uppercase tracking-wider bg-black/[0.04] hover:bg-[#FD5C05]/10 hover:text-[#FD5C05] text-[#2A2621] rounded-xl border border-transparent transition-all cursor-pointer"
+                                    >
+                                      Edit
+                                    </button>
+                                  )}
                                   <button
-                                    onClick={(e) => { e.stopPropagation(); router.push(`/student/create?editId=${evt.id}`); }}
-                                    className="flex-1 py-1.5 text-[9px] font-black uppercase tracking-wider bg-black/[0.04] hover:bg-[#FD5C05]/10 hover:text-[#FD5C05] text-[#2A2621] rounded-xl border border-transparent transition-all cursor-pointer"
+                                    onClick={async (e) => {
+                                      e.stopPropagation();
+                                      await deleteEvent(evt.id);
+                                      setToast({ message: 'Event deleted', undoId: '' });
+                                    }}
+                                    className="flex-1 py-1.5 text-[9px] font-black uppercase tracking-wider text-red-500 hover:bg-red-50 rounded-xl border border-red-200 transition-all cursor-pointer"
                                   >
-                                    Edit
+                                    Delete
                                   </button>
-                                )}
-                                <button
-                                  onClick={async (e) => {
-                                    e.stopPropagation();
-                                    await deleteEvent(evt.id);
-                                    setToast({ message: 'Event deleted', undoId: '' });
-                                  }}
-                                  className="flex-1 py-1.5 text-[9px] font-black uppercase tracking-wider text-red-500 hover:bg-red-50 rounded-xl border border-red-200 transition-all cursor-pointer"
-                                >
-                                  Delete
-                                </button>
-                              </div>
+                                </div>
+                              )}
                             </div>
                           </div>
                         ))}
@@ -900,14 +1009,18 @@ export default function StudentProfilePage() {
                     ) : (
                       <div className="bg-white rounded-2xl p-8 border border-black/[0.04] text-center">
                         <Star className="h-10 w-10 text-[#FD5C05]/20 mx-auto mb-2" />
-                        <p className="text-xs text-[#5A554E]">You haven't hosted any events yet.</p>
+                        <p className="text-xs text-[#5A554E]">
+                          {isOwner ? "You haven't hosted any events yet." : `${profileUser.name} hasn't hosted any events yet.`}
+                        </p>
                       </div>
                     )}
                   </div>
 
                   {/* Published Promotions */}
                   <div className="space-y-4">
-                    <h3 className="text-sm font-black uppercase tracking-wider text-[#2A2621]">Promotions Published ({hostedPromos.length})</h3>
+                    <h3 className="text-sm font-black uppercase tracking-wider text-[#2A2621]">
+                      {isOwner ? "Promotions Published By You" : `Promotions Published By ${profileUser.name}`} ({hostedPromos.length})
+                    </h3>
                     {hostedPromos.length > 0 ? (
                       <div className="grid gap-4 sm:grid-cols-2">
                         {hostedPromos.map(promo => (
@@ -930,7 +1043,9 @@ export default function StudentProfilePage() {
                     ) : (
                       <div className="bg-white rounded-2xl p-8 border border-black/[0.04] text-center">
                         <Sparkles className="h-10 w-10 text-[#FD5C05]/20 mx-auto mb-2" />
-                        <p className="text-xs text-[#5A554E]">You haven't published any promotions yet.</p>
+                        <p className="text-xs text-[#5A554E]">
+                          {isOwner ? "You haven't published any promotions yet." : `${profileUser.name} hasn't published any promotions yet.`}
+                        </p>
                       </div>
                     )}
                   </div>
@@ -940,13 +1055,15 @@ export default function StudentProfilePage() {
               {/* TAB 4: MY ORGANIZATIONS */}
               {activeTab === 'orgs' && (
                 <div className="space-y-4 text-left">
-                  <h3 className="text-sm font-black uppercase tracking-wider text-[#2A2621]">My Campus Groups ({myOrgs.length})</h3>
+                  <h3 className="text-sm font-black uppercase tracking-wider text-[#2A2621]">
+                    {isOwner ? "My Campus Groups" : `${profileUser.name}'s Campus Groups`} ({myOrgs.length})
+                  </h3>
                   {myOrgs.length > 0 ? (
                     <div className="grid gap-4 sm:grid-cols-2">
                       {myOrgs.map(org => {
-                        const userRole = org.memberRoles?.[currentUser.name] || 
-                                         org.memberRoles?.[currentUser.username] || 
-                                         (org.members[0] === currentUser.name ? 'President' : 'Member');
+                        const userRole = org.memberRoles?.[profileUser.name] || 
+                                         org.memberRoles?.[profileUser.username] || 
+                                         (org.members[0] === profileUser.name ? 'President' : 'Member');
                         return (
                           <div 
                             key={org.id} 
@@ -974,7 +1091,7 @@ export default function StudentProfilePage() {
                                 </div>
                               </div>
                             </div>
-                            <span className="text-[9px] font-black uppercase text-[#5A554E] group-hover:text-[#2A2621] transition-colors shrink-0">Manage →</span>
+                            {isOwner && <span className="text-[9px] font-black uppercase text-[#5A554E] group-hover:text-[#2A2621] transition-colors shrink-0">Manage →</span>}
                           </div>
                         );
                       })}
@@ -982,7 +1099,9 @@ export default function StudentProfilePage() {
                   ) : (
                     <div className="bg-white rounded-2xl p-8 border border-black/[0.04] text-center">
                       <Users className="h-10 w-10 text-[#FD5C05]/20 mx-auto mb-2" />
-                      <p className="text-xs text-[#5A554E]">Not associated with any groups.</p>
+                      <p className="text-xs text-[#5A554E]">
+                        {isOwner ? "Not associated with any groups." : `${profileUser.name} is not associated with any groups.`}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -992,7 +1111,7 @@ export default function StudentProfilePage() {
         </div>
 
         {/* ── Advisor Review Section (Visible to advisors only) ── */}
-        {currentUser.role === 'admin' && (
+        {isOwner && currentUser.role === 'admin' && (
           <div className="border-t border-black/[0.06] pt-8 mt-8 space-y-4 text-left">
             <div className="text-[11px] font-black text-[#5A554E] flex items-center gap-2 uppercase tracking-widest">
               <UserCheck className="h-4 w-4 text-[#FD5C05]" /> Pending Membership Applications Review
@@ -1054,5 +1173,17 @@ export default function StudentProfilePage() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function StudentProfilePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#D8D2BC] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FD5C05]"></div>
+      </div>
+    }>
+      <StudentProfilePageContent />
+    </Suspense>
   );
 }

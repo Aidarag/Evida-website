@@ -3,30 +3,18 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/lib/context/UserContext';
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, 
   ChevronRight, 
   User, 
   Bell, 
-  Shield, 
   Lock, 
   Building, 
-  Users, 
-  Moon, 
-  Globe, 
-  Calendar, 
-  Clock, 
-  HelpCircle, 
-  Mail, 
   AlertTriangle, 
   MessageSquare, 
   FileText, 
-  Info, 
-  Check, 
-  LogOut,
-  Sparkles
+  LogOut
 } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
@@ -45,23 +33,55 @@ interface SettingsSection {
 }
 
 export default function StudentSettingsPage() {
-  const { currentUser, logout } = useUser();
+  const { currentUser, setCurrentUser, logout } = useUser();
   const router = useRouter();
 
-  // Overlay modaldialog state triggers
+  // Overlay modal state triggers
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [notifConfig, setNotifConfig] = useState({
     push: true,
     email: true,
     reminders: true
   });
-  const [appearance, setAppearance] = useState<'light' | 'dark' | 'system'>('light');
 
   if (!currentUser) return null;
 
   const handleLogout = () => {
     logout();
     router.push('/login');
+  };
+
+  const updatePrivacy = async (key: 'going' | 'saved' | 'hosted' | 'organizations', value: 'public' | 'private') => {
+    if (!currentUser) return;
+    const updatedPrivacy = {
+      going: currentUser.privacy?.going || 'public',
+      saved: currentUser.privacy?.saved || 'private',
+      hosted: currentUser.privacy?.hosted || 'public',
+      organizations: currentUser.privacy?.organizations || 'private',
+      [key]: value
+    };
+
+    const updatedUser = {
+      ...currentUser,
+      privacy: updatedPrivacy
+    };
+
+    // Update context immediately
+    setCurrentUser(updatedUser);
+
+    // Save to backend database
+    try {
+      await fetch('/api/users/profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: currentUser.username,
+          privacy: updatedPrivacy
+        })
+      });
+    } catch (e) {
+      console.error('Failed to save privacy settings:', e);
+    }
   };
 
   const sections: SettingsSection[] = [
@@ -72,23 +92,11 @@ export default function StudentSettingsPage() {
         { id: 'notifications', label: 'Notifications', value: 'On', Icon: Bell, bgColor: '#3b82f6', onClick: () => setActiveModal('notifications') },
         { id: 'privacy', label: 'Privacy & Security', value: 'Private', Icon: Lock, bgColor: '#10b981', onClick: () => setActiveModal('privacy') },
         { id: 'college', label: 'Linked College', value: currentUser.school || 'Livingstone College', Icon: Building, bgColor: '#8b5cf6', onClick: () => setActiveModal('college') },
-        { id: 'orgs', label: 'Connected Organizations', value: `${currentUser.organizations?.length || 0} Joined`, Icon: Users, bgColor: '#ec4899', onClick: () => setActiveModal('orgs') },
       ]
     },
     {
-      title: 'Preferences',
+      title: 'Support & Feedback',
       items: [
-        { id: 'appearance', label: 'Appearance', value: appearance.toUpperCase(), Icon: Moon, bgColor: '#6b7280', onClick: () => setActiveModal('appearance') },
-        { id: 'language', label: 'Language', value: 'English (US)', Icon: Globe, bgColor: '#14b8a6', onClick: () => setActiveModal('language') },
-        { id: 'calendar', label: 'Calendar Integration', value: 'iCal Enabled', Icon: Calendar, bgColor: '#f59e0b', onClick: () => setActiveModal('calendar') },
-        { id: 'reminders', label: 'Reminder Preferences', value: '24h Prior', Icon: Clock, bgColor: '#a855f7', onClick: () => setActiveModal('reminders') },
-      ]
-    },
-    {
-      title: 'Help & Support',
-      items: [
-        { id: 'help', label: 'Help Center', Icon: HelpCircle, bgColor: '#06b6d4', onClick: () => setActiveModal('help') },
-        { id: 'contact', label: 'Contact Support', Icon: Mail, bgColor: '#3b82f6', onClick: () => setActiveModal('contact') },
         { id: 'report', label: 'Report a Problem', Icon: AlertTriangle, bgColor: '#ef4444', onClick: () => setActiveModal('report') },
         { id: 'feedback', label: 'Send Feedback', Icon: MessageSquare, bgColor: '#10b981', onClick: () => setActiveModal('feedback') },
       ]
@@ -98,21 +106,13 @@ export default function StudentSettingsPage() {
       items: [
         { id: 'terms', label: 'Terms of Service', Icon: FileText, bgColor: '#6b7280', onClick: () => setActiveModal('terms') },
         { id: 'policy', label: 'Privacy Policy', Icon: Lock, bgColor: '#374151', onClick: () => setActiveModal('policy') },
-        { id: 'accessibility', label: 'Accessibility', Icon: Info, bgColor: '#4b5563', onClick: () => setActiveModal('accessibility') },
-      ]
-    },
-    {
-      title: 'About',
-      items: [
-        { id: 'version', label: 'App Version', value: 'v2.4.0 (Stable)', Icon: Info, bgColor: '#9ca3af', onClick: () => {} },
-        { id: 'new', label: 'What’s New', Icon: Sparkles, bgColor: '#FD5C05', onClick: () => setActiveModal('new') },
       ]
     }
   ];
 
   return (
     <div className="min-h-screen bg-[#F3F3F0] text-[#2A2621] font-sans pb-32">
-      <div className="max-w-xl mx-auto px-4 py-8 space-y-6">
+      <div className="max-w-xl mx-auto px-4 py-6 space-y-4">
         
         {/* ── Native Grouped Settings Header ── */}
         <div className="flex items-center justify-between pb-3 border-b border-black/[0.04]">
@@ -124,7 +124,7 @@ export default function StudentSettingsPage() {
             Back
           </button>
           
-          <h1 className="text-sm font-black uppercase tracking-widest text-[#2A2621]">
+          <h1 className="text-[15px] font-semibold text-[#2A2621]">
             Settings
           </h1>
           
@@ -132,7 +132,7 @@ export default function StudentSettingsPage() {
         </div>
 
         {/* ── Grouped Sections ── */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           {sections.map(sec => (
             <div key={sec.title} className="space-y-1.5 text-left">
               <h3 className="text-[10px] font-black uppercase text-[#5A554E] tracking-widest pl-4">
@@ -144,7 +144,7 @@ export default function StudentSettingsPage() {
                   <div
                     key={item.id}
                     onClick={item.onClick}
-                    className="flex items-center justify-between px-4 py-3.5 hover:bg-slate-50/70 active:bg-slate-50 cursor-pointer transition-colors"
+                    className="flex items-center justify-between px-4 py-3 hover:bg-slate-50/70 active:bg-slate-50 cursor-pointer transition-colors"
                   >
                     <div className="flex items-center gap-3">
                       <div 
@@ -170,10 +170,10 @@ export default function StudentSettingsPage() {
         </div>
 
         {/* ── Independent Native Sign Out ── */}
-        <div className="pt-8">
+        <div className="pt-4">
           <button
             onClick={handleLogout}
-            className="w-full bg-white border border-red-500/10 hover:bg-red-500 hover:text-white rounded-2xl py-4 text-center text-xs font-black uppercase tracking-wider text-red-600 transition-all cursor-pointer shadow-sm"
+            className="w-full bg-white border border-red-500/10 hover:bg-red-500 hover:text-white rounded-2xl py-3.5 text-center text-xs font-black uppercase tracking-wider text-red-600 transition-all cursor-pointer shadow-sm"
           >
             <LogOut className="h-4 w-4 inline-block mr-1.5 -mt-0.5" />
             Sign Out
@@ -224,22 +224,6 @@ export default function StudentSettingsPage() {
                 </div>
               )}
 
-              {activeModal === 'appearance' && (
-                <div className="grid grid-cols-3 gap-2">
-                  {['light', 'dark', 'system'].map(mode => (
-                    <button
-                      key={mode}
-                      onClick={() => setAppearance(mode as any)}
-                      className={`py-2 px-1 text-[10px] font-black uppercase tracking-wider rounded-xl border transition-all ${
-                        appearance === mode ? 'bg-[#FD5C05] text-[#2A2621] border-[#FD5C05]' : 'bg-slate-50 border-black/5 hover:bg-slate-100 text-[#5A554E]'
-                      }`}
-                    >
-                      {mode}
-                    </button>
-                  ))}
-                </div>
-              )}
-
               {activeModal === 'college' && (
                 <div className="space-y-1.5 text-xs">
                   <p className="font-bold uppercase text-[9px] text-[#5A554E]">Connected Campus</p>
@@ -248,28 +232,67 @@ export default function StudentSettingsPage() {
                 </div>
               )}
 
-              {activeModal === 'orgs' && (
-                <div className="space-y-2 text-xs">
-                  <p className="font-bold uppercase text-[9px] text-[#5A554E]">Your Roles</p>
-                  {currentUser.organizations?.length > 0 ? (
-                    currentUser.organizations.map((orgId, idx) => (
-                      <div key={orgId} className="flex justify-between items-center p-2 bg-slate-50 rounded-lg">
-                        <span className="font-bold uppercase text-[9px]">{orgId}</span>
-                        <span className="text-[8px] bg-emerald-100 text-emerald-800 font-extrabold px-1.5 py-0.5 rounded">Active</span>
+              {activeModal === 'privacy' && (
+                <div className="space-y-4 text-xs">
+                  <div className="border-b border-black/[0.04] pb-2 text-left">
+                    <p className="font-bold text-[10px] uppercase text-[#5A554E] tracking-wider">Profile Visibility Settings</p>
+                    <p className="text-[10px] text-[#5A554E] mt-0.5">Control which tabs and contents are visible to other campus members visiting your profile.</p>
+                  </div>
+                  
+                  {([
+                    { key: 'going', label: 'Going Tab', desc: 'Lists events you plan to attend' },
+                    { key: 'saved', label: 'Saved Tab', desc: 'Lists events you have saved for later' },
+                    { key: 'hosted', label: 'Hosted Tab', desc: 'Lists events and promotions you host' },
+                    { key: 'organizations', label: 'Organizations Tab', desc: 'Lists organizations you manage or belong to' }
+                  ] as const).map(setting => {
+                    const currentVal = currentUser.privacy?.[setting.key] || (setting.key === 'saved' || setting.key === 'organizations' ? 'private' : 'public');
+                    return (
+                      <div key={setting.key} className="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-black/[0.02]">
+                        <div className="text-left max-w-[60%]">
+                          <p className="font-bold text-[#2A2621]">{setting.label}</p>
+                          <p className="text-[9px] text-[#5A554E] mt-0.5 leading-tight">{setting.desc}</p>
+                        </div>
+                        <div className="flex bg-black/[0.04] p-0.5 rounded-lg">
+                          {(['public', 'private'] as const).map(val => (
+                            <button
+                              key={val}
+                              onClick={() => updatePrivacy(setting.key, val)}
+                              className={`px-2.5 py-1 text-[8px] font-black uppercase tracking-wider rounded-md transition-all ${
+                                currentVal === val 
+                                  ? 'bg-[#FD5C05] text-[#2A2621] shadow-sm' 
+                                  : 'text-[#5A554E] hover:text-[#2A2621]'
+                              }`}
+                            >
+                              {val}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    ))
-                  ) : (
-                    <p className="text-[10px] text-[#5A554E] italic">Not registered under any campus organizations.</p>
-                  )}
+                    );
+                  })}
                 </div>
               )}
 
-              {['privacy', 'language', 'calendar', 'reminders', 'help', 'contact', 'report', 'feedback', 'terms', 'policy', 'accessibility', 'new'].includes(activeModal) && (
-                <div className="space-y-1.5 text-xs">
-                  <p className="font-bold uppercase text-[9px] text-[#5A554E]">System Details</p>
-                  <p className="text-[10px] text-[#5A554E] leading-relaxed">
-                    This section connects directly to Livingstone College campus directory resources. Support and legal terms are governed by Evida's university partnership guidelines.
+              {['report', 'feedback', 'terms', 'policy'].includes(activeModal) && (
+                <div className="space-y-1.5 text-xs text-[#5A554E] leading-relaxed">
+                  <p className="font-bold uppercase text-[9px] text-[#2A2621]">
+                    {activeModal === 'report' && 'Report a Problem'}
+                    {activeModal === 'feedback' && 'Send Feedback'}
+                    {activeModal === 'terms' && 'Terms of Service'}
+                    {activeModal === 'policy' && 'Privacy Policy'}
                   </p>
+                  {activeModal === 'report' && (
+                    <p>To report a problem, please email support@evida.app with details and screenshots of the issue.</p>
+                  )}
+                  {activeModal === 'feedback' && (
+                    <p>We value your feedback! Send your suggestions or ideas to hello@evida.app.</p>
+                  )}
+                  {activeModal === 'terms' && (
+                    <p>By using Evida, you agree to our campus terms of service and standard user conduct guidelines.</p>
+                  )}
+                  {activeModal === 'policy' && (
+                    <p>Your privacy is protected. We do not sell or share student directory data with external entities.</p>
+                  )}
                 </div>
               )}
 

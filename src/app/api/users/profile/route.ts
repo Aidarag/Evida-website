@@ -26,7 +26,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { username, name, major, graduationYear, school, avatar, banner, bio, interests, socials, classification } = body;
+    const { username, name, major, graduationYear, school, avatar, banner, bio, interests, socials, classification, privacy } = body;
 
     if (!username) {
       return NextResponse.json({ error: 'Username is required to update profile' }, { status: 400 });
@@ -51,6 +51,7 @@ export async function POST(request: Request) {
     if (interests !== undefined) user.interests = interests;
     if (socials !== undefined) user.socials = socials;
     if (classification !== undefined) user.classification = classification.trim();
+    if (privacy !== undefined) user.privacy = privacy;
 
     // Also update gradYear in sync with graduationYear
     if (user.graduationYear) {

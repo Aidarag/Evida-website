@@ -27,6 +27,12 @@ export interface User {
     instagram?: string;
   };
   achievements?: string[];
+  privacy?: {
+    going?: 'public' | 'private';
+    saved?: 'public' | 'private';
+    hosted?: 'public' | 'private';
+    organizations?: 'public' | 'private';
+  };
 }
 
 export interface Organization {
