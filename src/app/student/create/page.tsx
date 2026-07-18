@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useUser } from '@/lib/context/UserContext';
 import { useEvents } from '@/lib/context/EventContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Tag, ArrowRight, ArrowLeft, Check, Users, User, Shield, Sparkles, Megaphone, Image as ImageIcon, Info } from 'lucide-react';
+import { Calendar, Tag, ArrowRight, ArrowLeft, Check, Users, User, Shield, Sparkles, Image as ImageIcon, Info } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import Input from '@/components/ui/Input';
@@ -14,17 +14,22 @@ type CreateType = 'event' | 'promotion' | null;
 type CreatorEntity = 'student' | 'organization' | 'school' | null;
 type EventSubtype = 'quick' | 'standard' | null;
 
-export default function CreateListingPage() {
+function CreateListingPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { currentUser, activeProfile } = useUser();
-  const { events, organizations, createEvent } = useEvents();
+  const { events, organizations, createEvent, updateEvent } = useEvents();
 
   const [step, setStep] = useState(1);
   const [createType, setCreateType] = useState<CreateType>(null);
   const [creatorEntity, setCreatorEntity] = useState<CreatorEntity>(null);
   const [eventSubtype, setEventSubtype] = useState<EventSubtype>(null);
-  
-  // Form States
+  const [draftId, setDraftId] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+
+
   const [eventForm, setEventForm] = useState({
     title: '',
     description: '',
@@ -36,6 +41,7 @@ export default function CreateListingPage() {
     selectedOrgId: '',
     departmentName: '',
     isFeatured: false,
+    coverImageDataUrl: '',
   });
 
   const [promoForm, setPromoForm] = useState({
@@ -48,8 +54,13 @@ export default function CreateListingPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3500);
+  };
+
   // Initialize creator identity based on active profile switcher selection
-  React.useEffect(() => {
+  useEffect(() => {
     if (activeProfile.type === 'student') {
       setCreatorEntity('student');
     } else if (activeProfile.type === 'organization') {
@@ -57,6 +68,32 @@ export default function CreateListingPage() {
       setEventForm(prev => ({ ...prev, selectedOrgId: activeProfile.orgId }));
     }
   }, [activeProfile]);
+
+  // Pre-fill form from editId query param (draft editing)
+  useEffect(() => {
+    const editId = searchParams.get('editId');
+    if (!editId) return;
+    const evt = events.find(e => e.id === editId);
+    if (!evt) return;
+    setDraftId(editId);
+    setCreateType('event');
+    setCreatorEntity(evt.ownershipType || 'student');
+    setEventSubtype(evt.complexityType === 'quick' ? 'quick' : 'standard');
+    setEventForm(prev => ({
+      ...prev,
+      title: evt.title,
+      description: evt.description,
+      date: evt.date,
+      time: evt.time,
+      location: evt.location,
+      category: evt.category || 'Social',
+      capacity: evt.capacity ? String(evt.capacity) : '',
+      selectedOrgId: evt.organizationId || '',
+      departmentName: evt.ownershipType === 'school' ? evt.organizer : '',
+      isFeatured: evt.featured || false,
+    }));
+    setStep(4);
+  }, [events, searchParams]);
 
   if (!currentUser) return null;
 
@@ -98,35 +135,42 @@ export default function CreateListingPage() {
       location: eventForm.location,
       category: isSchool ? eventForm.category : eventForm.category,
       capacity: eventForm.capacity ? parseInt(eventForm.capacity) : undefined,
-      ownershipType: creatorEntity, // 'student' | 'organization' | 'school'
+      ownershipType: creatorEntity,
       organizationId: isOrg ? org?.id : undefined,
       organizationName: isOrg ? org?.name : undefined,
-      organizer: isSchool ? (eventForm.departmentName || 'School Administration') : currentUser.name,
+      organizer: isSchool ? (eventForm.departmentName || 'School Administration') : currentUser!.name,
       status: (isSchool || (creatorEntity === 'student' && eventSubtype === 'quick')) ? 'approved' : 'pending',
       usesSchoolFacilities: eventSubtype === 'standard',
-      coverImage: isSchool 
-        ? 'from-red-500 via-pink-500 to-orange-500' // School admin gradient
-        : (isOrg ? 'from-blue-600 to-indigo-900' : 'from-teal-400 to-emerald-600'),
+      coverImage: eventForm.coverImageDataUrl || (isSchool
+        ? 'from-red-500 via-pink-500 to-orange-500'
+        : (isOrg ? 'from-blue-600 to-indigo-900' : 'from-teal-400 to-emerald-600')),
       isFeatured: isSchool ? eventForm.isFeatured : false,
-      creatorUsername: currentUser.username,
+      creatorUsername: currentUser!.username,
+      organizerName: currentUser!.name,
     };
 
-    const success = await createEvent(payload);
+    let success: boolean;
+    if (draftId) {
+      success = await updateEvent(draftId, payload);
+    } else {
+      success = await createEvent(payload);
+    }
     setIsSubmitting(false);
 
     if (success) {
-      alert(
-        isSchool 
-          ? 'School event published successfully!' 
-          : (creatorEntity === 'student' && eventSubtype === 'quick') 
-            ? 'Event shared successfully!' 
+      showToast(
+        draftId ? 'Event updated successfully!' :
+        isSchool
+          ? 'School event published successfully!'
+          : (creatorEntity === 'student' && eventSubtype === 'quick')
+            ? 'Event shared successfully!'
             : (creatorEntity === 'student' && eventSubtype === 'standard')
               ? 'Event submitted for school review!'
               : 'Event submitted successfully! Waiting for moderation.'
       );
-      router.push('/student/my-events');
+      setTimeout(() => router.push('/student/my-events'), 1500);
     } else {
-      alert('Failed to create event. Please try again.');
+      showToast('Failed to create event. Please try again.', 'error');
     }
   };
 
@@ -142,7 +186,7 @@ export default function CreateListingPage() {
           title: promoForm.title,
           description: promoForm.description,
           category: promoForm.category,
-          organizer: activeProfile.type === 'organization' ? activeProfile.name : (promoForm.organizerName || currentUser.name),
+          organizer: activeProfile.type === 'organization' ? activeProfile.name : (promoForm.organizerName || currentUser!.name),
           contactInfo: promoForm.contactInfo,
         }),
       });
@@ -150,16 +194,15 @@ export default function CreateListingPage() {
       setIsSubmitting(false);
 
       if (res.ok) {
-        alert('Promotion submitted for moderation! Since promotions are not events, they are reviewed under our student service guidelines.');
-        router.push('/student/my-events');
+        showToast('Promotion submitted! It will appear after review.');
+        setTimeout(() => router.push('/student/my-events'), 1500);
       } else {
         const data = await res.json();
-        alert(`Failed to create promotion: ${data.error || 'Unknown error'}`);
+        showToast(`Failed to create promotion: ${data.error || 'Unknown error'}`, 'error');
       }
-    } catch (err) {
-      console.error(err);
+    } catch {
       setIsSubmitting(false);
-      alert('Failed to submit promotion. Please try again.');
+      showToast('Failed to submit promotion. Please try again.', 'error');
     }
   };
 
@@ -298,6 +341,7 @@ export default function CreateListingPage() {
                             selectedOrgId: evt.organizationId || '',
                             departmentName: evt.ownershipType === 'school' ? evt.organizer : '',
                             isFeatured: evt.featured || false,
+                            coverImageDataUrl: evt.coverImage || '',
                           });
                           // Move directly to the edit details step
                           setStep(4);
@@ -613,16 +657,40 @@ export default function CreateListingPage() {
                       </div>
                     )}
 
-                    {/* Visual Image Uploader Mock (Hidden for Quick Student Events) */}
+                    {/* Cover Image Upload */}
                     {eventSubtype !== 'quick' && (
                       <div className="space-y-1.5 pt-2">
                         <label className="block text-[10px] font-bold text-[#5A554E] uppercase tracking-widest">Cover Image / Flyer</label>
-                        <div className="w-full rounded-2xl border-2 border-dashed border-black/[0.08] bg-black/[0.01] p-6 flex flex-col items-center justify-center gap-2 hover:bg-black/[0.03] transition-colors cursor-pointer">
-                          <ImageIcon className="h-6 w-6 text-[#5A554E]/60" />
-                          <div className="text-center">
-                            <p className="text-xs font-bold text-[#2A2621]">Click to upload flyer image</p>
-                            <p className="text-[10px] text-[#5A554E]">PNG or JPG up to 5MB (Default gradient applied otherwise)</p>
-                          </div>
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept="image/png,image/jpeg,image/webp"
+                          className="sr-only"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            const reader = new FileReader();
+                            reader.onload = (ev) => {
+                              setEventForm(prev => ({ ...prev, coverImageDataUrl: ev.target?.result as string }));
+                            };
+                            reader.readAsDataURL(file);
+                          }}
+                        />
+                        <div
+                          className="w-full rounded-2xl border-2 border-dashed border-black/[0.08] bg-black/[0.01] p-6 flex flex-col items-center justify-center gap-2 hover:bg-black/[0.03] transition-colors cursor-pointer"
+                          onClick={() => fileInputRef.current?.click()}
+                        >
+                          {eventForm.coverImageDataUrl ? (
+                            <img src={eventForm.coverImageDataUrl} className="h-28 w-full object-cover rounded-xl" alt="preview" />
+                          ) : (
+                            <>
+                              <ImageIcon className="h-6 w-6 text-[#5A554E]/60" />
+                              <div className="text-center">
+                                <p className="text-xs font-bold text-[#2A2621]">Click to upload flyer image</p>
+                                <p className="text-[10px] text-[#5A554E]">PNG or JPG up to 5MB (Default gradient applied otherwise)</p>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     )}
@@ -724,6 +792,36 @@ export default function CreateListingPage() {
         )}
 
       </AnimatePresence>
+
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 50, scale: 0.95 }}
+            className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl text-xs font-bold shadow-2xl ${
+              toast.type === 'error'
+                ? 'bg-red-600 text-white'
+                : 'bg-[#2A2621] text-white'
+            }`}
+          >
+            {toast.message}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
+  );
+}
+
+export default function CreateListingPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#FCFAF2] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FD5C05]"></div>
+      </div>
+    }>
+      <CreateListingPageContent />
+    </Suspense>
   );
 }

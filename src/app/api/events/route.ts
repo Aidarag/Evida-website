@@ -47,6 +47,8 @@ export async function POST(request: Request) {
       free,
       capacity,
       visibility,
+      status: bodyStatus,
+      isFeatured,
       creatorUsername // Username of submitter to receive notifications
     } = body;
 
@@ -77,7 +79,7 @@ export async function POST(request: Request) {
       category: category || 'Social',
       ownershipType,
       complexityType,
-      status: 'pending',
+      status: (bodyStatus === 'approved' || bodyStatus === 'rejected') ? bodyStatus : 'pending',
       date,
       time,
       endTime: endTime || undefined,
@@ -89,7 +91,8 @@ export async function POST(request: Request) {
       organizer,
       organizationId,
       organizationName,
-      featured: false,
+      featured: !!isFeatured,
+      isFeatured: !!isFeatured,
       views: 0,
       estimatedAttendance: attendance,
       fundingRequested: isFunding,

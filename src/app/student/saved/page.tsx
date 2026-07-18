@@ -13,7 +13,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 type Tab = 'saved' | 'rsvp';
 
 export default function SavedEventsPage() {
-  const { events, saveToggle } = useEvents();
+  const { events, saveToggle, rsvpToggle } = useEvents();
   const { currentUser } = useUser();
   const router = useRouter();
 
@@ -24,6 +24,14 @@ export default function SavedEventsPage() {
     saveToggle(eventId);
     setToast({
       message: 'Removed from Saved',
+      undoId: eventId
+    });
+  };
+
+  const handleCancelRsvp = (eventId: string) => {
+    rsvpToggle(eventId, 'rsvp'); // toggles off
+    setToast({
+      message: 'RSVP cancelled',
       undoId: eventId
     });
   };
@@ -98,6 +106,11 @@ export default function SavedEventsPage() {
                       saveToggle(event.id);
                     }
                   }}
+                  isAttending={activeTab === 'rsvp'}
+                  onRsvp={activeTab === 'rsvp' ? (e) => {
+                    e.stopPropagation();
+                    handleCancelRsvp(event.id);
+                  } : undefined}
                 />
               </motion.div>
             ))}

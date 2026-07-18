@@ -14,10 +14,12 @@ interface EventContextType {
   // Mutations
   saveToggle: (eventId: string) => Promise<void>;
   rsvpToggle: (eventId: string, action: 'rsvp' | 'interested') => Promise<void>;
-  createEvent: (payload: any) => Promise<boolean>;
+  createEvent: (payload: unknown) => Promise<boolean>;
+  updateEvent: (id: string, payload: unknown) => Promise<boolean>;
+  deleteEvent: (id: string) => Promise<boolean>;
   reviewEvent: (id: string, status: 'approved' | 'rejected', feedback?: string) => Promise<void>;
   toggleVerifyOrg: (id: string) => Promise<void>;
-  createOrg: (orgData: any) => Promise<any>;
+  createOrg: (orgData: unknown) => Promise<unknown>;
   markNotificationRead: (id: string) => Promise<void>;
   clearNotification: (id: string) => Promise<void>;
   resetDatabase: () => Promise<void>;
@@ -185,7 +187,7 @@ export function EventProvider({ children }: { children: ReactNode }) {
     }
   }, [currentUser, fetchData]);
 
-  const createEvent = useCallback(async (payload: any): Promise<boolean> => {
+  const createEvent = useCallback(async (payload: unknown): Promise<boolean> => {
     try {
       const res = await fetch('/api/events', {
         method: 'POST',
@@ -202,6 +204,50 @@ export function EventProvider({ children }: { children: ReactNode }) {
       return false;
     }
   }, [fetchData]);
+
+  const updateEvent = useCallback(async (id: string, payload: unknown): Promise<boolean> => {
+    // Optimistic update
+    setEvents(prev => prev.map(evt =>
+      evt.id === id ? { ...evt, ...(payload as object) } : evt
+    ));
+    try {
+      const res = await fetch(`/api/events/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setEvents(prev => prev.map(evt => evt.id === id ? updated : evt));
+        return true;
+      }
+      await fetchData(); // rollback
+      return false;
+    } catch (e) {
+      console.error(e);
+      await fetchData();
+      return false;
+    }
+  }, [fetchData]);
+
+  const deleteEvent = useCallback(async (id: string): Promise<boolean> => {
+    // Optimistic removal
+    setEvents(prev => prev.filter(evt => evt.id !== id));
+    try {
+      const res = await fetch(`/api/events/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ organizerName: currentUser?.name }),
+      });
+      if (res.ok) return true;
+      await fetchData(); // rollback
+      return false;
+    } catch (e) {
+      console.error(e);
+      await fetchData();
+      return false;
+    }
+  }, [currentUser, fetchData]);
 
   const reviewEvent = useCallback(async (id: string, status: 'approved' | 'rejected', feedback?: string) => {
     try {
@@ -229,13 +275,13 @@ export function EventProvider({ children }: { children: ReactNode }) {
     }
   }, [fetchData]);
 
-  const createOrg = useCallback(async (orgData: any) => {
+  const createOrg = useCallback(async (orgData: unknown) => {
     if (!currentUser) return null;
     try {
       const res = await fetch('/api/organizations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...orgData, member: currentUser.name }),
+        body: JSON.stringify({ ...(orgData as any), member: currentUser.name }),
       });
       if (res.ok) {
         const newOrg = await res.json();
@@ -317,6 +363,8 @@ export function EventProvider({ children }: { children: ReactNode }) {
         saveToggle,
         rsvpToggle,
         createEvent,
+        updateEvent,
+        deleteEvent,
         reviewEvent,
         toggleVerifyOrg,
         createOrg,

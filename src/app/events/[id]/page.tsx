@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useEvents } from '@/lib/context/EventContext';
 import { useUser } from '@/lib/context/UserContext';
 import { useParams, useRouter } from 'next/navigation';
-import { Calendar, MapPin, Users, Heart, ArrowLeft, Share2, Compass, X, Bookmark } from 'lucide-react';
+import { Calendar, MapPin, Users, ArrowLeft, Share2, Compass, X, Bookmark } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
@@ -174,10 +174,10 @@ export default function EventDetailsPage() {
                 isAttending ? (
                   <div className="space-y-4 text-center p-5 bg-[#161622] border border-white/10 rounded-[24px] shadow-2xl relative animate-scale-in">
                     <div className="text-lg font-black text-white flex items-center justify-center gap-1.5">
-                      :-) You're In!
+                      :-) You&apos;re In!
                     </div>
                     <p className="text-xs text-[#B8BBC8] leading-relaxed">
-                      You have successfully RSVP'd to this event. We have saved your spot!
+                      You have successfully RSVP&apos;d to this event. We have saved your spot!
                     </p>
                     <div className="flex gap-2">
                       <Button
@@ -245,7 +245,7 @@ export default function EventDetailsPage() {
               {/* Title & Body */}
               <div className="space-y-2">
                 <h3 className="text-xl font-bold text-white tracking-tight">
-                  You're going! 🎉
+                  You&apos;re going! 🎉
                 </h3>
                 <p className="text-xs text-[#B8BBC8] leading-relaxed">
                   Your RSVP has been confirmed.

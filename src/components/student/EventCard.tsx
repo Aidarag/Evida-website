@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { MapPin, Calendar, Bookmark } from 'lucide-react';
 import { Event, Promotion } from '@/lib/types';
 import { motion } from 'framer-motion';
@@ -12,25 +12,25 @@ interface EventCardProps {
   onClick: () => void;
   onSave?: (e: React.MouseEvent) => void;
   isSaved?: boolean;
+  onRsvp?: (e: React.MouseEvent) => void;
+  isAttending?: boolean;
 }
 
-export default function EventCard({ event, onClick, onSave, isSaved = false }: EventCardProps) {
-  const [isSavedLocal, setIsSavedLocal] = useState(false);
-
+export default function EventCard({ event, onClick, onSave, isSaved = false, onRsvp, isAttending = false }: EventCardProps) {
   // Check if it's a promotion
   const isPromo = !('ownershipType' in event);
 
   // Set up cover image
-  const coverImage = isPromo 
-    ? '/pexels-markus-winkler-1430818-12199407.jpg' 
+  const coverImage = isPromo
+    ? '/pexels-markus-winkler-1430818-12199407.jpg'
     : event.coverImage;
 
   const isGradient = coverImage ? coverImage.includes('from-') : false;
   const bgClass = isGradient ? coverImage : (coverImage ? '' : 'bg-[#D8D2BC]');
   const bgStyle = (!isGradient && coverImage) ? { backgroundImage: `url(${coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {};
 
-  // Parse the date to match the uppercase invite format (e.g. SUN, OCT 11)
-  const dateObj = new Date(event.date);
+  // Parse the date
+  const dateObj = new Date(event.date + 'T00:00:00');
   const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
   const month = dateObj.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
   const day = dateObj.getDate();
@@ -38,8 +38,8 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
 
   const timeStr = !isPromo && (event as Event).time ? (event as Event).time : '7:00 PM';
 
-  // Dynamic mock attendee count based on event title length
-  const goingCount = 32 + (event.title.length * 2);
+  // Real attendee count
+  const goingCount = !isPromo ? ((event as Event).attendees?.length ?? 0) : 0;
 
   const getCategoryStyles = (cat?: string) => {
     if (isPromo) return 'bg-[#FD5C05]/15 text-[#2A2621] border-[#FD5C05]/25';
@@ -61,59 +61,86 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
     ? organizations.find(o => o.id === (event as Event).organizationId)?.verified
     : false;
 
-  const activeSaved = onSave ? isSaved : isSavedLocal;
+  // ICS download helper
+  const handleDownloadICS = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isPromo) { onClick(); return; }
+    const evt = event as Event;
+    const cleanTitle = evt.title.replace(/[^\w\s-]/gi, '');
+    const cleanDesc = (evt.description || '').replace(/[^\w\s-]/gi, '');
+    const cleanLoc = (evt.location || 'Campus').replace(/[^\w\s-]/gi, '');
+    const dateStr = (evt.date || '').replace(/-/g, '');
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Evida//Calendar//EN',
+      'BEGIN:VEVENT',
+      `UID:${evt.id}@evida.app`,
+      `SUMMARY:${cleanTitle}`,
+      `DESCRIPTION:${cleanDesc}`,
+      `LOCATION:${cleanLoc}`,
+      `DTSTART:${dateStr}T190000`,
+      `DTEND:${dateStr}T210000`,
+      'END:VEVENT',
+      'END:VCALENDAR',
+    ].join('\r\n');
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `${cleanTitle.replace(/\s+/g, '_')}.ics`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
-    <motion.div 
+    <motion.div
       whileHover={{ y: -6 }}
       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
       className="group flex flex-col bg-white rounded-[24px] overflow-hidden border border-black/[0.04] shadow-[var(--shadow-premium-sm)] hover:shadow-[var(--shadow-premium-md)] transition-all duration-300 h-full justify-between relative"
     >
       {/* 1. Image Container */}
-      <div 
+      <div
         onClick={onClick}
         className="relative aspect-[16/10] w-full overflow-hidden bg-gray-50 cursor-pointer"
       >
-        <div 
+        <div
           className={`absolute inset-0 transition-transform duration-700 group-hover:scale-105 ${bgClass}`}
           style={bgStyle}
         />
-        
+
         {/* Category Badge top left */}
         <div className="absolute top-4 left-4 z-10 flex">
-          <span className={`px-3.5 py-1 text-[9px] font-bold tracking-wider uppercase rounded-full border shadow-sm backdrop-blur-sm ${getCategoryStyles(isPromo ? 'Promotion' : event.category)}`}>
-            {isPromo ? 'Promotion' : event.category}
+          <span className={`px-3.5 py-1 text-[9px] font-bold tracking-wider uppercase rounded-full border shadow-sm backdrop-blur-sm ${getCategoryStyles(isPromo ? 'Promotion' : (event as Event).category)}`}>
+            {isPromo ? 'Promotion' : (event as Event).category}
           </span>
         </div>
       </div>
 
       {/* 2. Interactive Save (Bookmark) Button - Floating top right */}
-      <button 
+      <button
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          if (onSave) {
-            onSave(e);
-          } else {
-            setIsSavedLocal(!isSavedLocal);
-          }
+          if (onSave) onSave(e);
         }}
         className="absolute top-4 right-4 z-20 cursor-pointer focus:outline-none p-1 group"
-        title={activeSaved ? "Unsave Event" : "Save Event"}
+        title={isSaved ? 'Unsave Event' : 'Save Event'}
       >
-        <Bookmark 
+        <Bookmark
           className={`h-5 w-5 transition-all duration-150 ease-in-out ${
-            activeSaved 
-              ? 'fill-[#FD5C05] text-[#FD5C05]' 
+            isSaved
+              ? 'fill-[#FD5C05] text-[#FD5C05]'
               : 'text-white hover:text-[#FD5C05]/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]'
-          }`} 
+          }`}
         />
       </button>
 
       {/* 3. Content Body */}
       <div className="p-6 flex flex-col flex-1 justify-between gap-4 text-left">
         <div className="space-y-2 cursor-pointer" onClick={onClick}>
-          {/* Date & Time Invite Style (Dark Green, Uppercase) */}
+          {/* Date & Time */}
           <div className="text-[#2A2621]/85 text-[10px] font-bold uppercase tracking-widest">
             {formattedDate} • {timeStr}
           </div>
@@ -130,7 +157,7 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
           <h3 className="text-[#2A2621] font-bold text-lg line-clamp-2 leading-tight tracking-tight hover:text-[#2A2621]/80 transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
             {event.title}
           </h3>
-          
+
           {/* Location Row */}
           <div className="flex items-center gap-1.5 text-[#5A554E] text-xs font-semibold">
             <MapPin className="h-3.5 w-3.5 shrink-0 text-[#5A554E]" />
@@ -143,9 +170,9 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
           </p>
         </div>
 
-        {/* 4. Invite Action Footer (Avatars + Compact Add to Calendar Button) */}
+        {/* 4. Footer */}
         <div className="pt-4 border-t border-black/[0.04] flex items-center justify-between gap-2">
-          {/* Attendee Avatars */}
+          {/* Attendee count */}
           <div className="flex items-center gap-2">
             <div className="flex -space-x-2">
               {[
@@ -163,22 +190,33 @@ export default function EventCard({ event, onClick, onSave, isSaved = false }: E
               ))}
             </div>
             <span className="text-[#5A554E] text-[10px] font-bold whitespace-nowrap">
-              +{goingCount} going
+              {goingCount > 0 ? `+${goingCount} going` : 'Be the first'}
             </span>
           </div>
 
-          {/* Compact Add to Calendar Button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onClick();
-            }}
-            className="inline-flex items-center gap-1.5 bg-white border border-black/10 hover:border-transparent hover:bg-[#FD5C05] hover:text-[#2A2621] text-[#2A2621] font-bold text-[10px] uppercase tracking-wider py-1.5 px-3.5 rounded-full transition-all duration-300 shadow-sm cursor-pointer whitespace-nowrap"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            <Calendar className="h-3.5 w-3.5" />
-            Add to Calendar
-          </button>
+          {/* Action button — RSVP if onRsvp provided, else ICS download */}
+          {onRsvp ? (
+            <button
+              onClick={(e) => { e.stopPropagation(); onRsvp(e); }}
+              className={`inline-flex items-center gap-1.5 border font-bold text-[10px] uppercase tracking-wider py-1.5 px-3.5 rounded-full transition-all duration-300 shadow-sm cursor-pointer whitespace-nowrap ${
+                isAttending
+                  ? 'bg-[#FD5C05] text-[#2A2621] border-[#FD5C05]'
+                  : 'bg-white border-black/10 hover:border-transparent hover:bg-[#FD5C05] hover:text-[#2A2621] text-[#2A2621]'
+              }`}
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              {isAttending ? 'Going ✓' : 'RSVP'}
+            </button>
+          ) : (
+            <button
+              onClick={handleDownloadICS}
+              className="inline-flex items-center gap-1.5 bg-white border border-black/10 hover:border-transparent hover:bg-[#FD5C05] hover:text-[#2A2621] text-[#2A2621] font-bold text-[10px] uppercase tracking-wider py-1.5 px-3.5 rounded-full transition-all duration-300 shadow-sm cursor-pointer whitespace-nowrap"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              <Calendar className="h-3.5 w-3.5" />
+              Add to Calendar
+            </button>
+          )}
         </div>
       </div>
     </motion.div>

@@ -62,10 +62,10 @@ const MOCK_CALENDAR_EVENTS = [
 
 export default function StudentProfilePage() {
   const { currentUser, setCurrentUser, logout } = useUser();
-  const { events, organizations, saveToggle, rsvpToggle } = useEvents();
+  const { events, organizations, saveToggle, rsvpToggle, deleteEvent } = useEvents();
   const router = useRouter();
 
-  const allEvents = [...events, ...MOCK_CALENDAR_EVENTS];
+  const allEvents = events; // Only real events from context — no mock data
 
   // State variables for profile editor
   const [editOpen, setEditOpen] = useState(false);
@@ -554,8 +554,8 @@ export default function StudentProfilePage() {
         <div className="border-b border-black/[0.08] flex justify-center w-full pt-4">
           <div className="flex gap-6 sm:gap-12 md:gap-16">
             {[
-              { id: 'going' as const, label: 'Going', count: attendedEvents.length, Icon: CalendarCheck },
-              { id: 'saved' as const, label: 'Saved', count: savedEvents.length, Icon: Heart },
+                          { id: 'going' as const, label: 'Going', count: attendedEvents.length, Icon: CalendarCheck },
+              { id: 'saved' as const, label: 'Saved', count: savedEvents.length, Icon: Bookmark },
               { id: 'hosted' as const, label: 'Hosted', count: hostedCount, Icon: Star },
               { id: 'orgs' as const, label: 'Organizations', count: myOrgs.length, Icon: Users },
             ].map(tab => (
@@ -772,13 +772,23 @@ export default function StudentProfilePage() {
                               )}
                             </div>
                             <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-                              <div>
+                              <div onClick={() => router.push(`/events/${evt.id}`)}>
                                 <p className="font-bold text-xs text-[#2A2621] uppercase tracking-wide line-clamp-2">{evt.title}</p>
                                 <p className="text-[9px] text-[#5A554E] font-medium mt-1">{evt.date} • {evt.time}</p>
                               </div>
                               <p className="text-[10px] text-[#5A554E] font-bold uppercase tracking-wider flex items-center gap-1">
                                 <MapPin className="h-3 w-3 text-[#FD5C05]" /> {evt.location}
                               </p>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  rsvpToggle(evt.id, 'rsvp');
+                                  setToast({ message: 'RSVP cancelled', undoId: evt.id });
+                                }}
+                                className="w-full py-1.5 text-[9px] font-black uppercase tracking-wider text-red-500 hover:bg-red-50 rounded-xl border border-red-200 transition-all cursor-pointer"
+                              >
+                                Cancel RSVP
+                              </button>
                             </div>
                           </div>
                         ))}
@@ -863,6 +873,26 @@ export default function StudentProfilePage() {
                               <p className="text-[10px] text-[#5A554E] font-bold uppercase tracking-wider flex items-center gap-1">
                                 <MapPin className="h-3 w-3 text-[#FD5C05]" /> {evt.location}
                               </p>
+                              <div className="flex gap-2 pt-1">
+                                {evt.status === 'pending' && (
+                                  <button
+                                    onClick={(e) => { e.stopPropagation(); router.push(`/student/create?editId=${evt.id}`); }}
+                                    className="flex-1 py-1.5 text-[9px] font-black uppercase tracking-wider bg-black/[0.04] hover:bg-[#FD5C05]/10 hover:text-[#FD5C05] text-[#2A2621] rounded-xl border border-transparent transition-all cursor-pointer"
+                                  >
+                                    Edit
+                                  </button>
+                                )}
+                                <button
+                                  onClick={async (e) => {
+                                    e.stopPropagation();
+                                    await deleteEvent(evt.id);
+                                    setToast({ message: 'Event deleted', undoId: '' });
+                                  }}
+                                  className="flex-1 py-1.5 text-[9px] font-black uppercase tracking-wider text-red-500 hover:bg-red-50 rounded-xl border border-red-200 transition-all cursor-pointer"
+                                >
+                                  Delete
+                                </button>
+                              </div>
                             </div>
                           </div>
                         ))}

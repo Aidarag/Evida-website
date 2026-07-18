@@ -590,11 +590,11 @@ export function ProfileSwitcher() {
     if (!orgName.trim() || !orgDesc.trim()) return;
     setIsSubmitting(true);
     try {
-      const newOrg = await createOrg({
+      const newOrg = (await createOrg({
         name: orgName.trim(),
         description: orgDesc.trim(),
         logoColor: orgColor
-      });
+      })) as any;
       if (newOrg) {
         // Automatically switch active profile to the new organization!
         setActiveProfile({

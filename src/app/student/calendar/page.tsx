@@ -3,16 +3,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
-  GraduationCap, 
-  Music, 
-  Palette, 
-  Sparkles, 
-  Users, 
-  Trophy, 
-  Heart, 
-  Briefcase, 
-  Code, 
-  Film,
   ChevronLeft,
   ChevronRight,
   CalendarDays,
@@ -29,29 +19,12 @@ export default function StudentCalendarPage() {
   const { currentUser } = useUser();
   const [calendarDate, setCalendarDate] = useState<Date>(new Date(2026, 9, 1)); // Default to October 2026
 
-  const MOCK_CALENDAR_EVENTS = [
-    { id: 'mock-1', title: 'Graduation Cap Painting Workshop', date: '2026-10-03', time: '2:00 PM', location: 'Fine Arts Studio', coverImage: '/pexels-cottonbro-5989925.jpg', attendees: ['Michael'], description: 'Come paint your graduation cap with us! We supply all paint, glitter, and brushes.' },
-    { id: 'mock-2', title: 'Fall Acoustic Sessions', date: '2026-10-12', time: '6:30 PM', location: 'Campus Amphitheater', coverImage: '/pexels-amine-1285347-9371719.jpg', attendees: [], description: 'Enjoy live acoustic performances by talented student singer-songwriters.' },
-    { id: 'mock-3', title: 'Canvas & Mocktails Art Event', date: '2026-10-20', time: '4:00 PM', location: 'Student Union', coverImage: '/pexels-gu-ko-2150570603-31827067.jpg', attendees: ['Michael'], description: 'Unwind with custom mocktails while painting on canvas with our art mentors.' },
-    { id: 'mock-4', title: 'STEM Code Hackathon Kickoff', date: '2026-10-26', time: '9:00 AM', location: 'Tech Hall', coverImage: '/pexels-caleboquendo-34598092.jpg', attendees: [], description: 'Form teams, code awesome projects, and win prizes in this 24-hour hackathon.' },
-    { id: 'mock-5', title: 'Club Leadership Mixer', date: '2026-10-05', time: '5:00 PM', location: 'Student Center', coverImage: '/pexels-rdne-7648057.jpg', attendees: [], description: 'Meet leaders of all registered campus clubs and organizations to collaborate.' },
-    { id: 'mock-6', title: 'Varsity Soccer Tournament', date: '2026-10-15', time: '3:00 PM', location: 'Athletic Field', coverImage: '/pexels-tima-miroshnichenko-5439368.jpg', attendees: ['Michael'], description: 'Cheer for our varsity soccer team in the seasonal opener tournament!' },
-    { id: 'mock-7', title: 'Health & Wellness Seminar', date: '2026-10-22', time: '11:00 AM', location: 'Campus Gym', coverImage: '/pexels-ron-lach-8576102.jpg', attendees: [], description: 'Learn about nutritional planning, physical health, and mindfulness practices.' },
-    { id: 'mock-8', title: 'Resume Review & Interview Prep', date: '2026-10-08', time: '1:00 PM', location: 'Career Center', coverImage: '/pexels-marwen-larafa-2159807713-37714941.jpg', attendees: [], description: 'Get one-on-one expert feedback on your resume and practice mock interview panels.' },
-    { id: 'mock-9', title: 'Developer Tools Workshop', date: '2026-10-18', time: '6:00 PM', location: 'Computer Lab 3', coverImage: '/pexels-amine-1285347-9371719.jpg', attendees: [], description: 'Get hands-on experience with command line git, docker, and remote servers.' },
-    { id: 'mock-10', title: 'Classic Film Screening Night', date: '2026-10-29', time: '8:00 PM', location: 'Campus Theatre', coverImage: '/pexels-cottonbro-5989925.jpg', attendees: [], description: 'Join us for a cozy screening of classic cinema works. Free popcorn included.' }
-  ];
-
-  // Filter events (real and mock) to only those the user is going to
+  // Filter events to only those the user is attending (real data only)
   const userGoingEvents = React.useMemo(() => {
     if (!currentUser) return [];
-    const combined = [...events, ...MOCK_CALENDAR_EVENTS];
-    return combined.filter(e => 
-      e.attendees?.some(name => 
-        name === currentUser.name || 
-        currentUser.name.startsWith(name) || 
-        name.toLowerCase().includes(currentUser.name.split(' ')[0].toLowerCase())
-      )
+    return events.filter(e =>
+      e.status === 'approved' &&
+      e.attendees?.includes(currentUser.name)
     );
   }, [events, currentUser]);
 
@@ -126,7 +99,7 @@ export default function StudentCalendarPage() {
     year: 'numeric',
   });
 
-  const handleDownloadCalendar = (evt: any) => {
+  const handleDownloadCalendar = (evt: typeof userGoingEvents[0]) => {
     const cleanTitle = evt.title.replace(/[^\w\s-]/gi, '');
     const cleanDescription = evt.description ? evt.description.replace(/[^\w\s-]/gi, '') : '';
     const cleanLocation = evt.location ? evt.location.replace(/[^\w\s-]/gi, '') : 'Campus';

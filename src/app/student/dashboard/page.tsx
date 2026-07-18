@@ -6,20 +6,14 @@ import { useEvents } from '@/lib/context/EventContext';
 import { useRouter } from 'next/navigation';
 import {
   Calendar,
-  Bell,
   MapPin,
-  Clock,
   Compass,
   Trophy,
-  Music,
   Wine,
   Cpu,
-  MessageCircle,
-  Send,
-  CheckCircle2,
   Bookmark,
   X,
-  ChevronDown,
+  Search,
   Briefcase,
   GraduationCap,
   Users,
@@ -47,6 +41,7 @@ export default function StudentDashboardPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [likedEvents, setLikedEvents] = useState<Set<string>>(new Set());
   const [shareToast, setShareToast] = useState(false);
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
 
   // Fetch promotions
   useEffect(() => {
@@ -245,8 +240,9 @@ export default function StudentDashboardPage() {
   };
 
   const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({ title: 'Check this event on Evida!', url: window.location.href }).catch(() => { });
+    const url = window.location.href;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).catch(() => {});
     }
     setShareToast(true);
     setTimeout(() => setShareToast(false), 2000);
@@ -278,6 +274,27 @@ export default function StudentDashboardPage() {
           <Calendar className="h-4 w-4" />
           Campus Calendar
         </Link>
+      </div>
+
+      {/* ── Search Bar ── */}
+      <div className="relative max-w-5xl mx-auto">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5A554E] pointer-events-none" />
+        <input
+          ref={searchInputRef}
+          type="text"
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          placeholder="Search events, organizations, or services…"
+          className="w-full pl-10 pr-10 py-3 rounded-2xl bg-white border border-black/[0.06] text-sm text-[#2A2621] placeholder-[#5A554E]/60 focus:outline-none focus:border-[#FD5C05]/40 shadow-sm font-medium"
+        />
+        {searchQuery && (
+          <button
+            onClick={() => setSearchQuery('')}
+            className="absolute right-3 top-1/2 -translate-y-1/2 h-6 w-6 rounded-full bg-black/[0.06] flex items-center justify-center hover:bg-black/10 cursor-pointer"
+          >
+            <X className="h-3.5 w-3.5 text-[#5A554E]" />
+          </button>
+        )}
       </div>
 
       {/* ── Segmented Feed Toggle & Filter Controls ── */}
@@ -323,7 +340,7 @@ export default function StudentDashboardPage() {
           </button>
         </div>
 
-        {/* Categories pill row */}
+        {/* Categories pill row + Clear Filter */}
         <div className="flex gap-2 overflow-x-auto scrollbar-none pb-0.5">
           {currentCategories.map((cat) => {
             const isActive = selectedCategory.toLowerCase() === cat.name.toLowerCase();
@@ -341,6 +358,14 @@ export default function StudentDashboardPage() {
               </button>
             );
           })}
+          {selectedCategory !== 'All' && (
+            <button
+              onClick={() => setSelectedCategory('All')}
+              className="flex items-center gap-1 shrink-0 px-3 py-1.5 rounded-full text-[9px] font-extrabold uppercase tracking-wider bg-black/[0.06] text-[#5A554E] hover:bg-black/10 cursor-pointer"
+            >
+              <X className="h-2.5 w-2.5" /> Clear
+            </button>
+          )}
         </div>
       </div>
 

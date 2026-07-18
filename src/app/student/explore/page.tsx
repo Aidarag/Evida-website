@@ -310,7 +310,10 @@ export default function ExplorePage() {
             placeholder="Search events, organizations, promotions, services..."
             value={searchQuery}
             onFocus={() => setIsSearchActive(true)}
-            onChange={e => setIsSearchActive(true) || setSearchQuery(e.target.value)}
+            onChange={e => {
+              setIsSearchActive(true);
+              setSearchQuery(e.target.value);
+            }}
             className="w-full bg-transparent py-3.5 pl-11 pr-10 text-xs sm:text-sm text-[#2A2621] placeholder-[#5A554E]/60 focus:outline-none"
           />
           {searchQuery && (
