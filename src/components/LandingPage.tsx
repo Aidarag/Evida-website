@@ -248,7 +248,7 @@ export default function LandingPage({
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
                   transition={{ duration: 0.15, ease: 'easeOut' }}
-                  className="absolute right-4 sm:right-6 md:right-8 top-16 z-40 w-72 rounded-[24px] border border-[#D8D2BC] bg-white/95 backdrop-blur-md p-6 shadow-xl flex flex-col gap-4 text-left"
+                  className="absolute right-3 xs:right-4 sm:right-6 md:right-8 top-16 z-40 w-[calc(100vw-24px)] max-w-xs rounded-[24px] border border-[#D8D2BC] bg-white/95 backdrop-blur-md p-5 sm:p-6 shadow-xl flex flex-col gap-4 text-left"
                 >
                   {/* Links */}
                   <div className="flex flex-col gap-3.5 border-b border-[#D8D2BC]/40 pb-4">
@@ -310,7 +310,7 @@ export default function LandingPage({
       </header>
 
       {/* Hero Section - Wenspire Visual Style */}
-      <section className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12 w-full relative">
+      <section className="mx-auto max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 pt-16 sm:pt-24 pb-8 sm:pb-12 w-full relative overflow-x-hidden">
         {/* Soft floating blurred gradient blobs for premium lighting */}
         <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] rounded-full bg-gradient-to-br from-[#FB1C07] to-[#FC7C0B] opacity-[0.12] blur-[100px] md:blur-[140px] pointer-events-none z-0 animate-pulse" style={{ animationDuration: '8s' }} />
         <div className="absolute bottom-10 right-1/4 translate-x-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-gradient-to-br from-[#FD4002] to-[#FC7C0B] opacity-[0.08] blur-[90px] md:blur-[130px] pointer-events-none z-0 animate-pulse" style={{ animationDuration: '12s' }} />
@@ -319,7 +319,7 @@ export default function LandingPage({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative w-full rounded-[24px] md:rounded-[48px] overflow-hidden border border-[#D8D2BC]/40 shadow-2xl min-h-[380px] sm:min-h-[480px] md:min-h-[600px] flex flex-col justify-center p-5 sm:p-8 md:p-16 text-white z-10"
+          className="relative w-full rounded-[20px] xs:rounded-[24px] md:rounded-[48px] overflow-hidden border border-[#D8D2BC]/40 shadow-2xl min-h-[360px] xs:min-h-[420px] sm:min-h-[480px] md:min-h-[600px] flex flex-col justify-center p-4 xs:p-6 sm:p-8 md:p-16 text-white z-10"
         >
           {/* Background image & overlays */}
           <div className="absolute inset-0 bg-cover bg-center z-0 filter blur-[12px] scale-[1.05]" style={{ backgroundImage: "url('/evida-hero-bg-orange.png')" }} />
@@ -327,33 +327,33 @@ export default function LandingPage({
           <div className="absolute inset-0 bg-gradient-to-t from-[#2A2621]/90 via-[#2A2621]/15 to-[#2A2621]/45 z-10" />
 
           {/* Top Row: Floating Badge */}
-          <div className="absolute top-5 sm:top-8 left-5 sm:left-8 md:top-16 md:left-16 z-20 flex items-center justify-start">
-            <span className="flex items-center gap-2 rounded-full bg-black/35 border border-white/10 px-3.5 py-1.5 text-[9px] font-black uppercase tracking-widest text-[#FD5C05] backdrop-blur-md">
+          <div className="absolute top-3.5 xs:top-5 sm:top-8 left-3.5 xs:left-5 sm:left-8 md:top-16 md:left-16 z-20 flex items-center justify-start">
+            <span className="flex items-center gap-1.5 xs:gap-2 rounded-full bg-black/35 border border-white/10 px-3 xs:px-3.5 py-1 xs:py-1.5 text-[8px] xs:text-[9px] font-black uppercase tracking-widest text-[#FD5C05] backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FB1C07] animate-pulse" />
               Now in private beta
             </span>
           </div>
 
           {/* Middle Row: Content */}
-          <div className="relative z-20 space-y-4 sm:space-y-5 max-w-2xl text-left pt-14 pb-4 sm:pt-8 sm:pb-8">
-            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight md:tracking-tighter leading-[1.1] sm:leading-[0.95] text-white">
+          <div className="relative z-20 space-y-3.5 xs:space-y-4 sm:space-y-5 max-w-2xl text-left pt-12 xs:pt-14 pb-4 sm:pt-8 sm:pb-8">
+            <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight md:tracking-tighter leading-[1.15] xs:leading-[1.1] sm:leading-[0.95] text-white break-words">
               Everything Happening <br />
               <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent inline-block">on Campus.</span>
             </h1>
-            <p className="text-xs sm:text-sm text-gray-300 max-w-lg leading-relaxed font-medium break-words">
+            <p className="text-[11px] xs:text-xs sm:text-sm text-gray-300 max-w-lg leading-relaxed font-medium break-words">
               Evida brings campus events, student organizations, promotions, and opportunities into one place. Discover what’s happening, connect with your community, and never miss campus life.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm pt-2">
+            <div className="flex flex-col sm:flex-row gap-2.5 xs:gap-3 w-full max-w-sm pt-2">
               <button
                 onClick={onLogin}
-                className="w-full sm:w-auto flex-1 rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(251,28,7,0.25)] hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] px-6 py-3.5 text-xs font-black text-white transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1.5"
+                className="w-full sm:w-auto flex-1 rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(251,28,7,0.25)] hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] px-5 xs:px-6 py-3 xs:py-3.5 text-[11px] xs:text-xs font-black text-white transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1.5"
               >
                 <span>Join Waitlist</span>
                 <ArrowRight className="h-4 w-4 text-white" />
               </button>
               <button
                 onClick={handleSeeHowItWorksClick}
-                className="w-full sm:w-auto flex-1 rounded-full border border-[#FD5C05] bg-[#EAE4CF] hover:bg-[#FD5C05] hover:text-white px-6 py-3.5 text-xs font-black text-[#FD5C05] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer flex items-center justify-center"
+                className="w-full sm:w-auto flex-1 rounded-full border border-[#FD5C05] bg-[#EAE4CF] hover:bg-[#FD5C05] hover:text-white px-5 xs:px-6 py-3 xs:py-3.5 text-[11px] xs:text-xs font-black text-[#FD5C05] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer flex items-center justify-center"
               >
                 See How It Works
               </button>
@@ -598,69 +598,69 @@ export default function LandingPage({
       </section>
 
       {/* Problem Statistics Section */}
-      <section id="why-evida" className="bg-white border-b border-[#D8D2BC]/30 py-12 sm:py-20 md:py-28 w-full relative z-10">
-        <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 space-y-10 sm:space-y-16">
+      <section id="why-evida" className="bg-white border-b border-[#D8D2BC]/30 py-10 xs:py-12 sm:py-20 md:py-28 w-full relative z-10">
+        <div className="mx-auto max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 space-y-8 xs:space-y-10 sm:space-y-16">
           
-          <div className="text-center space-y-3 max-w-xl mx-auto">
+          <div className="text-center space-y-2.5 xs:space-y-3 max-w-xl mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Why Evida</span>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-[1.05] sm:leading-[0.95]" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-xl xs:text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight sm:leading-[0.95]" style={{ fontFamily: 'var(--font-display)' }}>
               One Campus. One Platform. Every Opportunity.
             </h2>
-            <p className="text-xs text-[#5A554E] font-medium leading-relaxed max-w-lg mx-auto">
+            <p className="text-xs text-[#5A554E] font-medium leading-relaxed max-w-lg mx-auto break-words">
               Campus life is scattered across emails, group chats, flyers, and social media. Evida brings events, organizations, promotions, and your campus calendar together in one place.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 text-left max-w-5xl mx-auto border-y border-[#D8D2BC]/30">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 text-left max-w-5xl mx-auto border-y border-[#D8D2BC]/30">
             
             {/* Card 1 */}
-            <div className="p-5 sm:p-8 border-b md:border-b-0 md:border-r border-[#D8D2BC]/30 flex flex-col space-y-2">
-              <span className="text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-4 xs:p-5 sm:p-8 border-b sm:border-r border-[#D8D2BC]/30 flex flex-col space-y-1.5">
+              <span className="text-3xl xs:text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 89%
               </span>
               <h3 className="text-xs sm:text-sm font-extrabold text-[#2A2621] leading-snug">
                 Miss important opportunities
               </h3>
-              <p className="text-xs text-[#5A554E] leading-relaxed font-medium block">
+              <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium block mt-1 break-words">
                 Students have missed important campus events, deadlines, and opportunities because information is scattered across multiple channels.
               </p>
             </div>
 
             {/* Card 2 */}
-            <div className="p-5 sm:p-8 border-b md:border-b-0 md:border-r border-[#D8D2BC]/30 flex flex-col space-y-2">
-              <span className="text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-4 xs:p-5 sm:p-8 border-b lg:border-b-0 lg:border-r border-[#D8D2BC]/30 flex flex-col space-y-1.5">
+              <span className="text-3xl xs:text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 36%
               </span>
               <h3 className="text-xs sm:text-sm font-extrabold text-[#2A2621] leading-snug">
                 Never participate
               </h3>
-              <p className="text-xs text-[#5A554E] leading-relaxed font-medium block">
+              <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium block mt-1 break-words">
                 More than one-third of students don't participate in a single extracurricular or co-curricular activity during the academic year.
               </p>
             </div>
 
             {/* Card 3 */}
-            <div className="p-5 sm:p-8 border-b md:border-b-0 md:border-r border-[#D8D2BC]/30 flex flex-col space-y-2">
-              <span className="text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-4 xs:p-5 sm:p-8 border-b sm:border-b-0 sm:border-r border-[#D8D2BC]/30 flex flex-col space-y-1.5">
+              <span className="text-3xl xs:text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 31%
               </span>
               <h3 className="text-xs sm:text-sm font-extrabold text-[#2A2621] leading-snug">
                 Don't know what's happening
               </h3>
-              <p className="text-xs text-[#5A554E] leading-relaxed font-medium block">
+              <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium block mt-1 break-words">
                 Many students say they miss campus activities simply because they never hear about them or discover them too late.
               </p>
             </div>
 
             {/* Card 4 */}
-            <div className="p-5 sm:p-8 flex flex-col space-y-2">
-              <span className="text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-4 xs:p-5 sm:p-8 flex flex-col space-y-1.5">
+              <span className="text-3xl xs:text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 26%
               </span>
               <h3 className="text-xs sm:text-sm font-extrabold text-[#2A2621] leading-snug">
                 Check campus email daily
               </h3>
-              <p className="text-xs text-[#5A554E] leading-relaxed font-medium block">
+              <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium block mt-1 break-words">
                 Only about one in four students regularly check their university email — making email alone unreliable.
               </p>
             </div>
@@ -670,26 +670,26 @@ export default function LandingPage({
       </section>
 
       {/* About Section */}
-      <section id="about" className="bg-[#D8D2BC]/35 border-y border-[#D8D2BC]/30 py-12 sm:py-20">
-        <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
-          <div className="text-center space-y-3 max-w-xl mx-auto">
+      <section id="about" className="bg-[#D8D2BC]/35 border-y border-[#D8D2BC]/30 py-10 xs:py-12 sm:py-20">
+        <div className="mx-auto max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
+          <div className="text-center space-y-2.5 xs:space-y-3 max-w-xl mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Built for Everyone</span>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-xl xs:text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
               One Platform. Two Ways to Connect.
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 xs:gap-6 sm:gap-8">
             
             {/* Students Card */}
-            <div className="rounded-[24px] sm:rounded-[28px] border border-black/[0.04] bg-white overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-all">
-              <div className="relative h-40 sm:h-48 w-full bg-[url('/pexels-maorattias-5191958.jpg')] bg-cover bg-center" />
-              <div className="p-5 sm:p-8 space-y-4 text-left">
+            <div className="rounded-[20px] xs:rounded-[24px] sm:rounded-[28px] border border-black/[0.04] bg-white overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-all">
+              <div className="relative h-36 xs:h-44 sm:h-48 w-full bg-[url('/pexels-maorattias-5191958.jpg')] bg-cover bg-center" />
+              <div className="p-4 xs:p-6 sm:p-8 space-y-3.5 xs:space-y-4 text-left">
                 <span className="text-[9px] font-black text-[#5A554E] uppercase tracking-widest block">For Students</span>
-                <h3 className="text-base sm:text-lg font-extrabold text-[#2A2621] uppercase tracking-tight leading-tight">
+                <h3 className="text-sm xs:text-base sm:text-lg font-extrabold text-[#2A2621] uppercase tracking-tight leading-tight break-words">
                   Discover events, join groups, and promote your initiatives.
                 </h3>
-                <ul className="space-y-2.5 text-xs text-[#5A554E] font-medium pt-1">
+                <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-[#5A554E] font-medium pt-1">
                   <li className="flex items-start gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mt-1.5 shrink-0 border border-black/10" />
                     <span>Discover campus events and stay in the loop.</span>
@@ -715,14 +715,14 @@ export default function LandingPage({
             </div>
 
             {/* School & Org Card */}
-            <div className="rounded-[24px] sm:rounded-[28px] border border-black/[0.04] bg-white overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-all">
-              <div className="relative h-40 sm:h-48 w-full bg-[url('/pexels-gu-ko-2150570603-31827067.jpg')] bg-cover bg-center" />
-              <div className="p-5 sm:p-8 space-y-4 text-left">
+            <div className="rounded-[20px] xs:rounded-[24px] sm:rounded-[28px] border border-black/[0.04] bg-white overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-all">
+              <div className="relative h-36 xs:h-44 sm:h-48 w-full bg-[url('/pexels-gu-ko-2150570603-31827067.jpg')] bg-cover bg-center" />
+              <div className="p-4 xs:p-6 sm:p-8 space-y-3.5 xs:space-y-4 text-left">
                 <span className="text-[9px] font-black text-[#5A554E] uppercase tracking-widest block">For Schools & Organizations</span>
-                <h3 className="text-base sm:text-lg font-extrabold text-[#2A2621] uppercase tracking-tight leading-tight">
+                <h3 className="text-sm xs:text-base sm:text-lg font-extrabold text-[#2A2621] uppercase tracking-tight leading-tight break-words">
                   Publish events, coordinate groups, and monitor engagement.
                 </h3>
-                <ul className="space-y-2.5 text-xs text-[#5A554E] font-medium pt-1">
+                <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-[#5A554E] font-medium pt-1">
                   <li className="flex items-start gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mt-1.5 shrink-0 border border-black/10" />
                     <span>Publish official events and share group announcements.</span>
@@ -748,72 +748,72 @@ export default function LandingPage({
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="bg-[#D8D2BC]/35 border-t border-[#D8D2BC]/30 py-12 sm:py-20">
-        <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
+      <section id="how-it-works" className="bg-[#D8D2BC]/35 border-t border-[#D8D2BC]/30 py-10 xs:py-12 sm:py-20">
+        <div className="mx-auto max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
           
-          <div className="text-center space-y-3 max-w-lg mx-auto">
+          <div className="text-center space-y-2.5 xs:space-y-3 max-w-lg mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">How It Works</span>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-xl xs:text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
               Four Steps. One Outcome: Being Connected.
             </h2>
-            <p className="text-xs text-[#5A554E]">We simplify communication and activities for everyone on campus.</p>
+            <p className="text-xs text-[#5A554E] break-words">We simplify communication and activities for everyone on campus.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 border border-[#D8D2BC]/30 rounded-[24px] sm:rounded-[32px] overflow-hidden bg-white shadow-sm max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 min-[500px]:grid-cols-2 border border-[#D8D2BC]/30 rounded-[20px] xs:rounded-[24px] sm:rounded-[32px] overflow-hidden bg-white shadow-sm max-w-4xl mx-auto">
             
             {/* Step 1 */}
-            <div className="p-5 sm:p-8 space-y-3 text-left border-b md:border-r border-[#D8D2BC]/30">
+            <div className="p-4 xs:p-6 sm:p-8 space-y-2.5 xs:space-y-3 text-left border-b min-[500px]:border-r border-[#D8D2BC]/30">
               <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#5A554E] block">Step 01</span>
               <div className="h-9 w-9 rounded-full bg-[#D8D2BC]/30 flex items-center justify-center text-[#2A2621] border border-[#D8D2BC]/40 shadow-inner">
                 <Mail className="h-4.5 w-4.5 stroke-[1.8]" />
               </div>
-              <h3 className="text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug">
+              <h3 className="text-xs xs:text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug break-words">
                 Sign up with your school email
               </h3>
-              <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
+              <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium break-words">
                 Students verify their identity using their official university email to ensure a secure, trusted environment.
               </p>
             </div>
 
             {/* Step 2 */}
-            <div className="p-5 sm:p-8 space-y-3 text-left border-b border-[#D8D2BC]/30">
+            <div className="p-4 xs:p-6 sm:p-8 space-y-2.5 xs:space-y-3 text-left border-b border-[#D8D2BC]/30">
               <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#5A554E] block">Step 02</span>
               <div className="h-9 w-9 rounded-full bg-[#D8D2BC]/30 flex items-center justify-center text-[#2A2621] border border-[#D8D2BC]/40 shadow-inner">
                 <Search className="h-4.5 w-4.5 stroke-[1.8]" />
               </div>
-              <h3 className="text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug">
+              <h3 className="text-xs xs:text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug break-words">
                 Discover campus life
               </h3>
-              <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
+              <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium break-words">
                 Browse events, student organizations, promotions, and opportunities personalized specifically to your campus.
               </p>
             </div>
 
             {/* Step 3 */}
-            <div className="p-5 sm:p-8 space-y-3 text-left border-b md:border-b-0 md:border-r border-[#D8D2BC]/30">
+            <div className="p-4 xs:p-6 sm:p-8 space-y-2.5 xs:space-y-3 text-left border-b min-[500px]:border-b-0 min-[500px]:border-r border-[#D8D2BC]/30">
               <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#5A554E] block">Step 03</span>
               <div className="h-9 w-9 rounded-full bg-[#D8D2BC]/30 flex items-center justify-center text-[#2A2621] border border-[#D8D2BC]/40 shadow-inner">
                 <Users className="h-4.5 w-4.5 stroke-[1.8]" />
               </div>
-              <h3 className="text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug">
+              <h3 className="text-xs xs:text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug break-words">
                 Connect with peers
               </h3>
-              <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
+              <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium break-words">
                 Join organizations, RSVP to events, interact with your campus community, and discover new experiences.
               </p>
             </div>
 
             {/* Step 4 */}
-            <div className="p-5 sm:p-8 space-y-3 text-left">
+            <div className="p-4 xs:p-6 sm:p-8 space-y-2.5 xs:space-y-3 text-left">
               <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#5A554E] block">Step 04</span>
               <div className="h-9 w-9 rounded-full bg-[#D8D2BC]/30 flex items-center justify-center text-[#2A2621] border border-[#D8D2BC]/40 shadow-inner">
                 <Plus className="h-4.5 w-4.5 stroke-[1.8]" />
               </div>
-              <h3 className="text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug">
+              <h3 className="text-xs xs:text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug break-words">
                 Create new content
               </h3>
-              <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
-              Allow every verified student to create events, promotions, and activities. Organization members simply receive additional management permissions.
+              <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium break-words">
+                Allow every verified student to create events, promotions, and activities. Organization members simply receive additional management permissions.
               </p>
             </div>
 
@@ -822,98 +822,98 @@ export default function LandingPage({
       </section>
 
       {/* Core Features Section */}
-      <section id="features" className="bg-[#EAE4CF] border-t border-[#D8D2BC] py-12 sm:py-20">
-        <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
+      <section id="features" className="bg-[#EAE4CF] border-t border-[#D8D2BC] py-10 xs:py-12 sm:py-20">
+        <div className="mx-auto max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
           
-          <div className="text-center space-y-3 max-w-lg mx-auto">
+          <div className="text-center space-y-2.5 xs:space-y-3 max-w-lg mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Core Features</span>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-xl xs:text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
               Everything You Need for Campus Life
             </h2>
-            <p className="text-xs text-[#5A554E]">A modular, streetwear-inspired hub connecting your entire university community.</p>
+            <p className="text-xs text-[#5A554E] break-words">A modular, streetwear-inspired hub connecting your entire university community.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 border border-[#D8D2BC] rounded-[24px] sm:rounded-[32px] overflow-hidden bg-white shadow-sm">
+          <div className="grid grid-cols-1 min-[500px]:grid-cols-2 border border-[#D8D2BC] rounded-[20px] xs:rounded-[24px] sm:rounded-[32px] overflow-hidden bg-white shadow-sm">
             
             {/* Card 1: Campus Events */}
-            <div className="group p-5 sm:p-8 space-y-3.5 text-left border-b md:border-r border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
-              <div className="space-y-3.5">
+            <div className="group p-4 xs:p-6 sm:p-8 space-y-3 text-left border-b min-[500px]:border-r border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
+              <div className="space-y-3">
                 <span className="inline-block text-[8px] font-black uppercase tracking-widest bg-[#D8D2BC]/40 text-[#5A554E] px-2.5 py-0.5 rounded-full w-fit">Feature 01</span>
                 <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#FB1C07]/10 to-[#FC7C0B]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[#FD5C05] shadow-sm group-hover:scale-105 transition-transform duration-300">
                   <Calendar className="h-4 w-4" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-sm font-extrabold text-[#2A2621] group-hover:text-[#FD5C05] transition-colors duration-300 leading-snug">
+                  <h3 className="text-xs xs:text-sm font-extrabold text-[#2A2621] group-hover:text-[#FD5C05] transition-colors duration-300 leading-snug break-words">
                     Campus Events
                   </h3>
                   <h4 className="text-[10px] font-bold text-[#5A554E]/60 uppercase tracking-wider">
                     Discover everything happening on campus.
                   </h4>
                 </div>
-                <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
+                <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium break-words">
                   Discover everything happening on campus in one place. Browse school events, organization activities, workshops, sports, cultural events, and more.
                 </p>
               </div>
             </div>
 
             {/* Card 2: Student Organizations */}
-            <div className="group p-5 sm:p-8 space-y-3.5 text-left border-b border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
-              <div className="space-y-3.5">
+            <div className="group p-4 xs:p-6 sm:p-8 space-y-3 text-left border-b border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
+              <div className="space-y-3">
                 <span className="inline-block text-[8px] font-black uppercase tracking-widest bg-[#D8D2BC]/40 text-[#5A554E] px-2.5 py-0.5 rounded-full w-fit">Feature 02</span>
                 <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#FB1C07]/10 to-[#FC7C0B]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[#FD5C05] shadow-sm group-hover:scale-105 transition-transform duration-300">
                   <Users className="h-4 w-4" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-sm font-extrabold text-[#2A2621] group-hover:text-[#FD5C05] transition-colors duration-300 leading-snug">
+                  <h3 className="text-xs xs:text-sm font-extrabold text-[#2A2621] group-hover:text-[#FD5C05] transition-colors duration-300 leading-snug break-words">
                     Student Organizations
                   </h3>
                   <h4 className="text-[10px] font-bold text-[#5A554E]/60 uppercase tracking-wider">
                     Explore clubs, teams, and student communities.
                   </h4>
                 </div>
-                <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
+                <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium break-words">
                   Explore clubs, teams, and student communities. Join groups that match your interests, view their events, and discover members.
                 </p>
               </div>
             </div>
 
             {/* Card 3: Event Creation */}
-            <div className="group p-5 sm:p-8 space-y-3.5 text-left border-b md:border-b-0 md:border-r border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
-              <div className="space-y-3.5">
+            <div className="group p-4 xs:p-6 sm:p-8 space-y-3 text-left border-b min-[500px]:border-b-0 min-[500px]:border-r border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
+              <div className="space-y-3">
                 <span className="inline-block text-[8px] font-black uppercase tracking-widest bg-[#D8D2BC]/40 text-[#5A554E] px-2.5 py-0.5 rounded-full w-fit">Feature 03</span>
                 <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#FB1C07]/10 to-[#FC7C0B]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[#FD5C05] shadow-sm group-hover:scale-105 transition-transform duration-300">
                   <Plus className="h-4 w-4" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-sm font-extrabold text-[#2A2621] group-hover:text-[#FD5C05] transition-colors duration-300 leading-snug">
+                  <h3 className="text-xs xs:text-sm font-extrabold text-[#2A2621] group-hover:text-[#FD5C05] transition-colors duration-300 leading-snug break-words">
                     Event Creation
                   </h3>
                   <h4 className="text-[10px] font-bold text-[#5A554E]/60 uppercase tracking-wider">
                     Create events in minutes.
                   </h4>
                 </div>
-                <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
+                <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium break-words">
                   Create and manage campus events with an easy publishing flow. Share events and activities with the entire campus, whether you're a student or school administrator.
                 </p>
               </div>
             </div>
 
             {/* Card 4: Promotions */}
-            <div className="group p-5 sm:p-8 space-y-3.5 text-left flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
-              <div className="space-y-3.5">
+            <div className="group p-4 xs:p-6 sm:p-8 space-y-3 text-left flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
+              <div className="space-y-3">
                 <span className="inline-block text-[8px] font-black uppercase tracking-widest bg-[#D8D2BC]/40 text-[#5A554E] px-2.5 py-0.5 rounded-full w-fit">Feature 04</span>
                 <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#FB1C07]/10 to-[#FC7C0B]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[#FD5C05] shadow-sm group-hover:scale-105 transition-transform duration-300">
                   <Sparkles className="h-4 w-4" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-sm font-extrabold text-[#2A2621] group-hover:text-[#FD5C05] transition-colors duration-300 leading-snug">
+                  <h3 className="text-xs xs:text-sm font-extrabold text-[#2A2621] group-hover:text-[#FD5C05] transition-colors duration-300 leading-snug break-words">
                     Promotions
                   </h3>
                   <h4 className="text-[10px] font-bold text-[#5A554E]/60 uppercase tracking-wider">
                     Promote what you do.
                   </h4>
                 </div>
-                <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
+                <p className="text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium break-words">
                   Advertise tutoring, photography, small businesses, food sales, student services, and campus initiatives. Share services and opportunities with the campus community.
                 </p>
               </div>
@@ -924,11 +924,11 @@ export default function LandingPage({
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="bg-[#EAE4CF] border-t border-[#D8D2BC] py-12 sm:py-20">
-        <div className="mx-auto max-w-3xl px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
-          <div className="text-center space-y-3 max-w-lg mx-auto">
+      <section id="faq" className="bg-[#EAE4CF] border-t border-[#D8D2BC] py-10 xs:py-12 sm:py-20">
+        <div className="mx-auto max-w-3xl px-3.5 xs:px-5 sm:px-6 md:px-8 space-y-6 xs:space-y-8 sm:space-y-12">
+          <div className="text-center space-y-2.5 xs:space-y-3 max-w-lg mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Questions</span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#2A2621]">Frequently Asked Questions</h2>
+            <h2 className="text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-[#2A2621]">Frequently Asked Questions</h2>
           </div>
 
           <div className="space-y-3 sm:space-y-4">
@@ -937,13 +937,13 @@ export default function LandingPage({
               return (
                 <div 
                   key={index}
-                  className="bg-white rounded-[20px] sm:rounded-[24px] border border-[#D8D2BC] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+                  className="bg-white rounded-[18px] xs:rounded-[20px] sm:rounded-[24px] border border-[#D8D2BC] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
                 >
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full p-4 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none select-none"
+                    className="w-full p-3.5 xs:p-5 sm:p-6 text-left flex items-center justify-between gap-3 xs:gap-4 cursor-pointer focus:outline-none select-none"
                   >
-                    <span className="text-xs sm:text-sm font-extrabold text-[#2A2621] uppercase tracking-wide">
+                    <span className="text-[11px] xs:text-xs sm:text-sm font-extrabold text-[#2A2621] uppercase tracking-wide break-words">
                       {item.question}
                     </span>
                     <motion.div
@@ -965,7 +965,7 @@ export default function LandingPage({
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.25, ease: 'easeInOut' }}
                       >
-                        <div className="px-4 sm:px-6 pb-4 sm:pb-6 pt-1 text-xs text-[#5A554E] leading-relaxed font-medium border-t border-[#D8D2BC] text-left">
+                        <div className="px-3.5 xs:px-5 sm:px-6 pb-4 sm:pb-6 pt-1 text-[11px] xs:text-xs text-[#5A554E] leading-relaxed font-medium border-t border-[#D8D2BC] text-left break-words">
                           {item.answer}
                         </div>
                       </motion.div>
@@ -979,31 +979,31 @@ export default function LandingPage({
       </section>
 
       {/* Get Started CTA Section */}
-      <section id="get-started" className="mx-auto max-w-7xl px-4 md:px-6 py-16 md:py-24 w-full relative z-10">
+      <section id="get-started" className="mx-auto max-w-7xl px-3.5 xs:px-4 md:px-6 py-10 xs:py-12 sm:py-16 md:py-24 w-full relative z-10">
         <div 
-          className="relative w-full rounded-[32px] md:rounded-[44px] overflow-hidden border border-[#FD5C05]/20 shadow-2xl p-8 sm:p-12 md:p-16 text-white text-center flex flex-col justify-center items-center min-h-[480px]"
+          className="relative w-full rounded-[20px] xs:rounded-[28px] sm:rounded-[32px] md:rounded-[44px] overflow-hidden border border-[#FD5C05]/20 shadow-2xl p-4 xs:p-6 sm:p-12 md:p-16 text-white text-center flex flex-col justify-center items-center min-h-[380px] xs:min-h-[440px] sm:min-h-[480px]"
           style={{ background: 'radial-gradient(circle at 20% 20%, rgba(251, 28, 7, 0.18) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(252, 124, 11, 0.14) 0%, transparent 55%), linear-gradient(135deg, #2A2621 0%, #171512 100%)' }}
         >
           {/* Subtle Ambient Glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-32 bg-[#FD5C05]/10 blur-3xl pointer-events-none" />
 
           {/* Content */}
-          <div className="relative z-20 space-y-6 max-w-xl w-full flex flex-col items-center">
+          <div className="relative z-20 space-y-4 xs:space-y-6 max-w-xl w-full flex flex-col items-center">
             {/* Top Sub-header Badge matching reference */}
-            <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] text-[#FC7C0B]/90">
+            <span className="text-[9px] xs:text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#FC7C0B]/90">
               EARLY ACCESS — LIMITED SPOTS
             </span>
 
             {/* Main Title matching reference layout */}
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight md:tracking-tighter leading-[1.08] text-white text-center">
+            <h2 className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight md:tracking-tighter leading-[1.1] sm:leading-[1.08] text-white text-center break-words">
               Be first to experience <br />
-              <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent inline-block">
                 campus differently.
               </span>
             </h2>
 
             {/* Subtext description matching reference structure */}
-            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed font-medium max-w-md mx-auto text-center">
+            <p className="text-[11px] xs:text-xs sm:text-sm text-gray-300 leading-relaxed font-medium max-w-md mx-auto text-center break-words">
               Join students getting priority access at launch. <br className="hidden sm:inline" />
               Free to join, no spam, real campus connections.
             </p>
@@ -1013,16 +1013,16 @@ export default function LandingPage({
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="w-full max-w-md bg-white/10 border border-white/15 rounded-[24px] p-6 text-center space-y-2 mt-2"
+                className="w-full max-w-md bg-white/10 border border-white/15 rounded-[20px] xs:rounded-[24px] p-5 xs:p-6 text-center space-y-2 mt-2"
               >
-                <div className="h-10 w-10 rounded-full bg-[#FD5C05]/20 text-[#FD5C05] flex items-center justify-center mx-auto mb-2">
-                  <Check className="h-5 w-5" />
+                <div className="h-9 w-9 xs:h-10 xs:w-10 rounded-full bg-[#FD5C05]/20 text-[#FD5C05] flex items-center justify-center mx-auto mb-2">
+                  <Check className="h-4 w-4 xs:h-5 xs:w-5" />
                 </div>
-                <h3 className="text-base font-extrabold text-[#FC7C0B]">You're on the waitlist!</h3>
-                <p className="text-xs text-gray-300">We'll notify you as soon as access opens for your campus.</p>
+                <h3 className="text-sm xs:text-base font-extrabold text-[#FC7C0B]">You're on the waitlist!</h3>
+                <p className="text-[11px] xs:text-xs text-gray-300">We'll notify you as soon as access opens for your campus.</p>
               </motion.div>
             ) : (
-              <form onSubmit={handleWaitlistSubmit} className="w-full max-w-md space-y-3.5 pt-2">
+              <form onSubmit={handleWaitlistSubmit} className="w-full max-w-md space-y-3 xs:space-y-3.5 pt-2">
                 {/* Input 1: Anonymous name (optional) / Name (optional) */}
                 <div className="relative">
                   <input
@@ -1030,7 +1030,7 @@ export default function LandingPage({
                     value={waitlistName}
                     onChange={(e) => setWaitlistName(e.target.value)}
                     placeholder="Name (optional)"
-                    className="w-full rounded-full bg-white/[0.07] hover:bg-white/[0.1] focus:bg-white/[0.12] border border-white/15 focus:border-[#FD5C05] px-6 py-4 text-xs sm:text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 text-center font-medium shadow-inner"
+                    className="w-full rounded-full bg-white/[0.07] hover:bg-white/[0.1] focus:bg-white/[0.12] border border-white/15 focus:border-[#FD5C05] px-4 xs:px-6 py-3 xs:py-4 text-xs sm:text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 text-center font-medium shadow-inner"
                   />
                 </div>
 
@@ -1041,14 +1041,14 @@ export default function LandingPage({
                     value={waitlistEmail}
                     onChange={(e) => setWaitlistEmail(e.target.value)}
                     placeholder="you@example.com"
-                    className="w-full rounded-full bg-white/[0.07] hover:bg-white/[0.1] focus:bg-white/[0.12] border border-white/15 focus:border-[#FD5C05] px-6 py-4 text-xs sm:text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 text-center font-medium shadow-inner"
+                    className="w-full rounded-full bg-white/[0.07] hover:bg-white/[0.1] focus:bg-white/[0.12] border border-white/15 focus:border-[#FD5C05] px-4 xs:px-6 py-3 xs:py-4 text-xs sm:text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 text-center font-medium shadow-inner"
                   />
                 </div>
 
                 {/* Pill CTA Button matching reference */}
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-[#EAE4CF] hover:bg-white hover:-translate-y-0.5 py-4 px-6 text-xs sm:text-sm font-black text-[#2A2621] shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 group"
+                  className="w-full rounded-full bg-[#EAE4CF] hover:bg-white hover:-translate-y-0.5 py-3 xs:py-4 px-4 xs:px-6 text-xs sm:text-sm font-black text-[#2A2621] shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 group"
                 >
                   <span>Join waitlist</span>
                   <ArrowRight className="h-4 w-4 text-[#2A2621] group-hover:translate-x-1 transition-transform" />
@@ -1061,21 +1061,21 @@ export default function LandingPage({
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#2A2621] border-t border-white/5 py-12 sm:py-16 md:py-20 text-white relative z-10">
-        <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 space-y-10 sm:space-y-12">
+      <footer className="bg-[#2A2621] border-t border-white/5 py-10 xs:py-12 sm:py-16 md:py-20 text-white relative z-10">
+        <div className="mx-auto max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 space-y-8 xs:space-y-10 sm:space-y-12">
           
           {/* Top row: Column Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 md:gap-8 text-left">
+          <div className="grid grid-cols-1 min-[450px]:grid-cols-2 md:grid-cols-12 gap-6 xs:gap-8 text-left">
             
             {/* Left Description Column */}
-            <div className="sm:col-span-2 md:col-span-6 space-y-4">
+            <div className="min-[450px]:col-span-2 md:col-span-6 space-y-3.5 xs:space-y-4">
               <EvidaLogo size={36} lightMode={false} text="EVIDA" />
-              <p className="text-xs text-[#5A554E] leading-relaxed max-w-xs font-semibold">
+              <p className="text-xs text-[#5A554E] leading-relaxed max-w-xs font-semibold break-words">
                 Bringing students, organizations, and schools together through one connected campus experience.
               </p>
               
               {/* Connect icons */}
-              <div className="flex items-center gap-3.5 pt-2">
+              <div className="flex items-center gap-3.5 pt-1 xs:pt-2">
                 <a href="mailto:info@myevida.app" className="text-[#5A554E] hover:text-[#FD5C05] transition-colors" title="Email Us">
                   <Mail className="h-4.5 w-4.5" />
                 </a>
@@ -1090,7 +1090,7 @@ export default function LandingPage({
             </div>
 
             {/* Product Column */}
-            <div className="sm:col-span-1 md:col-span-2 space-y-3.5">
+            <div className="min-[450px]:col-span-1 md:col-span-2 space-y-3">
               <span className="text-[10px] font-black uppercase tracking-widest text-white block">Product</span>
               <ul className="flex flex-col gap-2 text-xs text-[#5A554E] font-semibold">
                 <li>
@@ -1115,7 +1115,7 @@ export default function LandingPage({
             </div>
 
             {/* Company Column */}
-            <div className="sm:col-span-1 md:col-span-2 space-y-3.5">
+            <div className="min-[450px]:col-span-1 md:col-span-2 space-y-3">
               <span className="text-[10px] font-black uppercase tracking-widest text-white block">Company</span>
               <ul className="flex flex-col gap-2 text-xs text-[#5A554E] font-semibold">
                 <li>
@@ -1131,7 +1131,7 @@ export default function LandingPage({
             </div>
 
             {/* Legal Column */}
-            <div className="sm:col-span-1 md:col-span-2 space-y-3.5">
+            <div className="min-[450px]:col-span-1 md:col-span-2 space-y-3">
               <span className="text-[10px] font-black uppercase tracking-widest text-white block">Legal</span>
               <ul className="flex flex-col gap-2 text-xs text-[#5A554E] font-semibold">
                 <li>
@@ -1146,7 +1146,7 @@ export default function LandingPage({
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#5A554E] font-medium text-center md:text-left">
+          <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] xs:text-xs text-[#5A554E] font-medium text-center md:text-left">
             <span>© 2026 Evida. Built for campus life.</span>
           </div>
 
