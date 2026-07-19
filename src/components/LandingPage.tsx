@@ -334,10 +334,11 @@ export default function LandingPage({
               Now in private beta
             </div>
 
-            {/* 2. Full Two-Line Headline */}
-            <h1 className="text-[clamp(24px,7vw,36px)] sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-white">
-              Everything happening <br />
-              <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent">
+            {/* 2. Headline: 3 lines on mobile, 2 lines on desktop */}
+            <h1 className="text-[clamp(28px,8vw,36px)] sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-white">
+              <span className="block sm:inline">Everything</span>{' '}
+              <span className="block sm:inline">happening</span> <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent block sm:inline">
                 on campus.
               </span>
             </h1>
