@@ -366,3 +366,180 @@ body.preview-mode .md\:hidden.sticky.top-0 {
 body.preview-mode main {
   padding-top: 76px !important;
 }
+
+/* ───────────────────────────────────────────────
+   Interactive Demo Preview Mode Optimizations
+   ─────────────────────────────────────────────── */
+body.preview-mode {
+  font-size: 13px !important;
+  background-color: #D8D2BC !important;
+}
+
+body.preview-mode .max-w-5xl {
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  max-width: 100% !important;
+}
+
+/* Dashboard Page Header & Search */
+body.preview-mode h1 {
+  font-size: 1.25rem !important;
+  line-height: 1.2 !important;
+}
+
+body.preview-mode .border-b.pb-4 {
+  padding-bottom: 0.5rem !important;
+}
+
+body.preview-mode input {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  font-size: 0.75rem !important;
+}
+
+/* Feed Segmented Toggle & Categories */
+body.preview-mode .relative.w-full.rounded-full.border.bg-black\/\[0\.03\] button {
+  padding-top: 0.35rem !important;
+  padding-bottom: 0.35rem !important;
+}
+
+body.preview-mode .relative.w-full.rounded-full.border.bg-black\/\[0\.03\] span {
+  font-size: 9px !important;
+}
+
+body.preview-mode .flex.gap-2.overflow-x-auto button {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+  font-size: 8px !important;
+}
+
+/* Feed Cards */
+body.preview-mode .grid.grid-cols-1 {
+  gap: 0.75rem !important;
+}
+
+body.preview-mode [data-tour="event-card"] {
+  border-radius: 20px !important;
+}
+
+body.preview-mode [data-tour="event-card"] .h-36 {
+  height: 90px !important;
+}
+
+body.preview-mode [data-tour="event-card"] .p-5 {
+  padding: 0.75rem !important;
+}
+
+body.preview-mode [data-tour="event-card"] h3 {
+  font-size: 0.875rem !important;
+  line-height: 1.25 !important;
+}
+
+body.preview-mode [data-tour="event-card"] p {
+  font-size: 8px !important;
+}
+
+body.preview-mode [data-tour="event-card"] .top-4 {
+  top: 0.5rem !important;
+}
+
+body.preview-mode [data-tour="event-card"] .left-4 {
+  left: 0.5rem !important;
+}
+
+body.preview-mode [data-tour="event-card"] .right-12 {
+  right: 2.25rem !important;
+}
+
+body.preview-mode [data-tour="event-card"] .top-3\.5 {
+  top: 0.35rem !important;
+}
+
+body.preview-mode [data-tour="event-card"] .right-3\.5 {
+  right: 0.35rem !important;
+}
+
+/* Event Details Page */
+body.preview-mode .min-h-screen.bg-\[\#08080B\] .h-\[50vh\] {
+  height: 140px !important;
+  min-height: 140px !important;
+}
+
+body.preview-mode .min-h-screen.bg-\[\#08080B\] .top-6 {
+  top: 0.5rem !important;
+}
+
+body.preview-mode .min-h-screen.bg-\[\#08080B\] .left-6 {
+  left: 0.5rem !important;
+}
+
+body.preview-mode .min-h-screen.bg-\[\#08080B\] .right-6 {
+  right: 0.5rem !important;
+}
+
+body.preview-mode .min-h-screen.bg-\[\#08080B\] .bottom-10 {
+  bottom: 0.5rem !important;
+}
+
+body.preview-mode .min-h-screen.bg-\[\#08080B\] h1.text-4xl {
+  font-size: 1.125rem !important;
+  line-height: 1.2 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+body.preview-mode .min-h-screen.bg-\[\#08080B\] .px-6.py-12 {
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  padding-top: 0.75rem !important;
+  padding-bottom: 2rem !important;
+  gap: 0.75rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+body.preview-mode .min-h-screen.bg-\[\#08080B\] section {
+  margin-bottom: 0.5rem !important;
+}
+
+body.preview-mode .min-h-screen.bg-\[\#08080B\] h2 {
+  font-size: 0.875rem !important;
+}
+
+body.preview-mode .min-h-screen.bg-\[\#08080B\] p {
+  font-size: 0.75rem !important;
+  line-height: 1.4 !important;
+}
+
+body.preview-mode [data-tour="rsvp-section"] {
+  padding: 0.75rem !important;
+  border-radius: 16px !important;
+}
+
+body.preview-mode [data-tour="rsvp-section"] .space-y-4 > .flex {
+  gap: 0.5rem !important;
+}
+
+body.preview-mode [data-tour="rsvp-section"] .h-12 {
+  height: 2.25rem !important;
+  width: 2.25rem !important;
+  border-radius: 10px !important;
+}
+
+body.preview-mode [data-tour="rsvp-section"] h3 {
+  font-size: 0.75rem !important;
+}
+
+body.preview-mode [data-tour="rsvp-section"] p {
+  font-size: 0.65rem !important;
+}
+
+body.preview-mode [data-tour="rsvp-section"] .pt-6 {
+  padding-top: 0.75rem !important;
+}
+
+body.preview-mode [data-tour="rsvp-section"] .p-5 {
+  padding: 0.75rem !important;
+}
+
