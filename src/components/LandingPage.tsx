@@ -431,27 +431,25 @@ export default function LandingPage({
             </div>
 
             {/* ── Center: Smartphone Shell ──────────────────────────────── */}
-            <div className="flex flex-col items-center gap-5 w-full max-w-[320px] sm:max-w-none">
+            <div className="flex flex-col items-center gap-4 sm:gap-5 w-full max-w-full">
 
               {/* Phone Device */}
               <div
                 onClick={handlePhoneClick}
-                className="relative cursor-pointer w-full max-w-[280px] sm:max-w-[290px] mx-auto"
-                style={{ filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.6))' }}
+                className="relative cursor-pointer w-[280px] min-[380px]:w-[290px] sm:w-[310px] md:w-[320px] mx-auto transition-all duration-300"
+                style={{ filter: 'drop-shadow(0 25px 50px rgba(0,0,0,0.65))' }}
               >
-                {/* Overlay removed to support natural scrolling onboarding */}
-
                 {/* Phone Shell */}
-                <div className="relative w-full h-[580px] sm:h-[620px] rounded-[40px] sm:rounded-[44px] border-[8px] sm:border-[10px] border-[#0A0805] bg-[#D8D2BC] overflow-hidden select-none shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]">
+                <div className="relative w-full h-[560px] min-[380px]:h-[590px] sm:h-[620px] md:h-[640px] rounded-[38px] min-[380px]:rounded-[42px] sm:rounded-[44px] border-[7px] min-[380px]:border-[9px] sm:border-[10px] border-[#0A0805] bg-[#D8D2BC] overflow-hidden select-none shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]">
 
                   {/* Gloss overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent z-40 pointer-events-none rounded-[34px]" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent z-40 pointer-events-none rounded-[32px] sm:rounded-[34px]" />
 
                   {/* Dynamic Island */}
-                  <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[88px] h-[26px] bg-[#0A0805] rounded-full z-50 pointer-events-none shadow-inner" />
+                  <div className="absolute top-2.5 sm:top-3 left-1/2 -translate-x-1/2 w-[76px] min-[380px]:w-[84px] sm:w-[88px] h-[22px] sm:h-[26px] bg-[#0A0805] rounded-full z-50 pointer-events-none shadow-inner" />
 
                   {/* Status Bar */}
-                  <div className={`absolute top-2.5 inset-x-5 z-50 flex items-center justify-between text-[8px] font-bold select-none pointer-events-none transition-colors duration-500 ${currentPath.startsWith('/events/') ? 'text-white/80' : 'text-[#2A2621]/70'}`}>
+                  <div className={`absolute top-2 sm:top-2.5 inset-x-4 sm:inset-x-5 z-50 flex items-center justify-between text-[7px] sm:text-[8px] font-bold select-none pointer-events-none transition-colors duration-500 ${currentPath.startsWith('/events/') ? 'text-white/80' : 'text-[#2A2621]/70'}`}>
                     <span>9:41</span>
                     <div className="flex items-center gap-1">
                       <Signal className="h-2 w-2" />
@@ -461,14 +459,14 @@ export default function LandingPage({
                   </div>
 
                   {/* Home Indicator */}
-                  <div className={`absolute bottom-2 left-1/2 -translate-x-1/2 w-24 h-[3px] rounded-full z-50 pointer-events-none transition-colors duration-500 ${currentPath.startsWith('/events/') ? 'bg-white/30' : 'bg-[#2A2621]/20'}`} />
+                  <div className={`absolute bottom-2 left-1/2 -translate-x-1/2 w-20 sm:w-24 h-[3px] rounded-full z-50 pointer-events-none transition-colors duration-500 ${currentPath.startsWith('/events/') ? 'bg-white/30' : 'bg-[#2A2621]/20'}`} />
 
                   {/* Live Iframe — the real Evida app */}
                   <iframe
                     ref={iframeRef}
                     src="/student/dashboard?preview=true"
-                    className="absolute inset-0 w-full h-full border-none bg-[#D8D2BC]"
-                    style={{ borderRadius: '34px' }}
+                    className="absolute inset-0 w-full h-full border-none bg-[#D8D2BC] touch-pan-y"
+                    style={{ borderRadius: '32px' }}
                     title="Evida App Demo"
                   />
                 </div>
@@ -511,18 +509,39 @@ export default function LandingPage({
                 </button>
               </div>
 
-              {/* Mobile step label */}
+              {/* Responsive Mobile Step Card */}
               <AnimatePresence mode="wait">
-                <motion.p
+                <motion.div
                   key={tourStep}
-                  initial={{ opacity: 0, y: 4 }}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
+                  exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.2 }}
-                  className="lg:hidden text-[10px] font-black uppercase tracking-wider text-white/40 text-center"
+                  className="lg:hidden w-full max-w-[280px] min-[380px]:max-w-[290px] sm:max-w-[310px] bg-white/[0.04] border border-white/[0.08] rounded-2xl p-4 text-center space-y-2 mt-1"
                 >
-                  {tourStep + 1} / {TOUR_STEPS.length} — {TOUR_STEPS[tourStep].label}
-                </motion.p>
+                  <div className="flex items-center justify-center gap-1.5">
+                    <span className="text-xl">{TOUR_STEPS[tourStep].emoji}</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#FD5C05]">
+                      Step {tourStep + 1} of {TOUR_STEPS.length} — {TOUR_STEPS[tourStep].label}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-white/50 leading-relaxed font-medium">
+                    {TOUR_STEPS[tourStep].description}
+                  </p>
+                  <p className="text-[9px] font-bold text-[#FD5C05]/70 uppercase tracking-wider pt-0.5">
+                    {TOUR_STEPS[tourStep].hint}
+                  </p>
+                  {tourStep === TOUR_STEPS.length - 1 && (
+                    <div className="pt-1.5">
+                      <a
+                        href="#get-started"
+                        className="block w-full text-center bg-[#FD5C05] hover:bg-[#e84e00] text-[#2A2621] font-black text-[10px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition-all shadow-[0_0_16px_rgba(253,92,5,0.3)]"
+                      >
+                        Join Waitlist →
+                      </a>
+                    </div>
+                  )}
+                </motion.div>
               </AnimatePresence>
             </div>
 
