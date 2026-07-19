@@ -43,6 +43,90 @@ export default function StudentDashboardPage() {
   const [shareToast, setShareToast] = useState(false);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
 
+  // ── Onboarding Preview States & Effects ──
+  const [isPreview, setIsPreview] = useState(false);
+  const [onboardingStep, setOnboardingStep] = useState(0);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [scrollLocked, setScrollLocked] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const isPreviewMode = urlParams.get('preview') === 'true' || sessionStorage.getItem('evida_preview') === 'true';
+      setIsPreview(isPreviewMode);
+      if (isPreviewMode) {
+        const saved = sessionStorage.getItem('evida_onboarding_step');
+        const initialStep = saved ? parseInt(saved, 10) : 0;
+        setOnboardingStep(initialStep);
+        if (initialStep >= 1) {
+          setHasScrolled(true);
+        }
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isPreview) return;
+    
+    const handleReset = () => {
+      setOnboardingStep(0);
+      setHasScrolled(false);
+      setScrollLocked(false);
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('evida_onboarding_step', '0');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+    
+    window.addEventListener('evida_reset_onboarding', handleReset);
+    return () => {
+      window.removeEventListener('evida_reset_onboarding', handleReset);
+    };
+  }, [isPreview]);
+
+  useEffect(() => {
+    if (!isPreview || onboardingStep !== 0) return;
+
+    const handleScroll = () => {
+      const card = document.getElementById('event-card-evt-career-night');
+      if (!card) return;
+
+      const rect = card.getBoundingClientRect();
+      
+      if (window.scrollY > 20) {
+        setHasScrolled(true);
+      }
+
+      if (rect.top <= window.innerHeight * 0.65) {
+        setOnboardingStep(1);
+        sessionStorage.setItem('evida_onboarding_step', '1');
+        window.parent.postMessage({ type: 'EVIDA_TOUR_STEP_UPDATE', step: 1 }, '*');
+        setScrollLocked(true);
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isPreview, onboardingStep]);
+
+  useEffect(() => {
+    if (isPreview && scrollLocked) {
+      document.body.style.overflow = 'hidden';
+      const preventDefault = (e: any) => e.preventDefault();
+      window.addEventListener('wheel', preventDefault, { passive: false });
+      window.addEventListener('touchmove', preventDefault, { passive: false });
+      
+      return () => {
+        document.body.style.overflow = 'unset';
+        window.removeEventListener('wheel', preventDefault);
+        window.removeEventListener('touchmove', preventDefault);
+      };
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isPreview, scrollLocked]);
+
   // Fetch promotions
   useEffect(() => {
     const fetchPromotions = async () => {
@@ -396,13 +480,15 @@ export default function StudentDashboardPage() {
 
                 const coverImgUrl = isPromo ? (promo?.image || '') : (event?.coverImage || '');
 
+                const cardId = item.id === 'evt-career-night' ? 'event-card-evt-career-night' : `event-card-${item.id}`;
                 return (
                   <motion.div
                     key={item.id}
+                    id={cardId}
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     data-tour="event-card"
-                    className="bg-white rounded-3xl border border-black/[0.04] shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group"
+                    className="bg-white rounded-3xl border border-black/[0.04] shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group relative"
                   >
                     {/* Event/Promo Image Banner */}
                     <div
@@ -554,12 +640,37 @@ export default function StudentDashboardPage() {
                           </a>
                         ) : (
                           event && (
-                            <Link
-                              href={`/events/${event.id}`}
-                              className="flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider bg-[#2A2621] text-white hover:bg-[#2a2a2a] transition-all flex items-center justify-center gap-1.5 cursor-pointer text-center"
-                            >
-                              View Event
-                            </Link>
+                            <div className="flex-1 relative">
+                              <Link
+                                href={isPreview ? `/events/${event.id}?preview=true` : `/events/${event.id}`}
+                                className={`w-full py-2 rounded-xl text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer text-center transition-all duration-300 ${
+                                  isPreview && onboardingStep === 1 && event.id === 'evt-career-night'
+                                    ? 'bg-[#FD5C05] text-[#2A2621] ring-4 ring-[#FD5C05]/30 shadow-[0_0_15px_rgba(253,92,5,0.4)] scale-[1.02] z-30 animate-pulse font-black'
+                                    : 'bg-[#2A2621] text-white hover:bg-[#2a2a2a]'
+                                }`}
+                              >
+                                View Event
+                              </Link>
+                              
+                              {isPreview && onboardingStep === 1 && event.id === 'evt-career-night' && (
+                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3.5 z-45 pointer-events-none">
+                                  <motion.div
+                                    initial={{ opacity: 0, y: 8, x: '-50%' }}
+                                    animate={{ opacity: 1, y: 0, x: '-50%' }}
+                                    className="bg-[#FD5C05] text-[#2A2621] text-[8.5px] font-black uppercase tracking-widest px-3 py-2 rounded-xl shadow-2xl flex items-center gap-2 border border-[#EAE4CF]/30 whitespace-nowrap"
+                                    style={{ position: 'relative', left: '0%' }}
+                                  >
+                                    <span>Tap View Event</span>
+                                    <motion.span
+                                      animate={{ y: [0, -4, 0] }}
+                                      transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
+                                    >
+                                      👆
+                                    </motion.span>
+                                  </motion.div>
+                                </div>
+                              )}
+                            </div>
                           )
                         )}
                       </div>
@@ -587,6 +698,33 @@ export default function StudentDashboardPage() {
             className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-[#2A2621] text-white text-[11px] font-bold uppercase tracking-wider px-5 py-2.5 rounded-full shadow-xl"
           >
             Link copied! 🔗
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Onboarding pulsing finger overlay */}
+      <AnimatePresence>
+        {isPreview && onboardingStep === 0 && !hasScrolled && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: 20, x: '-50%' }}
+            className="fixed bottom-8 left-1/2 z-45 bg-[#2A2621]/95 border border-[#D8D2BC]/10 rounded-2xl p-3 flex flex-col items-center justify-center gap-2.5 shadow-2xl pointer-events-none w-[190px]"
+            style={{ transform: 'translateX(-50%)' }}
+          >
+            <motion.div
+              animate={{
+                y: [0, -6, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
+              className="text-2xl select-none"
+            >
+              👆
+            </motion.div>
+            <span className="text-[8.5px] font-black text-[#EAE4CF] uppercase tracking-widest text-center leading-relaxed">
+              scroll inside the phone to explore your feed
+            </span>
           </motion.div>
         )}
       </AnimatePresence>

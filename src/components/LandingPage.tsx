@@ -69,33 +69,33 @@ export default function LandingPage({
   // ── Guided Tour State ──────────────────────────────────────────────
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [tourStep, setTourStep] = useState(0);        // 0..3
-  const [hasInteracted, setHasInteracted] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(true);
   const [currentPath, setCurrentPath] = useState('/student/dashboard');
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
 
   const TOUR_STEPS = [
     {
-      label: 'Home Feed',
+      label: 'Explore Feed',
       emoji: '🏠',
       description: 'Your campus life starts here. Browse upcoming events from Livingstone College and your student community.',
-      hint: 'Scroll inside the phone to explore the feed.',
+      hint: 'Scroll inside the phone to explore your feed.',
     },
     {
       label: 'Select Event',
       emoji: '🔍',
-      description: 'Discover events tailored to your interests. Tap any card to open full event details.',
-      hint: 'Tap an event card to continue.',
+      description: 'Find premium opportunities and mixers. Select Career Fair Networking Night to read more.',
+      hint: 'Tap View Event to continue.',
     },
     {
       label: 'Event Details',
       emoji: '📋',
-      description: 'Everything about the event — date, location, organizer, and who\'s attending.',
-      hint: 'Scroll down to see the RSVP option.',
+      description: 'Review details, date, locations, and roster. RSVP in one simple tap.',
+      hint: 'Tap I\'m Going to continue.',
     },
     {
       label: "You're Going!",
       emoji: '🎉',
-      description: 'One tap to RSVP. Your spot is confirmed instantly and saved to your profile.',
+      description: 'Your spot is saved! Add to your native calendar directly and continue exploring.',
       hint: 'Tour complete — you\'re in!',
     },
   ];
@@ -103,9 +103,25 @@ export default function LandingPage({
   // Listen for route messages from the iframe
   useEffect(() => {
     const handleIframeMessage = (event: MessageEvent) => {
-      const { type, pathname } = event.data;
+      const { type, pathname, step } = event.data;
       if (type === 'EVIDA_PREVIEW_ROUTE') {
         setCurrentPath(pathname);
+      }
+      if (type === 'EVIDA_TOUR_STEP_UPDATE') {
+        setTourStep(step);
+        setCompletedSteps(prev => {
+          const next = new Set(prev);
+          for (let i = 0; i <= step; i++) {
+            if (i !== step) {
+              next.add(i);
+            }
+          }
+          return next;
+        });
+      }
+      if (type === 'EVIDA_TOUR_COMPLETE') {
+        setTourStep(3);
+        setCompletedSteps(new Set([0, 1, 2]));
       }
     };
     window.addEventListener('message', handleIframeMessage);
@@ -284,7 +300,7 @@ export default function LandingPage({
       </header>
 
       {/* Hero Section - Wenspire Visual Style */}
-      <section className="mx-auto max-w-7xl px-4 md:px-6 pt-20 sm:pt-24 pb-12 w-full relative">
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12 w-full relative">
         {/* Soft floating blurred gradient blobs for premium lighting */}
         <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] rounded-full bg-gradient-to-br from-[#FB1C07] to-[#FC7C0B] opacity-[0.12] blur-[100px] md:blur-[140px] pointer-events-none z-0 animate-pulse" style={{ animationDuration: '8s' }} />
         <div className="absolute bottom-10 right-1/4 translate-x-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-gradient-to-br from-[#FD4002] to-[#FC7C0B] opacity-[0.08] blur-[90px] md:blur-[130px] pointer-events-none z-0 animate-pulse" style={{ animationDuration: '12s' }} />
@@ -293,7 +309,7 @@ export default function LandingPage({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative w-full rounded-[24px] md:rounded-[48px] overflow-hidden border border-[#D8D2BC]/40 shadow-2xl min-h-[480px] md:min-h-[600px] flex flex-col justify-center p-6 sm:p-8 md:p-16 text-white z-10"
+          className="relative w-full rounded-[24px] md:rounded-[48px] overflow-hidden border border-[#D8D2BC]/40 shadow-2xl min-h-[380px] sm:min-h-[480px] md:min-h-[600px] flex flex-col justify-center p-5 sm:p-8 md:p-16 text-white z-10"
         >
           {/* Background image & overlays */}
           <div className="absolute inset-0 bg-cover bg-center z-0 filter blur-[12px] scale-[1.05]" style={{ backgroundImage: "url('/evida-hero-bg-orange.png')" }} />
@@ -301,7 +317,7 @@ export default function LandingPage({
           <div className="absolute inset-0 bg-gradient-to-t from-[#2A2621]/90 via-[#2A2621]/15 to-[#2A2621]/45 z-10" />
 
           {/* Top Row: Floating Badge */}
-          <div className="absolute top-6 sm:top-8 left-6 sm:left-8 md:top-16 md:left-16 z-20 flex items-center justify-start">
+          <div className="absolute top-5 sm:top-8 left-5 sm:left-8 md:top-16 md:left-16 z-20 flex items-center justify-start">
             <span className="flex items-center gap-2 rounded-full bg-black/35 border border-white/10 px-3.5 py-1.5 text-[9px] font-black uppercase tracking-widest text-[#FD5C05] backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FB1C07] animate-pulse" />
               Now in private beta
@@ -309,25 +325,25 @@ export default function LandingPage({
           </div>
 
           {/* Middle Row: Content */}
-          <div className="relative z-20 space-y-5 max-w-2xl text-left pt-12 pb-4 sm:pt-8 sm:pb-8">
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tighter leading-[1.05] sm:leading-[0.95] text-white">
+          <div className="relative z-20 space-y-4 sm:space-y-5 max-w-2xl text-left pt-14 pb-4 sm:pt-8 sm:pb-8">
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight md:tracking-tighter leading-[1.1] sm:leading-[0.95] text-white">
               Everything Happening <br />
               <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent inline-block">on Campus.</span>
             </h1>
-            <p className="text-[11px] sm:text-sm text-gray-300 max-w-lg leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-gray-300 max-w-lg leading-relaxed font-medium break-words">
               Evida brings campus events, student organizations, promotions, and opportunities into one place. Discover what’s happening, connect with your community, and never miss campus life.
             </p>
-            <div className="flex flex-col gap-3 w-full max-w-xs pt-2">
+            <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm pt-2">
               <button
                 onClick={onLogin}
-                className="w-full rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(251,28,7,0.25)] hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] px-6 py-4 text-xs font-black text-white transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1.5"
+                className="w-full sm:w-auto flex-1 rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(251,28,7,0.25)] hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] px-6 py-3.5 text-xs font-black text-white transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1.5"
               >
                 <span>Join Waitlist</span>
                 <ArrowRight className="h-4 w-4 text-white" />
               </button>
               <button
                 onClick={handleSeeHowItWorksClick}
-                className="w-full rounded-full border border-[#FD5C05] bg-[#EAE4CF] hover:bg-[#FD5C05] hover:text-white px-6 py-4 text-xs font-black text-[#FD5C05] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer flex items-center justify-center"
+                className="w-full sm:w-auto flex-1 rounded-full border border-[#FD5C05] bg-[#EAE4CF] hover:bg-[#FD5C05] hover:text-white px-6 py-3.5 text-xs font-black text-[#FD5C05] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer flex items-center justify-center"
               >
                 See How It Works
               </button>
@@ -337,22 +353,22 @@ export default function LandingPage({
       </section>
 
       {/* ── Interactive Evida Product Demo ─────────────────────────────── */}
-      <section id="experience" className="relative bg-[#1A1714] border-y border-white/[0.06] py-16 md:py-24 overflow-hidden">
+      <section id="experience" className="relative bg-[#1A1714] border-y border-white/[0.06] py-12 sm:py-16 md:py-24 overflow-hidden">
 
         {/* Ambient background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#FD5C05]/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-8">
 
           {/* Header */}
-          <div className="text-center mb-10">
-            <span className="rounded-full bg-[#FD5C05]/15 text-[#FD5C05] border border-[#FD5C05]/30 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest inline-block mb-4">
+          <div className="text-center mb-8 sm:mb-10">
+            <span className="rounded-full bg-[#FD5C05]/15 text-[#FD5C05] border border-[#FD5C05]/30 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest inline-block mb-3 sm:mb-4">
               Interactive Demo
             </span>
-            <h2 className="font-black tracking-tighter text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
               Experience Evida
             </h2>
-            <p className="text-sm text-white/50 font-medium max-w-md mx-auto mt-2 leading-relaxed">
+            <p className="text-xs sm:text-sm text-white/50 font-medium max-w-md mx-auto mt-2 leading-relaxed">
               {hasInteracted
                 ? 'Use Back & Next to navigate through the tour, or scroll freely inside the phone.'
                 : 'Click inside the phone to begin the guided tour.'}
@@ -360,7 +376,7 @@ export default function LandingPage({
           </div>
 
           {/* Main Layout: Progress | Phone | Context */}
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-12">
 
             {/* ── Left: Tour Progress ───────────────────────────────────── */}
             <div className="hidden lg:flex flex-col gap-1 min-w-[200px]">
@@ -405,55 +421,18 @@ export default function LandingPage({
             </div>
 
             {/* ── Center: Smartphone Shell ──────────────────────────────── */}
-            <div className="flex flex-col items-center gap-5">
+            <div className="flex flex-col items-center gap-5 w-full max-w-[320px] sm:max-w-none">
 
               {/* Phone Device */}
               <div
                 onClick={handlePhoneClick}
-                className="relative cursor-pointer"
+                className="relative cursor-pointer w-full max-w-[280px] sm:max-w-[290px] mx-auto"
                 style={{ filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.6))' }}
               >
-                {/* Apple-style Onboarding Overlay */}
-                <AnimatePresence>
-                  {!hasInteracted && (
-                    <motion.div
-                      key="onboarding"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0, transition: { duration: 0.3 } }}
-                      className="absolute inset-0 rounded-[40px] z-[60] flex flex-col items-center justify-center text-center p-6 overflow-hidden"
-                      style={{ background: 'rgba(10,8,5,0.75)', backdropFilter: 'blur(8px)' }}
-                    >
-                      {/* Animated finger emoji */}
-                      <motion.div
-                        animate={{
-                          y: [0, -8, 0],
-                          scale: [1, 1.05, 1],
-                        }}
-                        transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-                        className="text-5xl mb-4 select-none"
-                      >
-                        👆
-                      </motion.div>
-                      {/* Pulsing glow ring behind emoji */}
-                      <motion.div
-                        animate={{ scale: [0.8, 1.4, 0.8], opacity: [0.3, 0, 0.3] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-20 rounded-full bg-[#FD5C05]/30"
-                        style={{ zIndex: -1 }}
-                      />
-                      <p className="text-white font-black text-[11px] uppercase tracking-[0.12em] leading-relaxed max-w-[160px]">
-                        Click inside the phone to begin.
-                      </p>
-                      <p className="text-white/40 text-[9px] font-semibold mt-2 leading-relaxed max-w-[150px]">
-                        Scroll inside the phone to continue the guided tour.
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* Overlay removed to support natural scrolling onboarding */}
 
                 {/* Phone Shell */}
-                <div className="relative w-[290px] h-[620px] rounded-[44px] border-[10px] border-[#0A0805] bg-[#D8D2BC] overflow-hidden select-none shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]">
+                <div className="relative w-full h-[580px] sm:h-[620px] rounded-[40px] sm:rounded-[44px] border-[8px] sm:border-[10px] border-[#0A0805] bg-[#D8D2BC] overflow-hidden select-none shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]">
 
                   {/* Gloss overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent z-40 pointer-events-none rounded-[34px]" />
@@ -590,12 +569,12 @@ export default function LandingPage({
       </section>
 
       {/* Problem Statistics Section */}
-      <section id="why-evida" className="bg-white border-b border-[#D8D2BC]/30 py-20 md:py-28 w-full relative z-10">
-        <div className="mx-auto max-w-7xl px-6 space-y-16">
+      <section id="why-evida" className="bg-white border-b border-[#D8D2BC]/30 py-12 sm:py-20 md:py-28 w-full relative z-10">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 space-y-10 sm:space-y-16">
           
           <div className="text-center space-y-3 max-w-xl mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Why Evida</span>
-            <h2 className="font-black tracking-tighter text-[#2A2621] leading-[0.95]" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-[1.05] sm:leading-[0.95]" style={{ fontFamily: 'var(--font-display)' }}>
               One Campus. One Platform. Every Opportunity.
             </h2>
             <p className="text-xs text-[#5A554E] font-medium leading-relaxed max-w-lg mx-auto">
@@ -603,56 +582,56 @@ export default function LandingPage({
             </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 text-left max-w-5xl mx-auto border-y border-[#D8D2BC]/30">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 text-left max-w-5xl mx-auto border-y border-[#D8D2BC]/30">
             
             {/* Card 1 */}
-            <div className="p-4 sm:p-8 border-r border-b lg:border-b-0 border-[#D8D2BC]/30 flex flex-col space-y-1.5">
-              <span className="text-3xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-5 sm:p-8 border-b md:border-b-0 md:border-r border-[#D8D2BC]/30 flex flex-col space-y-2">
+              <span className="text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 89%
               </span>
-              <h3 className="text-[11px] sm:text-sm font-extrabold text-[#2A2621] leading-snug">
+              <h3 className="text-xs sm:text-sm font-extrabold text-[#2A2621] leading-snug">
                 Miss important opportunities
               </h3>
-              <p className="text-[10px] sm:text-xs text-[#5A554E] leading-relaxed font-medium hidden sm:block">
+              <p className="text-xs text-[#5A554E] leading-relaxed font-medium block">
                 Students have missed important campus events, deadlines, and opportunities because information is scattered across multiple channels.
               </p>
             </div>
 
             {/* Card 2 */}
-            <div className="p-4 sm:p-8 border-b lg:border-b-0 lg:border-r border-[#D8D2BC]/30 flex flex-col space-y-1.5">
-              <span className="text-3xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-5 sm:p-8 border-b md:border-b-0 md:border-r border-[#D8D2BC]/30 flex flex-col space-y-2">
+              <span className="text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 36%
               </span>
-              <h3 className="text-[11px] sm:text-sm font-extrabold text-[#2A2621] leading-snug">
+              <h3 className="text-xs sm:text-sm font-extrabold text-[#2A2621] leading-snug">
                 Never participate
               </h3>
-              <p className="text-[10px] sm:text-xs text-[#5A554E] leading-relaxed font-medium hidden sm:block">
+              <p className="text-xs text-[#5A554E] leading-relaxed font-medium block">
                 More than one-third of students don't participate in a single extracurricular or co-curricular activity during the academic year.
               </p>
             </div>
 
             {/* Card 3 */}
-            <div className="p-4 sm:p-8 border-r border-[#D8D2BC]/30 flex flex-col space-y-1.5">
-              <span className="text-3xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-5 sm:p-8 border-b md:border-b-0 md:border-r border-[#D8D2BC]/30 flex flex-col space-y-2">
+              <span className="text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 31%
               </span>
-              <h3 className="text-[11px] sm:text-sm font-extrabold text-[#2A2621] leading-snug">
+              <h3 className="text-xs sm:text-sm font-extrabold text-[#2A2621] leading-snug">
                 Don't know what's happening
               </h3>
-              <p className="text-[10px] sm:text-xs text-[#5A554E] leading-relaxed font-medium hidden sm:block">
+              <p className="text-xs text-[#5A554E] leading-relaxed font-medium block">
                 Many students say they miss campus activities simply because they never hear about them or discover them too late.
               </p>
             </div>
 
             {/* Card 4 */}
-            <div className="p-4 sm:p-8 flex flex-col space-y-1.5">
-              <span className="text-3xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
+            <div className="p-5 sm:p-8 flex flex-col space-y-2">
+              <span className="text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
                 26%
               </span>
-              <h3 className="text-[11px] sm:text-sm font-extrabold text-[#2A2621] leading-snug">
+              <h3 className="text-xs sm:text-sm font-extrabold text-[#2A2621] leading-snug">
                 Check campus email daily
               </h3>
-              <p className="text-[10px] sm:text-xs text-[#5A554E] leading-relaxed font-medium hidden sm:block">
+              <p className="text-xs text-[#5A554E] leading-relaxed font-medium block">
                 Only about one in four students regularly check their university email — making email alone unreliable.
               </p>
             </div>
@@ -662,74 +641,74 @@ export default function LandingPage({
       </section>
 
       {/* About Section */}
-      <section id="about" className="bg-[#D8D2BC]/35 border-y border-[#D8D2BC]/30 py-20">
-        <div className="mx-auto max-w-7xl px-6 space-y-12">
+      <section id="about" className="bg-[#D8D2BC]/35 border-y border-[#D8D2BC]/30 py-12 sm:py-20">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
           <div className="text-center space-y-3 max-w-xl mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Built for Everyone</span>
-            <h2 className="font-black tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
               One Platform. Two Ways to Connect.
             </h2>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             
             {/* Students Card */}
-            <div className="rounded-[28px] border border-black/[0.04] bg-white overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-all">
-              <div className="relative h-48 w-full bg-[url('/pexels-maorattias-5191958.jpg')] bg-cover bg-center" />
-              <div className="p-8 space-y-4 text-left">
+            <div className="rounded-[24px] sm:rounded-[28px] border border-black/[0.04] bg-white overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-all">
+              <div className="relative h-40 sm:h-48 w-full bg-[url('/pexels-maorattias-5191958.jpg')] bg-cover bg-center" />
+              <div className="p-5 sm:p-8 space-y-4 text-left">
                 <span className="text-[9px] font-black text-[#5A554E] uppercase tracking-widest block">For Students</span>
-                <h3 className="text-lg font-extrabold text-[#2A2621] uppercase tracking-tight leading-tight">
+                <h3 className="text-base sm:text-lg font-extrabold text-[#2A2621] uppercase tracking-tight leading-tight">
                   Discover events, join groups, and promote your initiatives.
                 </h3>
-                <ul className="space-y-2.5 text-xs text-[#5A554E] font-medium pt-2">
+                <ul className="space-y-2.5 text-xs text-[#5A554E] font-medium pt-1">
                   <li className="flex items-start gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mt-1.5 shrink-0 border border-black/10" />
-                    Discover campus events and stay in the loop.
+                    <span>Discover campus events and stay in the loop.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mt-1.5 shrink-0 border border-black/10" />
-                    Join organizations and meet new people.
+                    <span>Join organizations and meet new people.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mt-1.5 shrink-0 border border-black/10" />
-                    RSVP to campus activities in one tap.
+                    <span>RSVP to campus activities in one tap.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mt-1.5 shrink-0 border border-black/10" />
-                    Create your own independent student events.
+                    <span>Create your own independent student events.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mt-1.5 shrink-0 border border-black/10" />
-                    Promote local businesses, tutoring services, photography, food sales, and other student initiatives.
+                    <span>Promote local businesses, tutoring services, photography, food sales, and other student initiatives.</span>
                   </li>
                 </ul>
               </div>
             </div>
 
             {/* School & Org Card */}
-            <div className="rounded-[28px] border border-black/[0.04] bg-white overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-all">
-              <div className="relative h-48 w-full bg-[url('/pexels-gu-ko-2150570603-31827067.jpg')] bg-cover bg-center" />
-              <div className="p-8 space-y-4 text-left">
+            <div className="rounded-[24px] sm:rounded-[28px] border border-black/[0.04] bg-white overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-all">
+              <div className="relative h-40 sm:h-48 w-full bg-[url('/pexels-gu-ko-2150570603-31827067.jpg')] bg-cover bg-center" />
+              <div className="p-5 sm:p-8 space-y-4 text-left">
                 <span className="text-[9px] font-black text-[#5A554E] uppercase tracking-widest block">For Schools & Organizations</span>
-                <h3 className="text-lg font-extrabold text-[#2A2621] uppercase tracking-tight leading-tight">
+                <h3 className="text-base sm:text-lg font-extrabold text-[#2A2621] uppercase tracking-tight leading-tight">
                   Publish events, coordinate groups, and monitor engagement.
                 </h3>
-                <ul className="space-y-2.5 text-xs text-[#5A554E] font-medium pt-2">
+                <ul className="space-y-2.5 text-xs text-[#5A554E] font-medium pt-1">
                   <li className="flex items-start gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mt-1.5 shrink-0 border border-black/10" />
-                    Publish official events and share group announcements.
+                    <span>Publish official events and share group announcements.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mt-1.5 shrink-0 border border-black/10" />
-                    Manage organization members and assign specific moderation roles.
+                    <span>Manage organization members and assign specific moderation roles.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mt-1.5 shrink-0 border border-black/10" />
-                    Approve group membership requests seamlessly.
+                    <span>Approve group membership requests seamlessly.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#FD5C05] mt-1.5 shrink-0 border border-black/10" />
-                    Increase student engagement across all departments.
+                    <span>Increase student engagement across all departments.</span>
                   </li>
                 </ul>
               </div>
@@ -740,21 +719,21 @@ export default function LandingPage({
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="bg-[#D8D2BC]/35 border-t border-[#D8D2BC]/30 py-20">
-        <div className="mx-auto max-w-7xl px-6 space-y-12">
+      <section id="how-it-works" className="bg-[#D8D2BC]/35 border-t border-[#D8D2BC]/30 py-12 sm:py-20">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
           
           <div className="text-center space-y-3 max-w-lg mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">How It Works</span>
-            <h2 className="font-black tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
               Four Steps. One Outcome: Being Connected.
             </h2>
             <p className="text-xs text-[#5A554E]">We simplify communication and activities for everyone on campus.</p>
           </div>
 
-          <div className="grid grid-cols-2 border border-[#D8D2BC]/30 rounded-[32px] overflow-hidden bg-white shadow-sm max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 border border-[#D8D2BC]/30 rounded-[24px] sm:rounded-[32px] overflow-hidden bg-white shadow-sm max-w-4xl mx-auto">
             
             {/* Step 1 */}
-            <div className="p-6 sm:p-8 space-y-3.5 text-left border-r border-b border-[#D8D2BC]/30">
+            <div className="p-5 sm:p-8 space-y-3 text-left border-b md:border-r border-[#D8D2BC]/30">
               <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#5A554E] block">Step 01</span>
               <div className="h-9 w-9 rounded-full bg-[#D8D2BC]/30 flex items-center justify-center text-[#2A2621] border border-[#D8D2BC]/40 shadow-inner">
                 <Mail className="h-4.5 w-4.5 stroke-[1.8]" />
@@ -762,13 +741,13 @@ export default function LandingPage({
               <h3 className="text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug">
                 Sign up with your school email
               </h3>
-              <p className="text-[11px] sm:text-xs text-[#5A554E] leading-relaxed font-medium">
+              <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
                 Students verify their identity using their official university email to ensure a secure, trusted environment.
               </p>
             </div>
 
             {/* Step 2 */}
-            <div className="p-6 sm:p-8 space-y-3.5 text-left border-b border-[#D8D2BC]/30">
+            <div className="p-5 sm:p-8 space-y-3 text-left border-b border-[#D8D2BC]/30">
               <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#5A554E] block">Step 02</span>
               <div className="h-9 w-9 rounded-full bg-[#D8D2BC]/30 flex items-center justify-center text-[#2A2621] border border-[#D8D2BC]/40 shadow-inner">
                 <Search className="h-4.5 w-4.5 stroke-[1.8]" />
@@ -776,13 +755,13 @@ export default function LandingPage({
               <h3 className="text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug">
                 Discover campus life
               </h3>
-              <p className="text-[11px] sm:text-xs text-[#5A554E] leading-relaxed font-medium">
+              <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
                 Browse events, student organizations, promotions, and opportunities personalized specifically to your campus.
               </p>
             </div>
 
             {/* Step 3 */}
-            <div className="p-6 sm:p-8 space-y-3.5 text-left border-r border-[#D8D2BC]/30">
+            <div className="p-5 sm:p-8 space-y-3 text-left border-b md:border-b-0 md:border-r border-[#D8D2BC]/30">
               <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#5A554E] block">Step 03</span>
               <div className="h-9 w-9 rounded-full bg-[#D8D2BC]/30 flex items-center justify-center text-[#2A2621] border border-[#D8D2BC]/40 shadow-inner">
                 <Users className="h-4.5 w-4.5 stroke-[1.8]" />
@@ -790,13 +769,13 @@ export default function LandingPage({
               <h3 className="text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug">
                 Connect with peers
               </h3>
-              <p className="text-[11px] sm:text-xs text-[#5A554E] leading-relaxed font-medium">
+              <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
                 Join organizations, RSVP to events, interact with your campus community, and discover new experiences.
               </p>
             </div>
 
             {/* Step 4 */}
-            <div className="p-6 sm:p-8 space-y-3.5 text-left">
+            <div className="p-5 sm:p-8 space-y-3 text-left">
               <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#5A554E] block">Step 04</span>
               <div className="h-9 w-9 rounded-full bg-[#D8D2BC]/30 flex items-center justify-center text-[#2A2621] border border-[#D8D2BC]/40 shadow-inner">
                 <Plus className="h-4.5 w-4.5 stroke-[1.8]" />
@@ -804,7 +783,7 @@ export default function LandingPage({
               <h3 className="text-sm sm:text-base font-extrabold text-[#2A2621] leading-snug">
                 Create new content
               </h3>
-              <p className="text-[11px] sm:text-xs text-[#5A554E] leading-relaxed font-medium">
+              <p className="text-xs text-[#5A554E] leading-relaxed font-medium">
               Allow every verified student to create events, promotions, and activities. Organization members simply receive additional management permissions.
               </p>
             </div>
@@ -814,22 +793,22 @@ export default function LandingPage({
       </section>
 
       {/* Core Features Section */}
-      <section id="features" className="bg-[#EAE4CF] border-t border-[#D8D2BC] py-20">
-        <div className="mx-auto max-w-7xl px-6 space-y-12">
+      <section id="features" className="bg-[#EAE4CF] border-t border-[#D8D2BC] py-12 sm:py-20">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
           
           <div className="text-center space-y-3 max-w-lg mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Core Features</span>
-            <h2 className="font-black tracking-tighter text-[#2A2621]" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
               Everything You Need for Campus Life
             </h2>
             <p className="text-xs text-[#5A554E]">A modular, streetwear-inspired hub connecting your entire university community.</p>
           </div>
 
-          <div className="grid grid-cols-1 min-[450px]:grid-cols-2 border border-[#D8D2BC] rounded-[24px] sm:rounded-[32px] overflow-hidden bg-white shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 border border-[#D8D2BC] rounded-[24px] sm:rounded-[32px] overflow-hidden bg-white shadow-sm">
             
             {/* Card 1: Campus Events */}
-            <div className="group p-5 sm:p-8 space-y-4 text-left border-b min-[450px]:border-r border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
-              <div className="space-y-4">
+            <div className="group p-5 sm:p-8 space-y-3.5 text-left border-b md:border-r border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
+              <div className="space-y-3.5">
                 <span className="inline-block text-[8px] font-black uppercase tracking-widest bg-[#D8D2BC]/40 text-[#5A554E] px-2.5 py-0.5 rounded-full w-fit">Feature 01</span>
                 <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#FB1C07]/10 to-[#FC7C0B]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[#FD5C05] shadow-sm group-hover:scale-105 transition-transform duration-300">
                   <Calendar className="h-4 w-4" />
@@ -849,8 +828,8 @@ export default function LandingPage({
             </div>
 
             {/* Card 2: Student Organizations */}
-            <div className="group p-5 sm:p-8 space-y-4 text-left border-b border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
-              <div className="space-y-4">
+            <div className="group p-5 sm:p-8 space-y-3.5 text-left border-b border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
+              <div className="space-y-3.5">
                 <span className="inline-block text-[8px] font-black uppercase tracking-widest bg-[#D8D2BC]/40 text-[#5A554E] px-2.5 py-0.5 rounded-full w-fit">Feature 02</span>
                 <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#FB1C07]/10 to-[#FC7C0B]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[#FD5C05] shadow-sm group-hover:scale-105 transition-transform duration-300">
                   <Users className="h-4 w-4" />
@@ -870,8 +849,8 @@ export default function LandingPage({
             </div>
 
             {/* Card 3: Event Creation */}
-            <div className="group p-5 sm:p-8 space-y-4 text-left border-b min-[450px]:border-b-0 min-[450px]:border-r border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
-              <div className="space-y-4">
+            <div className="group p-5 sm:p-8 space-y-3.5 text-left border-b md:border-b-0 md:border-r border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
+              <div className="space-y-3.5">
                 <span className="inline-block text-[8px] font-black uppercase tracking-widest bg-[#D8D2BC]/40 text-[#5A554E] px-2.5 py-0.5 rounded-full w-fit">Feature 03</span>
                 <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#FB1C07]/10 to-[#FC7C0B]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[#FD5C05] shadow-sm group-hover:scale-105 transition-transform duration-300">
                   <Plus className="h-4 w-4" />
@@ -891,8 +870,8 @@ export default function LandingPage({
             </div>
 
             {/* Card 4: Promotions */}
-            <div className="group p-5 sm:p-8 space-y-4 text-left flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
-              <div className="space-y-4">
+            <div className="group p-5 sm:p-8 space-y-3.5 text-left flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
+              <div className="space-y-3.5">
                 <span className="inline-block text-[8px] font-black uppercase tracking-widest bg-[#D8D2BC]/40 text-[#5A554E] px-2.5 py-0.5 rounded-full w-fit">Feature 04</span>
                 <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#FB1C07]/10 to-[#FC7C0B]/10 border border-[#FD5C05]/20 flex items-center justify-center text-[#FD5C05] shadow-sm group-hover:scale-105 transition-transform duration-300">
                   <Sparkles className="h-4 w-4" />
@@ -916,32 +895,32 @@ export default function LandingPage({
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="bg-[#EAE4CF] border-t border-[#D8D2BC] py-20">
-        <div className="mx-auto max-w-4xl px-6 space-y-12">
+      <section id="faq" className="bg-[#EAE4CF] border-t border-[#D8D2BC] py-12 sm:py-20">
+        <div className="mx-auto max-w-3xl px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
           <div className="text-center space-y-3 max-w-lg mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Questions</span>
-            <h2 className="font-extrabold tracking-tight text-[#2A2621]">Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#2A2621]">Frequently Asked Questions</h2>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {faqData.map((item, index) => {
               const isOpen = faqOpenIndex === index;
               return (
                 <div 
                   key={index}
-                  className="bg-white rounded-[24px] border border-[#D8D2BC] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+                  className="bg-white rounded-[20px] sm:rounded-[24px] border border-[#D8D2BC] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
                 >
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none select-none"
+                    className="w-full p-4 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none select-none"
                   >
-                    <span className="text-xs md:text-sm font-extrabold text-[#2A2621] uppercase tracking-wide">
+                    <span className="text-xs sm:text-sm font-extrabold text-[#2A2621] uppercase tracking-wide">
                       {item.question}
                     </span>
                     <motion.div
                       animate={{ rotate: isOpen ? 180 : 0 }}
                       transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                      className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                      className={`h-7 w-7 sm:h-8 sm:w-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
                         isOpen ? 'bg-gradient-to-r from-[#FB1C07] to-[#FC7C0B] text-white' : 'bg-[#D8D2BC]/30 text-[#2A2621]'
                       }`}
                     >
@@ -957,7 +936,7 @@ export default function LandingPage({
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.25, ease: 'easeInOut' }}
                       >
-                        <div className="px-6 pb-6 pt-1 text-xs text-[#5A554E] leading-relaxed font-medium border-t border-[#D8D2BC] text-left">
+                        <div className="px-4 sm:px-6 pb-4 sm:pb-6 pt-1 text-xs text-[#5A554E] leading-relaxed font-medium border-t border-[#D8D2BC] text-left">
                           {item.answer}
                         </div>
                       </motion.div>
@@ -971,28 +950,28 @@ export default function LandingPage({
       </section>
 
       {/* Get Started CTA Section */}
-      <section id="get-started" className="mx-auto max-w-7xl px-4 md:px-6 py-16 w-full relative z-10">
+      <section id="get-started" className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 py-12 sm:py-16 w-full relative z-10">
         <div 
-          className="relative w-full rounded-[32px] md:rounded-[48px] overflow-hidden border border-[#FD5C05]/20 shadow-2xl p-8 sm:p-12 md:p-16 text-white text-center flex flex-col justify-center items-center min-h-[420px]"
+          className="relative w-full rounded-[28px] sm:rounded-[32px] md:rounded-[48px] overflow-hidden border border-[#FD5C05]/20 shadow-2xl p-6 sm:p-12 md:p-16 text-white text-center flex flex-col justify-center items-center min-h-[320px] sm:min-h-[420px]"
           style={{ background: 'radial-gradient(circle at 15% 15%, rgba(251, 28, 7, 0.16) 0%, transparent 55%), radial-gradient(circle at 85% 85%, rgba(252, 124, 11, 0.12) 0%, transparent 60%), linear-gradient(135deg, #2A2621 0%, #171512 100%)' }}
         >
           {/* Content */}
-          <div className="relative z-20 space-y-6 max-w-xl w-full">
+          <div className="relative z-20 space-y-5 sm:space-y-6 max-w-xl w-full">
             <span className="inline-block text-[10px] font-black uppercase tracking-[0.2em] text-[#FC7C0B]">
               Ready to Join
             </span>
-            <h2 className="font-extrabold tracking-tight md:tracking-tighter leading-[1.05] md:leading-[0.95] text-white">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] sm:leading-[0.95] text-white">
               Ready to Experience <br />
               <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent inline-block">Campus Differently?</span>
             </h2>
-            <p className="text-[11px] sm:text-xs md:text-sm text-gray-300 leading-relaxed font-medium max-w-md mx-auto">
+            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed font-medium max-w-md mx-auto">
               Sign up or sign in to discover a simpler way to explore events, organizations, promotions, and opportunities across campus.
             </p>
             
-            <div className="pt-4 flex flex-col gap-3.5 w-full max-w-xs mx-auto">
+            <div className="pt-2 sm:pt-4 flex flex-col gap-3.5 w-full max-w-xs mx-auto">
               <button
                 onClick={onLogin}
-                className="w-full rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 py-4 text-xs md:text-sm font-black text-white shadow-lg shadow-[#FB1C07]/25 hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2"
+                className="w-full rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 py-3.5 sm:py-4 text-xs sm:text-sm font-black text-white shadow-lg shadow-[#FB1C07]/25 hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2"
               >
                 <span>Join Waitlist</span>
                 <ArrowRight className="h-4 w-4 text-white" />
@@ -1003,14 +982,14 @@ export default function LandingPage({
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#2A2621] border-t border-white/5 py-16 md:py-20 text-white relative z-10">
-        <div className="mx-auto max-w-7xl px-6 space-y-12">
+      <footer className="bg-[#2A2621] border-t border-white/5 py-12 sm:py-16 md:py-20 text-white relative z-10">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 space-y-10 sm:space-y-12">
           
           {/* Top row: Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 md:gap-8 text-left">
             
             {/* Left Description Column */}
-            <div className="md:col-span-6 space-y-4">
+            <div className="sm:col-span-2 md:col-span-6 space-y-4">
               <EvidaLogo size={36} lightMode={false} text="EVIDA" />
               <p className="text-xs text-[#5A554E] leading-relaxed max-w-xs font-semibold">
                 Bringing students, organizations, and schools together through one connected campus experience.
@@ -1032,9 +1011,9 @@ export default function LandingPage({
             </div>
 
             {/* Product Column */}
-            <div className="md:col-span-2 space-y-4">
+            <div className="sm:col-span-1 md:col-span-2 space-y-3.5">
               <span className="text-[10px] font-black uppercase tracking-widest text-white block">Product</span>
-              <ul className="flex flex-col gap-2.5 text-xs text-[#5A554E] font-semibold">
+              <ul className="flex flex-col gap-2 text-xs text-[#5A554E] font-semibold">
                 <li>
                   <a href="#experience" className="hover:text-[#FD5C05] transition-colors">Experience Evida</a>
                 </li>
@@ -1057,9 +1036,9 @@ export default function LandingPage({
             </div>
 
             {/* Company Column */}
-            <div className="md:col-span-2 space-y-4">
+            <div className="sm:col-span-1 md:col-span-2 space-y-3.5">
               <span className="text-[10px] font-black uppercase tracking-widest text-white block">Company</span>
-              <ul className="flex flex-col gap-2.5 text-xs text-[#5A554E] font-semibold">
+              <ul className="flex flex-col gap-2 text-xs text-[#5A554E] font-semibold">
                 <li>
                   <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-[#FD5C05] transition-colors">About</a>
                 </li>
@@ -1073,9 +1052,9 @@ export default function LandingPage({
             </div>
 
             {/* Legal Column */}
-            <div className="md:col-span-2 space-y-4">
+            <div className="sm:col-span-1 md:col-span-2 space-y-3.5">
               <span className="text-[10px] font-black uppercase tracking-widest text-white block">Legal</span>
-              <ul className="flex flex-col gap-2.5 text-xs text-[#5A554E] font-semibold">
+              <ul className="flex flex-col gap-2 text-xs text-[#5A554E] font-semibold">
                 <li>
                   <a href="#faq" className="hover:text-[#FD5C05] transition-colors">Privacy Policy</a>
                 </li>
@@ -1088,7 +1067,7 @@ export default function LandingPage({
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#5A554E] font-medium text-center md:text-left">
+          <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#5A554E] font-medium text-center md:text-left">
             <span>© 2026 Evida. Built for campus life.</span>
           </div>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useEvents } from '@/lib/context/EventContext';
 import { useUser } from '@/lib/context/UserContext';
 import { useParams, useRouter } from 'next/navigation';
@@ -16,7 +16,39 @@ export default function EventDetailsPage() {
   const { currentUser } = useUser();
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  const [isPreview, setIsPreview] = useState(false);
+  const [addedToCalendar, setAddedToCalendar] = useState(false);
+
   const event = events.find(e => e.id === params.id);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const isPreviewMode = urlParams.get('preview') === 'true' || sessionStorage.getItem('evida_preview') === 'true';
+      setIsPreview(isPreviewMode);
+      if (isPreviewMode) {
+        sessionStorage.setItem('evida_onboarding_step', '2');
+        window.parent.postMessage({ type: 'EVIDA_TOUR_STEP_UPDATE', step: 2 }, '*');
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isPreview || !event) return;
+
+    const handleTriggerRSVP = async () => {
+      const isAttending = currentUser ? event.attendees?.includes(currentUser.name) : false;
+      if (!isAttending) {
+        await rsvpToggle(event.id, 'rsvp');
+      }
+      setShowConfirmation(true);
+      sessionStorage.setItem('evida_onboarding_step', '3');
+      window.parent.postMessage({ type: 'EVIDA_TOUR_STEP_UPDATE', step: 3 }, '*');
+    };
+
+    window.addEventListener('evida_trigger_rsvp', handleTriggerRSVP);
+    return () => window.removeEventListener('evida_trigger_rsvp', handleTriggerRSVP);
+  }, [isPreview, event, currentUser, rsvpToggle]);
 
   if (!event) {
     return (
@@ -197,17 +229,47 @@ export default function EventDetailsPage() {
                     </div>
                   </div>
                 ) : (
-                  <Button 
-                    variant="primary" 
-                    size="lg" 
-                    fullWidth
-                    onClick={async () => {
-                      await rsvpToggle(event.id, 'rsvp');
-                      setShowConfirmation(true);
-                    }}
-                  >
-                    I'm Going
-                  </Button>
+                  <div className="relative w-full">
+                    <Button 
+                      variant="primary" 
+                      size="lg" 
+                      fullWidth
+                      className={
+                        isPreview 
+                          ? 'bg-[#FD5C05] text-[#2A2621] hover:bg-[#CC3D00] border-none font-bold ring-4 ring-[#FD5C05]/30 shadow-[0_0_15px_rgba(253,92,5,0.4)] animate-pulse' 
+                          : ''
+                      }
+                      onClick={async () => {
+                        await rsvpToggle(event.id, 'rsvp');
+                        setShowConfirmation(true);
+                        if (isPreview) {
+                          sessionStorage.setItem('evida_onboarding_step', '3');
+                          window.parent.postMessage({ type: 'EVIDA_TOUR_STEP_UPDATE', step: 3 }, '*');
+                        }
+                      }}
+                    >
+                      I'm Going
+                    </Button>
+                    
+                    {isPreview && (
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3.5 z-40 pointer-events-none">
+                        <motion.div
+                          initial={{ opacity: 0, y: 8, x: '-50%' }}
+                          animate={{ opacity: 1, y: 0, x: '-50%' }}
+                          className="bg-[#FD5C05] text-[#2A2621] text-[8.5px] font-black uppercase tracking-widest px-3 py-2 rounded-xl shadow-2xl flex items-center gap-2 border border-white/20 whitespace-nowrap animate-bounce"
+                          style={{ position: 'relative', left: '0%' }}
+                        >
+                          <span>Tap I'm Going</span>
+                          <motion.span
+                            animate={{ y: [0, -4, 0] }}
+                            transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
+                          >
+                            👆
+                          </motion.span>
+                        </motion.div>
+                      </div>
+                    )}
+                  </div>
                 )
               ) : (
                 <Button variant="primary" size="lg" fullWidth onClick={() => router.push('/login')}>
@@ -221,57 +283,129 @@ export default function EventDetailsPage() {
 
       <AnimatePresence>
         {showConfirmation && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-[#111118] border border-white/[0.08] w-full max-w-sm rounded-[32px] p-6 shadow-2xl relative text-center space-y-6"
-            >
-              {/* Close Button X */}
-              <button
-                onClick={() => setShowConfirmation(false)}
-                className="absolute top-4 right-4 text-[#B8BBC8] hover:text-white transition-colors cursor-pointer"
-                title="Close"
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+            {isPreview ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-[#111118] border border-white/[0.08] w-[240px] rounded-[24px] p-5 shadow-2xl relative text-center space-y-4 select-none"
               >
-                <X className="h-5 w-5" />
-              </button>
+                {/* Success Icon */}
+                <div className="mx-auto h-12 w-12 rounded-full bg-[#FD5C05]/10 flex items-center justify-center text-[#FD5C05] text-2xl">
+                  🎉
+                </div>
 
-              {/* Big Success Icon / Graphics */}
-              <div className="mx-auto h-16 w-16 rounded-full bg-[#FD5C05]/15 flex items-center justify-center text-[#FD5C05] text-3xl">
-                🎉
-              </div>
+                {/* Title & Body */}
+                <div className="space-y-1">
+                  <h3 className="text-sm font-black text-white uppercase tracking-wider">
+                    You&apos;re in!
+                  </h3>
+                  <p className="text-[10px] text-[#B8BBC8] leading-relaxed">
+                    Establish crucial connections for summer internships!
+                  </p>
+                </div>
 
-              {/* Title & Body */}
-              <div className="space-y-2">
-                <h3 className="text-xl font-bold text-white tracking-tight">
-                  You&apos;re going! 🎉
-                </h3>
-                <p className="text-xs text-[#B8BBC8] leading-relaxed">
-                  Your RSVP has been confirmed.
-                </p>
-              </div>
+                {/* Onboarding buttons */}
+                <div className="space-y-2 pt-2">
+                  <motion.button
+                    onClick={() => setAddedToCalendar(true)}
+                    className={`w-full py-2.5 rounded-xl font-black uppercase tracking-wider text-[9px] flex items-center justify-center gap-1.5 transition-all duration-300 border-none cursor-pointer ${
+                      addedToCalendar
+                        ? 'bg-emerald-500 text-white shadow-[0_0_12px_rgba(16,185,129,0.3)]'
+                        : 'bg-[#FD5C05] text-white hover:bg-[#CC3D00] shadow-[0_0_12px_rgba(253,92,5,0.3)]'
+                    }`}
+                  >
+                    <AnimatePresence mode="wait">
+                      {addedToCalendar ? (
+                        <motion.span
+                          key="saved"
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                        >
+                          Saved to Calendar ✓
+                        </motion.span>
+                      ) : (
+                        <motion.span
+                          key="add"
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          className="flex items-center gap-1"
+                        >
+                          <Calendar className="h-3 w-3" />
+                          Add to Calendar
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </motion.button>
 
-              {/* Action Buttons */}
-              <div className="space-y-3 pt-2">
-                <Button
-                  variant="primary"
-                  fullWidth
-                  onClick={handleAddToCalendar}
-                  icon={<Calendar className="h-4 w-4" />}
-                  className="bg-[#FD5C05] text-white hover:bg-[#CC3D00] border-none font-bold uppercase tracking-wider text-xs py-3 rounded-xl cursor-pointer"
-                >
-                  Add to Calendar
-                </Button>
-
+                  <button
+                    onClick={() => {
+                      setShowConfirmation(false);
+                      setAddedToCalendar(false);
+                      window.parent.postMessage({ type: 'EVIDA_TOUR_COMPLETE' }, '*');
+                      sessionStorage.setItem('evida_onboarding_step', '0');
+                      window.dispatchEvent(new CustomEvent('evida_reset_onboarding'));
+                      router.push('/student/dashboard?preview=true');
+                    }}
+                    className="w-full text-center py-2 rounded-xl text-[9px] font-black uppercase tracking-wider bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all cursor-pointer"
+                  >
+                    Continue Exploring
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-[#111118] border border-white/[0.08] w-full max-w-sm rounded-[32px] p-6 shadow-2xl relative text-center space-y-6"
+              >
+                {/* Close Button X */}
                 <button
-                  onClick={handleCancelRSVP}
-                  className="w-full text-center py-2.5 text-xs font-bold uppercase tracking-wider text-[#B8BBC8] hover:text-red-400 hover:underline transition-all cursor-pointer border-none bg-transparent"
+                  onClick={() => setShowConfirmation(false)}
+                  className="absolute top-4 right-4 text-[#B8BBC8] hover:text-white transition-colors cursor-pointer"
+                  title="Close"
                 >
-                  Cancel RSVP
+                  <X className="h-5 w-5" />
                 </button>
-              </div>
-            </motion.div>
+
+                {/* Big Success Icon / Graphics */}
+                <div className="mx-auto h-16 w-16 rounded-full bg-[#FD5C05]/15 flex items-center justify-center text-[#FD5C05] text-3xl">
+                  🎉
+                </div>
+
+                {/* Title & Body */}
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold text-white tracking-tight">
+                    You&apos;re going! 🎉
+                  </h3>
+                  <p className="text-xs text-[#B8BBC8] leading-relaxed">
+                    Your RSVP has been confirmed.
+                  </p>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="space-y-3 pt-2">
+                  <Button
+                    variant="primary"
+                    fullWidth
+                    onClick={handleAddToCalendar}
+                    icon={<Calendar className="h-4 w-4" />}
+                    className="bg-[#FD5C05] text-white hover:bg-[#CC3D00] border-none font-bold uppercase tracking-wider text-xs py-3 rounded-xl cursor-pointer"
+                  >
+                    Add to Calendar
+                  </Button>
+
+                  <button
+                    onClick={handleCancelRSVP}
+                    className="w-full text-center py-2.5 text-xs font-bold uppercase tracking-wider text-[#B8BBC8] hover:text-red-400 hover:underline transition-all cursor-pointer border-none bg-transparent"
+                  >
+                    Cancel RSVP
+                  </button>
+                </div>
+              </motion.div>
+            )}
           </div>
         )}
       </AnimatePresence>

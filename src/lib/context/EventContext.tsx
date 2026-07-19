@@ -57,23 +57,19 @@ export function EventProvider({ children }: { children: ReactNode }) {
         const { type, step } = event.data;
         if (type !== 'EVIDA_TOUR_GOTO') return;
 
-        const approved = events.filter(e => e.status === 'approved');
-        const firstEvent = approved[0];
-
         if (step === 0) {
-          // Home Feed — navigate to dashboard, scroll to top
+          sessionStorage.setItem('evida_onboarding_step', '0');
           if (pathname !== '/student/dashboard') {
             router.push('/student/dashboard?preview=true');
           } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.dispatchEvent(new CustomEvent('evida_reset_onboarding'));
           }
         } else if (step === 1) {
-          // Select Event — stay on dashboard, scroll down to show event cards
+          sessionStorage.setItem('evida_onboarding_step', '1');
           if (pathname !== '/student/dashboard') {
             router.push('/student/dashboard?preview=true');
-            // Scroll will happen after navigation via the route effect
           } else {
-            const target = document.querySelector('[data-tour="event-card"]') as HTMLElement;
+            const target = document.getElementById('event-card-evt-career-night');
             if (target) {
               target.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
@@ -81,21 +77,14 @@ export function EventProvider({ children }: { children: ReactNode }) {
             }
           }
         } else if (step === 2) {
-          // Event Details — navigate to first approved event
-          if (firstEvent) {
-            router.push(`/events/${firstEvent.id}?preview=true`);
-          }
+          sessionStorage.setItem('evida_onboarding_step', '2');
+          router.push('/events/evt-career-night?preview=true');
         } else if (step === 3) {
-          // Event Confirmation — scroll to RSVP / confirmation section
-          if (pathname.startsWith('/events/')) {
-            const target = document.querySelector('[data-tour="rsvp-section"]') as HTMLElement;
-            if (target) {
-              target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else {
-              window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
-            }
-          } else if (firstEvent) {
-            router.push(`/events/${firstEvent.id}?preview=true`);
+          sessionStorage.setItem('evida_onboarding_step', '3');
+          if (!pathname.includes('/events/evt-career-night')) {
+            router.push('/events/evt-career-night?preview=true');
+          } else {
+            window.dispatchEvent(new CustomEvent('evida_trigger_rsvp'));
           }
         }
 
