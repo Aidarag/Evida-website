@@ -59,6 +59,16 @@ export default function LandingPage({
   // FAQ Accordion State
   const [faqOpenIndex, setFaqOpenIndex] = useState<number | null>(null);
 
+  // Waitlist form state
+  const [waitlistName, setWaitlistName] = useState('');
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
+
+  const handleWaitlistSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setWaitlistSubmitted(true);
+  };
+
   const handleSeeHowItWorksClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const element = document.getElementById('how-it-works');
@@ -554,12 +564,12 @@ export default function LandingPage({
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <Link
-                    href="/signup"
+                  <a
+                    href="#get-started"
                     className="block w-full text-center bg-[#FD5C05] hover:bg-[#e84e00] text-[#2A2621] font-black text-[10px] uppercase tracking-wider py-3 px-4 rounded-xl transition-all shadow-[0_0_20px_rgba(253,92,5,0.3)] hover:shadow-[0_0_30px_rgba(253,92,5,0.5)]"
                   >
                     Join Waitlist →
-                  </Link>
+                  </a>
                 </motion.div>
               )}
             </div>
@@ -950,33 +960,83 @@ export default function LandingPage({
       </section>
 
       {/* Get Started CTA Section */}
-      <section id="get-started" className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 py-12 sm:py-16 w-full relative z-10">
+      <section id="get-started" className="mx-auto max-w-7xl px-4 md:px-6 py-16 md:py-24 w-full relative z-10">
         <div 
-          className="relative w-full rounded-[28px] sm:rounded-[32px] md:rounded-[48px] overflow-hidden border border-[#FD5C05]/20 shadow-2xl p-6 sm:p-12 md:p-16 text-white text-center flex flex-col justify-center items-center min-h-[320px] sm:min-h-[420px]"
-          style={{ background: 'radial-gradient(circle at 15% 15%, rgba(251, 28, 7, 0.16) 0%, transparent 55%), radial-gradient(circle at 85% 85%, rgba(252, 124, 11, 0.12) 0%, transparent 60%), linear-gradient(135deg, #2A2621 0%, #171512 100%)' }}
+          className="relative w-full rounded-[32px] md:rounded-[44px] overflow-hidden border border-[#FD5C05]/20 shadow-2xl p-8 sm:p-12 md:p-16 text-white text-center flex flex-col justify-center items-center min-h-[480px]"
+          style={{ background: 'radial-gradient(circle at 20% 20%, rgba(251, 28, 7, 0.18) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(252, 124, 11, 0.14) 0%, transparent 55%), linear-gradient(135deg, #2A2621 0%, #171512 100%)' }}
         >
+          {/* Subtle Ambient Glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-32 bg-[#FD5C05]/10 blur-3xl pointer-events-none" />
+
           {/* Content */}
-          <div className="relative z-20 space-y-5 sm:space-y-6 max-w-xl w-full">
-            <span className="inline-block text-[10px] font-black uppercase tracking-[0.2em] text-[#FC7C0B]">
-              Ready to Join
+          <div className="relative z-20 space-y-6 max-w-xl w-full flex flex-col items-center">
+            {/* Top Sub-header Badge matching reference */}
+            <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] text-[#FC7C0B]/90">
+              EARLY ACCESS — LIMITED SPOTS
             </span>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] sm:leading-[0.95] text-white">
-              Ready to Experience <br />
-              <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent inline-block">Campus Differently?</span>
+
+            {/* Main Title matching reference layout */}
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight md:tracking-tighter leading-[1.08] text-white text-center">
+              Be first to experience <br />
+              <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent">
+                campus differently.
+              </span>
             </h2>
-            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed font-medium max-w-md mx-auto">
-              Sign up or sign in to discover a simpler way to explore events, organizations, promotions, and opportunities across campus.
+
+            {/* Subtext description matching reference structure */}
+            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed font-medium max-w-md mx-auto text-center">
+              Join students getting priority access at launch. <br className="hidden sm:inline" />
+              Free to join, no spam, real campus connections.
             </p>
             
-            <div className="pt-2 sm:pt-4 flex flex-col gap-3.5 w-full max-w-xs mx-auto">
-              <button
-                onClick={onLogin}
-                className="w-full rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 py-3.5 sm:py-4 text-xs sm:text-sm font-black text-white shadow-lg shadow-[#FB1C07]/25 hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2"
+            {/* Waitlist Form matching reference image layout & rounded pill shape */}
+            {waitlistSubmitted ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="w-full max-w-md bg-white/10 border border-white/15 rounded-[24px] p-6 text-center space-y-2 mt-2"
               >
-                <span>Join Waitlist</span>
-                <ArrowRight className="h-4 w-4 text-white" />
-              </button>
-            </div>
+                <div className="h-10 w-10 rounded-full bg-[#FD5C05]/20 text-[#FD5C05] flex items-center justify-center mx-auto mb-2">
+                  <Check className="h-5 w-5" />
+                </div>
+                <h3 className="text-base font-extrabold text-[#FC7C0B]">You're on the waitlist!</h3>
+                <p className="text-xs text-gray-300">We'll notify you as soon as access opens for your campus.</p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleWaitlistSubmit} className="w-full max-w-md space-y-3.5 pt-2">
+                {/* Input 1: Anonymous name (optional) / Name (optional) */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={waitlistName}
+                    onChange={(e) => setWaitlistName(e.target.value)}
+                    placeholder="Name (optional)"
+                    className="w-full rounded-full bg-white/[0.07] hover:bg-white/[0.1] focus:bg-white/[0.12] border border-white/15 focus:border-[#FD5C05] px-6 py-4 text-xs sm:text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 text-center font-medium shadow-inner"
+                  />
+                </div>
+
+                {/* Input 2: Email */}
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={waitlistEmail}
+                    onChange={(e) => setWaitlistEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className="w-full rounded-full bg-white/[0.07] hover:bg-white/[0.1] focus:bg-white/[0.12] border border-white/15 focus:border-[#FD5C05] px-6 py-4 text-xs sm:text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 text-center font-medium shadow-inner"
+                  />
+                </div>
+
+                {/* Pill CTA Button matching reference */}
+                <button
+                  type="submit"
+                  className="w-full rounded-full bg-[#EAE4CF] hover:bg-white hover:-translate-y-0.5 py-4 px-6 text-xs sm:text-sm font-black text-[#2A2621] shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 group"
+                >
+                  <span>Join waitlist</span>
+                  <ArrowRight className="h-4 w-4 text-[#2A2621] group-hover:translate-x-1 transition-transform" />
+                </button>
+              </form>
+            )}
+
           </div>
         </div>
       </section>
