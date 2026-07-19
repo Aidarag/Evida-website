@@ -357,3 +357,12 @@ body.preview-mode::-webkit-scrollbar,
 body.preview-mode *::-webkit-scrollbar {
   display: none !important;  /* Chrome, Safari and Opera */
 }
+
+/* In preview mode, hide the mobile top nav and add padding to main content for the progress bar */
+body.preview-mode .md\:hidden.sticky.top-0 {
+  display: none !important;
+}
+
+body.preview-mode main {
+  padding-top: 76px !important;
+}

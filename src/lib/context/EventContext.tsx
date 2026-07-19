@@ -39,8 +39,9 @@ export function EventProvider({ children }: { children: ReactNode }) {
   // Handle route change notifications inside the preview iframe
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      const isIframe = window.self !== window.top;
       const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('preview') === 'true') {
+      if (urlParams.get('preview') === 'true' || isIframe) {
         document.body.classList.add('preview-mode');
         window.parent.postMessage({ type: 'EVIDA_PREVIEW_ROUTE', pathname }, '*');
       }

@@ -453,6 +453,26 @@ export default function LandingPage({
                   {/* Home Indicator */}
                   <div className={`absolute bottom-2 left-1/2 -translate-x-1/2 w-24 h-[3px] rounded-full z-50 pointer-events-none transition-colors duration-500 ${currentPath.startsWith('/events/') ? 'bg-white/30' : 'bg-[#2A2621]/20'}`} />
 
+                  {/* Top Onboarding Progress Bar */}
+                  <div className="absolute top-[32px] inset-x-0 z-50 bg-[#D8D2BC]/95 backdrop-blur-md border-b border-black/[0.04] py-2.5 px-4 flex flex-col gap-1 select-none">
+                    <div className="flex gap-2 w-full">
+                      {['Explore', 'Details', 'RSVP'].map((label, idx) => {
+                        let stepIdx = 0;
+                        if (tourStep === 2) stepIdx = 1;
+                        if (tourStep >= 3) stepIdx = 2;
+                        const isFilled = idx <= stepIdx;
+                        return (
+                          <div key={idx} className="flex-1 flex flex-col gap-1">
+                            <div className={`h-[3px] rounded-full transition-all duration-300 ${isFilled ? 'bg-[#FD5C05]' : 'bg-black/10'}`} />
+                            <span className={`text-[8px] font-black uppercase tracking-wider text-center transition-colors duration-300 ${isFilled ? 'text-[#FD5C05]' : 'text-[#2A2621]/30'}`}>
+                              {label}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
                   {/* Live Iframe — the real Evida app */}
                   <iframe
                     ref={iframeRef}
