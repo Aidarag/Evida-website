@@ -364,7 +364,8 @@ body.preview-mode .md\:hidden.sticky.top-0 {
 }
 
 body.preview-mode main {
-  padding-top: 76px !important;
+  padding-top: 24px !important;
+  padding-bottom: 60px !important;
 }
 
 /* ───────────────────────────────────────────────

@@ -205,13 +205,23 @@ export function DesktopNav({
 // ─────────────────────────────────────────────────
 export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' | 'school' }) {
   const pathname = usePathname();
+  const [isPreview, setIsPreview] = React.useState(false);
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('preview') === 'true' || window.self !== window.top || document.body.classList.contains('preview-mode')) {
+        setIsPreview(true);
+      }
+    }
+  }, []);
 
   const studentTabs = [
     { href: '/student/dashboard', icon: Home, label: 'Home' },
-    { href: '/student/explore', icon: Compass, label: 'Explore' },
-    { href: '/student/create', icon: Plus, label: 'Create', isSpecial: true },
-    { href: '/student/calendar', icon: Calendar, label: 'Calendar' },
-    { href: '/student/profile', icon: User, label: 'Profile' },
+    { href: '/student/explore', icon: Compass, label: 'Explore', disabledInPreview: true },
+    { href: '/student/create', icon: Plus, label: 'Create', isSpecial: true, disabledInPreview: true },
+    { href: '/student/calendar', icon: Calendar, label: 'Calendar', disabledInPreview: true },
+    { href: '/student/profile', icon: User, label: 'Profile', disabledInPreview: true },
   ];
 
   const schoolTabs = [
@@ -225,44 +235,75 @@ export function MobileBottomNav({ variant = 'student' }: { variant?: 'student' |
   const tabs = variant === 'school' ? schoolTabs : studentTabs;
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-t border-[#D8D2BC]/30 pb-5 pt-2 shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-t border-[#D8D2BC]/30 pb-3 pt-2 shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
       <motion.nav
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="flex items-center justify-around px-2"
+        className="grid grid-cols-5 items-center w-full px-1"
       >
         {tabs.map((tab: any) => {
           const isActive = pathname === tab.href || pathname.startsWith(tab.href + '/');
           const Icon = tab.icon;
+          const isDisabled = isPreview && tab.disabledInPreview;
 
           if (tab.isSpecial) {
             return (
-              <Link
-                key={tab.href}
-                href={tab.href}
-                className="relative -top-4 flex flex-col items-center justify-center cursor-pointer group shrink-0 font-sans"
-              >
-                <div className="h-11 w-11 rounded-full bg-[#FD5C05] hover:bg-[#CC3D00] text-white flex items-center justify-center shadow-lg transition-transform hover:scale-105 active:scale-95 duration-200">
-                  <Icon className="h-5 w-5 stroke-[3]" />
-                </div>
-                <span className="text-[9px] font-black uppercase tracking-wider text-[#5A554E] group-hover:text-[#2A2621] mt-1.5">{tab.label}</span>
-              </Link>
+              <div key={tab.href} className="col-span-1 flex flex-col items-center justify-center">
+                {isDisabled ? (
+                  <div
+                    className="relative -top-2.5 flex flex-col items-center justify-center cursor-not-allowed opacity-40 font-sans select-none"
+                    onClick={(e) => e.preventDefault()}
+                    title="Disabled during demo"
+                  >
+                    <div className="h-10 w-10 rounded-full bg-gray-400 text-white flex items-center justify-center shadow-sm">
+                      <Icon className="h-5 w-5 stroke-[2.5]" />
+                    </div>
+                    <span className="text-[8.5px] font-black uppercase tracking-wider text-[#5A554E] mt-1">{tab.label}</span>
+                  </div>
+                ) : (
+                  <Link
+                    href={tab.href}
+                    className="relative -top-2.5 flex flex-col items-center justify-center cursor-pointer group font-sans"
+                  >
+                    <div className="h-10 w-10 rounded-full bg-[#FD5C05] hover:bg-[#CC3D00] text-white flex items-center justify-center shadow-lg transition-transform hover:scale-105 active:scale-95 duration-200">
+                      <Icon className="h-5 w-5 stroke-[3]" />
+                    </div>
+                    <span className="text-[8.5px] font-black uppercase tracking-wider text-[#5A554E] group-hover:text-[#2A2621] mt-1">{tab.label}</span>
+                  </Link>
+                )}
+              </div>
             );
           }
+
+          if (isDisabled) {
+            return (
+              <div
+                key={tab.href}
+                onClick={(e) => e.preventDefault()}
+                className="col-span-1 flex flex-col items-center justify-center gap-0.5 px-1 py-1 text-gray-400 opacity-40 cursor-not-allowed select-none"
+                title="Disabled during demo"
+              >
+                <Icon className="h-4.5 w-4.5" />
+                <span className="text-[8.5px] font-bold uppercase tracking-wider text-center">{tab.label}</span>
+              </div>
+            );
+          }
+
+          const targetHref = isPreview && tab.href === '/student/dashboard' ? '/student/dashboard?preview=true' : tab.href;
 
           return (
             <Link
               key={tab.href}
-              href={tab.href}
-              className={`flex flex-col items-center gap-1 px-3 py-1 transition-colors cursor-pointer ${
+              href={targetHref}
+              className={`col-span-1 flex flex-col items-center justify-center gap-0.5 px-1 py-1 transition-colors cursor-pointer ${
                 isActive 
                   ? 'text-[#FD5C05] font-black' 
                   : 'text-[#5A554E] hover:text-[#2A2621]'
               }`}
             >
-              <Icon className="h-5 w-5" />
-              <span className="text-[9px] font-bold uppercase tracking-wider">{tab.label}</span>
+              <Icon className="h-4.5 w-4.5" />
+              <span className="text-[8.5px] font-bold uppercase tracking-wider text-center">{tab.label}</span>
             </Link>
           );
         })}

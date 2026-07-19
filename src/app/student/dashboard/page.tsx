@@ -644,32 +644,16 @@ export default function StudentDashboardPage() {
                               <Link
                                 href={isPreview ? `/events/${event.id}?preview=true` : `/events/${event.id}`}
                                 className={`w-full py-2 rounded-xl text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer text-center transition-all duration-300 ${
-                                  isPreview && onboardingStep === 1 && event.id === 'evt-career-night'
-                                    ? 'bg-[#FD5C05] text-[#2A2621] ring-4 ring-[#FD5C05]/30 shadow-[0_0_15px_rgba(253,92,5,0.4)] scale-[1.02] z-30 animate-pulse font-black'
+                                  isPreview && (onboardingStep === 1 || onboardingStep === 0) && event.id === 'evt-career-night'
+                                    ? 'bg-[#FD5C05] text-white ring-2 ring-[#FD5C05] shadow-[0_0_16px_rgba(253,92,5,0.5)] animate-pulse font-black'
                                     : 'bg-[#2A2621] text-white hover:bg-[#2a2a2a]'
                                 }`}
                               >
-                                View Event
+                                <span>View Event</span>
+                                {isPreview && (onboardingStep === 1 || onboardingStep === 0) && event.id === 'evt-career-night' && (
+                                  <span className="inline-block animate-bounce text-xs ml-0.5">👉</span>
+                                )}
                               </Link>
-                              
-                              {isPreview && onboardingStep === 1 && event.id === 'evt-career-night' && (
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3.5 z-45 pointer-events-none">
-                                  <motion.div
-                                    initial={{ opacity: 0, y: 8, x: '-50%' }}
-                                    animate={{ opacity: 1, y: 0, x: '-50%' }}
-                                    className="bg-[#FD5C05] text-[#2A2621] text-[8.5px] font-black uppercase tracking-widest px-3 py-2 rounded-xl shadow-2xl flex items-center gap-2 border border-[#EAE4CF]/30 whitespace-nowrap"
-                                    style={{ position: 'relative', left: '0%' }}
-                                  >
-                                    <span>Tap View Event</span>
-                                    <motion.span
-                                      animate={{ y: [0, -4, 0] }}
-                                      transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
-                                    >
-                                      👆
-                                    </motion.span>
-                                  </motion.div>
-                                </div>
-                              )}
                             </div>
                           )
                         )}
@@ -698,33 +682,6 @@ export default function StudentDashboardPage() {
             className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-[#2A2621] text-white text-[11px] font-bold uppercase tracking-wider px-5 py-2.5 rounded-full shadow-xl"
           >
             Link copied! 🔗
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Onboarding pulsing finger overlay */}
-      <AnimatePresence>
-        {isPreview && onboardingStep === 0 && !hasScrolled && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, x: '-50%' }}
-            animate={{ opacity: 1, y: 0, x: '-50%' }}
-            exit={{ opacity: 0, y: 20, x: '-50%' }}
-            className="fixed bottom-8 left-1/2 z-45 bg-[#2A2621]/95 border border-[#D8D2BC]/10 rounded-2xl p-3 flex flex-col items-center justify-center gap-2.5 shadow-2xl pointer-events-none w-[190px]"
-            style={{ transform: 'translateX(-50%)' }}
-          >
-            <motion.div
-              animate={{
-                y: [0, -6, 0],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
-              className="text-2xl select-none"
-            >
-              👆
-            </motion.div>
-            <span className="text-[8.5px] font-black text-[#EAE4CF] uppercase tracking-widest text-center leading-relaxed">
-              scroll inside the phone to explore your feed
-            </span>
           </motion.div>
         )}
       </AnimatePresence>
