@@ -310,54 +310,61 @@ export default function LandingPage({
       </header>
 
       {/* Hero Section - Wenspire Visual Style */}
-      <section className="mx-auto w-full max-w-full px-3.5 xs:px-5 sm:px-6 md:px-8 pt-16 sm:pt-24 pb-8 sm:pb-12 relative overflow-x-hidden">
+      <section className="mx-auto w-full max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 pt-16 sm:pt-24 pb-6 sm:pb-12 relative overflow-x-hidden">
         {/* Soft floating blurred gradient blobs for premium lighting */}
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] rounded-full bg-gradient-to-br from-[#FB1C07] to-[#FC7C0B] opacity-[0.12] blur-[100px] md:blur-[140px] pointer-events-none z-0 animate-pulse" style={{ animationDuration: '8s' }} />
-        <div className="absolute bottom-10 right-1/4 translate-x-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-gradient-to-br from-[#FD4002] to-[#FC7C0B] opacity-[0.08] blur-[90px] md:blur-[130px] pointer-events-none z-0 animate-pulse" style={{ animationDuration: '12s' }} />
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-gradient-to-br from-[#FB1C07] to-[#FC7C0B] opacity-[0.12] blur-[90px] pointer-events-none z-0 animate-pulse" style={{ animationDuration: '8s' }} />
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative w-full max-w-full rounded-[20px] xs:rounded-[28px] md:rounded-[48px] overflow-hidden border border-[#D8D2BC]/40 shadow-2xl min-h-[380px] sm:min-h-[480px] md:min-h-[600px] flex flex-col justify-center items-center p-4 xs:p-6 sm:p-10 md:p-16 text-white z-10 text-center"
+          className="relative w-full rounded-[24px] sm:rounded-[32px] md:rounded-[44px] overflow-hidden border border-white/10 shadow-2xl p-5 sm:p-8 md:p-14 text-white z-10 flex flex-col justify-between"
         >
           {/* Background image & overlays */}
-          <div className="absolute inset-0 bg-cover bg-center z-0 filter blur-[12px] scale-[1.05]" style={{ backgroundImage: "url('/evida-hero-bg-orange.png')" }} />
-          <div className="absolute inset-0 bg-[#2A2621]/25 z-10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#2A2621]/90 via-[#2A2621]/15 to-[#2A2621]/45 z-10" />
+          <div className="absolute inset-0 bg-cover bg-center z-0 filter blur-[8px] scale-[1.05]" style={{ backgroundImage: "url('/evida-hero-bg-orange.png')" }} />
+          <div className="absolute inset-0 bg-[#2A2621]/45 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#171512]/95 via-[#2A2621]/40 to-[#2A2621]/60 z-10" />
 
-          {/* Top Row: Floating Badge */}
-          <div className="relative z-20 mb-3 sm:mb-5 flex items-center justify-center">
-            <span className="inline-flex items-center gap-1.5 xs:gap-2 rounded-full bg-black/35 border border-white/10 px-3.5 py-1.5 text-[9px] xs:text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#FD5C05] backdrop-blur-md text-center">
+          {/* Content Wrapper */}
+          <div className="relative z-20 space-y-4 sm:space-y-5 max-w-xl text-left">
+            
+            {/* 1. Small "Now in private beta" Badge */}
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-black/40 border border-white/15 px-3 py-1 text-[10px] sm:text-xs font-semibold text-white/90 backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FB1C07] animate-pulse" />
               Now in private beta
-            </span>
-          </div>
+            </div>
 
-          {/* Middle Row: Content */}
-          <div className="relative z-20 space-y-4 sm:space-y-6 max-w-3xl w-full flex flex-col items-center justify-center text-center">
-            <h1 className="text-[clamp(44px,11vw,52px)] sm:text-6xl lg:text-7xl font-extrabold tracking-tight md:tracking-tighter leading-[1.08] sm:leading-[0.95] text-white text-center w-full max-w-full break-words">
-              Everything Happening <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent inline-block">on Campus.</span>
+            {/* 2. Full Two-Line Headline */}
+            <h1 className="text-[clamp(24px,7vw,36px)] sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-white">
+              Everything happening <br />
+              <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent">
+                on campus.
+              </span>
             </h1>
-            <p className="text-[clamp(16px,4.5vw,18px)] text-gray-300 max-w-xl w-full leading-relaxed font-medium text-center break-words">
+
+            {/* 3. Short Evida Description */}
+            <p className="text-xs sm:text-sm md:text-base text-gray-200/90 leading-relaxed font-medium max-w-md">
               Evida brings campus events, student organizations, promotions, and opportunities into one place. Discover what’s happening, connect with your community, and never miss campus life.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto max-w-md mx-auto pt-2 items-center justify-center">
+
+            {/* 4. Full-Width Buttons */}
+            <div className="flex flex-col gap-2.5 sm:gap-3 w-full pt-1">
               <button
                 onClick={onLogin}
-                className="w-full sm:w-auto min-w-[180px] rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(251,28,7,0.25)] hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] px-6 py-3.5 sm:py-4 text-xs sm:text-sm font-black text-white transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2"
+                className="w-full rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 py-3.5 px-6 text-xs sm:text-sm font-black text-white shadow-lg shadow-[#FB1C07]/25 transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2"
               >
                 <span>Join Waitlist</span>
                 <ArrowRight className="h-4 w-4 text-white" />
               </button>
+
               <button
                 onClick={handleSeeHowItWorksClick}
-                className="w-full sm:w-auto min-w-[180px] rounded-full border border-[#FD5C05] bg-[#EAE4CF] hover:bg-[#FD5C05] hover:text-white px-6 py-3.5 sm:py-4 text-xs sm:text-sm font-black text-[#FD5C05] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer flex items-center justify-center"
+                className="w-full rounded-full border border-white/20 bg-white/10 hover:bg-white/20 backdrop-blur-md py-3.5 px-6 text-xs sm:text-sm font-bold text-white transition-all duration-300 cursor-pointer flex items-center justify-center"
               >
                 See How It Works
               </button>
             </div>
+
           </div>
         </motion.div>
       </section>
