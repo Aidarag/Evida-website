@@ -310,7 +310,7 @@ export default function LandingPage({
       </header>
 
       {/* Hero Section - Wenspire Visual Style */}
-      <section className="mx-auto max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 pt-16 sm:pt-24 pb-8 sm:pb-12 w-full relative overflow-x-hidden">
+      <section className="mx-auto w-full max-w-full px-3.5 xs:px-5 sm:px-6 md:px-8 pt-16 sm:pt-24 pb-8 sm:pb-12 relative overflow-x-hidden">
         {/* Soft floating blurred gradient blobs for premium lighting */}
         <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] rounded-full bg-gradient-to-br from-[#FB1C07] to-[#FC7C0B] opacity-[0.12] blur-[100px] md:blur-[140px] pointer-events-none z-0 animate-pulse" style={{ animationDuration: '8s' }} />
         <div className="absolute bottom-10 right-1/4 translate-x-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-gradient-to-br from-[#FD4002] to-[#FC7C0B] opacity-[0.08] blur-[90px] md:blur-[130px] pointer-events-none z-0 animate-pulse" style={{ animationDuration: '12s' }} />
@@ -319,7 +319,7 @@ export default function LandingPage({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative w-full rounded-[20px] xs:rounded-[24px] md:rounded-[48px] overflow-hidden border border-[#D8D2BC]/40 shadow-2xl min-h-[360px] xs:min-h-[420px] sm:min-h-[480px] md:min-h-[600px] flex flex-col justify-center p-4 xs:p-6 sm:p-8 md:p-16 text-white z-10"
+          className="relative w-full max-w-full rounded-[20px] xs:rounded-[28px] md:rounded-[48px] overflow-hidden border border-[#D8D2BC]/40 shadow-2xl min-h-[380px] sm:min-h-[480px] md:min-h-[600px] flex flex-col justify-center items-center p-4 xs:p-6 sm:p-10 md:p-16 text-white z-10 text-center"
         >
           {/* Background image & overlays */}
           <div className="absolute inset-0 bg-cover bg-center z-0 filter blur-[12px] scale-[1.05]" style={{ backgroundImage: "url('/evida-hero-bg-orange.png')" }} />
@@ -327,33 +327,33 @@ export default function LandingPage({
           <div className="absolute inset-0 bg-gradient-to-t from-[#2A2621]/90 via-[#2A2621]/15 to-[#2A2621]/45 z-10" />
 
           {/* Top Row: Floating Badge */}
-          <div className="absolute top-3.5 xs:top-5 sm:top-8 left-3.5 xs:left-5 sm:left-8 md:top-16 md:left-16 z-20 flex items-center justify-start">
-            <span className="flex items-center gap-1.5 xs:gap-2 rounded-full bg-black/35 border border-white/10 px-3 xs:px-3.5 py-1 xs:py-1.5 text-[8px] xs:text-[9px] font-black uppercase tracking-widest text-[#FD5C05] backdrop-blur-md">
+          <div className="relative z-20 mb-3 sm:mb-5 flex items-center justify-center">
+            <span className="inline-flex items-center gap-1.5 xs:gap-2 rounded-full bg-black/35 border border-white/10 px-3.5 py-1.5 text-[9px] xs:text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#FD5C05] backdrop-blur-md text-center">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FB1C07] animate-pulse" />
               Now in private beta
             </span>
           </div>
 
           {/* Middle Row: Content */}
-          <div className="relative z-20 space-y-3.5 xs:space-y-4 sm:space-y-5 max-w-2xl text-left pt-12 xs:pt-14 pb-4 sm:pt-8 sm:pb-8">
-            <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight md:tracking-tighter leading-[1.15] xs:leading-[1.1] sm:leading-[0.95] text-white break-words">
-              Everything Happening <br />
+          <div className="relative z-20 space-y-4 sm:space-y-6 max-w-3xl w-full flex flex-col items-center justify-center text-center">
+            <h1 className="text-[clamp(44px,11vw,52px)] sm:text-6xl lg:text-7xl font-extrabold tracking-tight md:tracking-tighter leading-[1.08] sm:leading-[0.95] text-white text-center w-full max-w-full break-words">
+              Everything Happening <br className="hidden sm:inline" />
               <span className="bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] bg-clip-text text-transparent inline-block">on Campus.</span>
             </h1>
-            <p className="text-[11px] xs:text-xs sm:text-sm text-gray-300 max-w-lg leading-relaxed font-medium break-words">
+            <p className="text-[clamp(16px,4.5vw,18px)] text-gray-300 max-w-xl w-full leading-relaxed font-medium text-center break-words">
               Evida brings campus events, student organizations, promotions, and opportunities into one place. Discover what’s happening, connect with your community, and never miss campus life.
             </p>
-            <div className="flex flex-col sm:flex-row gap-2.5 xs:gap-3 w-full max-w-sm pt-2">
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto max-w-md mx-auto pt-2 items-center justify-center">
               <button
                 onClick={onLogin}
-                className="w-full sm:w-auto flex-1 rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(251,28,7,0.25)] hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] px-5 xs:px-6 py-3 xs:py-3.5 text-[11px] xs:text-xs font-black text-white transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1.5"
+                className="w-full sm:w-auto min-w-[180px] rounded-full bg-gradient-to-r from-[#FB1C07] via-[#FD5C05] to-[#FC7C0B] hover:brightness-110 hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(251,28,7,0.25)] hover:shadow-[0_6px_20px_rgba(251,28,7,0.35)] px-6 py-3.5 sm:py-4 text-xs sm:text-sm font-black text-white transition-all duration-300 cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2"
               >
                 <span>Join Waitlist</span>
                 <ArrowRight className="h-4 w-4 text-white" />
               </button>
               <button
                 onClick={handleSeeHowItWorksClick}
-                className="w-full sm:w-auto flex-1 rounded-full border border-[#FD5C05] bg-[#EAE4CF] hover:bg-[#FD5C05] hover:text-white px-5 xs:px-6 py-3 xs:py-3.5 text-[11px] xs:text-xs font-black text-[#FD5C05] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer flex items-center justify-center"
+                className="w-full sm:w-auto min-w-[180px] rounded-full border border-[#FD5C05] bg-[#EAE4CF] hover:bg-[#FD5C05] hover:text-white px-6 py-3.5 sm:py-4 text-xs sm:text-sm font-black text-[#FD5C05] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer flex items-center justify-center"
               >
                 See How It Works
               </button>
