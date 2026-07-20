@@ -8,6 +8,7 @@ interface EvidaLogoProps {
   showText?: boolean; // Whether to show the "Evida" text (default: true)
   lightMode?: boolean; // If true, text is dark (#2A2621) instead of brand color (default: false)
   text?: string; // Custom text to display next to the logo (default: "Evida")
+  squareColor?: string; // Optional custom color override for center square/diamond
 }
 
 export default function EvidaLogo({
@@ -16,11 +17,14 @@ export default function EvidaLogo({
   showText = true,
   lightMode = false,
   text = 'Evida',
+  squareColor,
 }: EvidaLogoProps) {
   // Scale factor based on the default height of 48px
   const scale = size / 48;
   const viewBoxWidth = text === 'Evida' ? 200 : 340;
   const width = showText ? viewBoxWidth * scale : 48 * scale;
+
+  const centerFill = squareColor || (lightMode ? '#2A2621' : '#EAE4CF');
 
   return (
     <svg
@@ -41,7 +45,7 @@ export default function EvidaLogo({
           <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#FB1C07" floodOpacity="0.25" />
         </filter>
       </defs>
-      
+
       <g id="evida-logo-mark" filter="url(#logo-glow)">
         {/* Left Ribbon (Tangelo Gradient) */}
         <path
@@ -49,22 +53,22 @@ export default function EvidaLogo({
           fill="url(#logo-grad)"
           opacity="0.95"
         />
-        
+
         {/* Right Ribbon (Tangelo Gradient) */}
         <path
           d="M 42 42 L 42 22 L 24 6 L 24 15 L 33 24 L 33 42 Z"
           fill="url(#logo-grad)"
           opacity="0.95"
         />
-        
-        {/* Center Ribbon (Small Diamond - Premium Dark) */}
+
+        {/* Center Ribbon (Small Diamond - Contrast Adjusted for Light & Dark Backgrounds) */}
         <path
           d="M 24 10 L 36 22 L 24 34 L 12 22 Z M 24 16 L 30 22 L 24 28 L 18 22 Z"
-          fill="#2A2621"
+          fill={centerFill}
           opacity="0.95"
         />
       </g>
-      
+
       {showText && (
         <text
           x="56"

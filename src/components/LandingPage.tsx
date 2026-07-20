@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  ArrowRight, 
-  Calendar, 
-  Shield, 
-  Users, 
+import {
+  ArrowRight,
+  Calendar,
+  Shield,
+  Users,
   Trophy,
   ChevronDown,
   Sparkles,
@@ -28,7 +28,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Check
+  Check,
+  Phone
 } from 'lucide-react';
 import { Event } from '@/lib/types';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -63,10 +64,63 @@ export default function LandingPage({
   const [waitlistName, setWaitlistName] = useState('');
   const [waitlistEmail, setWaitlistEmail] = useState('');
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
+  const [waitlistSubmitting, setWaitlistSubmitting] = useState(false);
+  const [waitlistError, setWaitlistError] = useState<string | null>(null);
 
-  const handleWaitlistSubmit = (e: React.FormEvent) => {
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setWaitlistSubmitted(true);
+    if (waitlistSubmitting) return;
+
+    setWaitlistError(null);
+
+    const name = waitlistName.trim();
+    const email = waitlistEmail.trim();
+
+    // Validate both fields
+    if (!name) {
+      setWaitlistError('Please enter your name.');
+      return;
+    }
+
+    if (!email) {
+      setWaitlistError('Please enter your email.');
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setWaitlistError('Please enter a valid email address.');
+      return;
+    }
+
+    setWaitlistSubmitting(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+
+      const response = await fetch(
+        'https://script.google.com/macros/s/AKfycbyqYZ5rJZJkDyaguPqFNMtvTyhSU72Ka2Z-O2qj7x4okw347fhcfbdF1cGuHbW7iyyYQw/exec',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Request failed');
+      }
+
+      setWaitlistSubmitted(true);
+      setWaitlistName('');
+      setWaitlistEmail('');
+    } catch (error) {
+      setWaitlistError('Something went wrong. Please try again.');
+    } finally {
+      setWaitlistSubmitting(false);
+    }
   };
 
   const handleSeeHowItWorksClick = (e: React.MouseEvent) => {
@@ -185,7 +239,7 @@ export default function LandingPage({
     },
     {
       question: "What makes Evida different from other portals?",
-      answer: "Unlike complex and fragmented administrative systems, Evida combines beautiful streetwear aesthetics, micro-interactions, fast loading, and modular design. We prioritize UX design and engagement above all."
+      answer: "Evida prioritizes user experience over administrative complexity. Its student-first interface, intuitive navigation, responsive interactions, and streamlined event discovery make campus engagement feel simple, modern, and natural."
     }
   ];
 
@@ -237,11 +291,11 @@ export default function LandingPage({
             {menuOpen && (
               <>
                 {/* Backdrop (closes menu when clicked) */}
-                <div 
+                <div
                   className="fixed inset-0 z-30 bg-transparent"
                   onClick={() => setMenuOpen(false)}
                 />
-                
+
                 {/* Responsive Dropdown Menu */}
                 <motion.div
                   initial={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -327,7 +381,7 @@ export default function LandingPage({
 
           {/* Content Wrapper */}
           <div className="relative z-20 space-y-4 sm:space-y-5 max-w-xl text-left">
-            
+
             {/* 1. Small "Now in private beta" Badge */}
             <div className="inline-flex items-center gap-1.5 rounded-full bg-black/40 border border-white/15 px-3 py-1 text-[10px] sm:text-xs font-semibold text-white/90 backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FB1C07] animate-pulse" />
@@ -400,9 +454,9 @@ export default function LandingPage({
             <div className="hidden lg:flex flex-col gap-1 min-w-[200px]">
               <p className="text-[9px] font-black uppercase tracking-[0.15em] text-white/30 mb-4">Tour Progress</p>
               {TOUR_STEPS.map((step, idx) => {
-                const isActive    = tourStep === idx;
+                const isActive = tourStep === idx;
                 const isCompleted = completedSteps.has(idx) && !isActive;
-                const isUpcoming  = !isActive && !isCompleted;
+                const isUpcoming = !isActive && !isCompleted;
                 return (
                   <div key={idx} className="flex items-start gap-3 group">
                     {/* Connector line above (except first) */}
@@ -412,9 +466,9 @@ export default function LandingPage({
                       )}
                       <div className={`
                         h-6 w-6 rounded-full flex items-center justify-center text-[9px] font-black shrink-0 transition-all duration-300 border
-                        ${isActive    ? 'bg-[#FD5C05] border-[#FD5C05] text-[#2A2621] scale-110 shadow-[0_0_12px_rgba(253,92,5,0.5)]' : ''}
+                        ${isActive ? 'bg-[#FD5C05] border-[#FD5C05] text-[#2A2621] scale-110 shadow-[0_0_12px_rgba(253,92,5,0.5)]' : ''}
                         ${isCompleted ? 'bg-[#FD5C05]/20 border-[#FD5C05]/50 text-[#FD5C05]' : ''}
-                        ${isUpcoming  ? 'bg-white/5 border-white/10 text-white/30' : ''}
+                        ${isUpcoming ? 'bg-white/5 border-white/10 text-white/30' : ''}
                       `}>
                         {isCompleted ? <Check className="h-3 w-3" /> : idx + 1}
                       </div>
@@ -496,13 +550,12 @@ export default function LandingPage({
                   {TOUR_STEPS.map((_, idx) => (
                     <div
                       key={idx}
-                      className={`rounded-full transition-all duration-300 ${
-                        tourStep === idx
+                      className={`rounded-full transition-all duration-300 ${tourStep === idx
                           ? 'w-5 h-2 bg-[#FD5C05]'
                           : completedSteps.has(idx)
-                          ? 'w-2 h-2 bg-[#FD5C05]/40'
-                          : 'w-2 h-2 bg-white/15'
-                      }`}
+                            ? 'w-2 h-2 bg-[#FD5C05]/40'
+                            : 'w-2 h-2 bg-white/15'
+                        }`}
                     />
                   ))}
                 </div>
@@ -608,7 +661,7 @@ export default function LandingPage({
       {/* Problem Statistics Section */}
       <section id="why-evida" className="bg-white border-b border-[#D8D2BC]/30 py-10 xs:py-12 sm:py-20 md:py-28 w-full relative z-10">
         <div className="mx-auto max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 space-y-8 xs:space-y-10 sm:space-y-16">
-          
+
           <div className="text-center space-y-2.5 xs:space-y-3 max-w-xl mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Why Evida</span>
             <h2 className="text-xl xs:text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight sm:leading-[0.95]" style={{ fontFamily: 'var(--font-display)' }}>
@@ -620,7 +673,7 @@ export default function LandingPage({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 text-left max-w-5xl mx-auto border-y border-[#D8D2BC]/30">
-            
+
             {/* Card 1 */}
             <div className="p-4 xs:p-5 sm:p-8 border-b sm:border-r border-[#D8D2BC]/30 flex flex-col space-y-1.5">
               <span className="text-3xl xs:text-4xl sm:text-5xl font-black text-brand-gradient tracking-tight block" style={{ fontFamily: 'var(--font-display)' }}>
@@ -688,7 +741,7 @@ export default function LandingPage({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 xs:gap-6 sm:gap-8">
-            
+
             {/* Students Card */}
             <div className="rounded-[20px] xs:rounded-[24px] sm:rounded-[28px] border border-black/[0.04] bg-white overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-all">
               <div className="relative h-36 xs:h-44 sm:h-48 w-full bg-[url('/pexels-maorattias-5191958.jpg')] bg-cover bg-center" />
@@ -758,7 +811,7 @@ export default function LandingPage({
       {/* How It Works Section */}
       <section id="how-it-works" className="bg-[#D8D2BC]/35 border-t border-[#D8D2BC]/30 py-10 xs:py-12 sm:py-20">
         <div className="mx-auto max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
-          
+
           <div className="text-center space-y-2.5 xs:space-y-3 max-w-lg mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">How It Works</span>
             <h2 className="text-xl xs:text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -768,7 +821,7 @@ export default function LandingPage({
           </div>
 
           <div className="grid grid-cols-1 min-[500px]:grid-cols-2 border border-[#D8D2BC]/30 rounded-[20px] xs:rounded-[24px] sm:rounded-[32px] overflow-hidden bg-white shadow-sm max-w-4xl mx-auto">
-            
+
             {/* Step 1 */}
             <div className="p-4 xs:p-6 sm:p-8 space-y-2.5 xs:space-y-3 text-left border-b min-[500px]:border-r border-[#D8D2BC]/30">
               <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#5A554E] block">Step 01</span>
@@ -832,7 +885,7 @@ export default function LandingPage({
       {/* Core Features Section */}
       <section id="features" className="bg-[#EAE4CF] border-t border-[#D8D2BC] py-10 xs:py-12 sm:py-20">
         <div className="mx-auto max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 space-y-8 sm:space-y-12">
-          
+
           <div className="text-center space-y-2.5 xs:space-y-3 max-w-lg mx-auto">
             <span className="text-[10px] font-black tracking-widest text-[#5A554E] uppercase">Core Features</span>
             <h2 className="text-xl xs:text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight md:tracking-tighter text-[#2A2621] leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -842,7 +895,7 @@ export default function LandingPage({
           </div>
 
           <div className="grid grid-cols-1 min-[500px]:grid-cols-2 border border-[#D8D2BC] rounded-[20px] xs:rounded-[24px] sm:rounded-[32px] overflow-hidden bg-white shadow-sm">
-            
+
             {/* Card 1: Campus Events */}
             <div className="group p-4 xs:p-6 sm:p-8 space-y-3 text-left border-b min-[500px]:border-r border-[#D8D2BC] flex flex-col justify-between hover:bg-[#EAE4CF]/20 transition-all duration-300">
               <div className="space-y-3">
@@ -943,7 +996,7 @@ export default function LandingPage({
             {faqData.map((item, index) => {
               const isOpen = faqOpenIndex === index;
               return (
-                <div 
+                <div
                   key={index}
                   className="bg-white rounded-[18px] xs:rounded-[20px] sm:rounded-[24px] border border-[#D8D2BC] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
                 >
@@ -957,9 +1010,8 @@ export default function LandingPage({
                     <motion.div
                       animate={{ rotate: isOpen ? 180 : 0 }}
                       transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                      className={`h-7 w-7 sm:h-8 sm:w-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
-                        isOpen ? 'bg-gradient-to-r from-[#FB1C07] to-[#FC7C0B] text-white' : 'bg-[#D8D2BC]/30 text-[#2A2621]'
-                      }`}
+                      className={`h-7 w-7 sm:h-8 sm:w-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${isOpen ? 'bg-gradient-to-r from-[#FB1C07] to-[#FC7C0B] text-white' : 'bg-[#D8D2BC]/30 text-[#2A2621]'
+                        }`}
                     >
                       <ChevronDown className="h-4 w-4" />
                     </motion.div>
@@ -988,7 +1040,7 @@ export default function LandingPage({
 
       {/* Get Started CTA Section */}
       <section id="get-started" className="mx-auto max-w-7xl px-3.5 xs:px-4 md:px-6 py-10 xs:py-12 sm:py-16 md:py-24 w-full relative z-10">
-        <div 
+        <div
           className="relative w-full rounded-[20px] xs:rounded-[28px] sm:rounded-[32px] md:rounded-[44px] overflow-hidden border border-[#FD5C05]/20 shadow-2xl p-4 xs:p-6 sm:p-12 md:p-16 text-white text-center flex flex-col justify-center items-center min-h-[380px] xs:min-h-[440px] sm:min-h-[480px]"
           style={{ background: 'radial-gradient(circle at 20% 20%, rgba(251, 28, 7, 0.18) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(252, 124, 11, 0.14) 0%, transparent 55%), linear-gradient(135deg, #2A2621 0%, #171512 100%)' }}
         >
@@ -1015,10 +1067,10 @@ export default function LandingPage({
               Join students getting priority access at launch. <br className="hidden sm:inline" />
               Free to join, no spam, real campus connections.
             </p>
-            
+
             {/* Waitlist Form matching reference image layout & rounded pill shape */}
             {waitlistSubmitted ? (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="w-full max-w-md bg-white/10 border border-white/15 rounded-[20px] xs:rounded-[24px] p-5 xs:p-6 text-center space-y-2 mt-2"
@@ -1026,19 +1078,29 @@ export default function LandingPage({
                 <div className="h-9 w-9 xs:h-10 xs:w-10 rounded-full bg-[#FD5C05]/20 text-[#FD5C05] flex items-center justify-center mx-auto mb-2">
                   <Check className="h-4 w-4 xs:h-5 xs:w-5" />
                 </div>
-                <h3 className="text-sm xs:text-base font-extrabold text-[#FC7C0B]">You're on the waitlist!</h3>
+                <h3 className="text-sm xs:text-base font-extrabold text-[#FC7C0B]">You’re officially on the waitlist!</h3>
                 <p className="text-[11px] xs:text-xs text-gray-300">We'll notify you as soon as access opens for your campus.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleWaitlistSubmit} className="w-full max-w-md space-y-3 xs:space-y-3.5 pt-2">
-                {/* Input 1: Anonymous name (optional) / Name (optional) */}
+                {waitlistError && (
+                  <p className="text-xs text-red-400 text-center font-medium bg-red-500/10 border border-red-500/20 py-2 px-4 rounded-full">
+                    {waitlistError}
+                  </p>
+                )}
+
+                {/* Input 1: Name */}
                 <div className="relative">
                   <input
                     type="text"
                     value={waitlistName}
-                    onChange={(e) => setWaitlistName(e.target.value)}
-                    placeholder="Name (optional)"
-                    className="w-full rounded-full bg-white/[0.07] hover:bg-white/[0.1] focus:bg-white/[0.12] border border-white/15 focus:border-[#FD5C05] px-4 xs:px-6 py-3 xs:py-4 text-xs sm:text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 text-center font-medium shadow-inner"
+                    onChange={(e) => {
+                      setWaitlistName(e.target.value);
+                      if (waitlistError) setWaitlistError(null);
+                    }}
+                    placeholder="Name"
+                    disabled={waitlistSubmitting}
+                    className="w-full rounded-full bg-white/[0.07] hover:bg-white/[0.1] focus:bg-white/[0.12] border border-white/15 focus:border-[#FD5C05] px-4 xs:px-6 py-3 xs:py-4 text-xs sm:text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 text-center font-medium shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
 
@@ -1047,18 +1109,23 @@ export default function LandingPage({
                   <input
                     type="email"
                     value={waitlistEmail}
-                    onChange={(e) => setWaitlistEmail(e.target.value)}
+                    onChange={(e) => {
+                      setWaitlistEmail(e.target.value);
+                      if (waitlistError) setWaitlistError(null);
+                    }}
                     placeholder="you@example.com"
-                    className="w-full rounded-full bg-white/[0.07] hover:bg-white/[0.1] focus:bg-white/[0.12] border border-white/15 focus:border-[#FD5C05] px-4 xs:px-6 py-3 xs:py-4 text-xs sm:text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 text-center font-medium shadow-inner"
+                    disabled={waitlistSubmitting}
+                    className="w-full rounded-full bg-white/[0.07] hover:bg-white/[0.1] focus:bg-white/[0.12] border border-white/15 focus:border-[#FD5C05] px-4 xs:px-6 py-3 xs:py-4 text-xs sm:text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 text-center font-medium shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
 
                 {/* Pill CTA Button matching reference */}
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-[#EAE4CF] hover:bg-white hover:-translate-y-0.5 py-3 xs:py-4 px-4 xs:px-6 text-xs sm:text-sm font-black text-[#2A2621] shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 group"
+                  disabled={waitlistSubmitting}
+                  className="w-full rounded-full bg-[#EAE4CF] hover:bg-white hover:-translate-y-0.5 py-3 xs:py-4 px-4 xs:px-6 text-xs sm:text-sm font-black text-[#2A2621] shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  <span>Join waitlist</span>
+                  <span>{waitlistSubmitting ? 'Submitting...' : 'Join waitlist'}</span>
                   <ArrowRight className="h-4 w-4 text-[#2A2621] group-hover:translate-x-1 transition-transform" />
                 </button>
               </form>
@@ -1071,28 +1138,26 @@ export default function LandingPage({
       {/* Footer */}
       <footer className="bg-[#2A2621] border-t border-white/5 py-10 xs:py-12 sm:py-16 md:py-20 text-white relative z-10">
         <div className="mx-auto max-w-7xl px-3.5 xs:px-5 sm:px-6 md:px-8 space-y-8 xs:space-y-10 sm:space-y-12">
-          
+
           {/* Top row: Column Grid */}
           <div className="grid grid-cols-1 min-[450px]:grid-cols-2 md:grid-cols-12 gap-6 xs:gap-8 text-left">
-            
+
             {/* Left Description Column */}
             <div className="min-[450px]:col-span-2 md:col-span-6 space-y-3.5 xs:space-y-4">
               <EvidaLogo size={36} lightMode={false} text="EVIDA" />
               <p className="text-xs text-[#5A554E] leading-relaxed max-w-xs font-semibold break-words">
                 Bringing students, organizations, and schools together through one connected campus experience.
               </p>
-              
-              {/* Connect icons */}
-              <div className="flex items-center gap-3.5 pt-1 xs:pt-2">
-                <a href="mailto:info@myevida.app" className="text-[#5A554E] hover:text-[#FD5C05] transition-colors" title="Email Us">
-                  <Mail className="h-4.5 w-4.5" />
+
+              {/* Contact Information */}
+              <div className="flex flex-col gap-2 pt-1 xs:pt-2 text-xs font-semibold text-[#5A554E]">
+                <a href="mailto:myevidainfo@gmail.com" className="flex items-center gap-2 hover:text-[#FD5C05] transition-colors">
+                  <Mail className="h-4 w-4 shrink-0 text-[#FD5C05]" />
+                  <span>myevidainfo@gmail.com</span>
                 </a>
-                <a href="https://instagram.com/myevida" target="_blank" rel="noopener noreferrer" className="text-[#5A554E] hover:text-[#FD5C05] transition-colors" title="Instagram">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                  </svg>
+                <a href="tel:+14046906226" className="flex items-center gap-2 hover:text-[#FD5C05] transition-colors">
+                  <Phone className="h-4 w-4 shrink-0 text-[#FD5C05]" />
+                  <span>+1 (404) 690-6226</span>
                 </a>
               </div>
             </div>
